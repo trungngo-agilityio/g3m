@@ -14,10 +14,10 @@ jobs:
   include:
     - stage: testing
       name: "./tool"
-      dart: dev
+      dart: stable
       os: linux
-      env: PKGS="json_serializable"
-      script: ./tool/travis.sh command
+      env: PKGS="g3m"
+      script: ./tool/travis.sh vm_test
 
 cache:
   directories:
