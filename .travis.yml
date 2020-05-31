@@ -1,0 +1,24 @@
+language: dart
+
+# Only building master means that we don't run two builds for each pull request.
+branches:
+  only: [master]
+
+# Build stages: https://docs.travis-ci.com/user/build-stages/.
+stages:
+  - presubmit
+  - testing
+  - coverage
+
+jobs:
+  include:
+    - stage: testing
+      name: "./tool"
+      dart: dev
+      os: linux
+      env: PKGS="json_serializable"
+      script: ./tool/travis.sh command
+
+cache:
+  directories:
+    - "$HOME/.pub-cache"
