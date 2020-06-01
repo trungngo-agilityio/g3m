@@ -59,7 +59,6 @@ class Constraint extends Expr<Constraint> {
   /// would be applied to all sub constraints.
   ///
   set min(int value) {
-    _min = value;
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._min = value;
@@ -83,7 +82,6 @@ class Constraint extends Expr<Constraint> {
   /// would be applied to all sub constraints.
   ///
   set max(int value) {
-    _max = value;
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._max = value;
@@ -104,41 +102,6 @@ class Constraint extends Expr<Constraint> {
   bool _isValid() =>
       _pattern.isEmptyOrValidSet &&
       (_min == null || _max == null || _min <= _max);
-
-  @override
-  Set<Constraint> eval() {
-    // Combines the constrains into just 1.
-    int newMin, newMax;
-    for (final i in super.eval()) {
-      // Combines the min value
-      final oldMin = i._min;
-
-      if (oldMin != null) {
-        if (newMin == null) {
-          newMin = oldMin;
-        } else if (newMin < oldMin) {
-          newMin = oldMin;
-        }
-      }
-
-      // Combines the max value
-      final oldMax = i._max;
-
-      if (oldMax != null) {
-        if (newMax == null) {
-          newMax = oldMax;
-        } else if (newMax > oldMax) {
-          newMax = oldMax;
-        }
-      }
-    }
-
-    return {
-      _scope.make()
-        .._min = newMin
-        .._max = newMax
-    };
-  }
 }
 
 class ConstraintScope extends Scope<Constraint> {

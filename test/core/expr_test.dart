@@ -111,6 +111,7 @@ void main() {
     var e = (a + b) >> (c + d);
     var s = List.of(e.eval());
     expect(s.length, equals(4));
+
     expect(s[0].name.toString(), equals('a c'));
     expect(s[1].name.toString(), equals('a d'));
     expect(s[2].name.toString(), equals('b c'));

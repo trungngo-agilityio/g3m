@@ -376,7 +376,7 @@ void _writeClassFunctionList(
 
     cfg.writeClassFunctionComment(w, clz, f);
     cfg.writeClassFunctionDef(w, clz, f);
-    if (f.abstract) {
+    if (f.abstract == true) {
       // End the definition
       w.lineEnd();
     } else {

@@ -44,7 +44,7 @@ class MyProgram implements Program {
 }
 
 void main() {
-  test('project - step by step', () {
+  test('project - step by step', () async {
     var program = MyProgram();
     var out = '/tmp/g3gen-test';
     var outDir = Directory(out);
@@ -59,10 +59,10 @@ void main() {
     p.build();
     expect(program.buildCalled, equals(1));
 
-    p.write();
+    await p.write();
     expect(program.item.writeCalled, equals(1));
 
-    p.deploy();
+    await p.deploy();
     expect(program.deployedCalled, equals(1));
 
     expect(program.writeCalled, equals(1));
@@ -74,12 +74,12 @@ void main() {
     expect(outDir.existsSync(), isTrue);
   });
 
-  test('project - all', () {
+  test('project - all', () async {
     var program = MyProgram();
     var out = '/tmp/g3gen-test';
     var p = Project.open(program, out);
 
-    p.deploy();
+    await p.deploy();
     expect(program.deployedCalled, equals(1));
 
     expect(program.writeCalled, equals(1));
