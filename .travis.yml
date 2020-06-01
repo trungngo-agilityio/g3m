@@ -4,20 +4,11 @@ language: dart
 branches:
   only: [master]
 
-# Build stages: https://docs.travis-ci.com/user/build-stages/.
-stages:
-  - presubmit
-  - testing
-  - coverage
+dart_task:
+  - test: --platform vm
 
-jobs:
-  include:
-    - stage: testing
-      name: "./tool"
-      dart: stable
-      os: linux
-      env: PKGS="g3m"
-      script: ./tool/travis.sh vm_test
+  # Warnings are fatal, but we only analyze the lib/ directory.
+  - dartanalyzer: --fatal-warnings lib
 
 cache:
   directories:
