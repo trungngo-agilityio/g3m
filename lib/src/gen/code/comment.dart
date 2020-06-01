@@ -45,7 +45,7 @@ class CodeComment {
 // -----------------------------------------------------------------------------
 
 class CodeCommentWriter extends Writer {
-  CodeComment _comment;
+  final CodeComment _comment;
 
   CodeCommentWriter._(this._comment)
       : super(_comment._buf, config: _comment._config);
