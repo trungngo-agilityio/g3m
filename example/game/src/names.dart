@@ -1,35 +1,62 @@
 import 'package:g3m/g3m.dart';
 import 'package:g3m/g3mex.dart';
 
-class CoreFieldScope extends FieldScopeEx {
-  CoreFieldScope(DataTypeScopeEx type, ConstraintScopeEx constraint)
+class GameWorld extends WorldEx {
+  GameFieldScope _field;
+
+  @override
+  GameFieldScope get field => _field ??= GameFieldScope(type, constraint);
+
+  GameModelScope _model;
+
+  @override
+  GameModelScope get model => _model ??= GameModelScope(field);
+
+  GameDataTypeScope _type;
+
+  @override
+  GameDataTypeScope get type => _type ??= GameDataTypeScope(constraint);
+
+  GameActionScope _action;
+
+  @override
+  GameActionScope get storyAction => _action ??= GameActionScope();
+
+  GameActorScope _actor;
+
+  @override
+  GameActorScope get storyActor => _actor ??= GameActorScope();
+}
+
+class GameFieldScope extends FieldScopeEx {
+  GameFieldScope(DataTypeScopeEx type, ConstraintScopeEx constraint)
       : super(type, constraint);
 
   Field invitedUserId, fromUserId, suggestedUserId;
   Field friendList, friendInvitationList, friendSuggestionList;
 }
 
-class CoreModelScope extends ModelScopeEx {
+class GameModelScope extends ModelScopeEx {
   Model project, game, gameEnvironment, gameRelease, projectTeam, projectMember;
   Model friend, friendInvitation, friendSuggestion;
   Model party, partyInvitation, partySuggestion;
   Model lobby, lobbyInvitation, lobbySuggestion;
 
-  CoreModelScope(FieldScopeEx field) : super(field);
+  GameModelScope(FieldScopeEx field) : super(field);
 }
 
-class CoreDataTypeScope extends DataTypeScopeEx {
-  CoreDataTypeScope(ConstraintScopeEx constraintScopeEx)
+class GameDataTypeScope extends DataTypeScopeEx {
+  GameDataTypeScope(ConstraintScopeEx constraintScopeEx)
       : super(constraintScopeEx);
 }
 
-class CoreConstraintScope extends ConstraintScopeEx {
-  CoreConstraintScope(PatternScopeEx pattern) : super(pattern);
+class GameConstraintScope extends ConstraintScopeEx {
+  GameConstraintScope(PatternScopeEx pattern) : super(pattern);
 }
 
-class CorePatternScope extends PatternScopeEx {}
+class GamePatternScope extends PatternScopeEx {}
 
-class CoreActorScope extends ActorScopeEx {
+class GameActorScope extends StoryActorScopeEx {
   Actor projectAdmin, projectDeveloper;
   Actor player;
   Actor nonMember;
@@ -37,4 +64,4 @@ class CoreActorScope extends ActorScopeEx {
   Actor lobbyAdmin, lobbyMember;
 }
 
-class CoreActionScope extends ActionScopeEx {}
+class GameActionScope extends StoryActionScopeEx {}

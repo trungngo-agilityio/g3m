@@ -13,7 +13,6 @@ class CodeWriter extends Writer {
     _ln = codeConfig.lineEnding;
   }
 
-
   /// Starts a new block. This must be ended with [blockEnd].
   ///
   void blockStart() {
@@ -79,8 +78,10 @@ class CodeWriter extends Writer {
   }
 
   void classField(String type, String name, [int index]) {
-    name = codeConfig.fieldName % name;
-    type = codeConfig.typeName % type;
+    name = codeConfig.fieldName?.call(name) ?? name;
+    type = codeConfig.typeName?.call(type) ?? type;
+    type = codeConfig.typeMapper?.call(type) ?? type;
+
     String s = codeConfig.fieldTypeName(type, name);
     if (codeConfig.fieldIndexed && index != null) {
       s += ' = $index';

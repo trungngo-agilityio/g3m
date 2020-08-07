@@ -53,12 +53,17 @@ void main() {
     expect(symbol.all.isValidSingle, isFalse);
   });
 
-  test('valid - single', () {
-    var symbol = FakeSymbolScope();
-    var a = symbol('a');
+  test('valid - plus null', () {
+    final symbol = FakeSymbolScope();
+    final a = symbol('a');
+    final b = null;
+
+    expect(a + b, equals(a));
+    expect(a + symbol.none, equals(a));
+    expect(symbol.none + a, equals(a));
   });
 
-  test('valid - plus', () {
+  test('valid - plus - 2', () {
     var symbol = FakeSymbolScope();
     var a = symbol('a');
     var b = symbol('b');

@@ -18,9 +18,21 @@ class CodeFieldList with IterableMixin<CodeField> {
       bool protected,
       bool sealed,
       bool override,
+      bool nullable,
       String comment}) {
-    var f = CodeField(this, name?.toString(), type?.toString(), initializer,
-        index, abstract, private, protected, sealed, override, comment);
+    var f = CodeField(
+        this,
+        name?.toString(),
+        type?.toString(),
+        initializer,
+        index,
+        abstract,
+        private,
+        protected,
+        sealed,
+        override,
+        nullable,
+        comment);
     _list.add(f);
     return f;
   }
@@ -55,19 +67,21 @@ class CodeField {
   // ---------------------------------------------------------------------------
 
   /// True indicates that this is an abstract field.
-  bool abstract = false;
+  bool abstract;
 
   /// True indicates that this is a private field.
-  bool private = false;
+  bool private;
 
   /// True indicate that this is a protected field.
-  bool protected = false;
+  bool protected;
 
   /// True indicates that this is a sealed (i.e., not open) field.
-  bool sealed = false;
+  bool sealed;
 
   /// True indicates that this is a override parent's field.
-  bool override = false;
+  bool override;
+
+  bool nullable;
 
   // ---------------------------------------------------------------------------
   // Comment
@@ -89,6 +103,7 @@ class CodeField {
       this.protected,
       this.sealed,
       this.override,
+      this.nullable,
       String comment) {
     _comment = CodeComment._(_list._config, comment);
   }

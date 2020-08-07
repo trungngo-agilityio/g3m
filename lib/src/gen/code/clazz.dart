@@ -14,15 +14,29 @@ class CodeClazzList with IterableMixin<CodeClazz> {
 
   CodeClazzList(this._doc, [this._clazz]);
 
-  CodeClazz clazz(Object name,
-      {bool abstract,
-      bool private,
-      bool protected,
-      bool sealed,
-      String comment,
-      Function(CodeClazz) let}) {
-    var clz = CodeClazz(this, name?.toString(), abstract, private, protected,
-        sealed, comment, let);
+  CodeClazz clazz(
+    Object name, {
+      bool interface,
+    bool abstract,
+    bool public,
+    bool private,
+    bool protected,
+    bool sealed,
+    String comment,
+    Function(CodeClazz) let,
+  }) {
+    var clz = CodeClazz(
+      this,
+      name?.toString(),
+      interface: interface,
+      abstract: abstract,
+      public: public,
+      private: private,
+      protected: protected,
+      sealed: sealed,
+      comment: comment,
+      let: let,
+    );
     _list.add(clz);
     return clz;
   }
@@ -47,17 +61,23 @@ class CodeClazz {
   /// The class name.
   String name;
 
+  /// True indicates that this is an interface.
+  bool interface;
+
   /// True indicates that this is an abstract class.
-  bool abstract = false;
+  bool abstract;
 
   /// True indicates that this is a private class.
-  bool private = false;
+  bool private;
+
+  /// True indicates that this is a public class.
+  bool public;
 
   /// True indicate that this is a protected class.
-  bool protected = false;
+  bool protected;
 
   /// True indicates that this is a sealed (i.e., not open) class.
-  bool sealed = false;
+  bool sealed;
 
   // ---------------------------------------------------------------------------
   // Comment
@@ -97,6 +117,7 @@ class CodeClazz {
           bool protected,
           bool sealed,
           bool override,
+          bool nullable,
           String comment}) =>
       _fieldList.field(name, type,
           initializer: initializer,
@@ -106,6 +127,7 @@ class CodeClazz {
           protected: protected,
           sealed: sealed,
           override: override,
+          nullable: nullable,
           comment: comment);
 
   // ---------------------------------------------------------------------------
@@ -139,8 +161,18 @@ class CodeClazz {
   // ---------------------------------------------------------------------------
   // Constructor
   // ---------------------------------------------------------------------------
-  CodeClazz(this._list, this.name, this.abstract, this.private, this.protected,
-      this.sealed, String comment, Function(CodeClazz) let) {
+  CodeClazz(
+    this._list,
+    this.name, {
+    this.interface,
+    this.abstract,
+    this.public,
+    this.private,
+    this.protected,
+    this.sealed,
+    String comment,
+    Function(CodeClazz) let,
+  }) {
     var config = _list._doc._config;
     _comment = CodeComment._(config, comment);
     _clazzList = CodeClazzList(_list._doc, this);

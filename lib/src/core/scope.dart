@@ -26,11 +26,13 @@ abstract class Scope<T extends Expr<T>> {
 
   /// Adds a new named expression to the scope.
   ///
-  T add(Object name) {
+  T add(dynamic name) {
     var n = name?.toString() ?? '@anon${_counter++}';
     var item = make();
     item.name = Name(n);
     _all += item;
     return item;
   }
+
+  void build() {}
 }

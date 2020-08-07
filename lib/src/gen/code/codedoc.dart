@@ -44,8 +44,11 @@ class CodeDoc implements WritableProjectItem {
     _comment = CodeComment._(_config, '');
 
     _clazzList = CodeClazzList(this);
-    _importList = CodeImportList(this);
+    _importList = CodeImportList();
   }
+
+  CodeImport import({String package, List<String> types, String alias}) =>
+      _importList.import(package: package, types: types, alias: alias);
 
   /// Defines a new class.
   /// - [name] is the class name.
@@ -53,20 +56,28 @@ class CodeDoc implements WritableProjectItem {
   /// - [comment] for simple online liner text comment.
   /// - [let] for defining class body (e.g., fields, functions, etc).
   ///
-  CodeClazz clazz(Object name,
-          {bool abstract,
-          bool private,
-          bool protected,
-          bool sealed,
-          String comment,
-          Function(CodeClazz) let}) =>
-      _clazzList.clazz(name,
-          abstract: abstract,
-          private: private,
-          protected: protected,
-          sealed: sealed,
-          comment: comment,
-          let: let);
+  CodeClazz clazz(
+    Object name, {
+    bool interface,
+    bool abstract,
+    bool public,
+    bool private,
+    bool protected,
+    bool sealed,
+    String comment,
+    Function(CodeClazz) let,
+  }) =>
+      _clazzList.clazz(
+        name,
+        interface: interface,
+        abstract: abstract,
+        public: public,
+        private: private,
+        protected: protected,
+        sealed: sealed,
+        comment: comment,
+        let: let,
+      );
 
   String get content {
     var buf = StringBuffer();

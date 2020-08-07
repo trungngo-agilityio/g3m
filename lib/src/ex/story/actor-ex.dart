@@ -1,13 +1,13 @@
 part of g3m.ex;
 
-class ActorScopeEx extends ActorScope {
+class StoryActorScopeEx extends ActorScope {
   Actor user;
 
   Actor guest;
 
   Actor admin;
 
-  ActorScopeEx() {
+  StoryActorScopeEx() {
     user = call('user');
     guest = call('guest');
     admin = call('admin');

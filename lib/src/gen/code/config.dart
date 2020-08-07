@@ -1,20 +1,60 @@
 part of g3gen;
 
+typedef WriteCodeDocFunc = void Function(CodeWriter, CodeDoc);
+typedef WriteHeaderCommentFunc = void Function(CodeWriter, CodeDoc);
+
+typedef WritePackageFunc = void Function(CodeWriter, CodeDoc);
+
+typedef WriteImportListFunc = Function(CodeWriter, CodeImportList);
+typedef WriteImportFunc = void Function(CodeWriter, CodeImport);
+
+typedef WriteClassListFunc = Function(CodeWriter, CodeClazzList);
+typedef WriteClassCommentFunc = void Function(CodeWriter, CodeClazz);
+typedef WriteClassDefFunc = void Function(CodeWriter, CodeClazz);
+
+typedef WriteClassFieldListFunc = void Function(
+    CodeWriter, CodeClazz, CodeFieldList);
+
+typedef WriteClassFieldDefFunc = void Function(
+    CodeWriter, CodeClazz, CodeField);
+
+typedef WriteClassFieldCommentFunc = void Function(
+    CodeWriter, CodeClazz, CodeField);
+
+typedef WriteClassFunctionListFunc = void Function(
+    CodeWriter, CodeClazz, CodeFunctionList);
+
+typedef WriteClassFunctionDefFunc = Function(
+    CodeWriter, CodeClazz, CodeFunction);
+typedef WriteClassFunctionCommentFunc = Function(
+    CodeWriter, CodeClazz, CodeFunction);
 // -----------------------------------------------------------------------------
 // Configuration
 // -----------------------------------------------------------------------------
 
 class CodeConfig extends WriterConfig {
+  final CodeLanguage language;
+
   /// The string function to convert free text to package name.
   StringFunc packageName;
 
   /// The string function to convert free text to class name
   StringFunc className;
+
+  /// The string function to covert free text to field name.
   StringFunc fieldName;
+
+  /// The string function to convert free text to function name.
   StringFunc functionName;
 
+  /// The string function to convert free text to variable name.
   StringFunc variableName;
+
+  /// The string function to convert free text to type name.
   StringFunc typeName;
+
+  /// The string function to convert type name to natively supported type name.
+  StringFunc typeMapper;
 
   StringFunc packageStatement;
 
@@ -52,12 +92,20 @@ class CodeConfig extends WriterConfig {
   ///
   String argListSeparator;
 
+  String importKeyword;
   String packageKeyword;
 
   /// For most language, this should be `class`. Except for proto3,
   /// this should be `message`;
   ///
   String classKeyword;
+  String interfaceKeyword;
+
+  String publicKeyword;
+  String protectedKeyword;
+  String privateKeyword;
+  String abstractKeyword;
+  String sealedKeyword;
 
   /// The func keyword that marks the beginning of a function.
   /// For dart, there is none. For Typescript, this should be 'function'.
@@ -83,18 +131,25 @@ class CodeConfig extends WriterConfig {
   ///
   Function(String, String, String) funcDef;
 
-  Function(CodeWriter, CodeDoc) writeCodeDoc;
-  Function(CodeWriter, CodeDoc) writeHeaderComment;
-  Function(CodeWriter, CodeDoc) writePackage;
-  Function(CodeWriter, CodeClazzList) writeClassList;
-  Function(CodeWriter, CodeClazz) writeClassComment;
-  Function(CodeWriter, CodeClazz) writeClassDef;
-  Function(CodeWriter, CodeClazz, CodeFieldList) writeClassFieldList;
-  Function(CodeWriter, CodeClazz, CodeField) writeClassFieldDef;
-  Function(CodeWriter, CodeClazz, CodeField) writeClassFieldComment;
-  Function(CodeWriter, CodeClazz, CodeFunctionList) writeClassFunctionList;
-  Function(CodeWriter, CodeClazz, CodeFunction) writeClassFunctionDef;
-  Function(CodeWriter, CodeClazz, CodeFunction) writeClassFunctionComment;
+  WriteCodeDocFunc writeCodeDoc;
+  WriteHeaderCommentFunc writeHeaderComment;
+
+  WritePackageFunc writePackage;
+
+  WriteImportListFunc writeImportList;
+  WriteImportFunc writeImport;
+
+  WriteClassListFunc writeClassList;
+  WriteClassCommentFunc writeClassComment;
+  WriteClassDefFunc writeClassDef;
+
+  WriteClassFieldListFunc writeClassFieldList;
+  WriteClassFieldDefFunc writeClassFieldDef;
+  WriteClassFieldCommentFunc writeClassFieldComment;
+
+  WriteClassFunctionListFunc writeClassFunctionList;
+  WriteClassFunctionDefFunc writeClassFunctionDef;
+  WriteClassFunctionCommentFunc writeClassFunctionComment;
 
   // ---------------------------------------------------------------------------
   // Setup for dart code generation.
@@ -104,82 +159,135 @@ class CodeConfig extends WriterConfig {
 
   CodeConfig.forKotlin()
       : this(
-            fieldTypeAfterName: true,
-            fieldTypeVarSeparator: ': ',
-            argTypeAfterName: true,
-            argTypeVarSeparator: ': ',
-            packageKeyword: 'package ',
-            funcKeyword: 'fun ');
+          language: CodeLanguages.kotlin,
+          fieldTypeAfterName: true,
+          fieldTypeVarSeparator: ': ',
+          argTypeAfterName: true,
+          argTypeVarSeparator: ': ',
+          packageKeyword: 'package ',
+          funcKeyword: 'fun ',
+        );
 
   CodeConfig.forJava()
       : this(
+          language: CodeLanguages.java,
           headerComment: code.commentJavaDoc,
           classComment: code.commentJavaDoc,
           functionComment: code.commentJavaDoc,
           packageKeyword: 'package ',
         );
 
-  CodeConfig.forCSharp() : this();
+  CodeConfig.forCSharp()
+      : this(
+          language: CodeLanguages.cSharp,
+        );
 
   CodeConfig.forPython()
       : this(
-            functionName: snake,
-            fieldName: snake,
-            fieldTypeAfterName: true,
-            fieldTypeVarSeparator: ': ',
-            argTypeAfterName: true,
-            argTypeVarSeparator: ': ',
-            headerComment: code.commentHash,
-            classComment: code.commentHash,
-            functionComment: code.commentHash,
-            lineComment: code.commentHash,
-            funcKeyword: 'def ',
-            packageKeyword: 'package ',
-            classKeyword: 'class ',
-            blockStart: ':',
-            blockEnd: '',
-            funcDef: (outArgs, name, inArgs) => 'def $name (self, $inArgs)');
+          language: CodeLanguages.python,
+          functionName: snake,
+          fieldName: snake,
+          fieldTypeAfterName: true,
+          fieldTypeVarSeparator: ': ',
+          argTypeAfterName: true,
+          argTypeVarSeparator: ': ',
+          headerComment: code.commentHash,
+          classComment: code.commentHash,
+          functionComment: code.commentHash,
+          lineComment: code.commentHash,
+          funcKeyword: 'def ',
+          packageKeyword: 'package ',
+          classKeyword: 'class ',
+          blockStart: ':',
+          blockEnd: '',
+          funcDef: (outArgs, name, inArgs) => 'def $name (self, $inArgs)',
+        );
 
   CodeConfig.forTypescript()
       : this(
-            fieldTypeAfterName: true,
-            fieldTypeVarSeparator: ': ',
-            packageKeyword: 'package ',
-            funcKeyword: 'function ');
+          language: CodeLanguages.typeScript,
+          typeMapper: (name) {
+            // See https://www.typescriptlang.org/docs/handbook/basic-types.html
+            switch (name) {
+              case 'String':
+                return 'string';
+              case 'Bool':
+              case 'Boolean':
+                return 'boolean';
+              case 'Double':
+              case 'Float':
+              case 'Int32':
+              case 'Int64':
+              case 'Uint32':
+              case 'Uint64':
+              case 'Sint32':
+              case 'Sint64':
+              case 'Sfixed32':
+              case 'Sfixed64':
+                return 'number';
+              case 'bytes':
+                return 'dynamic';
+              default:
+                return name;
+            }
+          },
+          fieldTypeAfterName: true,
+          fieldTypeVarSeparator: ': ',
+          interfaceKeyword: 'interface ',
+          funcKeyword: 'function ',
+          publicKeyword: 'export ',
+          importKeyword: 'import ',
+          writePackage: (CodeWriter w, CodeDoc doc) {
+            // Do nothing since Typescript do not have package concept.
+          },
+          writeClassFieldDef: (CodeWriter w, CodeClazz clz, CodeField f) {
+            var name = f.name;
+            if (f.nullable == true) {
+              name = name + '?';
+            }
+            w.classField(f.type, name);
+          },
+        );
 
   CodeConfig.forProto3()
       : this(
-            typeName: camel,
-            fieldName: pascal,
-            packageKeyword: 'package ',
-            classKeyword: 'message ',
-            argTypeAfterName: true,
-            fieldIndexed: true,
-            funcDef: (outArgs, name, inArgs) =>
-                'rpc $name ($inArgs) returns ($outArgs)');
+          language: CodeLanguages.proto3,
+          typeName: camel,
+          fieldName: pascal,
+          packageKeyword: 'package ',
+          classKeyword: 'message ',
+          argTypeAfterName: true,
+          fieldIndexed: true,
+          funcDef: (outArgs, name, inArgs) =>
+              'rpc $name ($inArgs) returns ($outArgs)',
+        );
 
   CodeConfig.forGRpc()
       : this(
-            typeName: camel,
-            fieldName: pascal,
-            packageKeyword: 'package ',
-            classKeyword: 'service ',
-            fieldIndexed: true,
-            funcKeyword: 'rpc ',
-            argTypeAfterName: true,
-            funcDef: (outArgs, name, inArgs) =>
-                'rpc $name ($inArgs) returns ($outArgs)');
+          language: CodeLanguages.gRpc,
+          typeName: camel,
+          fieldName: pascal,
+          packageKeyword: 'package ',
+          classKeyword: 'service ',
+          fieldIndexed: true,
+          funcKeyword: 'rpc ',
+          argTypeAfterName: true,
+          funcDef: (outArgs, name, inArgs) =>
+              'rpc $name ($inArgs) returns ($outArgs)',
+        );
 
   CodeConfig.forGo()
       : this(
-            fieldTypeAfterName: true,
-            fieldTypeVarSeparator: ' ',
-            argTypeAfterName: true,
-            argTypeVarSeparator: ' ',
-            packageKeyword: 'package ',
-            classKeyword: 'struct ',
-            funcKeyword: 'func ',
-            lineEnding: '');
+          language: CodeLanguages.go,
+          fieldTypeAfterName: true,
+          fieldTypeVarSeparator: ' ',
+          argTypeAfterName: true,
+          argTypeVarSeparator: ' ',
+          packageKeyword: 'package ',
+          classKeyword: 'struct ',
+          funcKeyword: 'func ',
+          lineEnding: '',
+        );
 
   // ---------------------------------------------------------------------------
   // Custom constructor.
@@ -187,12 +295,14 @@ class CodeConfig extends WriterConfig {
   CodeConfig(
       {int tabSize = 2,
       bool useTab = false,
+      this.language,
       this.packageName,
       this.className,
       this.fieldName,
       this.functionName,
       this.variableName,
       this.typeName,
+      this.typeMapper,
       this.packageStatement,
       this.headerComment,
       this.classComment,
@@ -206,8 +316,15 @@ class CodeConfig extends WriterConfig {
       this.argTypeAfterName,
       this.argTypeVarSeparator,
       this.argListSeparator,
+      this.importKeyword,
       this.packageKeyword,
       this.classKeyword,
+      this.interfaceKeyword,
+      this.publicKeyword,
+      this.protectedKeyword,
+      this.privateKeyword,
+      this.abstractKeyword,
+      this.sealedKeyword,
       this.funcKeyword,
       this.lineEnding,
       this.blockStart,
@@ -219,6 +336,8 @@ class CodeConfig extends WriterConfig {
       this.writeCodeDoc,
       this.writeHeaderComment,
       this.writePackage,
+      this.writeImportList,
+      this.writeImport,
       this.writeClassList,
       this.writeClassComment,
       this.writeClassDef,
@@ -255,6 +374,7 @@ class CodeConfig extends WriterConfig {
 
     packageKeyword ??= 'library ';
     classKeyword ??= 'class ';
+    interfaceKeyword ??= classKeyword;
     funcKeyword ??= '';
 
     lineEnding ??= ';';
@@ -277,6 +397,8 @@ class CodeConfig extends WriterConfig {
     writeCodeDoc ??= _writeCodeDoc;
     writeHeaderComment ??= _writeHeaderComment;
     writePackage ??= _writePackage;
+    writeImportList ??= _writeImportList;
+    writeImport ??= _writeImport;
 
     writeClassList ??= _writeClassList;
     writeClassComment ??= _writeClassComment;
@@ -290,18 +412,19 @@ class CodeConfig extends WriterConfig {
   }
 }
 
-void _writeCodeDoc(CodeWriter w, CodeDoc doc) {
+final WriteCodeDocFunc _writeCodeDoc = (w, doc) {
   var cfg = w.codeConfig;
   cfg.writeHeaderComment(w, doc);
   cfg.writePackage(w, doc);
+  cfg.writeImportList(w, doc.importList);
   cfg.writeClassList(w, doc.clazzList);
-}
+};
 
-void _writeHeaderComment(CodeWriter w, CodeDoc doc) {
+final WriteHeaderCommentFunc _writeHeaderComment = (w, doc) {
   w.headerComment(doc.comment.text);
-}
+};
 
-void _writePackage(CodeWriter w, CodeDoc doc) {
+final WritePackageFunc _writePackage = (w, doc) {
   // Writes out the package
   var package = doc.package;
   if (package == null) return;
@@ -310,14 +433,69 @@ void _writePackage(CodeWriter w, CodeDoc doc) {
   var name = cfg.packageName % package;
 
   w.statement('${cfg.packageKeyword}$name');
-}
+};
 
-void _writeClassList(CodeWriter w, CodeClazzList clazzList) {
-  var cfg = w.codeConfig;
+// =============================================================================
+// Import
+// =============================================================================
+
+final WriteImportListFunc _writeImportList = (w, importList) {
+  final cfg = w.codeConfig;
+
+  if (importList == null || importList.isEmpty) return;
+  for (final imp in importList) {
+    w.writeln();
+    cfg.writeImport(w, imp);
+  }
+};
+
+final WriteImportFunc _writeImport = (w, imp) {
+  assert(imp != null);
+  final cfg = w.codeConfig;
+  final types = imp.types;
+  if (types == null || types.isEmpty) {
+    // import a entire package.
+    w.write(cfg.importKeyword);
+    w.write(imp.package);
+    if (imp.alias != null) {
+      w.write('as ');
+      w.write(imp.alias);
+    }
+    w.writeln(cfg.lineEnding);
+  } else {
+    // import an individual type.
+    w.write(cfg.importKeyword);
+
+    w.block(null, () {
+      // TODO: Implement this better since this is different from language
+      // to language.
+      for (final t in types) {
+        w.write(t);
+
+        if (imp.alias != null) {
+          w.write('as ');
+          w.write(imp.alias);
+        }
+        w.writeln(',');
+      }
+    });
+
+    w.write(' from ');
+    w.write(imp.package);
+    w.writeln(cfg.lineEnding);
+  }
+};
+
+// =============================================================================
+// Class
+// =============================================================================
+
+final WriteClassListFunc _writeClassList = (w, clazzList) {
+  final cfg = w.codeConfig;
 
   // Writes out all class in the class list.
-  for (var clz in clazzList) {
-    ~w;
+  for (final clz in clazzList) {
+    w.writeln();
 
     cfg.writeClassComment(w, clz);
     cfg.writeClassDef(w, clz);
@@ -328,22 +506,49 @@ void _writeClassList(CodeWriter w, CodeClazzList clazzList) {
       cfg.writeClassFunctionList(w, clz, clz.functionList);
     });
   }
-}
+};
 
-void _writeClassComment(CodeWriter w, CodeClazz clz) {
+final WriteClassCommentFunc _writeClassComment = (w, clz) {
   w.classComment(clz.comment.text);
-}
+};
 
-void _writeClassDef(CodeWriter w, CodeClazz clz) {
+final WriteClassDefFunc _writeClassDef = (w, clz) {
   // -------------------------------------------------------------------------
   // Writes out class name and open block
   // -------------------------------------------------------------------------
   var cfg = w.codeConfig;
   var name = cfg.className % clz.name;
-  w + '${cfg.classKeyword}$name ';
-}
 
-void _writeClassFieldList(CodeWriter w, CodeClazz clz, CodeFieldList list) {
+  if (clz.interface == true) {
+    name = cfg.interfaceKeyword + name;
+  } else {
+    name = cfg.classKeyword + name;
+  }
+
+  if (clz.public == true && cfg.publicKeyword != null) {
+    name = cfg.publicKeyword + name;
+  }
+  if (clz.protected == true && cfg.protectedKeyword != null) {
+    name = cfg.protectedKeyword + name;
+  }
+  if (clz.private == true && cfg.privateKeyword != null) {
+    name = cfg.privateKeyword + name;
+  }
+  if (clz.abstract == true && cfg.abstractKeyword != null) {
+    name = cfg.abstractKeyword + name;
+  }
+  if (clz.sealed == true && cfg.sealedKeyword != null) {
+    name = cfg.sealedKeyword + name;
+  }
+
+  w.write(name);
+};
+
+// =============================================================================
+// Class Field
+// =============================================================================
+
+final WriteClassFieldListFunc _writeClassFieldList = (w, clz, list) {
   var cfg = w.codeConfig;
 
   // -------------------------------------------------------------------------
@@ -355,18 +560,21 @@ void _writeClassFieldList(CodeWriter w, CodeClazz clz, CodeFieldList list) {
     cfg.writeClassFieldComment(w, clz, f);
     cfg.writeClassFieldDef(w, clz, f);
   }
-}
+};
 
-void _writeClassFieldComment(CodeWriter w, CodeClazz clz, CodeField f) {
+final WriteClassFieldCommentFunc _writeClassFieldComment = (w, clz, f) {
   w.fieldComment(f.comment.text);
-}
+};
 
-void _writeClassFieldDef(CodeWriter w, CodeClazz clz, CodeField f) {
+final WriteClassFieldDefFunc _writeClassFieldDef = (w, clz, f) {
   w.classField(f.type, f.name, f.index);
-}
+};
 
-void _writeClassFunctionList(
-    CodeWriter w, CodeClazz clz, CodeFunctionList list) {
+// =============================================================================
+// Class Function
+// =============================================================================
+
+final WriteClassFunctionListFunc _writeClassFunctionList = (w, clz, list) {
   var cfg = w.codeConfig;
   // -------------------------------------------------------------------------
   // Writes out the list of functions
@@ -384,13 +592,13 @@ void _writeClassFunctionList(
       w.block(f.body.content);
     }
   }
-}
+};
 
-void _writeClassFunctionComment(CodeWriter w, CodeClazz clz, CodeFunction f) {
+final WriteClassFunctionCommentFunc _writeClassFunctionComment = (w, clz, f) {
   w.classComment(f.comment.text);
-}
+};
 
-void _writeClassFunctionDef(CodeWriter w, CodeClazz clz, CodeFunction f) {
+final WriteClassFunctionDefFunc _writeClassFunctionDef = (w, clz, f) {
   var cfg = w.codeConfig;
 
   // -----------------------------------------------------------------------
@@ -409,4 +617,4 @@ void _writeClassFunctionDef(CodeWriter w, CodeClazz clz, CodeFunction f) {
   // Write out function definition
   // -----------------------------------------------------------------------
   w + cfg.funcDef(outType, fName, args);
-}
+};

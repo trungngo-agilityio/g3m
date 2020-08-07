@@ -5,6 +5,9 @@ void _run(CodeConfig config) {
   var doc = CodeDoc(config);
   doc
     ..package = 'com google'
+    ..import(package: 'google', types: ['OAuth'])
+    ..import(package: 'somepackage')
+    ..import(package: 'somepackage', alias: 'somealias')
     ..clazz('abc',
         abstract: true,
         protected: true,
@@ -17,7 +20,7 @@ void _run(CodeConfig config) {
       // Adding field with shortcut.
       clz
         ..field('abc', 'String', comment: 'This is just a demo', private: true)
-        ..field('abc', 'String', private: true)
+        ..field('abc', 'Boolean', private: true, nullable: true)
         ..func('hello world func', comment: 'Just a function', let: (f) {
           f
             ..inArg('field1', 'string')

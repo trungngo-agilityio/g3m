@@ -8,41 +8,13 @@ import 'names.dart';
 
 // =============================================================================
 
-class GameProgram implements Program {
-  CorePatternScope pattern;
-  CoreConstraintScope constraint;
-  CoreDataTypeScope type;
-  CoreFieldScope field;
-  CoreModelScope model;
-  ErRelationCardinalScopeEx relationCardinal;
-  ErRelationTypeScopeEx relationType;
-  ErRelationScopeEx relation;
-  DbEngineScopeEx engine;
-  DbSchemaScopeEx schema;
-  DbTableScopeEx table;
-  CoreActorScope actor;
-  CoreActionScope action;
-  StoryScopeEx story;
+class GameProgram extends WorldEx implements Program {
+  final GameWorld world = GameWorld();
 
   CodeDoc rpcCodeDoc;
   CodeDoc protoMessageCodeDoc;
 
-  GameProgram() {
-    pattern = CorePatternScope();
-    constraint = CoreConstraintScope(pattern);
-    type = CoreDataTypeScope(constraint);
-    field = CoreFieldScope(type, constraint);
-    model = CoreModelScope(field);
-    relationCardinal = ErRelationCardinalScopeEx();
-    relationType = ErRelationTypeScopeEx(relationCardinal);
-    relation = ErRelationScopeEx(model, relationType);
-    engine = DbEngineScopeEx();
-    schema = DbSchemaScopeEx();
-    table = DbTableScopeEx(engine, schema, model, field);
-    actor = CoreActorScope();
-    action = CoreActionScope();
-    story = StoryScopeEx(actor, action, model, table);
-  }
+  GameProgram() {}
 
   @override
   void load() {
@@ -76,7 +48,7 @@ class GameProgram implements Program {
   // Fields
   // ---------------------------------------------------------------------------
   void _buildFields() {
-    var f = field;
+    var f = world.field;
 
     f.invitedUserId = f.userId ^ 'invited user id';
     f.fromUserId = f.userId ^ 'from user id';
@@ -88,7 +60,10 @@ class GameProgram implements Program {
   // ---------------------------------------------------------------------------
 
   void _buildModels() {
-    var m = model, f = field, r = relation, t = relationType;
+    var m = world.model,
+        f = world.field,
+        r = world.erRelation,
+        t = world.erRelationType;
 
     // These are the models owns by user.
     var m1 = m.none;
@@ -101,7 +76,7 @@ class GameProgram implements Program {
     m1.fields += f.name + f.desc;
 
     // All these should be save in database.
-    table(m1);
+    world.dbTable(m1);
 
     var m2 = m.none;
 
@@ -126,7 +101,7 @@ class GameProgram implements Program {
 
     r(m.user, t.own, m2);
 
-    table(m2);
+    world.dbTable(m2);
   }
 
   Field _toFindRequestFieldList(Model item) {
@@ -140,8 +115,8 @@ class GameProgram implements Program {
   // ---------------------------------------------------------------------------
 
   void _buildTableFields() {
-    var f = field;
-    for (var i in table.all.eval()) {
+    var f = field, dt = world.dbTable;
+    for (var i in dt.all.eval()) {
       i.fields + f.id + f.createdAt + f.modifiedAt + f.version;
       for (var j in i.models.eval()) {
         i.fields += j.fields;
@@ -154,7 +129,7 @@ class GameProgram implements Program {
   // ---------------------------------------------------------------------------
 
   void _buildActors() {
-    var a = actor;
+    var a = world.storyActor;
     a.projectAdmin = a('project admin');
     a.projectDeveloper = a('project developer');
 
@@ -180,7 +155,7 @@ class GameProgram implements Program {
   // ---------------------------------------------------------------------------
 
   void _buildStories() {
-    var f = field, m = model, a = actor, t = action;
+    var f = world.field, m = world.model, a = world.storyActor, t = world.storyAction;
     story(a.projectAdmin,
         t.manage >> (m.game + m.gameRelease + m.gameEnvironment))
       ..request = field.id + field.name
@@ -248,10 +223,10 @@ class GameProgram implements Program {
   // Builds database relation.
   // -------------------------------------------------------------------------
   void _buildRelation() {
-    var m = model, t = relationType;
-    relation(m.project, t.hasMany, m.game + m.gameEnvironment + m.gameRelease);
+    var m = world.model, t = world.erRelationType;
+    erRelation(m.project, t.hasMany, m.game + m.gameEnvironment + m.gameRelease);
 
-    relation(
+    erRelation(
         m.user, t.own, m.project + m.game + m.gameRelease + m.gameEnvironment);
   }
 
@@ -263,8 +238,8 @@ class GameProgram implements Program {
   }
 
   void _buildModelCode(ProjectFolder folder) {
-    var cfg = CodeConfig.forDart();
-    for (var i in table.all.eval()) {
+    var cfg = CodeConfig.forDart(), dt = world.dbTable;
+    for (var i in dt.all.eval()) {
       final doc = CodeDoc(cfg);
 
       final name = i.name.snake().toString() + '.dart';
@@ -351,7 +326,7 @@ class GameProgram implements Program {
     out.newFile('stories.md', doc);
 
     var stories = List.of(story.all.eval());
-    var actors = List.of(actor.all.eval());
+    var actors = List.of(storyActor.all.eval());
 
     for (var a in actors) {
       var relatedStories = stories.where((e) => e.actor == a);
@@ -401,10 +376,10 @@ class GameProgram implements Program {
   }
 
   void _buildTableMarkDownDoc(ProjectFolder out) {
-    var doc = MarkdownDoc()..title = 'Tables';
+    var dt = world.dbTable, doc = MarkdownDoc()..title = 'Tables';
     out.newFile('db.md', doc);
 
-    for (var i in table.all.eval()) {
+    for (var i in dt.all.eval()) {
       doc.bottom.after((i.name >> 'table').toString())
         ..write((w) {
           w + mk.bold % 'Name';

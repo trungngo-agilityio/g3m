@@ -1,7 +1,7 @@
 part of g3m.ex;
 
-class ActionScopeEx extends ActionScope {
-  ActionScopeEx() {
+class StoryActionScopeEx extends ActionScope {
+  StoryActionScopeEx() {
     _crudActions();
     _commonActions();
   }

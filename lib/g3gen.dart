@@ -3,6 +3,7 @@ library g3gen;
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:g3m/src/gen/code/language.dart';
 import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;
 import 'package:recase/recase.dart';

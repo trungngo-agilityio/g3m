@@ -1,9 +1,9 @@
 part of g3m.ex;
 
 class StoryScopeEx extends StoryScope {
-  final ActorScopeEx _actor;
+  final StoryActorScopeEx _actor;
 
-  final ActionScopeEx _action;
+  final StoryActionScopeEx _action;
 
   final ModelScopeEx _model;
 
