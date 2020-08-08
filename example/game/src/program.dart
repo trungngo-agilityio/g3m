@@ -8,13 +8,11 @@ import 'names.dart';
 
 // =============================================================================
 
-class GameProgram extends WorldEx implements Program {
+class GameProgram implements Program {
   final GameWorld world = GameWorld();
 
   CodeDoc rpcCodeDoc;
   CodeDoc protoMessageCodeDoc;
-
-  GameProgram() {}
 
   @override
   void load() {
@@ -30,8 +28,8 @@ class GameProgram extends WorldEx implements Program {
   @override
   void build(ProjectFolder folder) {
     _buildCommonFiles(folder);
-    _buildModelCode(folder);
-    _buildProtoCode(folder);
+    _buildModelCode(folder.newFolder('models'));
+    _buildProtoCode(folder.newFolder('proto'));
 
     var docFolder = folder.newFolder('doc');
     _buildTableMarkDownDoc(docFolder);
@@ -105,7 +103,7 @@ class GameProgram extends WorldEx implements Program {
   }
 
   Field _toFindRequestFieldList(Model item) {
-    var f = field;
+    var f = world.field;
     var items = f('items').clone()..type = item.asDataType().asList();
     return f.total + f.pageIndex + f.pageSize + items;
   }
@@ -115,7 +113,7 @@ class GameProgram extends WorldEx implements Program {
   // ---------------------------------------------------------------------------
 
   void _buildTableFields() {
-    var f = field, dt = world.dbTable;
+    var f = world.field, dt = world.dbTable;
     for (var i in dt.all.eval()) {
       i.fields + f.id + f.createdAt + f.modifiedAt + f.version;
       for (var j in i.models.eval()) {
@@ -155,13 +153,17 @@ class GameProgram extends WorldEx implements Program {
   // ---------------------------------------------------------------------------
 
   void _buildStories() {
-    var f = world.field, m = world.model, a = world.storyActor, t = world.storyAction;
-    story(a.projectAdmin,
+    var f = world.field,
+        m = world.model,
+        a = world.storyActor,
+        t = world.storyAction,
+        s = world.story;
+    world.story(a.projectAdmin,
         t.manage >> (m.game + m.gameRelease + m.gameEnvironment))
-      ..request = field.id + field.name
-      ..response = field.id;
+      ..request = f.id + f.name
+      ..response = f.id;
 
-    story(a.projectAdmin, t.find >> m.game)
+    s(a.projectAdmin, t.find >> m.game)
       ..request = f.pageSize + f.pageIndex
       ..response = _toFindRequestFieldList(m.game);
 
@@ -178,38 +180,38 @@ class GameProgram extends WorldEx implements Program {
     assert(invitation.length == n);
     assert(suggestion.length == n);
 
-    var s1 = story.none;
+    var s1 = s.none;
     // Admin send/cancel invitation
     for (var p in zip([admin, invitation])) {
-      s1 += story(p[0], (t.send + t.cancel) >> p[1])
+      s1 += s(p[0], (t.send + t.cancel) >> p[1])
         ..request = f.invitedUserId.required()
         ..response = f.id;
     }
 
     // Non member see, accept, deny invitation
     for (var model in invitation) {
-      s1 += story(a.nonMember, (t.accept + t.deny + t.see) >> model)
+      s1 += s(a.nonMember, (t.accept + t.deny + t.see) >> model)
         ..request = f.invitedUserId.required()
         ..response = f.id;
     }
 
     // member see invitation
     for (var p in zip([member, invitation])) {
-      s1 += story(p[0], (t.see) >> 'other' >> p[1])
+      s1 += s(p[0], (t.see) >> 'other' >> p[1])
         ..request = f.invitedUserId.required()
         ..response = f.id;
     }
 
     // member make/cancel suggestion
     for (var p in zip([member, invitation])) {
-      s1 += story(p[0], (t.see) >> p[1])
+      s1 += s(p[0], (t.see) >> p[1])
         ..request = f.suggestedUserId.required() + f.fromUserId.required()
         ..response = f.id;
     }
 
     // admin see/accept/deny suggestion
     for (var p in zip([admin, suggestion])) {
-      s1 += story(p[0], (t.see + t.accept + t.deny) >> 'other' >> p[1])
+      s1 += s(p[0], (t.see + t.accept + t.deny) >> 'other' >> p[1])
         ..request = f.suggestedUserId.required()
         ..response = f.id;
     }
@@ -223,11 +225,10 @@ class GameProgram extends WorldEx implements Program {
   // Builds database relation.
   // -------------------------------------------------------------------------
   void _buildRelation() {
-    var m = world.model, t = world.erRelationType;
-    erRelation(m.project, t.hasMany, m.game + m.gameEnvironment + m.gameRelease);
+    var m = world.model, t = world.erRelationType, r = world.erRelation;
 
-    erRelation(
-        m.user, t.own, m.project + m.game + m.gameRelease + m.gameEnvironment);
+    r(m.project, t.hasMany, m.game + m.gameEnvironment + m.gameRelease);
+    r(m.user, t.own, m.project + m.game + m.gameRelease + m.gameEnvironment);
   }
 
   // -------------------------------------------------------------------------
@@ -238,26 +239,62 @@ class GameProgram extends WorldEx implements Program {
   }
 
   void _buildModelCode(ProjectFolder folder) {
-    var cfg = CodeConfig.forDart(), dt = world.dbTable;
-    for (var i in dt.all.eval()) {
-      final doc = CodeDoc(cfg);
+    final configs = [
+      CodeConfig.forDart(),
+      CodeConfig.forTypescript(),
+      CodeConfig.forCSharp(),
+      CodeConfig.forJava(),
+      CodeConfig.forKotlin(),
+      CodeConfig.forPython(),
+      CodeConfig.forGo(),
+    ];
 
-      final name = i.name.snake().toString() + '.dart';
-      folder.newFile(name.toString(), doc);
+    for (final cfg in configs) {
+      final dt = world.dbTable;
+      final fileExt = cfg.language.fileExt;
+      final codeFolder = folder.newFolder(fileExt);
 
-      doc.package = 'g3model';
+      for (var i in dt.all.eval()) {
+        final doc = CodeDoc(cfg);
 
-      var clz = doc.clazz(i.name);
-      for (var j in i.fields.eval()) {
-        clz.field(j.name, j.type.name);
+        final name = i.name.snake().toString() + '.' + fileExt;
+        codeFolder.newFile(name.toString(), doc);
+
+        doc.package = 'g3model';
+
+        var clz = doc.clazz(i.name);
+        for (var j in i.fields.eval()) {
+          clz.field(j.name, j.type.name);
+        }
       }
     }
   }
 
   void _buildProtoCode(ProjectFolder folder) {
-    var gRpcCfg = CodeConfig.forGRpc();
+    final msg = world.protoMessage,
+        m = world.protoRpcMethod,
+        rpc = world.protoRpc;
 
-    var oldWritePackage = gRpcCfg.writePackage;
+    final protoRpcMap = <Actor, ProtoRpc>{};
+
+    for (final i in world.story.all.eval()) {
+      // Gets or create a new rpc object.
+      final actorRpc = protoRpcMap[i.actor] ??= rpc(i.actor.name & 'rpc');
+
+      // Creates the request proto message.
+      final request = msg.ofFields(i.name & 'request', i.request);
+
+      // Creates the response proto message.
+      final response = msg.ofFields(i.name & 'response', i.response);
+
+      // Adds a new method to the rpc
+      actorRpc.methods +=
+          m(i.name - i.actor.name, request: request, response: response);
+    }
+
+    final gRpcCfg = CodeConfig.forProto3();
+    final oldWritePackage = gRpcCfg.writePackage;
+
     gRpcCfg.writePackage = (w, doc) {
       w.statement('syntax = \'proto3\'');
       oldWritePackage(w, doc);
@@ -267,72 +304,33 @@ class GameProgram extends WorldEx implements Program {
 
     // Makes a proto file for all grpc services
     rpcCodeDoc = CodeDoc(gRpcCfg)..package = 'g3playersdk';
+
     rpcCodeDoc.comment.write((w) {
       w + 'This is just a sample comment';
     });
     folder.newFile('grpc.proto', rpcCodeDoc);
 
-    var proto3Cfg = CodeConfig.forProto3();
-    protoMessageCodeDoc = CodeDoc(proto3Cfg)..package = 'g3playersdk';
+    protoMessageCodeDoc = CodeDoc(gRpcCfg)..package = 'g3playersdk';
     folder.newFile('message.proto', protoMessageCodeDoc);
 
-    final rpcMap = <Actor, CodeClazz>{};
-
-    for (var i in story.all.eval()) {
-      var reqName = i.name & 'request';
-      var resName = i.name & 'response';
-      var rpcName = i.actor.name & 'rpc';
-      var methodName = i.name - i.actor.name;
-
-      var rpcMethodRef = proto3Cfg.className % rpcName +
-          '.' +
-          proto3Cfg.functionName % methodName;
-
-      // -----------------------------------------------------------------------
-      // Adding message request
-      // -----------------------------------------------------------------------
-      var req = protoMessageCodeDoc.clazz(reqName,
-          comment: 'Request message for [$rpcMethodRef].');
-
-      var idx = 10;
-      for (var j in i.request.eval()) {
-        req.field(j.name, j.type.name, index: idx++);
+    for (final i in msg.all.eval()) {
+      final clz = protoMessageCodeDoc.clazz(i.name);
+      for (var j in i.fields.eval()) {
+        clz.field(j.name, j.type.name, index: j.position);
       }
-
-      // -----------------------------------------------------------------------
-      // Adding message response
-      // -----------------------------------------------------------------------
-      idx = 10;
-      var res = protoMessageCodeDoc.clazz(resName,
-          comment: 'Response message for [$rpcMethodRef]. method.');
-
-      for (var j in i.response.eval()) {
-        res.field(j.name, j.type.name, index: idx++);
-      }
-
-      // -----------------------------------------------------------------------
-      // Adding rpc method
-      // -----------------------------------------------------------------------
-      var rpc = rpcMap[i.actor] ??= rpcMap[i.actor] = rpcCodeDoc.clazz(rpcName,
-          abstract: true, comment: 'Rpc for ${i.actor.name} actor');
-      rpc.func(methodName, abstract: true)
-        ..inArg('req', req.name)
-        ..outArg(res.name, name: 'res');
     }
   }
 
   void _buildStoryMarkdownDoc(ProjectFolder out) {
+    var s = world.story, a = world.storyActor;
     var doc = MarkdownDoc()..title = 'Features';
     out.newFile('stories.md', doc);
 
-    var stories = List.of(story.all.eval());
-    var actors = List.of(storyActor.all.eval());
-
-    for (var a in actors) {
-      var relatedStories = stories.where((e) => e.actor == a);
-      if (relatedStories.isNotEmpty) {
-        var p = doc.bottom.after(a.name.sentence().toString());
-        for (var s in relatedStories) {
+    for (var i in a.all.eval()) {
+      var relatedStories = s.all.filterByActor(i);
+      if (relatedStories.isNonEmptySet) {
+        var p = doc.bottom.after(i.name.sentence().toString());
+        for (final s in relatedStories.eval()) {
           _writeStoryToMarkdownDoc(p, s);
         }
       }

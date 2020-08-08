@@ -3,6 +3,7 @@ library g3gen;
 import 'dart:collection';
 import 'dart:io';
 
+import 'package:g3m/g3m.dart';
 import 'package:g3m/src/gen/code/language.dart';
 import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;
@@ -43,3 +44,5 @@ part 'src/gen/text/mustache_doc.dart';
 part 'src/gen/text/textdoc.dart';
 
 part 'src/gen/writer.dart';
+part 'src/gen/proto/proto-code-writer.dart';
+part 'src/gen/proto/proto-code-doc.dart';

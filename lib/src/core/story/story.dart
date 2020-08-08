@@ -52,6 +52,18 @@ class Story extends Expr<Story> {
   set table(DbTable value) {
     eval().forEach((e) => e._table = value);
   }
+
+  Story filterByActor(Actor actor) {
+    return filter((t) => actor.contains(t.actor));
+  }
+
+  Story filterByAction(Action actor) {
+    return filter((t) => action.contains(t.action));
+  }
+
+  Story filterByTable(DbTable table) {
+    return filter((t) => table.contains(t.table));
+  }
 }
 
 class StoryScope extends Scope<Story> {
@@ -67,7 +79,6 @@ class StoryScope extends Scope<Story> {
 
   Story call(Actor actor, Action action,
       {Field request, Field response, DbTable table}) {
-
     assert(actor != null && actor.eval().isNotEmpty, 'actor argument required');
     assert(
         action != null && action.eval().isNotEmpty, 'action argument required');

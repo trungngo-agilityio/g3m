@@ -155,7 +155,7 @@ class CodeConfig extends WriterConfig {
   // Setup for dart code generation.
   // ---------------------------------------------------------------------------
 
-  CodeConfig.forDart() : this();
+  CodeConfig.forDart() : this(language: CodeLanguages.dart);
 
   CodeConfig.forKotlin()
       : this(

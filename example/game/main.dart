@@ -1,9 +1,9 @@
 import 'package:g3m/g3gen.dart';
 
-import 'src/world.dart';
+import 'src/program.dart';
 
 void main() async {
-  var w = GameProgram();
-  await Project.open(w, '.out/game')
+  final program = GameProgram();
+  await Project.open(program, '.out/game')
     ..deploy();
 }

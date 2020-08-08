@@ -22,6 +22,16 @@ part 'src/ex/model-ex.dart';
 
 part 'src/ex/pattern-ex.dart';
 
+part 'src/ex/proto/proto-lib-ex.dart';
+
+part 'src/ex/proto/proto-message-ex.dart';
+
+part 'src/ex/proto/proto-message-field-ex.dart';
+
+part 'src/ex/proto/proto-rpc-ex.dart';
+
+part 'src/ex/proto/proto-rpc-method-ex.dart';
+
 part 'src/ex/restapi/http-status-ex.dart';
 
 part 'src/ex/story/action-ex.dart';

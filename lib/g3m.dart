@@ -1,5 +1,6 @@
 library g3m.core;
 
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:recase/recase.dart';
@@ -31,6 +32,16 @@ part 'src/core/model.dart';
 part 'src/core/name.dart';
 
 part 'src/core/pattern.dart';
+
+part 'src/core/proto/proto-lib.dart';
+
+part 'src/core/proto/proto-message-field.dart';
+
+part 'src/core/proto/proto-message.dart';
+
+part 'src/core/proto/proto-rpc-method.dart';
+
+part 'src/core/proto/proto-rpc.dart';
 
 part 'src/core/restapi/http-status.dart';
 
