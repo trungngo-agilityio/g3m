@@ -1,38 +1,37 @@
 part of g3.armory;
 
-class CodeIndentConfig implements Node {
-  final int tabSize;
-  final bool useTab;
-  final Node content;
-
-  CodeIndentConfig({
-    this.tabSize = 2,
-    this.useTab = false,
-    this.content,
-  });
-
-  @override
-  Node build(BuildContext context) {
-    return content;
-  }
-}
-
 class CodeFile implements Node {
+  /// The file name without extension.
   final String name;
+
+  /// The file extension.
   final String extension;
+
+  /// The syntax name. E.g., csharp, java, etc.
   final String syntax;
+
+  /// The header file comment.
+  final Node comment;
+
+  /// The file content.
   final Node content;
 
   CodeFile({
     @required this.name,
-    this.extension,
+    @required this.extension,
     this.syntax,
+    this.comment,
     this.content,
   });
 
   @override
   Node build(BuildContext context) {
-    return File('${name}.${extension}', content);
+    return File(
+        '${name}.${extension}',
+        Container([
+          CodeComment(comment),
+          content,
+        ]));
   }
 }
 
@@ -43,7 +42,7 @@ class CodeBlock implements Node, Renderer, PostRenderer {
 
   @override
   Node build(BuildContext context) {
-    return content;
+    return Indent(content);
   }
 
   @override
@@ -57,6 +56,9 @@ class CodeBlock implements Node, Renderer, PostRenderer {
   }
 }
 
+/// Defines different access level for a piece of code. For example,
+/// a class method can be either public, private, or protected.
+///
 enum CodeAccess { public, private, protected }
 
 class CodeDataType implements Node {
@@ -87,34 +89,35 @@ class CodeField implements Node {
   }
 }
 
-enum CodeCommentStyle { javaDoc, doubleSplash, tripleSplash, hash }
+class CodeCommentConfig extends SingleChildNode {
+  final StringFunc transform;
+  final Node child;
+
+  CodeCommentConfig(this.transform, this.child) : super(child);
+
+  factory CodeCommentConfig.doubleSplash(Node child) =>
+      CodeCommentConfig(code.commentDoubleSplash, child);
+
+  factory CodeCommentConfig.tripleSplash(Node child) =>
+      CodeCommentConfig(code.commentTripleSplash, child);
+
+  factory CodeCommentConfig.javaDoc(Node child) =>
+      CodeCommentConfig(code.commentJavaDoc, child);
+
+  factory CodeCommentConfig.hash(Node child) =>
+      CodeCommentConfig(code.commentHash, child);
+
+  static CodeCommentConfig of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<CodeCommentConfig>();
+  }
+}
 
 class CodeComment implements Node {
-  final CodeCommentStyle style;
   final Node content;
-  StringFunc _transform;
 
-  CodeComment({this.style, this.content}) {
-    switch (style) {
-      case CodeCommentStyle.javaDoc:
-        _transform = code.commentJavaDoc;
-        break;
-      case CodeCommentStyle.doubleSplash:
-        _transform = code.commentDoubleSplash;
-        break;
-      case CodeCommentStyle.tripleSplash:
-        _transform = code.commentTripleSplash;
-        break;
-      case CodeCommentStyle.hash:
-        _transform = code.commentHash;
-        break;
-      default:
-        assert(false, 'BUG');
-    }
-  }
+  CodeComment(this.content);
 
   factory CodeComment.of({
-    CodeCommentStyle style,
     String text,
     Node content,
   }) {
@@ -122,13 +125,15 @@ class CodeComment implements Node {
         'either content or text must be specified');
 
     content ??= Text(text);
-    return CodeComment(style: style, content: content);
+    return CodeComment(content);
   }
 
   @override
   Node build(BuildContext context) {
+    final config = CodeCommentConfig.of(context);
+
     return Container([
-      TextTransform(content, _transform),
+      TextTransform(content, config.transform),
       NewLine(),
     ]);
   }
@@ -169,7 +174,7 @@ class CodeClass implements Node {
   @override
   Node build(BuildContext context) {
     return Container([
-      CodeComment(content: comment),
+      CodeComment(comment),
       Container(annotations),
       Text('interface ${name} {'),
       NewLine(),

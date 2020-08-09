@@ -16,6 +16,24 @@ abstract class Node {
   Node build(BuildContext context);
 }
 
+class NoChildNode implements Node {
+  @override
+  Node build(BuildContext context) {
+    return null;
+  }
+}
+
+class SingleChildNode implements Node {
+  final Node _child;
+
+  SingleChildNode(this._child);
+
+  @override
+  Node build(BuildContext context) {
+    return _child;
+  }
+}
+
 abstract class Renderer {
   void render(RenderContext context);
 }

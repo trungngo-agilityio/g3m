@@ -4,30 +4,37 @@ import 'package:test/test.dart';
 import 'utils.dart';
 
 void main() {
-  test('comment - double splash', () {
-    final root = CodeComment.of(
-      style: CodeCommentStyle.doubleSplash,
-      text: 'hello',
-    );
+  group('CodeComment', () {
+    test('double splash', () {
+      final root = CodeCommentConfig.doubleSplash(CodeComment.of(
+        text: 'hello',
+      ));
 
-    runAndExpect(root, '// hello\n');
-  });
+      runAndExpect(root, '// hello\n');
+    });
 
-  test('comment - triple splash', () {
-    final root = CodeComment.of(
-      style: CodeCommentStyle.tripleSplash,
-      text: 'hello',
-    );
+    test('triple splash', () {
+      final root = CodeCommentConfig.tripleSplash(CodeComment.of(
+        text: 'hello',
+      ));
 
-    runAndExpect(root, '/// hello\n');
-  });
+      runAndExpect(root, '/// hello\n');
+    });
 
-  test('comment - java doc', () {
-    final root = CodeComment.of(
-      style: CodeCommentStyle.javaDoc,
-      text: 'hello',
-    );
+    test('hash', () {
+      final root = CodeCommentConfig.hash(CodeComment.of(
+        text: 'hello',
+      ));
 
-    runAndExpect(root, '/**\n * hello\n */\n');
+      runAndExpect(root, '# hello\n');
+    });
+
+    test('java doc', () {
+      final root = CodeCommentConfig.javaDoc(CodeComment.of(
+        text: 'hello',
+      ));
+
+      runAndExpect(root, '/**\n * hello\n */\n');
+    });
   });
 }

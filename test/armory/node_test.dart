@@ -18,7 +18,7 @@ void main() {
             DotKeepFile(),
             ReadmeFile(
               Container([
-                Uppercase(
+                UpperCase(
                   Section(
                       'README',
                       Container([
@@ -40,10 +40,5 @@ void main() {
         ),
       ),
     );
-  });
-
-  test('code', () {
-    var codeComment = CodeComment(content: Text('hello world \nThis is cool.'));
-    Program.execute(codeComment);
   });
 }
