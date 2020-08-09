@@ -306,21 +306,6 @@ class Trim implements Node {
   }
 }
 
-class PadRight implements Node {
-  final Node suffix;
-  final Node content;
-
-  PadRight(this.suffix, this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return Container([
-      content,
-      suffix,
-    ]);
-  }
-}
-
 class Pad implements Node {
   final Node prefix;
   final Node suffix;

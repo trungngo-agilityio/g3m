@@ -4,23 +4,17 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
   CodeGenericParamConfig(NodeBuildFunc<CodeGenericParam> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeGenericParamConfig.javaLike(Node child) =>
+  factory CodeGenericParamConfig.asIs(Node child) =>
       CodeGenericParamConfig((context, param) {
-        if (param.extend == null) {
-          return PascalCase(param.name);
-        } else {
-          return Container([
-            PascalCase(param.name),
-            Text(' extends '),
-            param.extend,
-          ]);
-        }
+        return param.name;
       }, child);
 }
 
 class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam> {
-  final Node name;
-  final CodeDataType extend;
+  final CodeDataType name;
 
-  CodeGenericParam(this.name, {this.extend});
+  CodeGenericParam(this.name);
+
+  factory CodeGenericParam.simple(String name) =>
+      CodeGenericParam(CodeDataType.simple(name));
 }

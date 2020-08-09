@@ -26,7 +26,21 @@ part 'src/armory/code/field.dart';
 
 part 'src/armory/code/file.dart';
 
+part 'src/armory/code/function-arg-list.dart';
+
+part 'src/armory/code/function-body.dart';
+
+part 'src/armory/code/function-arg.dart';
+
 part 'src/armory/code/function-name.dart';
+
+part 'src/armory/code/function-return-list.dart';
+
+part 'src/armory/code/function-return.dart';
+
+part 'src/armory/code/function-throw-list.dart';
+
+part 'src/armory/code/function-throw.dart';
 
 part 'src/armory/code/function.dart';
 

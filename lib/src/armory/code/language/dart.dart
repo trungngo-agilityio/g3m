@@ -48,16 +48,47 @@ class DartCode implements Node {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         CodeCommentConfig.tripleSplash(
-          CodeGenericParamConfig.javaLike(
-            CodeGenericParamListConfig.javaLike(
-              CodeDataTypeConfig.forDartLike(
-                CodeFieldNameConfig.camelCase(
-                  CodeFieldConfig.typeThenName(
-                    CodeStatementConfig.endWithCommaAndNewLine(
-                        CodeFunctionNameConfig.camelCase(
-                      CodeClassNameConfig.pascalCase(content),
-                    )),
+          CodeDataTypeConfig.forDartLike(
+            CodeStatementConfig.endWithCommaAndNewLine(
+              CodeClassNameConfig.pascalCase(
+                _buildGenericConfig(
+                  _buildFieldConfig(
+                    _buildFunctionConfig(content),
                   ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Node _buildGenericConfig(Node child) {
+    return CodeGenericParamConfig.asIs(
+      CodeGenericParamListConfig.commaSeparated(
+        child,
+      ),
+    );
+  }
+
+  Node _buildFieldConfig(Node child) {
+    return CodeFieldNameConfig.camelCase(
+      CodeFieldConfig.typeThenName(
+        child,
+      ),
+    );
+  }
+
+  Node _buildFunctionConfig(Node child) {
+    return CodeFunctionNameConfig.camelCase(
+      CodeFunctionArgListConfig.commaSeparated(
+        CodeFunctionArgConfig.typeSpaceName(
+          CodeFunctionReturnListConfig.commaSeparated(
+            CodeFunctionReturnConfig.asIs(
+              CodeFunctionThrowListConfig.commaSeparated(
+                CodeFunctionThrowConfig.asIs(
+                  CodeFunctionBodyConfig.asCodeBlock(child),
                 ),
               ),
             ),

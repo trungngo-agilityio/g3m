@@ -22,5 +22,5 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
   CodeField(this.type, this.name);
 
   factory CodeField.simple(String type, String name) =>
-      CodeField(CodeDataType.simple(Text(type)), CodeFieldName.simple(name));
+      CodeField(CodeDataType.simple(type), CodeFieldName.simple(name));
 }

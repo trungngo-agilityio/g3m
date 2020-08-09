@@ -7,19 +7,9 @@ void main() {
   group('generic param', () {
     test('generic param', () {
       var code = DartCode(
-        CodeGenericParam(Text('hello world')),
+        CodeGenericParam.simple('hello world'),
       );
       runAndExpect(code, 'HelloWorld');
-    });
-
-    test('generic param extends', () {
-      var code = DartCode(
-        CodeGenericParam(
-          Text('car'),
-          extend: CodeDataType(Text('vehicle')),
-        ),
-      );
-      runAndExpect(code, 'Car extends Vehicle');
     });
   });
 }
