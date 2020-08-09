@@ -17,5 +17,5 @@ class CodeFunctionArg extends CodeConfigProxyNode<CodeFunctionArg> {
   CodeFunctionArg(this.name, this.type);
 
   factory CodeFunctionArg.ofNameType(String name, String type) =>
-      CodeFunctionArg(CodeFunctionName.simple(name), CodeDataType.simple(type));
+      CodeFunctionArg(CodeFunctionName.of(name), CodeDataType.simple(type));
 }

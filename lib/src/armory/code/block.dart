@@ -42,6 +42,7 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
         Indent(codeBlock.content),
         NewLine(),
         close != null ? Text(close) : null,
+        NewLine(),
       ]);
     }, child);
   }

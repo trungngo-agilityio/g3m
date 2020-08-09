@@ -19,4 +19,6 @@ class CodeStatement extends CodeConfigProxyNode<CodeStatement> {
   final Node expression;
 
   CodeStatement(this.expression);
+
+  factory CodeStatement.of(String text) => CodeStatement(Text(text));
 }

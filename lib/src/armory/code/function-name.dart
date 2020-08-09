@@ -25,5 +25,5 @@ class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName> {
 
   CodeFunctionName(this.name);
 
-  factory CodeFunctionName.simple(String name) => CodeFunctionName(Text(name));
+  factory CodeFunctionName.of(String name) => CodeFunctionName(Text(name));
 }

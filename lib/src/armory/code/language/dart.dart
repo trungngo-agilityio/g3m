@@ -49,11 +49,13 @@ class DartCode implements Node {
       CodeBlockConfig.curlyBracketSameLine(
         CodeCommentConfig.tripleSplash(
           CodeDataTypeConfig.forDartLike(
-            CodeStatementConfig.endWithCommaAndNewLine(
-              CodeClassNameConfig.pascalCase(
-                _buildGenericConfig(
-                  _buildFieldConfig(
-                    _buildFunctionConfig(content),
+            CodeStatementListConfig.asIs(
+              CodeStatementConfig.endWithCommaAndNewLine(
+                CodeClassNameConfig.pascalCase(
+                  _buildGenericConfig(
+                    _buildFieldConfig(
+                      _buildFunctionConfig(content),
+                    ),
                   ),
                 ),
               ),
@@ -88,7 +90,9 @@ class DartCode implements Node {
             CodeFunctionReturnConfig.asIs(
               CodeFunctionThrowListConfig.commaSeparated(
                 CodeFunctionThrowConfig.asIs(
-                  CodeFunctionBodyConfig.asCodeBlock(child),
+                  CodeFunctionBodyConfig.asCodeBlock(
+                    CodeFunctionConfig.forJavaLike(child),
+                  ),
                 ),
               ),
             ),

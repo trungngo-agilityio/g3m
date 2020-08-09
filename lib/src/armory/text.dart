@@ -341,6 +341,10 @@ class Join implements Node {
 
   Join(this.separator, this.children);
 
+  factory Join.newLineSeparated(List<Node> children) => Join.of('\n', children);
+
+  factory Join.notSeparated(List<Node> children) => Join.of('', children);
+
   factory Join.commaSeparated(List<Node> children) => Join.of(', ', children);
 
   factory Join.spaceSeparated(List<Node> children) => Join.of(' ', children);
