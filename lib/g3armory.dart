@@ -9,24 +9,36 @@ import 'package:path/path.dart' as ioPath;
 part 'src/armory/code/annotation.dart';
 
 part 'src/armory/code/block.dart';
-part 'src/armory/code/generic.dart';
+
+part 'src/armory/code/class-name.dart';
 
 part 'src/armory/code/class.dart';
 
-part 'src/armory/code/config.dart';
 part 'src/armory/code/comment.dart';
 
+part 'src/armory/code/config.dart';
+
 part 'src/armory/code/data-type.dart';
+
+part 'src/armory/code/field-name.dart';
 
 part 'src/armory/code/field.dart';
 
 part 'src/armory/code/file.dart';
 
+part 'src/armory/code/function-name.dart';
+
 part 'src/armory/code/function.dart';
+
+part 'src/armory/code/generic-param-list.dart';
+
+part 'src/armory/code/generic-param.dart';
 
 part 'src/armory/code/language/dart.dart';
 
 part 'src/armory/code/language/markdown.dart';
+
+part 'src/armory/code/statement.dart';
 
 part 'src/armory/container.dart';
 

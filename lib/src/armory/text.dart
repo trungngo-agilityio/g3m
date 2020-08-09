@@ -12,6 +12,7 @@ class Text extends NoChildNode implements Renderer {
 
   @override
   void render(RenderContext context) {
+    if (text == null) return;
     // Writes out the text as is.
     context.out.write(text);
   }
@@ -275,5 +276,100 @@ class Italic implements Node {
   @override
   Node build(BuildContext context) {
     return content;
+  }
+}
+
+class Trim implements Node {
+  final bool left;
+  final bool right;
+  final Node content;
+
+  Trim(this.left, this.right, this.content);
+
+  factory Trim.left(Node content) => Trim(true, false, content);
+
+  factory Trim.right(Node content) => Trim(false, true, content);
+
+  factory Trim.leftRight(Node content) => Trim(true, true, content);
+
+  @override
+  Node build(BuildContext context) {
+    return TextTransform(content, (s) {
+      if (left == true && right == true) {
+        return s.trim();
+      } else if (left == true) {
+        return s.trimLeft();
+      } else {
+        return s.trimRight();
+      }
+    });
+  }
+}
+
+class PadRight implements Node {
+  final Node suffix;
+  final Node content;
+
+  PadRight(this.suffix, this.content);
+
+  @override
+  Node build(BuildContext context) {
+    return Container([
+      content,
+      suffix,
+    ]);
+  }
+}
+
+class Pad implements Node {
+  final Node prefix;
+  final Node suffix;
+  final Node content;
+
+  Pad(this.prefix, this.suffix, this.content);
+
+  factory Pad.left(String prefix, Node content) =>
+      Pad.of(prefix, null, content);
+
+  factory Pad.right(String suffix, Node content) =>
+      Pad.of(null, suffix, content);
+
+  factory Pad.leftRight(String text, Node content) =>
+      Pad.of(text, text, content);
+
+  factory Pad.of(String prefix, String suffix, Node content) =>
+      Pad(Text(prefix), Text(suffix), content);
+
+  @override
+  Node build(BuildContext context) {
+    return Container([
+      prefix,
+      content,
+      suffix,
+    ]);
+  }
+}
+
+class Join implements Node {
+  final Node separator;
+  final List<Node> children;
+
+  Join(this.separator, this.children);
+
+  factory Join.commaSeparated(List<Node> children) => Join.of(', ', children);
+
+  factory Join.spaceSeparated(List<Node> children) => Join.of(' ', children);
+
+  factory Join.of(String separator, List<Node> children) =>
+      Join(Text(separator), children);
+
+  @override
+  Node build(BuildContext context) {
+    final res = <Node>[children[0]];
+    for (var i = 1; i < children.length; i++) {
+      res.add(separator);
+      res.add(children[i]);
+    }
+    return Container(res);
   }
 }

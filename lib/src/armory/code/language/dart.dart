@@ -50,8 +50,15 @@ class DartCode implements Node {
         CodeCommentConfig.tripleSplash(
           CodeGenericParamConfig.javaLike(
             CodeGenericParamListConfig.javaLike(
-              CodeDataTypeConfig.dartLike(
-                content,
+              CodeDataTypeConfig.forDartLike(
+                CodeFieldNameConfig.camelCase(
+                  CodeFieldConfig.typeThenName(
+                    CodeStatementConfig.endWithCommaAndNewLine(
+                        CodeFunctionNameConfig.camelCase(
+                      CodeClassNameConfig.pascalCase(content),
+                    )),
+                  ),
+                ),
               ),
             ),
           ),

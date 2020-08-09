@@ -138,4 +138,63 @@ void main() {
       });
     });
   });
+
+  group('Trim', () {
+    test('left', () {
+      var text = Trim.left(Text(' A B C '));
+      runAndExpect(text, 'A B C ');
+    });
+
+    test('right', () {
+      var text = Trim.right(Text(' A B C '));
+      runAndExpect(text, ' A B C');
+    });
+
+    test('left & right', () {
+      var text = Trim.leftRight(Text(' A B C '));
+      runAndExpect(text, 'A B C');
+    });
+  });
+
+  group('Pad', () {
+    test('left', () {
+      var text = Pad.left('*', Text('A'));
+      runAndExpect(text, '*A');
+    });
+
+    test('right', () {
+      var text = Pad.right('*', Text('A'));
+      runAndExpect(text, 'A*');
+    });
+
+    test('left & right', () {
+      var text = Pad.leftRight('*', Text('A'));
+      runAndExpect(text, '*A*');
+    });
+
+    test('of', () {
+      var text = Pad.of('^', '*', Text('A'));
+      runAndExpect(text, '^A*');
+    });
+  });
+
+  group('Join', () {
+    test('comma separated', () {
+      var text = Join.commaSeparated([
+        Text('A'),
+        Text('B'),
+        Text('C'),
+      ]);
+      runAndExpect(text, 'A, B, C');
+    });
+
+    test('space separated', () {
+      var text = Join.spaceSeparated([
+        Text('A'),
+        Text('B'),
+        Text('C'),
+      ]);
+      runAndExpect(text, 'A B C');
+    });
+  });
 }

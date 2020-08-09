@@ -1,17 +1,9 @@
 import 'package:g3m/g3armory.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
-  group('comment', () {
-    test('comment', () {
-      var code = DartCode(
-        CodeComment.text('hello world'),
-      );
-      runAndExpect(code, '/// hello world\n');
-    });
-  });
 
   group('data type', () {
     test('simple', () {
@@ -50,25 +42,6 @@ void main() {
         ),
       );
       runAndExpect(code, 'List<Vehicle<Car>>');
-    });
-  });
-
-  group('generic param', () {
-    test('generic param', () {
-      var code = DartCode(
-        CodeGenericParam(Text('hello world')),
-      );
-      runAndExpect(code, 'HelloWorld');
-    });
-
-    test('generic param extends', () {
-      var code = DartCode(
-        CodeGenericParam(
-          Text('car'),
-          extend: CodeDataType(Text('vehicle')),
-        ),
-      );
-      runAndExpect(code, 'Car extends Vehicle');
     });
   });
 }
