@@ -12,7 +12,7 @@ class MarkdownFile implements Node {
       name: name,
       extension: 'md',
       syntax: 'markdown',
-      content: content,
+      source: content,
     );
   }
 }

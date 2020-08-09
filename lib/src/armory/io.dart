@@ -7,7 +7,7 @@ class Directory implements Node, Renderer {
   Directory(this.path, this.child);
 
   static Directory of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<Directory>();
+    return context.dependOnAncestorNodeOfExactType<Directory>();
   }
 
   @override

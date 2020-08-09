@@ -9,7 +9,7 @@ class _Context implements BuildContext, RenderContext {
   _Context(this.parent, this.node);
 
   @override
-  T dependOnInheritedWidgetOfExactType<T extends Node>() {
+  T dependOnAncestorNodeOfExactType<T extends Node>() {
     final res = findAncestorNodeOfExactType<T>();
     assert(res != null, 'Cannot find ancestor of type ${T}');
     return res;

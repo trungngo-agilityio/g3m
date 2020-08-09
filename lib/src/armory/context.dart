@@ -1,9 +1,12 @@
 part of g3.armory;
 
+typedef NodeBuildFunc<T extends Node> = Node Function(
+    BuildContext context, T node);
+
 abstract class BuildContext {
   T findAncestorNodeOfExactType<T extends Node>();
 
-  T dependOnInheritedWidgetOfExactType<T extends Node>();
+  T dependOnAncestorNodeOfExactType<T extends Node>();
 }
 
 abstract class RenderContext {

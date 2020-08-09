@@ -8,6 +8,8 @@ class Text extends NoChildNode implements Renderer {
 
   Text(this.text);
 
+  factory Text.space([count]) => Text(' ' * (count ?? 1));
+
   @override
   void render(RenderContext context) {
     // Writes out the text as is.
@@ -235,7 +237,7 @@ class IndentationConfig implements Node {
   }
 
   static IndentationConfig of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<IndentationConfig>();
+    return context.dependOnAncestorNodeOfExactType<IndentationConfig>();
   }
 }
 
