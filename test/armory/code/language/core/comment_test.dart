@@ -64,7 +64,7 @@ void main() {
           type: 'string',
           comment: 'hello',
         ),
-        '/// hello\n'
+        '// hello\n'
         'String firstName;\n',
       );
     });

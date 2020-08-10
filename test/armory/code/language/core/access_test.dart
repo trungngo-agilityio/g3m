@@ -10,50 +10,50 @@ void main() {
   }
 
   test('private', () {
-    run(CodeAccess.private(), 'private ');
+    run(CodeAccess.private(), 'private');
   });
 
   test('public', () {
-    run(CodeAccess.public(), 'public ');
+    run(CodeAccess.public(), 'public');
   });
 
   test('internal', () {
-    run(CodeAccess.internal(), 'internal ');
+    run(CodeAccess.internal(), 'internal');
   });
 
   test('public', () {
-    run(CodeAccess.public(), 'public ');
+    run(CodeAccess.public(), 'public');
   });
 
   test('private abstract', () {
-    run(CodeAccess.privateAbstract(), 'private abstract ');
+    run(CodeAccess.privateAbstract(), 'private abstract');
   });
 
   test('protected abstract', () {
-    run(CodeAccess.protectedAbstract(), 'protected abstract ');
+    run(CodeAccess.protectedAbstract(), 'protected abstract');
   });
 
   test('internal abstract', () {
-    run(CodeAccess.internalAbstract(), 'internal abstract ');
+    run(CodeAccess.internalAbstract(), 'internal abstract');
   });
 
   test('public abstract', () {
-    run(CodeAccess.publicAbstract(), 'public abstract ');
+    run(CodeAccess.publicAbstract(), 'public abstract');
   });
 
   test('private static', () {
-    run(CodeAccess.privateStatic(), 'private static ');
+    run(CodeAccess.privateStatic(), 'private static');
   });
 
   test('protected static', () {
-    run(CodeAccess.protectedStatic(), 'protected static ');
+    run(CodeAccess.protectedStatic(), 'protected static');
   });
 
   test('internal static', () {
-    run(CodeAccess.internalStatic(), 'internal static ');
+    run(CodeAccess.internalStatic(), 'internal static');
   });
 
   test('public static', () {
-    run(CodeAccess.publicStatic(), 'public static ');
+    run(CodeAccess.publicStatic(), 'public static');
   });
 }

@@ -4,7 +4,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
   CodeClassConfig(NodeBuildFunc<CodeClass> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassConfig.of(
+  factory CodeClassConfig.forJavaLike(
     Node child, {
     String classKeyword = 'class',
     String extendsKeyword = 'extends',
@@ -38,14 +38,18 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
 
 class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// The class name.
-  final CodeClassName name;
+  final CodeName name;
 
+  /// Defines public, private, protected, etc.
   final CodeAccess access;
 
+  /// The list of generic param applied for the class.
   final CodeGenericParamList generic;
 
+  /// The list of data types that this class extends from.
   final CodeClassExtendList extend;
 
+  /// The list of data types that this class implements.
   final CodeClassImplementList implements;
 
   /// The list of fields defined in the class.
@@ -54,6 +58,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// THe list of functions defined in the class.
   final CodeFunctionList functions;
 
+  /// Class-level code comment.
   final CodeComment comment;
 
   CodeClass({
@@ -65,7 +70,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     this.fields,
     this.functions,
     this.comment,
-  });
+  }) : assert(name != null);
 
   factory CodeClass.of({
     String name,
@@ -78,7 +83,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     String comment,
   }) =>
       CodeClass(
-        name: CodeClassName.simple(name),
+        name: CodeName.of(name),
         generic: generic,
         access: access,
         extend: extend,

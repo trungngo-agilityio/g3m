@@ -18,8 +18,10 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
                 ])
               : null,
           func.name,
-          func.generic != null ? Pad.of('<', '>', func.generic) : null,
-          Pad.of('(', ')', func.args),
+          func.generic,
+          Text('('),
+          func.args,
+          Text(')'),
           func.throws != null
               ? Container([
                   throwKeyword != null
@@ -47,7 +49,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
 }
 
 class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
-  final CodeFunctionName name;
+  final CodeName name;
   final CodeComment comment;
   final CodeGenericParamList generic;
   final CodeFunctionArgList args;
@@ -75,7 +77,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     List<String> body,
   }) =>
       CodeFunction(
-        name: CodeFunctionName.of(name),
+        name: CodeName.of(name),
         comment: comment != null ? CodeComment.text(comment) : null,
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,

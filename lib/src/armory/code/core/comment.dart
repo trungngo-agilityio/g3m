@@ -21,7 +21,8 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
   factory CodeCommentConfig.hash(Node child) =>
       CodeCommentConfig.byStringFunc(code.commentHash, child);
 
-  factory CodeCommentConfig.forDartLike(Node child) => CodeCommentConfig.forCode(
+  factory CodeCommentConfig.forDartLike(Node child) =>
+      CodeCommentConfig.forCode(
         child,
         clazz: code.commentTripleSplash,
         field: code.commentTripleSplash,
@@ -29,7 +30,8 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         other: code.commentDoubleSplash,
       );
 
-  factory CodeCommentConfig.forJavaLike(Node child) => CodeCommentConfig.forCode(
+  factory CodeCommentConfig.forJavaLike(Node child) =>
+      CodeCommentConfig.forCode(
         child,
         clazz: code.commentJavaDoc,
         field: code.commentDoubleSplash,
@@ -53,9 +55,13 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         var func;
         if (container != null) {
           // Determines the comment style for the given container.
-          if (container is CodeClass) func = clazz;
-          if (container is CodeField) func = field;
-          if (container is CodeFunction) func = function;
+          if (container is CodeClass) {
+            func = clazz;
+          } else if (container is CodeField) {
+            func = field;
+          } else if (container is CodeFunction) {
+            func = function;
+          }
         }
 
         func ??= other;

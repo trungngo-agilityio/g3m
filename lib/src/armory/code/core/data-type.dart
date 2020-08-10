@@ -22,10 +22,10 @@ class CodeDataTypeConfig extends CodeConfigNode<CodeDataType> {
 
   factory CodeDataTypeConfig._internal(Node child, bool isDart) =>
       CodeDataTypeConfig((context, codeDataType) {
-        final params = codeDataType.params;
+        final params = codeDataType.generic;
         final array = codeDataType.array;
 
-        Node name = CodeClassName(codeDataType.name);
+        Node name = CodeName(codeDataType.name);
         if (array != true && (params == null || params.params.isEmpty)) {
           // If there is no complex settings, just return the
           // type name.
@@ -67,24 +67,24 @@ class CodeDataType extends CodeConfigProxyNode<CodeDataType> {
   final Node name;
 
   /// The list of generic params.
-  final CodeGenericParamList params;
+  final CodeGenericParamList generic;
 
   /// True indicates that this is an array type.
   final bool array;
 
-  CodeDataType(this.name, {this.params, this.array});
+  CodeDataType(this.name, {this.generic, this.array});
 
   factory CodeDataType.simple(String name) => CodeDataType(Text(name));
 
   factory CodeDataType.genericSingle(String name, String param) => CodeDataType(
         Text(name),
-        params: CodeGenericParamList.single(param),
+        generic: CodeGenericParamList.single(param),
       );
 
   factory CodeDataType.genericList(String name, List<String> params) =>
       CodeDataType(
         Text(name),
-        params: CodeGenericParamList.list(params),
+        generic: CodeGenericParamList.list(params),
       );
 
   factory CodeDataType.array(String name) => CodeDataType(
@@ -95,14 +95,14 @@ class CodeDataType extends CodeConfigProxyNode<CodeDataType> {
   factory CodeDataType.genericSingleArray(String name, String param) =>
       CodeDataType(
         Text(name),
-        params: CodeGenericParamList.single(param),
+        generic: CodeGenericParamList.single(param),
         array: true,
       );
 
   factory CodeDataType.genericListArray(String name, List<String> params) =>
       CodeDataType(
         Text(name),
-        params: CodeGenericParamList.list(params),
+        generic: CodeGenericParamList.list(params),
         array: true,
       );
 }

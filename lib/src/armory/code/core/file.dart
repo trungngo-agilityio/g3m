@@ -1,6 +1,5 @@
 part of g3.armory;
 
-
 class CodeFile implements Node {
   /// The file name without extension.
   final String name;

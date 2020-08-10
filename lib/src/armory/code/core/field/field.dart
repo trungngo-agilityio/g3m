@@ -26,7 +26,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
 }
 
 class CodeField extends CodeConfigProxyNode<CodeField> {
-  final CodeFieldName name;
+  final CodeName name;
   final CodeDataType type;
   final CodeComment comment;
 
@@ -37,7 +37,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
   });
 
   factory CodeField.of({String name, String type, String comment}) => CodeField(
-        name: CodeFieldName.simple(name),
+        name: CodeName.of(name),
         type: CodeDataType.simple(type),
         comment: comment != null ? CodeComment.text(comment) : null,
       );

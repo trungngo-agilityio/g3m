@@ -16,7 +16,7 @@ class CodeClassExtendListConfig extends CodeConfigNode<CodeClassExtendList> {
         }
 
         return Container([
-          Text(extendsKeyword),
+          extendsKeyword != null ? Text(extendsKeyword) : null,
           Text.space(),
           Join.commaSeparated(types),
         ]);

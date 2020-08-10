@@ -76,6 +76,8 @@ void main() {
           ]),
         ),
         'class Person {\n'
+        '  \n'
+        '  \n'
         '  String firstName;\n'
         '  \n'
         '}\n',
@@ -92,6 +94,8 @@ void main() {
           ]),
         ),
         'class Person {\n'
+        '  \n'
+        '  \n'
         '  String firstName;\n'
         '  \n'
         '  String lastName;\n'
@@ -112,6 +116,8 @@ void main() {
           );
         },
         'class Person {\n'
+        '  \n'
+        '  \n'
         '  /// test hello world 1\n'
         '  String helloWorld1(String name, Person other);\n'
         '  \n'
@@ -130,13 +136,13 @@ void main() {
           ]);
 
           final extend = CodeClassExtendList(
-              [CodeClassExtend(CodeDataType(Text('car'), params: generic))]);
+              [CodeClassExtend(CodeDataType(Text('car'), generic: generic))]);
 
           final implements = CodeClassImplementList([
             makeImplement('four wheel'),
             CodeClassImplement(CodeDataType(
               Text('vehicle'),
-              params: generic,
+              generic: generic,
             )),
           ]);
 
@@ -160,7 +166,14 @@ void main() {
             functions: functions,
           );
         },
-        'class Person {\n'
+        'public abstract class Person<T> extends Car<T> implements FourWheel, Vehicle<T> {\n'
+        '  \n'
+        '  \n'
+        '  String firstName;\n'
+        '  \n'
+        '  String lastName;\n'
+        '  \n'
+        '  \n'
         '  /// test hello world 1\n'
         '  String helloWorld1(String name, Person other);\n'
         '  \n'
