@@ -1,43 +1,43 @@
 import 'package:g3m/g3armory.dart';
 import 'package:test/test.dart';
 
-import '../../../utils.dart';
+import '../../utils.dart';
 
 void main() {
-  group('function return', () {
+  group('function throw', () {
     test('simple', () {
       var code = DartCode(
-        CodeFunctionReturn.simple('my car'),
+        CodeFunctionThrow.simple('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
   });
 
-  group('function return list', () {
+  group('function throw list', () {
     test('single', () {
       var code = DartCode(
-        CodeFunctionReturnList.single('my car'),
+        CodeFunctionThrowList.single('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('list - empty', () {
       var code = DartCode(
-        CodeFunctionReturnList.list([]),
+        CodeFunctionThrowList.list([]),
       );
       runAndExpect(code, '');
     });
 
     test('list - one', () {
       var code = DartCode(
-        CodeFunctionReturnList.list(['my car']),
+        CodeFunctionThrowList.list(['my car']),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('list - more than one', () {
       var code = DartCode(
-        CodeFunctionReturnList.list(['my car', 'my vehicle']),
+        CodeFunctionThrowList.list(['my car', 'my vehicle']),
       );
       runAndExpect(code, 'MyCar, MyVehicle');
     });

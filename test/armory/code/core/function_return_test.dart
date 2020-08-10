@@ -1,45 +1,45 @@
 import 'package:g3m/g3armory.dart';
 import 'package:test/test.dart';
 
-import '../../../utils.dart';
+import '../../utils.dart';
 
 void main() {
-  group('param', () {
+  group('function return', () {
     test('simple', () {
       var code = DartCode(
-        CodeGenericParam.simple('my car'),
+        CodeFunctionReturn.simple('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
   });
 
-  group('param list', () {
+  group('function return list', () {
     test('single', () {
       var code = DartCode(
-        CodeGenericParamList.single('my car'),
+        CodeFunctionReturnList.single('my car'),
       );
-      runAndExpect(code, '<MyCar>');
+      runAndExpect(code, 'MyCar');
     });
 
     test('list - empty', () {
       var code = DartCode(
-        CodeGenericParamList.list([]),
+        CodeFunctionReturnList.list([]),
       );
       runAndExpect(code, '');
     });
 
     test('list - one', () {
       var code = DartCode(
-        CodeGenericParamList.list(['my car']),
+        CodeFunctionReturnList.list(['my car']),
       );
-      runAndExpect(code, '<MyCar>');
+      runAndExpect(code, 'MyCar');
     });
 
     test('list - more than one', () {
       var code = DartCode(
-        CodeGenericParamList.list(['my car', 'my vehicle']),
+        CodeFunctionReturnList.list(['my car', 'my vehicle']),
       );
-      runAndExpect(code, '<MyCar, MyVehicle>');
+      runAndExpect(code, 'MyCar, MyVehicle');
     });
   });
 }

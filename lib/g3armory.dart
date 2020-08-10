@@ -20,6 +20,8 @@ part 'src/armory/code/core/class/class-implement-list.dart';
 
 part 'src/armory/code/core/class/class-implement.dart';
 
+part 'src/armory/code/core/class/class-list.dart';
+
 part 'src/armory/code/core/class/class.dart';
 
 part 'src/armory/code/core/comment.dart';

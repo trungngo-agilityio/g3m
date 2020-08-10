@@ -1,7 +1,7 @@
 part of g3.armory;
 
 /// Defines a dart code fine.
-/// This help to enforce the dart syntax and [DatCode] will
+/// This help to enforce the dart syntax and [DartCode] will
 /// be automatically added in the node tree.
 ///
 class DartCodeFile implements Node {
@@ -12,21 +12,36 @@ class DartCodeFile implements Node {
   final String name;
 
   /// The header file comment.
-  final Node comment;
+  final CodeComment comment;
+
+  final CodeFunctionList functions;
+
+  final CodeClassList classes;
 
   /// The file content.
   final Node source;
 
-  DartCodeFile(this.name, this.comment, this.source);
+  DartCodeFile(
+    this.name, {
+    this.comment,
+    this.functions,
+    this.classes,
+    this.source,
+  });
 
   @override
   Node build(BuildContext context) {
-    return CodeFile(
-      name: name,
-      extension: extension,
-      syntax: syntax,
-      comment: comment,
-      source: DartCode(source),
+    return DartCode(
+      CodeFile(
+        name: name,
+        extension: extension,
+        syntax: syntax,
+        comment: comment,
+        source: Container([
+          classes,
+          functions,
+        ]),
+      ),
     );
   }
 }
@@ -39,9 +54,9 @@ class DartCodeFile implements Node {
 /// - Block: Curly bracket start at the same line.
 ///
 class DartCode implements Node {
-  final Node content;
+  final Node child;
 
-  DartCode(this.content);
+  DartCode(this.child);
 
   @override
   Node build(BuildContext context) {
@@ -57,7 +72,7 @@ class DartCode implements Node {
                       _buildFieldConfig(
                         _buildFunctionConfig(
                           _buildClassConfig(
-                            content,
+                            child,
                           ),
                         ),
                       ),
