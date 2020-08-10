@@ -24,11 +24,13 @@ class DartCodeFile implements Node {
     CodeComment comment,
     CodeFunctionList functions,
     CodeClassList classes,
+    Node body,
   }) {
     var source = Container([
       comment,
       functions,
       classes,
+      body,
     ]);
 
     return DartCodeFile(name, source: source);

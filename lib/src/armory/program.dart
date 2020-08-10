@@ -55,17 +55,17 @@ class _Context implements BuildContext, RenderContext {
     }
   }
 
-  void render() {
+  void render() async {
     if (node is Renderer) {
-      (node as Renderer).render(this);
+      await (node as Renderer).render(this);
     }
 
     for (final i in _children) {
-      i.render();
+      await i.render();
     }
 
     if (node is PostRenderer) {
-      (node as PostRenderer).postRender(this);
+      await (node as PostRenderer).postRender(this);
     }
   }
 
@@ -103,16 +103,16 @@ class Program {
 
   Program._(this.root);
 
-  void _execute() {
+  void _execute() async {
     final tempDir = io.Directory.systemTemp.createTempSync('g3').path;
 
     final context = _Context(null, Directory(tempDir, root));
     context.build();
-    context.render();
+    await context.render();
   }
 
-  static void execute(Node root) {
+  static void execute(Node root) async {
     final program = Program._(root);
-    program._execute();
+    await program._execute();
   }
 }
