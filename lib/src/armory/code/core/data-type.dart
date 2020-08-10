@@ -1,6 +1,5 @@
 part of g3.armory;
 
-
 /// Provides configuration for how [CodeDataType] node will render.
 ///
 /// Here are some useful predefined factory methods:
@@ -37,7 +36,7 @@ class CodeDataTypeConfig extends CodeConfigNode<CodeDataType> {
           // Append generic params after the type.
           name = Container([
             name,
-            Pad.of('<', '>', params),
+            params,
           ]);
         }
 

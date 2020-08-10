@@ -6,19 +6,23 @@ class CodeFieldListConfig extends CodeConfigNode<CodeFieldList> {
 
   factory CodeFieldListConfig.newLineSeparated(Node child) =>
       CodeFieldListConfig((context, param) {
-        final children = param.args;
+        final children = param.fields;
         if (children == null || children.isEmpty) {
           return null;
         }
 
-        return Join.newLineSeparated(children);
+        return Container([
+          NewLine(),
+          NewLine(),
+          Join.newLineSeparated(children),
+        ]);
       }, child);
 }
 
 class CodeFieldList extends CodeConfigProxyNode<CodeFieldList> {
-  final List<CodeField> args;
+  final List<CodeField> fields;
 
-  CodeFieldList(this.args);
+  CodeFieldList(this.fields);
 
   factory CodeFieldList.ofNameType(String name, String type) =>
       CodeFieldList([CodeField.of(name: name, type: type)]);

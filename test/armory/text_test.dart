@@ -167,14 +167,87 @@ void main() {
       runAndExpect(text, 'A*');
     });
 
-    test('left & right', () {
-      var text = Pad.leftRight('*', Text('A'));
-      runAndExpect(text, '*A*');
-    });
-
     test('of', () {
       var text = Pad.of('^', '*', Text('A'));
       runAndExpect(text, '^A*');
+    });
+
+    test('curly brackets', () {
+      var text = Pad.curlyBrackets(Text('A'));
+      runAndExpect(text, '{A}');
+    });
+
+    test('square brackets', () {
+      var text = Pad.squareBrackets(Text('A'));
+      runAndExpect(text, '[A]');
+    });
+
+    test('parentheses brackets', () {
+      var text = Pad.parentheses(Text('A'));
+      runAndExpect(text, '(A)');
+    });
+
+    test('angle brackets', () {
+      var text = Pad.angleBrackets(Text('A'));
+      runAndExpect(text, '<A>');
+    });
+
+    test('single quotes', () {
+      var text = Pad.singleQuotes(Text('A'));
+      runAndExpect(text, '\'A\'');
+    });
+
+    test('double quotes', () {
+      var text = Pad.doubleQuotes(Text('A'));
+      runAndExpect(text, '"A"');
+    });
+    group('always', () {});
+
+    group('only if missing', () {
+      test('left', () {
+        var text = Pad.left('*', Text('*A'), onlyIfMissing: true);
+        runAndExpect(text, '*A');
+      });
+
+      test('right', () {
+        var text = Pad.right('*', Text('A*'), onlyIfMissing: true);
+        runAndExpect(text, 'A*');
+      });
+
+      test('of', () {
+        var text = Pad.of('^', '*', Text('^A*'), onlyIfMissing: true);
+        runAndExpect(text, '^A*');
+      });
+
+      test('curly brackets', () {
+        var text = Pad.curlyBrackets(Text('{A}'), onlyIfMissing: true);
+        runAndExpect(text, '{A}');
+      });
+
+      test('square brackets', () {
+        var text = Pad.squareBrackets(Text('[A]'), onlyIfMissing: true);
+        runAndExpect(text, '[A]');
+      });
+
+      test('parentheses brackets', () {
+        var text = Pad.parentheses(Text('(A)'), onlyIfMissing: true);
+        runAndExpect(text, '(A)');
+      });
+
+      test('angle brackets', () {
+        var text = Pad.angleBrackets(Text('<A>'), onlyIfMissing: true);
+        runAndExpect(text, '<A>');
+      });
+
+      test('single quotes', () {
+        var text = Pad.singleQuotes(Text('\'A\''), onlyIfMissing: true);
+        runAndExpect(text, '\'A\'');
+      });
+
+      test('double quotes', () {
+        var text = Pad.doubleQuotes(Text('"A"'), onlyIfMissing: true);
+        runAndExpect(text, '"A"');
+      });
     });
   });
 

@@ -13,16 +13,20 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
       CodeClassConfig((context, clazz) {
         return Container([
           clazz.comment,
-          clazz.access,
-          Text(classKeyword),
-          Text.space(),
-          clazz.name,
-          clazz.implements == null
-              ? null
-              : Container([
-                  Text(implementsKeyword),
-                  clazz.implements,
-                ]),
+          Trim.leftRight(
+            Container([
+              clazz.access,
+              Text.space(),
+              Text(classKeyword),
+              Text.space(),
+              clazz.name,
+              clazz.generic,
+              Text.space(),
+              clazz.extend,
+              Text.space(),
+              clazz.implements,
+            ]),
+          ),
           Text.space(),
           CodeBlock(Container([
             clazz.fields,
@@ -37,6 +41,8 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   final CodeClassName name;
 
   final CodeAccess access;
+
+  final CodeGenericParamList generic;
 
   final CodeClassExtendList extend;
 
@@ -53,6 +59,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   CodeClass({
     @required this.name,
     this.access,
+    this.generic,
     this.extend,
     this.implements,
     this.fields,
@@ -63,17 +70,21 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   factory CodeClass.of({
     String name,
     CodeAccess access,
-    String extend,
-    List<String> implement,
+    CodeGenericParamList generic,
+    CodeClassExtendList extend,
+    CodeClassImplementList implements,
     CodeFieldList fields,
     CodeFunctionList functions,
     String comment,
   }) =>
       CodeClass(
         name: CodeClassName.simple(name),
+        generic: generic,
         access: access,
+        extend: extend,
+        implements: implements,
         fields: fields,
         functions: functions,
-        comment: CodeComment.text(comment),
+        comment: comment != null ? CodeComment.text(comment) : null,
       );
 }

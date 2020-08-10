@@ -62,6 +62,8 @@ part 'src/armory/code/core/generic-param-list.dart';
 
 part 'src/armory/code/core/generic-param.dart';
 
+part 'src/armory/code/core/space.dart';
+
 part 'src/armory/code/core/statement-list.dart';
 
 part 'src/armory/code/core/statement.dart';

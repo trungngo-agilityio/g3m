@@ -84,7 +84,14 @@ void main() {
           body: ['// some sample comment', 'callAFunction()'],
         ),
       );
-      runAndExpect(code, 'hello();\n');
+      runAndExpect(
+        code,
+        'hello() {\n'
+        '  // some sample comment;\n'
+        '  callAFunction();\n'
+        '  \n'
+        '}\n',
+      );
     });
   });
 }

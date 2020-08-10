@@ -42,7 +42,7 @@ class CodeAccessConfig extends CodeConfigNode<CodeAccess> {
 
         if (keywords.isEmpty) return null;
 
-        return Text(keywords.join(' ') + ' ');
+        return Text(keywords.join(' '));
       }, child);
 }
 

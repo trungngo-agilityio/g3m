@@ -5,14 +5,21 @@ class CodeClassExtendListConfig extends CodeConfigNode<CodeClassExtendList> {
       NodeBuildFunc<CodeClassExtendList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassExtendListConfig.commaSeparated(Node child) =>
+  factory CodeClassExtendListConfig.forJavaLike(
+    Node child, {
+    String extendsKeyword = 'extends',
+  }) =>
       CodeClassExtendListConfig((context, param) {
         final types = param.types;
         if (types == null || types.isEmpty) {
           return null;
         }
 
-        return Join.commaSeparated(types);
+        return Container([
+          Text(extendsKeyword),
+          Text.space(),
+          Join.commaSeparated(types),
+        ]);
       }, child);
 }
 

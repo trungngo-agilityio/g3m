@@ -6,14 +6,21 @@ class CodeClassImplementListConfig
       NodeBuildFunc<CodeClassImplementList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassImplementListConfig.commaSeparated(Node child) =>
+  factory CodeClassImplementListConfig.forJavaLike(
+    Node child, {
+    String implementsKeyword = 'implements',
+  }) =>
       CodeClassImplementListConfig((context, param) {
         final types = param.types;
         if (types == null || types.isEmpty) {
           return null;
         }
 
-        return Join.commaSeparated(types);
+        return Container([
+          Text(implementsKeyword),
+          Text.space(),
+          Join.commaSeparated(types),
+        ]);
       }, child);
 }
 

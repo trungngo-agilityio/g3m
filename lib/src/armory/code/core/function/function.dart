@@ -76,7 +76,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   }) =>
       CodeFunction(
         name: CodeFunctionName.of(name),
-        comment: CodeComment.text(comment),
+        comment: comment != null ? CodeComment.text(comment) : null,
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,

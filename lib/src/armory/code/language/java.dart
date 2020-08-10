@@ -51,11 +51,13 @@ class JavaCode implements Node {
           CodeDataTypeConfig.forJavaLike(
             CodeStatementListConfig.asIs(
               CodeStatementConfig.endWithCommaAndNewLine(
-                _buildGenericConfig(
-                  _buildFieldConfig(
-                    _buildFunctionConfig(
-                      _buildClassConfig(
-                        content,
+                _buildCodeAccess(
+                  _buildGenericConfig(
+                    _buildFieldConfig(
+                      _buildFunctionConfig(
+                        _buildClassConfig(
+                          content,
+                        ),
                       ),
                     ),
                   ),
@@ -68,9 +70,13 @@ class JavaCode implements Node {
     );
   }
 
+  Node _buildCodeAccess(Node child) {
+    return CodeAccessConfig.of(child);
+  }
+
   Node _buildGenericConfig(Node child) {
     return CodeGenericParamConfig.asIs(
-      CodeGenericParamListConfig.commaSeparated(
+      CodeGenericParamListConfig.forJavaLike(
         child,
       ),
     );
@@ -78,8 +84,10 @@ class JavaCode implements Node {
 
   Node _buildFieldConfig(Node child) {
     return CodeFieldNameConfig.camelCase(
-      CodeFieldConfig.typeThenName(
-        child,
+      CodeFieldListConfig.newLineSeparated(
+        CodeFieldConfig.typeThenName(
+          child,
+        ),
       ),
     );
   }
@@ -93,7 +101,9 @@ class JavaCode implements Node {
               CodeFunctionThrowListConfig.commaSeparated(
                 CodeFunctionThrowConfig.asIs(
                   CodeFunctionBodyConfig.asCodeBlock(
-                    CodeFunctionConfig.forJavaLike(child),
+                    CodeFunctionListConfig.newLineSeparated(
+                      CodeFunctionConfig.forJavaLike(child),
+                    ),
                   ),
                 ),
               ),
@@ -107,7 +117,15 @@ class JavaCode implements Node {
   Node _buildClassConfig(Node child) {
     return CodeClassNameConfig.pascalCase(
       CodeClassConfig.of(
-        child,
+        CodeClassExtendListConfig.forJavaLike(
+          CodeClassExtendConfig.asIs(
+            CodeClassImplementListConfig.forJavaLike(
+              CodeClassImplementConfig.asIs(
+                child,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

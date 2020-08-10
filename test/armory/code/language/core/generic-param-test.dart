@@ -18,7 +18,7 @@ void main() {
       var code = DartCode(
         CodeGenericParamList.single('my car'),
       );
-      runAndExpect(code, 'MyCar');
+      runAndExpect(code, '<MyCar>');
     });
 
     test('list - empty', () {
@@ -32,14 +32,14 @@ void main() {
       var code = DartCode(
         CodeGenericParamList.list(['my car']),
       );
-      runAndExpect(code, 'MyCar');
+      runAndExpect(code, '<MyCar>');
     });
 
     test('list - more than one', () {
       var code = DartCode(
         CodeGenericParamList.list(['my car', 'my vehicle']),
       );
-      runAndExpect(code, 'MyCar, MyVehicle');
+      runAndExpect(code, '<MyCar, MyVehicle>');
     });
   });
 }

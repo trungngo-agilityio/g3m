@@ -5,14 +5,17 @@ class CodeGenericParamListConfig extends CodeConfigNode<CodeGenericParamList> {
       NodeBuildFunc<CodeGenericParamList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeGenericParamListConfig.commaSeparated(Node child) =>
+  factory CodeGenericParamListConfig.forJavaLike(Node child) =>
       CodeGenericParamListConfig((context, param) {
         final params = param.params;
         if (params == null || params.isEmpty) {
           return null;
         }
 
-        return Join.commaSeparated(params);
+        return Pad.angleBrackets(
+          Join.commaSeparated(params),
+          onlyIfMissing: true,
+        );
       }, child);
 }
 
