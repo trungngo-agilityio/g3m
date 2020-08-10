@@ -10,9 +10,6 @@ class CodeFile implements Node {
   /// The syntax name. E.g., csharp, java, etc.
   final String syntax;
 
-  /// The header file comment.
-  final Node comment;
-
   /// The file content.
   final Node source;
 
@@ -20,17 +17,14 @@ class CodeFile implements Node {
     @required this.name,
     @required this.extension,
     this.syntax,
-    this.comment,
     this.source,
   });
 
   @override
   Node build(BuildContext context) {
     return File(
-        '${name}.${extension}',
-        Container([
-          CodeComment(comment),
-          source,
-        ]));
+      '${name}.${extension}',
+      CodeSyntax(syntax, source),
+    );
   }
 }

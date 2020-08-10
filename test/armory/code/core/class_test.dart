@@ -8,7 +8,7 @@ CodeField makeField(String name) => CodeField.of(
       type: 'string',
     );
 
-CodeFunction makeFunction(String name) => CodeFunction.of(
+CodeFunction makeFunction(String name) => CodeFunction.simple(
       name: name,
       returns: ['string'],
       args: {

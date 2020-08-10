@@ -28,10 +28,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
             ]),
           ),
           Text.space(),
-          CodeBlock(Container([
-            clazz.fields,
-            clazz.functions,
-          ])),
+          clazz.body,
         ]);
       }, child);
 }
@@ -52,14 +49,10 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// The list of data types that this class implements.
   final CodeClassImplementList implements;
 
-  /// The list of fields defined in the class.
-  final CodeFieldList fields;
-
-  /// THe list of functions defined in the class.
-  final CodeFunctionList functions;
-
   /// Class-level code comment.
   final CodeComment comment;
+
+  final CodeBlock body;
 
   CodeClass({
     @required this.name,
@@ -67,9 +60,8 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     this.generic,
     this.extend,
     this.implements,
-    this.fields,
-    this.functions,
     this.comment,
+    this.body,
   }) : assert(name != null);
 
   factory CodeClass.of({
@@ -80,6 +72,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     CodeClassImplementList implements,
     CodeFieldList fields,
     CodeFunctionList functions,
+    Node body,
     String comment,
   }) =>
       CodeClass(
@@ -88,8 +81,13 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
         access: access,
         extend: extend,
         implements: implements,
-        fields: fields,
-        functions: functions,
+        body: CodeBlock(
+          Container([
+            fields,
+            functions,
+            body,
+          ]),
+        ),
         comment: comment != null ? CodeComment.text(comment) : null,
       );
 }

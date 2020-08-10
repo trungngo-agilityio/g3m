@@ -11,23 +11,28 @@ class DartCodeFile implements Node {
   /// The file name without extension.
   final String name;
 
-  /// The header file comment.
-  final CodeComment comment;
-
-  final CodeFunctionList functions;
-
-  final CodeClassList classes;
-
   /// The file content.
   final Node source;
 
   DartCodeFile(
     this.name, {
-    this.comment,
-    this.functions,
-    this.classes,
     this.source,
   });
+
+  factory DartCodeFile.of(
+    String name, {
+    CodeComment comment,
+    CodeFunctionList functions,
+    CodeClassList classes,
+  }) {
+    var source = Container([
+      comment,
+      functions,
+      classes,
+    ]);
+
+    return DartCodeFile(name, source: source);
+  }
 
   @override
   Node build(BuildContext context) {
@@ -36,11 +41,7 @@ class DartCodeFile implements Node {
         name: name,
         extension: extension,
         syntax: syntax,
-        comment: comment,
-        source: Container([
-          classes,
-          functions,
-        ]),
+        source: source,
       ),
     );
   }

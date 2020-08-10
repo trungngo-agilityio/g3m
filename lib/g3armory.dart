@@ -4,6 +4,7 @@ import 'dart:io' as io;
 
 import 'package:g3m/g3gen.dart';
 import 'package:meta/meta.dart';
+import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;
 
 part 'src/armory/code/core/access.dart';
@@ -66,6 +67,8 @@ part 'src/armory/code/core/statement-list.dart';
 
 part 'src/armory/code/core/statement.dart';
 
+part 'src/armory/code/core/syntax.dart';
+
 part 'src/armory/code/language/dart.dart';
 
 part 'src/armory/code/language/java.dart';
@@ -79,6 +82,8 @@ part 'src/armory/context.dart';
 part 'src/armory/git.dart';
 
 part 'src/armory/io.dart';
+
+part 'src/armory/mustache.dart';
 
 part 'src/armory/node.dart';
 

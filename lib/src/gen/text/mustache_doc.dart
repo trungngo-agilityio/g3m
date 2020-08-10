@@ -9,8 +9,10 @@ class MustacheDoc implements WritableProjectItem {
 
   MustacheDoc(this.template, this.values);
 
-  factory MustacheDoc.of(String template, dynamic values) =>
-      MustacheDoc(Template(template), values);
+  factory MustacheDoc.of(String template, dynamic values) {
+    assert(template != null);
+    return MustacheDoc(Template(template), values);
+  }
 
   @override
   void write(StringSink out) {

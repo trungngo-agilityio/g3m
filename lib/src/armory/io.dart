@@ -2,12 +2,18 @@ part of g3.armory;
 
 class Directory implements Node, Renderer {
   final String path;
+
   final Node child;
 
   Directory(this.path, this.child);
 
   static Directory of(BuildContext context) {
     return context.dependOnAncestorNodeOfExactType<Directory>();
+  }
+
+  factory Directory.temp(String path, Node child) {
+    final tempDir = io.Directory.systemTemp.createTempSync(path).path;
+    return Directory(tempDir, child);
   }
 
   @override
@@ -29,20 +35,29 @@ class File implements Node, Renderer, PostRenderer {
 
   File(this.name, this.content);
 
+  String _path;
+  io.IOSink _out;
+
   @override
   Node build(BuildContext context) {
+    final dir = Directory.of(context);
+    _path = ioPath.join(dir.path, name);
     return content;
   }
 
   @override
   void render(RenderContext context) {
+    print('open file ${_path}');
     context.blockLevel = 0;
-    print('open file ${name}');
+    _out = io.File(_path).openWrite();
+    context.out = _out;
   }
 
   @override
-  void postRender(RenderContext context) {
-    print('close file ${name}');
+  void postRender(RenderContext context) async {
+    print('close file ${_path}');
+    await _out.flush();
+    await _out.close();
   }
 }
 

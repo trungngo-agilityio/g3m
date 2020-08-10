@@ -25,7 +25,6 @@ class JavaCodeFile implements Node {
       name: name,
       extension: extension,
       syntax: syntax,
-      comment: comment,
       source: JavaCode(source),
     );
   }

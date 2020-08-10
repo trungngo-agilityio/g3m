@@ -67,7 +67,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     this.body,
   });
 
-  factory CodeFunction.of({
+  factory CodeFunction.simple({
     @required String name,
     String comment,
     List<String> generic,
