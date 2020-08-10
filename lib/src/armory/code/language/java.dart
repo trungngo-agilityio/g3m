@@ -4,9 +4,9 @@ part of g3.armory;
 /// This help to enforce the dart syntax and [DatCode] will
 /// be automatically added in the node tree.
 ///
-class DartCodeFile implements Node {
-  static const String syntax = 'dart';
-  static const String extension = 'dart';
+class JavaCodeFile implements Node {
+  static const String syntax = 'java';
+  static const String extension = 'java';
 
   /// The file name without extension.
   final String name;
@@ -17,7 +17,7 @@ class DartCodeFile implements Node {
   /// The file content.
   final Node source;
 
-  DartCodeFile(this.name, this.comment, this.source);
+  JavaCodeFile(this.name, this.comment, this.source);
 
   @override
   Node build(BuildContext context) {
@@ -26,29 +26,29 @@ class DartCodeFile implements Node {
       extension: extension,
       syntax: syntax,
       comment: comment,
-      source: DartCode(source),
+      source: JavaCode(source),
     );
   }
 }
 
 /// Defines global configuration for dart code generation.
 ///
-/// Dart default syntax:
+/// Java default syntax:
 /// - Indentation: 2 spaces
 /// - Comment: Triple splash
 /// - Block: Curly bracket start at the same line.
 ///
-class DartCode implements Node {
+class JavaCode implements Node {
   final Node content;
 
-  DartCode(this.content);
+  JavaCode(this.content);
 
   @override
   Node build(BuildContext context) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
-        CodeCommentConfig.forDartLike(
-          CodeDataTypeConfig.forDartLike(
+        CodeCommentConfig.forJavaLike(
+          CodeDataTypeConfig.forJavaLike(
             CodeStatementListConfig.asIs(
               CodeStatementConfig.endWithCommaAndNewLine(
                 _buildGenericConfig(

@@ -13,19 +13,20 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
       CodeClassConfig((context, clazz) {
         return Container([
           clazz.comment,
+          clazz.access,
           Text(classKeyword),
           Text.space(),
           clazz.name,
-          clazz.implement == null
+          clazz.implements == null
               ? null
               : Container([
                   Text(implementsKeyword),
-                  Container(clazz.implement),
+                  clazz.implements,
                 ]),
           Text.space(),
           CodeBlock(Container([
-            Container(clazz.fields),
-            Container(clazz.functions),
+            clazz.fields,
+            clazz.functions,
           ])),
         ]);
       }, child);
@@ -34,33 +35,45 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
 class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// The class name.
   final CodeClassName name;
-  final bool abstract;
-  final bool interface;
 
-  /// The access level for the class.
   final CodeAccess access;
 
+  final CodeClassExtendList extend;
+
+  final CodeClassImplementList implements;
+
   /// The list of fields defined in the class.
-  final List<CodeField> fields;
+  final CodeFieldList fields;
 
   /// THe list of functions defined in the class.
-  final List<CodeFunction> functions;
+  final CodeFunctionList functions;
 
-  final CodeDataType extend;
-  final List<CodeDataType> implement;
-  final List<CodeAnnotation> annotations;
   final CodeComment comment;
 
-  CodeClass(
-    this.name, {
-    this.abstract,
-    this.interface,
+  CodeClass({
+    @required this.name,
     this.access,
+    this.extend,
+    this.implements,
     this.fields,
     this.functions,
-    this.extend,
-    this.implement,
-    this.annotations,
     this.comment,
   });
+
+  factory CodeClass.of({
+    String name,
+    CodeAccess access,
+    String extend,
+    List<String> implement,
+    CodeFieldList fields,
+    CodeFunctionList functions,
+    String comment,
+  }) =>
+      CodeClass(
+        name: CodeClassName.simple(name),
+        access: access,
+        fields: fields,
+        functions: functions,
+        comment: CodeComment.text(comment),
+      );
 }

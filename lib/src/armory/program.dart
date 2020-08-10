@@ -16,6 +16,15 @@ class _Context implements BuildContext, RenderContext {
   }
 
   @override
+  Iterable<Node> get ancestors sync* {
+    var ctx = parent;
+    while (ctx != null) {
+      yield ctx.node;
+      ctx = ctx.parent;
+    }
+  }
+
+  @override
   T findAncestorNodeOfExactType<T extends Node>() {
     if (node is T) {
       return node;

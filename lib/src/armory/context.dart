@@ -7,6 +7,8 @@ abstract class BuildContext {
   T findAncestorNodeOfExactType<T extends Node>();
 
   T dependOnAncestorNodeOfExactType<T extends Node>();
+
+  Iterable<Node> get ancestors;
 }
 
 abstract class RenderContext {

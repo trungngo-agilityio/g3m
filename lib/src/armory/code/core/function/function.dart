@@ -10,6 +10,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
   }) =>
       CodeFunctionConfig((context, func) {
         final def = Container([
+          func.comment,
           func.returns != null
               ? Container([
                   func.returns,
@@ -17,9 +18,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
                 ])
               : null,
           func.name,
-          func.genericParams != null
-              ? Pad.of('<', '>', func.genericParams)
-              : null,
+          func.generic != null ? Pad.of('<', '>', func.generic) : null,
           Pad.of('(', ')', func.args),
           func.throws != null
               ? Container([
@@ -49,7 +48,8 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
 
 class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   final CodeFunctionName name;
-  final CodeGenericParamList genericParams;
+  final CodeComment comment;
+  final CodeGenericParamList generic;
   final CodeFunctionArgList args;
   final CodeFunctionReturnList returns;
   final CodeFunctionThrowList throws;
@@ -57,7 +57,8 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
 
   CodeFunction({
     @required this.name,
-    this.genericParams,
+    this.comment,
+    this.generic,
     this.args,
     this.returns,
     this.throws,
@@ -66,7 +67,8 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
 
   factory CodeFunction.of({
     @required String name,
-    List<String> genericParams,
+    String comment,
+    List<String> generic,
     Map<String, String> args,
     List<String> returns,
     List<String> throws,
@@ -74,9 +76,8 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   }) =>
       CodeFunction(
         name: CodeFunctionName.of(name),
-        genericParams: genericParams != null
-            ? CodeGenericParamList.list(genericParams)
-            : null,
+        comment: CodeComment.text(comment),
+        generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,
         throws: throws != null ? CodeFunctionThrowList.list(throws) : null,

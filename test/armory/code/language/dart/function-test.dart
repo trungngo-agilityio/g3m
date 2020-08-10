@@ -39,7 +39,7 @@ void main() {
       var code = DartCode(
         CodeFunction.of(
           name: 'hello',
-          genericParams: ['T'],
+          generic: ['T'],
           args: {
             'name': 'T',
           },
@@ -63,7 +63,7 @@ void main() {
         CodeFunction.of(
           name: 'hello',
           returns: ['string'],
-          genericParams: ['t'],
+          generic: ['t'],
           args: {
             'name': 'string',
             'another': 't',

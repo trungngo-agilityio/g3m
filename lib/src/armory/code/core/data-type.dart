@@ -1,9 +1,5 @@
 part of g3.armory;
 
-/// Defines different access level for a piece of code. For example,
-/// a class method can be either public, private, or protected.
-///
-enum CodeAccess { public, private, protected }
 
 /// Provides configuration for how [CodeDataType] node will render.
 ///
