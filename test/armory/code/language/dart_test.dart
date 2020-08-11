@@ -12,18 +12,19 @@ void main() {
       Container([
         DartCodeFile.of(
           'hello2',
-          body: Text('just any body'),
-          comment: CodeComment.of('simple comment'),
-          package: CodePackage.of('my personal'),
+          body: Text('// You can put anything in this body.'),
+          comment: CodeComment.of('Demo file level comment'),
+          package: CodePackage.of('my personal vehicle'),
           imports: CodeImportList([
             CodeImport.of('io'),
+            CodeImport.of('path', alias: 'ioPath'),
             CodeImport.of('math', types: [
               CodeImportType.of('vector'),
               CodeImportType.of('human matrix'),
             ]),
           ]),
           functions: CodeFunctionList([
-            CodeFunction.simple(
+            CodeFunction.of(
               'hello',
               args: {
                 'first name': 'string',
@@ -44,6 +45,40 @@ void main() {
                   CodeDataType.genericSingle('fuel', 'T'),
                 ),
               ]),
+              fields: CodeFieldList([
+                CodeField.of(
+                    name: 'first name',
+                    type: 'string',
+                    comment: 'The human first name.'),
+                CodeField.of(
+                    name: 'last name',
+                    type: 'string',
+                    comment: 'The human last name.'),
+              ]),
+              constructors: CodeClassConstructorList([
+                CodeClassConstructor.of(
+                    comment: 'a demo constructor',
+                    args: {'name': 'string'},
+                    body: '// Any free text can be here'),
+              ]),
+              functions: CodeFunctionList([
+                CodeFunction.of(
+                  'drive',
+                  generic: ['T'],
+                  args: {'vehicle': 'car'},
+                  comment: 'just a demo function',
+                  returns: ['void'],
+                  throws: ['accident exception', 'bad driver exception'],
+                  body: Text('// Just any text'),
+                ),
+              ]),
+              body: Mustache.of(
+                '\n'
+                '// just a free text class body \n'
+                '// with Mustache template support.\n'
+                'hello({{name}});',
+                {'name': 'John Doe'},
+              ),
             ),
           ]),
         ),

@@ -71,7 +71,7 @@ void main() {
 
     test('function', () {
       run(
-          () => CodeFunction.simple(
+          () => CodeFunction.of(
                 'world',
                 comment: 'hello',
               ),

@@ -8,7 +8,7 @@ CodeField makeField(String name) => CodeField.of(
       type: 'string',
     );
 
-CodeFunction makeFunction(String name) => CodeFunction.simple(
+CodeFunction makeFunction(String name) => CodeFunction.of(
       name,
       returns: ['string'],
       args: {
@@ -135,13 +135,15 @@ void main() {
             CodeGenericParam.simple('t'),
           ]);
 
-          final extend = CodeClassExtendList(
-              [CodeClassExtend(CodeDataType(Text('car'), generic: generic))]);
+          final extend = CodeClassExtendList([
+            CodeClassExtend(
+                CodeDataType(CodeDataTypeName.of('car'), generic: generic))
+          ]);
 
           final implements = CodeClassImplementList([
             makeImplement('four wheel'),
             CodeClassImplement(CodeDataType(
-              Text('vehicle'),
+              CodeDataTypeName.of('vehicle'),
               generic: generic,
             )),
           ]);

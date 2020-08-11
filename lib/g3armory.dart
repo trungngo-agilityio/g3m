@@ -15,6 +15,8 @@ part 'src/armory/code/core/block.dart';
 
 part 'src/armory/code/core/class/class-constructor-list.dart';
 
+part 'src/armory/code/core/class/class-constructor-name.dart';
+
 part 'src/armory/code/core/class/class-constructor.dart';
 
 part 'src/armory/code/core/class/class-extend-list.dart';
@@ -29,6 +31,8 @@ part 'src/armory/code/core/class/class-list.dart';
 
 part 'src/armory/code/core/class/class-method.dart';
 
+part 'src/armory/code/core/class/class-name.dart';
+
 part 'src/armory/code/core/class/class-property.dart';
 
 part 'src/armory/code/core/class/class.dart';
@@ -37,9 +41,13 @@ part 'src/armory/code/core/comment.dart';
 
 part 'src/armory/code/core/config.dart';
 
+part 'src/armory/code/core/data-type-name.dart';
+
 part 'src/armory/code/core/data-type.dart';
 
 part 'src/armory/code/core/field/field-list.dart';
+
+part 'src/armory/code/core/field/field-name.dart';
 
 part 'src/armory/code/core/field/field.dart';
 
@@ -47,9 +55,13 @@ part 'src/armory/code/core/file.dart';
 
 part 'src/armory/code/core/function/function-arg-list.dart';
 
+part 'src/armory/code/core/function/function-arg-name.dart';
+
 part 'src/armory/code/core/function/function-arg.dart';
 
 part 'src/armory/code/core/function/function-list.dart';
+
+part 'src/armory/code/core/function/function-name.dart';
 
 part 'src/armory/code/core/function/function-return-list.dart';
 
@@ -71,7 +83,7 @@ part 'src/armory/code/core/import/import-type.dart';
 
 part 'src/armory/code/core/import/import.dart';
 
-part 'src/armory/code/core/name.dart';
+part 'src/armory/code/core/package/package-name.dart';
 
 part 'src/armory/code/core/package/package.dart';
 

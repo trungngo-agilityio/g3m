@@ -24,15 +24,5 @@ class CodePackage extends CodeConfigProxyNode<CodePackage> {
 
   CodePackage(this.name);
 
-  factory CodePackage.of(String name) => CodePackage(
-        CodePackageName.of(name),
-      );
-}
-
-class CodePackageName extends SingleChildNode {
-  CodePackageName(Node child) : super(CodeName(child));
-
-  factory CodePackageName.of(String text) {
-    return text == null ? null : CodePackageName(CodeName.of(text));
-  }
+  factory CodePackage.of(String name) => CodePackage(CodePackageName.of(name));
 }

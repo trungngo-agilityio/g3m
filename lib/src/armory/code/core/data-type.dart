@@ -21,11 +21,11 @@ class CodeDataTypeConfig extends CodeConfigNode<CodeDataType> {
       CodeDataTypeConfig._internal(child, true);
 
   factory CodeDataTypeConfig._internal(Node child, bool isDart) =>
-      CodeDataTypeConfig((context, codeDataType) {
-        final params = codeDataType.generic;
-        final array = codeDataType.array;
+      CodeDataTypeConfig((context, type) {
+        final params = type.generic;
+        final array = type.array;
 
-        Node name = CodeName(codeDataType.name);
+        Node name = type.name;
         if (array != true && (params == null || params.params.isEmpty)) {
           // If there is no complex settings, just return the
           // type name.
@@ -64,7 +64,7 @@ class CodeDataTypeConfig extends CodeConfigNode<CodeDataType> {
 ///
 class CodeDataType extends CodeConfigProxyNode<CodeDataType> {
   /// The data type name.
-  final Node name;
+  final CodeDataTypeName name;
 
   /// The list of generic params.
   final CodeGenericParamList generic;
@@ -74,34 +74,35 @@ class CodeDataType extends CodeConfigProxyNode<CodeDataType> {
 
   CodeDataType(this.name, {this.generic, this.array});
 
-  factory CodeDataType.simple(String name) => CodeDataType(Text(name));
+  factory CodeDataType.simple(String name) =>
+      CodeDataType(CodeDataTypeName.of(name));
 
   factory CodeDataType.genericSingle(String name, String param) => CodeDataType(
-        Text(name),
+        CodeDataTypeName.of(name),
         generic: CodeGenericParamList.single(param),
       );
 
   factory CodeDataType.genericList(String name, List<String> params) =>
       CodeDataType(
-        Text(name),
+        CodeDataTypeName.of(name),
         generic: CodeGenericParamList.list(params),
       );
 
   factory CodeDataType.array(String name) => CodeDataType(
-        Text(name),
+        CodeDataTypeName.of(name),
         array: true,
       );
 
   factory CodeDataType.genericSingleArray(String name, String param) =>
       CodeDataType(
-        Text(name),
+        CodeDataTypeName.of(name),
         generic: CodeGenericParamList.single(param),
         array: true,
       );
 
   factory CodeDataType.genericListArray(String name, List<String> params) =>
       CodeDataType(
-        Text(name),
+        CodeDataTypeName.of(name),
         generic: CodeGenericParamList.list(params),
         array: true,
       );

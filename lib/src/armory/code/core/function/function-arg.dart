@@ -11,11 +11,11 @@ class CodeFunctionArgConfig extends CodeConfigNode<CodeFunctionArg> {
 }
 
 class CodeFunctionArg extends CodeConfigProxyNode<CodeFunctionArg> {
-  final CodeName name;
+  final CodeFunctionArgName name;
   final CodeDataType type;
 
   CodeFunctionArg(this.name, this.type);
 
   factory CodeFunctionArg.ofNameType(String name, String type) =>
-      CodeFunctionArg(CodeName.of(name), CodeDataType.simple(type));
+      CodeFunctionArg(CodeFunctionArgName.of(name), CodeDataType.simple(type));
 }

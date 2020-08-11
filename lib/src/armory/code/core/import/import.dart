@@ -4,6 +4,25 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
   CodeImportConfig(NodeBuildFunc<CodeImport> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeImportConfig.forDartLike(
+    Node child, {
+    String importKeyword = 'import',
+    String asKeyword = 'as',
+  }) =>
+      CodeImportConfig((context, import) {
+        return CodeStatement(
+          Container([
+            importKeyword,
+            ' \'',
+            import.package,
+            '\'',
+            import.alias != null
+                ? Container([' ', asKeyword, ' ', import.alias])
+                : null,
+          ]),
+        );
+      }, child);
+
   factory CodeImportConfig.forJavaLike(
     Node child, {
     String importKeyword = 'import',

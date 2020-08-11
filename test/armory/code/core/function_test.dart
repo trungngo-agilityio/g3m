@@ -7,14 +7,14 @@ void main() {
   group('no body', () {
     test('name only', () {
       var code = DartCode(
-        CodeFunction.simple('hello'),
+        CodeFunction.of('hello'),
       );
       runAndExpect(code, 'hello();\n');
     });
 
     test('with args', () {
       var code = DartCode(
-        CodeFunction.simple(
+        CodeFunction.of(
           'hello',
           args: {
             'name': 'String',
@@ -27,7 +27,7 @@ void main() {
 
     test('with return', () {
       var code = DartCode(
-        CodeFunction.simple(
+        CodeFunction.of(
           'hello',
           returns: ['string'],
         ),
@@ -37,7 +37,7 @@ void main() {
 
     test('with generic', () {
       var code = DartCode(
-        CodeFunction.simple(
+        CodeFunction.of(
           'hello',
           generic: ['T'],
           args: {
@@ -50,7 +50,7 @@ void main() {
 
     test('with throw', () {
       var code = DartCode(
-        CodeFunction.simple(
+        CodeFunction.of(
           'hello',
           throws: ['invalid argument exception'],
         ),
@@ -60,7 +60,7 @@ void main() {
 
     test('with all', () {
       var code = DartCode(
-        CodeFunction.simple(
+        CodeFunction.of(
           'hello',
           returns: ['string'],
           generic: ['t'],
@@ -79,7 +79,7 @@ void main() {
   group('with body', () {
     test('name only', () {
       var code = DartCode(
-        CodeFunction.simple(
+        CodeFunction.of(
           'hello',
           body: Container(['// some sample comment', 'callAFunction()']),
         ),

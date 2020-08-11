@@ -35,7 +35,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
 
 class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// The class name.
-  final CodeName name;
+  final CodeClassName name;
 
   /// Defines public, private, protected, etc.
   final CodeAccess access;
@@ -52,6 +52,8 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// Class-level code comment.
   final CodeComment comment;
 
+  final CodeClassConstructorList constructors;
+
   /// The class body.
   final CodeBlock body;
 
@@ -62,6 +64,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     this.extend,
     this.implements,
     this.comment,
+    this.constructors,
     this.body,
   }) : assert(name != null);
 
@@ -71,20 +74,23 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     CodeGenericParamList generic,
     CodeClassExtendList extend,
     CodeClassImplementList implements,
+    CodeClassConstructorList constructors,
     CodeFieldList fields,
     CodeFunctionList functions,
     Node body,
     String comment,
   }) =>
       CodeClass(
-        name: CodeName.of(name),
+        name: CodeClassName.of(name),
         generic: generic,
         access: access,
         extend: extend,
         implements: implements,
+        constructors: constructors,
         body: CodeBlock(
           Container([
             fields,
+            constructors,
             functions,
             body,
           ]),

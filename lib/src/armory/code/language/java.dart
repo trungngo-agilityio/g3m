@@ -44,13 +44,13 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
   Node buildOne(BuildContext context, Node child) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
-        CodeNameConfig.forJavaLike(
-          CodeCommentConfig.forJavaLike(
-            _buildPackageConfig(
-              _buildImportConfig(
-                CodeDataTypeConfig.forJavaLike(
-                  CodeStatementListConfig.asIs(
-                    CodeStatementConfig.endWithCommaAndNewLine(
+        CodeCommentConfig.forJavaLike(
+          _buildPackageConfig(
+            _buildImportConfig(
+              CodeDataTypeConfig.forJavaLike(
+                CodeStatementListConfig.asIs(
+                  CodeStatementConfig.endWithCommaAndNewLine(
+                    _buildDataType(
                       _buildCodeAccess(
                         _buildGenericConfig(
                           _buildFieldConfig(
@@ -77,8 +77,18 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
     return CodeAccessConfig.of(child);
   }
 
+  Node _buildDataType(Node child) {
+    return CodeDataTypeNameConfig.forJavaLike(
+      CodeDataTypeConfig.forDartLike(
+        child,
+      ),
+    );
+  }
+
   Node _buildPackageConfig(Node child) {
-    return CodePackageConfig.forJavaLike(child);
+    return CodePackageNameConfig.forJavaLike(
+      CodePackageConfig.forJavaLike(child),
+    );
   }
 
   Node _buildImportConfig(Node child) {
@@ -100,22 +110,28 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
   }
 
   Node _buildFieldConfig(Node child) {
-    return CodeFieldListConfig.newLineSeparated(
-      CodeFieldConfig.typeThenName(
-        child,
+    return CodeFieldNameConfig.forJavaLike(
+      CodeFieldListConfig.newLineSeparated(
+        CodeFieldConfig.typeThenName(
+          child,
+        ),
       ),
     );
   }
 
   Node _buildFunctionConfig(Node child) {
-    return CodeFunctionArgListConfig.commaSeparated(
-      CodeFunctionArgConfig.typeSpaceName(
-        CodeFunctionReturnListConfig.commaSeparated(
-          CodeFunctionReturnConfig.asIs(
-            CodeFunctionThrowListConfig.commaSeparated(
-              CodeFunctionThrowConfig.asIs(
-                CodeFunctionListConfig.newLineSeparated(
-                  CodeFunctionConfig.forJavaLike(child),
+    return CodeFunctionNameConfig.forJavaLike(
+      CodeFunctionArgNameConfig.forJavaLike(
+        CodeFunctionArgListConfig.commaSeparated(
+          CodeFunctionArgConfig.typeSpaceName(
+            CodeFunctionReturnListConfig.commaSeparated(
+              CodeFunctionReturnConfig.asIs(
+                CodeFunctionThrowListConfig.commaSeparated(
+                  CodeFunctionThrowConfig.asIs(
+                    CodeFunctionListConfig.newLineSeparated(
+                      CodeFunctionConfig.forJavaLike(child),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -126,14 +142,18 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
   }
 
   Node _buildClassConfig(Node child) {
-    return CodeClassConfig.forJavaLike(
-      CodeClassExtendListConfig.forJavaLike(
-        CodeClassExtendConfig.asIs(
-          CodeClassImplementListConfig.forJavaLike(
-            CodeClassImplementConfig.asIs(
-              CodeClassConstructorConfig.forJavaLike(
-                CodeClassConstructorListConfig.newLineSeparated(
-                  child,
+    return CodeClassNameConfig.forJavaLike(
+      CodeClassConfig.forJavaLike(
+        CodeClassListConfig.newLineSeparated(
+          CodeClassExtendListConfig.forJavaLike(
+            CodeClassExtendConfig.asIs(
+              CodeClassImplementListConfig.forJavaLike(
+                CodeClassImplementConfig.asIs(
+                  CodeClassConstructorConfig.forJavaLike(
+                    CodeClassConstructorListConfig.newLineSeparated(
+                      child,
+                    ),
+                  ),
                 ),
               ),
             ),

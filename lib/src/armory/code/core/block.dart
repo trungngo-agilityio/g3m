@@ -61,7 +61,9 @@ class CodeBlock extends CodeConfigProxyNode<CodeBlock> {
 
   CodeBlock(this.child);
 
-  factory CodeBlock.of(dynamic child) => child is CodeBlock
-      ? child
-      : CodeBlock(child is Node ? child : Text(child));
+  factory CodeBlock.of(dynamic child) => child == null
+      ? null
+      : child is CodeBlock
+          ? child
+          : CodeBlock(child is Node ? child : Text(child));
 }

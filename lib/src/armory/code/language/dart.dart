@@ -67,13 +67,13 @@ class DartCode extends ExactlyOneNode<DartCode> {
   Node buildOne(BuildContext context, Node child) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
-        CodeNameConfig.forJavaLike(
-          CodeCommentConfig.forDartLike(
-            _buildPackageConfig(
-              _buildImportConfig(
-                CodeDataTypeConfig.forDartLike(
-                  CodeStatementListConfig.asIs(
-                    CodeStatementConfig.endWithCommaAndNewLine(
+        CodeCommentConfig.forDartLike(
+          _buildPackageConfig(
+            _buildImportConfig(
+              CodeDataTypeConfig.forDartLike(
+                CodeStatementListConfig.asIs(
+                  CodeStatementConfig.endWithCommaAndNewLine(
+                    _buildDataType(
                       _buildCodeAccess(
                         _buildGenericConfig(
                           _buildFieldConfig(
@@ -100,12 +100,22 @@ class DartCode extends ExactlyOneNode<DartCode> {
     return CodeAccessConfig.of(child);
   }
 
+  Node _buildDataType(Node child) {
+    return CodeDataTypeNameConfig.forJavaLike(
+      CodeDataTypeConfig.forDartLike(
+        child,
+      ),
+    );
+  }
+
   Node _buildPackageConfig(Node child) {
-    return CodePackageConfig.forJavaLike(child, packageKeyword: 'library');
+    return CodePackageNameConfig.forJavaLike(
+      CodePackageConfig.forJavaLike(child, packageKeyword: 'library'),
+    );
   }
 
   Node _buildImportConfig(Node child) {
-    return CodeImportConfig.forJavaLike(
+    return CodeImportConfig.forDartLike(
       CodeImportListConfig.forJavaLike(
         CodeImportTypeConfig.forJavaLike(
           child,
@@ -123,23 +133,29 @@ class DartCode extends ExactlyOneNode<DartCode> {
   }
 
   Node _buildFieldConfig(Node child) {
-    return CodeFieldListConfig.newLineSeparated(
-      CodeFieldConfig.typeThenName(
-        child,
+    return CodeFieldNameConfig.forJavaLike(
+      CodeFieldListConfig.newLineSeparated(
+        CodeFieldConfig.typeThenName(
+          child,
+        ),
       ),
     );
   }
 
   Node _buildFunctionConfig(Node child) {
-    return CodeFunctionArgListConfig.commaSeparated(
-      CodeFunctionArgConfig.typeSpaceName(
-        CodeFunctionReturnListConfig.commaSeparated(
-          CodeFunctionReturnConfig.asIs(
-            CodeFunctionThrowListConfig.commaSeparated(
-              CodeFunctionThrowConfig.asIs(
-                CodeFunctionListConfig.newLineSeparated(
-                  CodeFunctionConfig.forJavaLike(child),
+    return CodeFunctionNameConfig.forJavaLike(
+      CodeFunctionArgNameConfig.forJavaLike(
+      CodeFunctionArgListConfig.commaSeparated(
+        CodeFunctionArgConfig.typeSpaceName(
+          CodeFunctionReturnListConfig.commaSeparated(
+            CodeFunctionReturnConfig.asIs(
+              CodeFunctionThrowListConfig.commaSeparated(
+                CodeFunctionThrowConfig.asIs(
+                  CodeFunctionListConfig.newLineSeparated(
+                    CodeFunctionConfig.forJavaLike(child),
+                  ),
                 ),
+              ),
               ),
             ),
           ),
@@ -149,15 +165,17 @@ class DartCode extends ExactlyOneNode<DartCode> {
   }
 
   Node _buildClassConfig(Node child) {
-    return CodeClassConfig.forJavaLike(
-      CodeClassListConfig.newLineSeparated(
-        CodeClassExtendListConfig.forJavaLike(
-          CodeClassExtendConfig.asIs(
-            CodeClassImplementListConfig.forJavaLike(
-              CodeClassImplementConfig.asIs(
-                CodeClassConstructorConfig.forJavaLike(
-                  CodeClassConstructorListConfig.newLineSeparated(
-                    child,
+    return CodeClassNameConfig.forJavaLike(
+      CodeClassConfig.forJavaLike(
+        CodeClassListConfig.newLineSeparated(
+          CodeClassExtendListConfig.forJavaLike(
+            CodeClassExtendConfig.asIs(
+              CodeClassImplementListConfig.forJavaLike(
+                CodeClassImplementConfig.asIs(
+                  CodeClassConstructorConfig.forJavaLike(
+                    CodeClassConstructorListConfig.newLineSeparated(
+                      child,
+                    ),
                   ),
                 ),
               ),

@@ -49,7 +49,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
 }
 
 class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
-  final CodeName name;
+  final CodeFunctionName name;
   final CodeComment comment;
   final CodeGenericParamList generic;
   final CodeFunctionArgList args;
@@ -67,7 +67,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     this.body,
   });
 
-  factory CodeFunction.simple(
+  factory CodeFunction.of(
     String name, {
     String comment,
     List<String> generic,
@@ -77,12 +77,12 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     Node body,
   }) =>
       CodeFunction(
-        name: CodeName.of(name),
+        name: CodeFunctionName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,
         throws: throws != null ? CodeFunctionThrowList.list(throws) : null,
-        body: CodeBlock(body),
+        body: CodeBlock.of(body),
       );
 }

@@ -54,7 +54,7 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
 
 class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   /// The constructor name. This is often optional.
-  final CodeName name;
+  final CodeClassConstructorName name;
 
   /// Defines public, private, protected, etc.
   final CodeAccess access;
@@ -86,7 +86,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     dynamic body,
   }) =>
       CodeClassConstructor(
-        name: CodeName.of(name),
+        name: CodeClassConstructorName.of(name),
         access: access,
         comment: comment != null ? CodeComment.of(comment) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
