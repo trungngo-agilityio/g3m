@@ -12,10 +12,10 @@ void main() {
       Container([
         DartCodeFile.of('hello2',
             body: Text('just any body'),
-            comment: CodeComment.text('simple comment'),
+            comment: CodeComment.of('simple comment'),
             functions: CodeFunctionList([
               CodeFunction.simple(
-                name: 'hello',
+                'hello',
                 args: {
                   'first name': 'string',
                 },

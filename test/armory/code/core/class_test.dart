@@ -9,7 +9,7 @@ CodeField makeField(String name) => CodeField.of(
     );
 
 CodeFunction makeFunction(String name) => CodeFunction.simple(
-      name: name,
+      name,
       returns: ['string'],
       args: {
         'name': 'String',

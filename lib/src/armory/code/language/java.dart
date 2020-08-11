@@ -37,26 +37,28 @@ class JavaCodeFile implements Node {
 /// - Comment: Triple splash
 /// - Block: Curly bracket start at the same line.
 ///
-class JavaCode implements Node {
+class JavaCode extends ExactlyOneNode<JavaCode> {
   final Node content;
 
   JavaCode(this.content);
 
   @override
-  Node build(BuildContext context) {
+  Node buildOne(BuildContext context) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         CodeNameConfig.forJavaLike(
           CodeCommentConfig.forJavaLike(
-            CodeDataTypeConfig.forJavaLike(
-              CodeStatementListConfig.asIs(
-                CodeStatementConfig.endWithCommaAndNewLine(
-                  _buildCodeAccess(
-                    _buildGenericConfig(
-                      _buildFieldConfig(
-                        _buildFunctionConfig(
-                          _buildClassConfig(
-                            content,
+            CodePackageConfig.forJavaLike(
+              CodeDataTypeConfig.forJavaLike(
+                CodeStatementListConfig.asIs(
+                  CodeStatementConfig.endWithCommaAndNewLine(
+                    _buildCodeAccess(
+                      _buildGenericConfig(
+                        _buildFieldConfig(
+                          _buildFunctionConfig(
+                            _buildClassConfig(
+                              content,
+                            ),
                           ),
                         ),
                       ),

@@ -1,6 +1,5 @@
 part of g3.armory;
 
-
 class Project implements Node {
   final String path;
   final Node content;

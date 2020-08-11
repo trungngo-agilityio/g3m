@@ -7,7 +7,7 @@ void main() {
   group('by string transform', () {
     test('double splash', () {
       var code = CodeCommentConfig.doubleSplash(
-        CodeComment.text('hello\nworld'),
+        CodeComment.of('hello\nworld'),
       );
       runAndExpect(
         code,
@@ -18,7 +18,7 @@ void main() {
 
     test('triple splash', () {
       var code = CodeCommentConfig.tripleSplash(
-        CodeComment.text('hello\nworld'),
+        CodeComment.of('hello\nworld'),
       );
       runAndExpect(
         code,
@@ -29,7 +29,7 @@ void main() {
 
     test('hash', () {
       var code = CodeCommentConfig.hash(
-        CodeComment.text('hello\nworld'),
+        CodeComment.of('hello\nworld'),
       );
       runAndExpect(
         code,
@@ -40,7 +40,7 @@ void main() {
 
     test('java doc', () {
       var code = CodeCommentConfig.javaDoc(
-        CodeComment.text('hello\nworld'),
+        CodeComment.of('hello\nworld'),
       );
       runAndExpect(
         code,
@@ -72,7 +72,7 @@ void main() {
     test('function', () {
       run(
           () => CodeFunction.simple(
-                name: 'world',
+                'world',
                 comment: 'hello',
               ),
           '/**\n'
@@ -98,7 +98,7 @@ void main() {
     test('statement', () {
       run(
         () => Container([
-          CodeComment.text('world'),
+          CodeComment.of('world'),
           CodeStatement.of('hello'),
         ]),
         '// world\n'

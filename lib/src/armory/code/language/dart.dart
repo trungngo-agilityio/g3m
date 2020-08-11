@@ -21,6 +21,7 @@ class DartCodeFile implements Node {
 
   factory DartCodeFile.of(
     String name, {
+    CodePackage package,
     CodeComment comment,
     CodeFunctionList functions,
     CodeClassList classes,
@@ -28,6 +29,7 @@ class DartCodeFile implements Node {
   }) {
     var source = Container([
       comment,
+      package,
       functions,
       classes,
       body,
@@ -56,26 +58,28 @@ class DartCodeFile implements Node {
 /// - Comment: Triple splash
 /// - Block: Curly bracket start at the same line.
 ///
-class DartCode implements Node {
+class DartCode extends ExactlyOneNode<DartCode> {
   final Node child;
 
   DartCode(this.child);
 
   @override
-  Node build(BuildContext context) {
+  Node buildOne(BuildContext context) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         CodeNameConfig.forJavaLike(
           CodeCommentConfig.forDartLike(
-            CodeDataTypeConfig.forDartLike(
-              CodeStatementListConfig.asIs(
-                CodeStatementConfig.endWithCommaAndNewLine(
-                  _buildCodeAccess(
-                    _buildGenericConfig(
-                      _buildFieldConfig(
-                        _buildFunctionConfig(
-                          _buildClassConfig(
-                            child,
+            _buildPackageConfig(
+              CodeDataTypeConfig.forDartLike(
+                CodeStatementListConfig.asIs(
+                  CodeStatementConfig.endWithCommaAndNewLine(
+                    _buildCodeAccess(
+                      _buildGenericConfig(
+                        _buildFieldConfig(
+                          _buildFunctionConfig(
+                            _buildClassConfig(
+                              child,
+                            ),
                           ),
                         ),
                       ),
@@ -92,6 +96,10 @@ class DartCode implements Node {
 
   Node _buildCodeAccess(Node child) {
     return CodeAccessConfig.of(child);
+  }
+
+  Node _buildPackageConfig(Node child) {
+    return CodePackageConfig.forJavaLike(child, packageKeyword: 'library');
   }
 
   Node _buildGenericConfig(Node child) {

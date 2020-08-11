@@ -1,8 +1,7 @@
 part of g3.armory;
 
 class CodeClassExtendConfig extends CodeConfigNode<CodeClassExtend> {
-  CodeClassExtendConfig(
-      NodeBuildFunc<CodeClassExtend> buildFunc, Node child)
+  CodeClassExtendConfig(NodeBuildFunc<CodeClassExtend> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeClassExtendConfig.asIs(Node child) =>

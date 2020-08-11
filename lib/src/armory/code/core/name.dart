@@ -7,6 +7,7 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
   factory CodeNameConfig.forJavaLike(Node child) => CodeNameConfig.forCode(
         child,
         dataType: pascal,
+        package: camel,
         clazz: pascal,
         field: camel,
         function: camel,
@@ -18,6 +19,7 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
   factory CodeNameConfig.forCode(
     Node child, {
     @required StringFunc dataType,
+    @required StringFunc package,
     @required StringFunc clazz,
     @required StringFunc field,
     @required StringFunc function,
@@ -30,6 +32,7 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
         final container = context.ancestors.firstWhere(
             (e) =>
                 e is CodeDataType ||
+                e is CodePackageName ||
                 e is CodeClass ||
                 e is CodeField ||
                 e is CodeFunction ||
@@ -42,6 +45,8 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
           // Determines the comment style for the given container.
           if (container is CodeDataType) {
             func = dataType;
+          } else if (container is CodePackageName) {
+            func = package;
           } else if (container is CodeClass) {
             func = clazz;
           } else if (container is CodeField) {

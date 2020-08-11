@@ -52,6 +52,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   /// Class-level code comment.
   final CodeComment comment;
 
+  /// The class body.
   final CodeBlock body;
 
   CodeClass({
@@ -88,6 +89,6 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
             body,
           ]),
         ),
-        comment: comment != null ? CodeComment.text(comment) : null,
+        comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

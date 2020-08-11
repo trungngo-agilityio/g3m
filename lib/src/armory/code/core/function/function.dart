@@ -67,8 +67,8 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     this.body,
   });
 
-  factory CodeFunction.simple({
-    @required String name,
+  factory CodeFunction.simple(
+    String name, {
     String comment,
     List<String> generic,
     Map<String, String> args,
@@ -78,7 +78,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   }) =>
       CodeFunction(
         name: CodeName.of(name),
-        comment: comment != null ? CodeComment.text(comment) : null,
+        comment: comment != null ? CodeComment.of(comment) : null,
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,

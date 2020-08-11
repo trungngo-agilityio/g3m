@@ -1,7 +1,5 @@
 part of g3.armory;
 
-
-
 class StatelessNode implements Node {
   @override
   Node build(BuildContext context) {
