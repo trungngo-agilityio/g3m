@@ -26,11 +26,10 @@ class _Context implements BuildContext, RenderContext {
 
   @override
   T findAncestorNodeOfExactType<T extends Node>() {
-    if (node is T) {
-      return node;
-    } else {
-      return parent?.findAncestorNodeOfExactType<T>();
+    for (final i in ancestors) {
+      if (i is T) return i;
     }
+    return null;
   }
 
   void build() {
@@ -41,7 +40,9 @@ class _Context implements BuildContext, RenderContext {
       if (container.children != null) {
         for (final i in container.children) {
           if (i != null) {
-            final context = _Context(this, i)..build();
+            final child = i is Node ? i : Text(i);
+
+            final context = _Context(this, child)..build();
             _children.add(context);
           }
         }

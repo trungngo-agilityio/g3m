@@ -59,12 +59,10 @@ class DartCodeFile implements Node {
 /// - Block: Curly bracket start at the same line.
 ///
 class DartCode extends ExactlyOneNode<DartCode> {
-  final Node child;
-
-  DartCode(this.child);
+  DartCode(Node child) : super(child);
 
   @override
-  Node buildOne(BuildContext context) {
+  Node buildOne(BuildContext context, Node child) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         CodeNameConfig.forJavaLike(

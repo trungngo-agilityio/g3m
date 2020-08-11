@@ -10,12 +10,12 @@ void main() {
   });
 
   test('non empty', () {
-    var container = Container([Text('hello')]);
-    runAndExpect(container, 'hello');
+    var container = Container([Text('hello'), 1, null]);
+    runAndExpect(container, 'hello1');
   });
 
   test('non empty, with null', () {
-    var container = Container([null, Text('hello'), null]);
+    var container = Container([null, 'hello', null]);
     runAndExpect(container, 'hello');
   });
 }

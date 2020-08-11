@@ -6,7 +6,7 @@ part of g3.armory;
 class Text extends NoChildNode implements Renderer {
   final String text;
 
-  Text(this.text);
+  Text(dynamic text) : text = text?.toString();
 
   factory Text.space([count]) => Text(' ' * (count ?? 1));
 

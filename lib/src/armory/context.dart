@@ -40,17 +40,21 @@ class SingleChildNode implements Node {
 }
 
 abstract class ExactlyOneNode<T extends ExactlyOneNode<T>> implements Node {
+  final Node _child;
+
+  ExactlyOneNode(this._child);
+
   @override
   Node build(BuildContext context) {
     if (context.findAncestorNodeOfExactType<T>() != null) {
       // Allows maximum one instance of this class.
-      return null;
+      return _child;
     }
 
-    return buildOne(context);
+    return buildOne(context, _child);
   }
 
-  Node buildOne(BuildContext context);
+  Node buildOne(BuildContext context, Node child);
 }
 
 abstract class Renderer {

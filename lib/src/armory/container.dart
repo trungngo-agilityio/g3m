@@ -1,7 +1,7 @@
 part of g3.armory;
 
 class Container implements Node {
-  final List<Node> children;
+  final List<dynamic> children;
 
   Container(this.children);
 

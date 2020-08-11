@@ -38,12 +38,10 @@ class JavaCodeFile implements Node {
 /// - Block: Curly bracket start at the same line.
 ///
 class JavaCode extends ExactlyOneNode<JavaCode> {
-  final Node content;
-
-  JavaCode(this.content);
+  JavaCode(Node child) : super(child);
 
   @override
-  Node buildOne(BuildContext context) {
+  Node buildOne(BuildContext context, Node child) {
     return IndentationConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         CodeNameConfig.forJavaLike(
@@ -57,7 +55,7 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
                         _buildFieldConfig(
                           _buildFunctionConfig(
                             _buildClassConfig(
-                              content,
+                              child,
                             ),
                           ),
                         ),
