@@ -39,7 +39,7 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
         newLine ? NewLine() : null,
         open != null ? Text(open) : null,
         NewLine(),
-        Indent(codeBlock.content),
+        Indent(codeBlock.child),
         NewLine(),
         close != null ? Text(close) : null,
         NewLine(),
@@ -57,7 +57,11 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
 /// Important: [CodeBlockConfig] is a required ancestor for this node.
 ///
 class CodeBlock extends CodeConfigProxyNode<CodeBlock> {
-  final Node content;
+  final Node child;
 
-  CodeBlock(this.content);
+  CodeBlock(this.child);
+
+  factory CodeBlock.of(dynamic child) => child is CodeBlock
+      ? child
+      : CodeBlock(child is Node ? child : Text(child));
 }

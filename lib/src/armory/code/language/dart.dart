@@ -142,7 +142,11 @@ class DartCode extends ExactlyOneNode<DartCode> {
         CodeClassExtendConfig.asIs(
           CodeClassImplementListConfig.forJavaLike(
             CodeClassImplementConfig.asIs(
-              child,
+              CodeClassConstructorConfig.forJavaLike(
+                CodeClassConstructorListConfig.newLineSeparated(
+                  child,
+                ),
+              ),
             ),
           ),
         ),

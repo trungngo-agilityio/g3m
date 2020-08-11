@@ -117,7 +117,11 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
         CodeClassExtendConfig.asIs(
           CodeClassImplementListConfig.forJavaLike(
             CodeClassImplementConfig.asIs(
-              child,
+              CodeClassConstructorConfig.forJavaLike(
+                CodeClassConstructorListConfig.newLineSeparated(
+                  child,
+                ),
+              ),
             ),
           ),
         ),

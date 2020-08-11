@@ -24,8 +24,13 @@ part 'src/armory/code/core/class/class-implement.dart';
 part 'src/armory/code/core/class/class-list.dart';
 
 part 'src/armory/code/core/class/class.dart';
+
 part 'src/armory/code/core/class/class-constructor.dart';
+
+part 'src/armory/code/core/class/class-constructor-list.dart';
+
 part 'src/armory/code/core/class/class-method.dart';
+
 part 'src/armory/code/core/class/class-property.dart';
 
 part 'src/armory/code/core/comment.dart';
@@ -71,9 +76,13 @@ part 'src/armory/code/core/statement-list.dart';
 part 'src/armory/code/core/statement.dart';
 
 part 'src/armory/code/core/syntax.dart';
+
 part 'src/armory/code/core/package.dart';
+
 part 'src/armory/code/core/import.dart';
+
 part 'src/armory/code/core/package-name.dart';
+
 part 'src/armory/code/core/import-list.dart';
 
 part 'src/armory/code/language/dart.dart';

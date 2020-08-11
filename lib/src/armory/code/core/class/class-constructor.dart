@@ -1,21 +1,22 @@
 part of g3.armory;
 
-class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
-  CodeConstructorConfig(NodeBuildFunc<CodeConstructor> buildFunc, Node child)
+class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
+  CodeClassConstructorConfig(
+      NodeBuildFunc<CodeClassConstructor> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeConstructorConfig.forJavaLike(
+  factory CodeClassConstructorConfig.forJavaLike(
     Node child, {
     String constructorKeyword = 'constructor',
   }) =>
-      CodeConstructorConfig((context, func) {
+      CodeClassConstructorConfig((context, func) {
         final def = Container([
           func.comment,
-          Text(constructorKeyword),
+          constructorKeyword,
           func.name,
-          Text('('),
+          '(',
           func.args,
-          Text(')'),
+          ')',
         ]);
 
         if (func.body == null) {
@@ -23,14 +24,14 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
         } else {
           return Container([
             def,
-            Text.space(),
+            ' ',
             func.body,
           ]);
         }
       }, child);
 }
 
-class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
+class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   /// The constructor name. This is often optional.
   final CodeName name;
 
@@ -44,9 +45,9 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
   final CodeFunctionArgList args;
 
   /// The class implementation body
-  final CodeFunctionBody body;
+  final CodeBlock body;
 
-  CodeConstructor({
+  CodeClassConstructor({
     this.name,
     this.access,
     this.comment,
@@ -54,20 +55,18 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
     this.body,
   });
 
-  factory CodeConstructor.simple({
+  factory CodeClassConstructor.of({
     String name,
     String comment,
     Map<String, String> args,
     List<String> returns,
     List<String> throws,
-    List<String> body,
+    dynamic body,
   }) =>
-      CodeConstructor(
+      CodeClassConstructor(
         name: CodeName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
-        body: body != null
-            ? CodeFunctionBody(CodeStatementList.list(body))
-            : null,
+        body: CodeBlock.of(body),
       );
 }
