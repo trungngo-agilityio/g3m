@@ -22,6 +22,7 @@ class DartCodeFile implements Node {
   factory DartCodeFile.of(
     String name, {
     CodePackage package,
+    CodeImportList imports,
     CodeComment comment,
     CodeFunctionList functions,
     CodeClassList classes,
@@ -30,6 +31,7 @@ class DartCodeFile implements Node {
     var source = Container([
       comment,
       package,
+      imports,
       functions,
       classes,
       body,
@@ -68,15 +70,17 @@ class DartCode extends ExactlyOneNode<DartCode> {
         CodeNameConfig.forJavaLike(
           CodeCommentConfig.forDartLike(
             _buildPackageConfig(
-              CodeDataTypeConfig.forDartLike(
-                CodeStatementListConfig.asIs(
-                  CodeStatementConfig.endWithCommaAndNewLine(
-                    _buildCodeAccess(
-                      _buildGenericConfig(
-                        _buildFieldConfig(
-                          _buildFunctionConfig(
-                            _buildClassConfig(
-                              child,
+              _buildImportConfig(
+                CodeDataTypeConfig.forDartLike(
+                  CodeStatementListConfig.asIs(
+                    CodeStatementConfig.endWithCommaAndNewLine(
+                      _buildCodeAccess(
+                        _buildGenericConfig(
+                          _buildFieldConfig(
+                            _buildFunctionConfig(
+                              _buildClassConfig(
+                                child,
+                              ),
                             ),
                           ),
                         ),
@@ -98,6 +102,16 @@ class DartCode extends ExactlyOneNode<DartCode> {
 
   Node _buildPackageConfig(Node child) {
     return CodePackageConfig.forJavaLike(child, packageKeyword: 'library');
+  }
+
+  Node _buildImportConfig(Node child) {
+    return CodeImportConfig.forJavaLike(
+      CodeImportListConfig.forJavaLike(
+        CodeImportTypeConfig.forJavaLike(
+          child,
+        ),
+      ),
+    );
   }
 
   Node _buildGenericConfig(Node child) {
@@ -123,10 +137,8 @@ class DartCode extends ExactlyOneNode<DartCode> {
           CodeFunctionReturnConfig.asIs(
             CodeFunctionThrowListConfig.commaSeparated(
               CodeFunctionThrowConfig.asIs(
-                CodeFunctionBodyConfig.asCodeBlock(
-                  CodeFunctionListConfig.newLineSeparated(
-                    CodeFunctionConfig.forJavaLike(child),
-                  ),
+                CodeFunctionListConfig.newLineSeparated(
+                  CodeFunctionConfig.forJavaLike(child),
                 ),
               ),
             ),
@@ -138,13 +150,15 @@ class DartCode extends ExactlyOneNode<DartCode> {
 
   Node _buildClassConfig(Node child) {
     return CodeClassConfig.forJavaLike(
-      CodeClassExtendListConfig.forJavaLike(
-        CodeClassExtendConfig.asIs(
-          CodeClassImplementListConfig.forJavaLike(
-            CodeClassImplementConfig.asIs(
-              CodeClassConstructorConfig.forJavaLike(
-                CodeClassConstructorListConfig.newLineSeparated(
-                  child,
+      CodeClassListConfig.newLineSeparated(
+        CodeClassExtendListConfig.forJavaLike(
+          CodeClassExtendConfig.asIs(
+            CodeClassImplementListConfig.forJavaLike(
+              CodeClassImplementConfig.asIs(
+                CodeClassConstructorConfig.forJavaLike(
+                  CodeClassConstructorListConfig.newLineSeparated(
+                    child,
+                  ),
                 ),
               ),
             ),

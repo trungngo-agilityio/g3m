@@ -9,10 +9,12 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
     String packageKeyword = 'package',
   }) =>
       CodePackageConfig((context, package) {
-        return CodeStatement(Join.spaceSeparated([
-          Text(packageKeyword),
-          package.name,
-        ]));
+        return CodeStatement(
+          Join.spaceSeparated([
+            Text(packageKeyword),
+            package.name,
+          ]),
+        );
       }, child);
 }
 
@@ -25,4 +27,12 @@ class CodePackage extends CodeConfigProxyNode<CodePackage> {
   factory CodePackage.of(String name) => CodePackage(
         CodePackageName.of(name),
       );
+}
+
+class CodePackageName extends SingleChildNode {
+  CodePackageName(Node child) : super(CodeName(child));
+
+  factory CodePackageName.of(String text) {
+    return text == null ? null : CodePackageName(CodeName.of(text));
+  }
 }

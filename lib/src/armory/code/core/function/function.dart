@@ -55,7 +55,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   final CodeFunctionArgList args;
   final CodeFunctionReturnList returns;
   final CodeFunctionThrowList throws;
-  final CodeFunctionBody body;
+  final CodeBlock body;
 
   CodeFunction({
     @required this.name,
@@ -74,7 +74,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     Map<String, String> args,
     List<String> returns,
     List<String> throws,
-    List<String> body,
+    Node body,
   }) =>
       CodeFunction(
         name: CodeName.of(name),
@@ -83,9 +83,6 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,
         throws: throws != null ? CodeFunctionThrowList.list(throws) : null,
-        // TODO
-        body: body != null
-            ? CodeFunctionBody(CodeStatementList.list(body))
-            : null,
+        body: CodeBlock(body),
       );
 }

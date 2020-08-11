@@ -4,16 +4,19 @@ import 'package:test/test.dart';
 import '../../utils.dart';
 
 void main() {
-  void run(Node child, String expected) {
-    var code = DartCode(child);
-    runAndExpect(code, expected);
+  void run(Node child, String expected) async {
+    var code = DartCode(CodeClass.of(name: 'person', body: child));
+    await runAndExpect(code, expected);
   }
 
-  test('simple', () {
-    run(
+  test('hello', () async {
+    await run(
       CodeClassConstructor.of(
-        comment: 'Just a sample',
-        body: 'what',
+        comment: 'Just a sample\n'
+            'Another line.\n'
+            'Another line.',
+        access: CodeAccess.public(),
+        body: 'var a = 1;',
       ),
       'abc',
     );

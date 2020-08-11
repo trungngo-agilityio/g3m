@@ -7,16 +7,37 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
 
   factory CodeClassConstructorConfig.forJavaLike(
     Node child, {
-    String constructorKeyword = 'constructor',
+    String constructorKeyword,
+    bool appendClassName = true,
   }) =>
       CodeClassConstructorConfig((context, func) {
+        final clazz = context.dependOnAncestorNodeOfExactType<CodeClass>();
+
+        Node name;
+
+        if (appendClassName && func.name != null) {
+          name = Container([clazz.name, '.', func.name]);
+        } else if (appendClassName) {
+          name = clazz.name;
+        } else {
+          name = func.name;
+        }
+
         final def = Container([
           func.comment,
-          constructorKeyword,
-          func.name,
-          '(',
-          func.args,
-          ')',
+          Trim.leftRight(
+            Container([
+              func.access,
+              constructorKeyword != null && constructorKeyword.isNotEmpty
+                  ? Container([' ', constructorKeyword])
+                  : null,
+              ' ',
+              name,
+              '(',
+              func.args,
+              ')',
+            ]),
+          ),
         ]);
 
         if (func.body == null) {
@@ -57,14 +78,16 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
 
   factory CodeClassConstructor.of({
     String name,
-    String comment,
+    CodeAccess access,
     Map<String, String> args,
     List<String> returns,
     List<String> throws,
+    String comment,
     dynamic body,
   }) =>
       CodeClassConstructor(
         name: CodeName.of(name),
+        access: access,
         comment: comment != null ? CodeComment.of(comment) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         body: CodeBlock.of(body),

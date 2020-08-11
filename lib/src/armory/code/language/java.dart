@@ -46,16 +46,18 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
       CodeBlockConfig.curlyBracketSameLine(
         CodeNameConfig.forJavaLike(
           CodeCommentConfig.forJavaLike(
-            CodePackageConfig.forJavaLike(
-              CodeDataTypeConfig.forJavaLike(
-                CodeStatementListConfig.asIs(
-                  CodeStatementConfig.endWithCommaAndNewLine(
-                    _buildCodeAccess(
-                      _buildGenericConfig(
-                        _buildFieldConfig(
-                          _buildFunctionConfig(
-                            _buildClassConfig(
-                              child,
+            _buildPackageConfig(
+              _buildImportConfig(
+                CodeDataTypeConfig.forJavaLike(
+                  CodeStatementListConfig.asIs(
+                    CodeStatementConfig.endWithCommaAndNewLine(
+                      _buildCodeAccess(
+                        _buildGenericConfig(
+                          _buildFieldConfig(
+                            _buildFunctionConfig(
+                              _buildClassConfig(
+                                child,
+                              ),
                             ),
                           ),
                         ),
@@ -73,6 +75,20 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
 
   Node _buildCodeAccess(Node child) {
     return CodeAccessConfig.of(child);
+  }
+
+  Node _buildPackageConfig(Node child) {
+    return CodePackageConfig.forJavaLike(child);
+  }
+
+  Node _buildImportConfig(Node child) {
+    return CodeImportConfig.forJavaLike(
+      CodeImportListConfig.forJavaLike(
+        CodeImportTypeConfig.forJavaLike(
+          child,
+        ),
+      ),
+    );
   }
 
   Node _buildGenericConfig(Node child) {
@@ -98,10 +114,8 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
           CodeFunctionReturnConfig.asIs(
             CodeFunctionThrowListConfig.commaSeparated(
               CodeFunctionThrowConfig.asIs(
-                CodeFunctionBodyConfig.asCodeBlock(
-                  CodeFunctionListConfig.newLineSeparated(
-                    CodeFunctionConfig.forJavaLike(child),
-                  ),
+                CodeFunctionListConfig.newLineSeparated(
+                  CodeFunctionConfig.forJavaLike(child),
                 ),
               ),
             ),

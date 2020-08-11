@@ -8,6 +8,8 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
         child,
         dataType: pascal,
         package: camel,
+        importPackageName: camel,
+        importTypeName: pascal,
         clazz: pascal,
         field: camel,
         function: camel,
@@ -20,6 +22,8 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
     Node child, {
     @required StringFunc dataType,
     @required StringFunc package,
+    @required StringFunc importPackageName,
+    @required StringFunc importTypeName,
     @required StringFunc clazz,
     @required StringFunc field,
     @required StringFunc function,
@@ -33,6 +37,8 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
             (e) =>
                 e is CodeDataType ||
                 e is CodePackageName ||
+                e is CodeImport ||
+                e is CodeImportType ||
                 e is CodeClass ||
                 e is CodeField ||
                 e is CodeFunction ||
@@ -47,6 +53,10 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
             func = dataType;
           } else if (container is CodePackageName) {
             func = package;
+          } else if (container is CodeImport) {
+            func = importPackageName;
+          } else if (container is CodeImportType) {
+            func = importTypeName;
           } else if (container is CodeClass) {
             func = clazz;
           } else if (container is CodeField) {
@@ -62,7 +72,7 @@ class CodeNameConfig extends CodeConfigNode<CodeName> {
 
         func ??= other;
 
-        return TextTransform(name.content, func);
+        return TextTransform(name.content ?? '', func);
       }, child);
 }
 
@@ -72,6 +82,6 @@ class CodeName extends CodeConfigProxyNode<CodeName> {
   CodeName(this.content);
 
   factory CodeName.of(String text) {
-    return CodeName(Text(text));
+    return text == null ? null : CodeName(Text(text));
   }
 }
