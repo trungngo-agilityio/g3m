@@ -19,11 +19,14 @@ class CodeStatementListConfig extends CodeConfigNode<CodeStatementList> {
 class CodeStatementList extends CodeConfigProxyNode<CodeStatementList> {
   final List<CodeStatement> statements;
 
-  CodeStatementList(this.statements);
+  CodeStatementList._(this.statements);
+
+  factory CodeStatementList.of(List<CodeStatement> statements) =>
+      statements?.isNotEmpty == true ? CodeStatementList._(statements) : null;
 
   factory CodeStatementList.single(String line) =>
-      CodeStatementList([CodeStatement.of(line)]);
+      CodeStatementList._([CodeStatement.of(line)]);
 
-  factory CodeStatementList.list(List<String> lines) =>
-      CodeStatementList(lines?.map((type) => CodeStatement.of(type))?.toList());
+  factory CodeStatementList.list(List<String> lines) => CodeStatementList.of(
+      lines?.map((type) => CodeStatement.of(type))?.toList());
 }

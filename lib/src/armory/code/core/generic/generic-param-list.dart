@@ -22,11 +22,15 @@ class CodeGenericParamListConfig extends CodeConfigNode<CodeGenericParamList> {
 class CodeGenericParamList extends CodeConfigProxyNode<CodeGenericParamList> {
   final List<CodeGenericParam> params;
 
-  CodeGenericParamList(this.params);
+  CodeGenericParamList._(this.params);
 
   factory CodeGenericParamList.single(String type) =>
-      CodeGenericParamList([CodeGenericParam.of(type)]);
+      CodeGenericParamList._([CodeGenericParam.of(type)]);
 
-  factory CodeGenericParamList.list(List<String> types) => CodeGenericParamList(
-      types?.map((type) => CodeGenericParam.of(type))?.toList());
+  factory CodeGenericParamList.list(List<String> types) =>
+      CodeGenericParamList._(
+          types?.map((type) => CodeGenericParam.of(type))?.toList());
+
+  factory CodeGenericParamList.of(List<CodeGenericParam> params) =>
+      params?.isNotEmpty == true ? CodeGenericParamList._(params) : null;
 }

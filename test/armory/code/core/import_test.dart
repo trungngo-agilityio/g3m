@@ -43,7 +43,7 @@ void main() {
   group('import list', () {
     test('all', () async {
       var code = JavaCode(
-        CodeImportList([single, multi]),
+        CodeImportList.of([single, multi]),
       );
 
       await runAndExpect(

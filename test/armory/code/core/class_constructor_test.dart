@@ -5,7 +5,7 @@ import '../../utils.dart';
 
 void main() {
   void run(Node child, String expected) async {
-    var code = DartCode(CodeClass.of('person', body: child));
+    var code = JavaCode(CodeClass.of('person', body: child));
     await runAndExpect(code, expected);
   }
 
@@ -18,7 +18,17 @@ void main() {
         access: CodeAccess.public(),
         body: 'var a = 1;',
       ),
-      'abc',
+      'class Person {\n'
+      '  /**\n'
+      '   * Just a sample\n'
+      '   * Another line.\n'
+      '   * Another line.\n'
+      '   */\n'
+      '  public Person() {\n'
+      '    var a = 1;\n'
+      '  }\n'
+      '  \n'
+      '}\n',
     );
   });
 }

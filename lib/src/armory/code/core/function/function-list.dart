@@ -22,5 +22,8 @@ class CodeFunctionListConfig extends CodeConfigNode<CodeFunctionList> {
 class CodeFunctionList extends CodeConfigProxyNode<CodeFunctionList> {
   final List<CodeFunction> functions;
 
-  CodeFunctionList(this.functions);
+  CodeFunctionList._(this.functions);
+
+  factory CodeFunctionList.of(List<CodeFunction> functions) =>
+      functions?.isNotEmpty == true ? CodeFunctionList._(functions) : null;
 }

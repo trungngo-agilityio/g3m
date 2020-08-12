@@ -22,5 +22,8 @@ class CodeImportListConfig extends CodeConfigNode<CodeImportList> {
 class CodeImportList extends CodeConfigProxyNode<CodeImportList> {
   final List<CodeImport> imports;
 
-  CodeImportList(this.imports);
+  CodeImportList._(this.imports);
+
+  factory CodeImportList.of(List<CodeImport> imports) =>
+      imports?.isNotEmpty == true ? CodeImportList._(imports) : null;
 }

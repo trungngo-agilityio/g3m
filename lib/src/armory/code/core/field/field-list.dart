@@ -22,13 +22,16 @@ class CodeFieldListConfig extends CodeConfigNode<CodeFieldList> {
 class CodeFieldList extends CodeConfigProxyNode<CodeFieldList> {
   final List<CodeField> fields;
 
-  CodeFieldList(this.fields);
+  CodeFieldList._(this.fields);
+
+  factory CodeFieldList.of(List<CodeField> fields) =>
+      fields?.isNotEmpty == true ? CodeFieldList._(fields) : null;
 
   factory CodeFieldList.ofNameType(String name, String type) =>
-      CodeFieldList([CodeField.of(name: name, type: type)]);
+      CodeFieldList._([CodeField.of(name: name, type: type)]);
 
   factory CodeFieldList.ofNameTypeMap(Map<String, String> types) =>
-      CodeFieldList(types?.entries
+      CodeFieldList._(types?.entries
           ?.map((e) => CodeField.of(name: e.key, type: e.value))
           ?.toList());
 }

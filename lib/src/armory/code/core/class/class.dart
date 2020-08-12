@@ -91,15 +91,15 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   }) =>
       CodeClass(
         name: CodeClassName.of(name),
-        generic: CodeGenericParamList(generic),
+        generic: CodeGenericParamList.of(generic),
         access: access,
         extend: extend,
         implements: CodeTypeList.of(implements),
         body: CodeBlock(
           Container([
-            CodeFieldList(fields),
+            CodeFieldList.of(fields),
             CodeClassConstructorList(constructors),
-            CodeFunctionList(functions),
+            CodeFunctionList.of(functions),
             body,
           ]),
         ),

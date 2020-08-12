@@ -78,12 +78,12 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
         name: CodeTypeName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         access: access,
-        generic: CodeGenericParamList(generic),
+        generic: CodeGenericParamList.of(generic),
         extend: CodeTypeList.of(extend),
         body: CodeBlock(
           Container([
-            CodeFieldList(fields),
-            CodeFunctionList(functions),
+            CodeFieldList.of(fields),
+            CodeFunctionList.of(functions),
             body,
           ]),
         ),

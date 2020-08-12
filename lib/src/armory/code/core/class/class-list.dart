@@ -6,7 +6,7 @@ class CodeClassListConfig extends CodeConfigNode<CodeClassList> {
 
   factory CodeClassListConfig.newLineSeparated(Node child) =>
       CodeClassListConfig((context, param) {
-        final children = param.functions;
+        final children = param.classes;
         if (children == null || children.isEmpty) {
           return null;
         }
@@ -20,7 +20,10 @@ class CodeClassListConfig extends CodeConfigNode<CodeClassList> {
 }
 
 class CodeClassList extends CodeConfigProxyNode<CodeClassList> {
-  final List<CodeClass> functions;
+  final List<CodeClass> classes;
 
-  CodeClassList(this.functions);
+  CodeClassList._(this.classes);
+
+  factory CodeClassList.of(List<CodeClass> classes) =>
+      classes?.isNotEmpty == true ? CodeClassList._(classes) : null;
 }

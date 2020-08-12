@@ -29,10 +29,10 @@ class JavaCodeFile implements Node {
     var source = Container([
       comment,
       package,
-      CodeImportList(imports),
-      CodeFunctionList(functions),
-      CodeInterfaceList(interfaces),
-      CodeClassList(classes),
+      CodeImportList.of(imports),
+      CodeFunctionList.of(functions),
+      CodeInterfaceList.of(interfaces),
+      CodeClassList.of(classes),
       body,
     ]);
 

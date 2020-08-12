@@ -7,7 +7,7 @@ class CodeInterfaceListConfig extends CodeConfigNode<CodeInterfaceList> {
 
   factory CodeInterfaceListConfig.newLineSeparated(Node child) =>
       CodeInterfaceListConfig((context, param) {
-        final children = param.functions;
+        final children = param.interfaces;
         if (children == null || children.isEmpty) {
           return null;
         }
@@ -21,7 +21,10 @@ class CodeInterfaceListConfig extends CodeConfigNode<CodeInterfaceList> {
 }
 
 class CodeInterfaceList extends CodeConfigProxyNode<CodeInterfaceList> {
-  final List<CodeInterface> functions;
+  final List<CodeInterface> interfaces;
 
-  CodeInterfaceList(this.functions);
+  CodeInterfaceList._(this.interfaces);
+
+  factory CodeInterfaceList.of(List<CodeInterface> interfaces) =>
+      interfaces?.isNotEmpty == true ? CodeInterfaceList._(interfaces) : null;
 }
