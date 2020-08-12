@@ -12,10 +12,10 @@ class CodeClassImplementConfig extends CodeConfigNode<CodeClassImplement> {
 }
 
 class CodeClassImplement extends CodeConfigProxyNode<CodeClassImplement> {
-  final CodeDataType type;
+  final CodeType type;
 
   CodeClassImplement(this.type);
 
   factory CodeClassImplement.simple(String type) =>
-      CodeClassImplement(CodeDataType.simple(type));
+      CodeClassImplement(CodeType.simple(type));
 }

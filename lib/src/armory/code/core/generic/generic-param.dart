@@ -11,10 +11,10 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
 }
 
 class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam> {
-  final CodeDataType name;
+  final CodeType name;
 
   CodeGenericParam(this.name);
 
   factory CodeGenericParam.simple(String name) =>
-      CodeGenericParam(CodeDataType.simple(name));
+      CodeGenericParam(CodeType.simple(name));
 }

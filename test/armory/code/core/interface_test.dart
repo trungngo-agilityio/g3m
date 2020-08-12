@@ -29,14 +29,14 @@ CodeClassImplement makeImplement(String name) {
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) {
-      var code = DartCode(build());
+      var code = JavaCode(build());
       runAndExpect(code, expected);
     }
 
     test('empty', () {
       run(
-        () => CodeClass.of(name: 'person'),
-        'class Person {\n'
+        () => CodeInterface.of(name: 'person'),
+        'interface Person {\n'
         '  \n'
         '}\n',
       );
@@ -44,11 +44,11 @@ void main() {
 
     test('with code access', () {
       run(
-        () => CodeClass.of(
+        () => CodeInterface.of(
           name: 'person',
-          access: CodeAccess.privateAbstract(),
+          access: CodeAccess.private(),
         ),
-        'private abstract class Person {\n'
+        'private interface Person {\n'
         '  \n'
         '}\n',
       );
@@ -56,12 +56,14 @@ void main() {
 
     test('with comment', () {
       run(
-        () => CodeClass.of(
+        () => CodeInterface.of(
           name: 'person',
           comment: 'hello world',
         ),
-        '/// hello world\n'
-        'class Person {\n'
+        '/**\n'
+        ' * hello world\n'
+        ' */\n'
+        'interface Person {\n'
         '  \n'
         '}\n',
       );
@@ -69,13 +71,13 @@ void main() {
 
     test('with field', () {
       run(
-        () => CodeClass.of(
+        () => CodeInterface.of(
           name: 'person',
           fields: CodeFieldList([
             makeField('first name'),
           ]),
         ),
-        'class Person {\n'
+        'interface Person {\n'
         '  \n'
         '  \n'
         '  String firstName;\n'
@@ -118,10 +120,14 @@ void main() {
         'class Person {\n'
         '  \n'
         '  \n'
-        '  /// test hello world 1\n'
+        '  /**\n'
+        '   * test hello world 1\n'
+        '   */\n'
         '  String helloWorld1(String name, Person other);\n'
         '  \n'
-        '  /// test hello world 2\n'
+        '  /**\n'
+        '   * test hello world 2\n'
+        '   */\n'
         '  String helloWorld2(String name, Person other);\n'
         '  \n'
         '}\n',
@@ -136,8 +142,7 @@ void main() {
           ]);
 
           final extend = CodeClassExtendList([
-            CodeClassExtend(
-                CodeType(CodeTypeName.of('car'), generic: generic))
+            CodeClassExtend(CodeType(CodeTypeName.of('car'), generic: generic))
           ]);
 
           final implements = CodeClassImplementList([

@@ -47,7 +47,7 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
         CodeCommentConfig.forJavaLike(
           _buildPackageConfig(
             _buildImportConfig(
-              CodeDataTypeConfig.forJavaLike(
+              _buildTypeConfig(
                 CodeStatementListConfig.asIs(
                   CodeStatementConfig.endWithCommaAndNewLine(
                     _buildDataType(
@@ -55,8 +55,10 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
                         _buildGenericConfig(
                           _buildFieldConfig(
                             _buildFunctionConfig(
-                              _buildClassConfig(
-                                child,
+                              _buildInterfaceConfig(
+                                _buildClassConfig(
+                                  child,
+                                ),
                               ),
                             ),
                           ),
@@ -78,8 +80,8 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
   }
 
   Node _buildDataType(Node child) {
-    return CodeDataTypeNameConfig.forJavaLike(
-      CodeDataTypeConfig.forDartLike(
+    return CodeTypeNameConfig.forJavaLike(
+      CodeTypeConfig.forDartLike(
         child,
       ),
     );
@@ -95,6 +97,16 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
     return CodeImportConfig.forJavaLike(
       CodeImportListConfig.forJavaLike(
         CodeImportTypeConfig.forJavaLike(
+          child,
+        ),
+      ),
+    );
+  }
+
+  Node _buildTypeConfig(Node child) {
+    return CodeTypeNameConfig.forJavaLike(
+      CodeTypeConfig.forJavaLike(
+        CodeTypeListConfig.commaSeparated(
           child,
         ),
       ),
@@ -137,6 +149,14 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Node _buildInterfaceConfig(Node child) {
+    return CodeInterfaceConfig.forJavaLike(
+      CodeInterfaceListConfig.newLineSeparated(
+        child,
       ),
     );
   }

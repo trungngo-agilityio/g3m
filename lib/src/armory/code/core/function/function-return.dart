@@ -12,10 +12,10 @@ class CodeFunctionReturnConfig extends CodeConfigNode<CodeFunctionReturn> {
 }
 
 class CodeFunctionReturn extends CodeConfigProxyNode<CodeFunctionReturn> {
-  final CodeDataType type;
+  final CodeType type;
 
   CodeFunctionReturn(this.type);
 
   factory CodeFunctionReturn.simple(String type) =>
-      CodeFunctionReturn(CodeDataType.simple(type));
+      CodeFunctionReturn(CodeType.simple(type));
 }

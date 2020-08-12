@@ -25,6 +25,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
       CodeCommentConfig.forCode(
         child,
         clazz: code.commentTripleSplash,
+        interfaze: code.commentTripleSplash,
         field: code.commentTripleSplash,
         function: code.commentTripleSplash,
         other: code.commentDoubleSplash,
@@ -34,6 +35,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
       CodeCommentConfig.forCode(
         child,
         clazz: code.commentJavaDoc,
+        interfaze: code.commentJavaDoc,
         field: code.commentDoubleSplash,
         function: code.commentJavaDoc,
         other: code.commentDoubleSplash,
@@ -42,6 +44,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
   factory CodeCommentConfig.forCode(
     Node child, {
     @required StringFunc clazz,
+    @required StringFunc interfaze,
     @required StringFunc field,
     @required StringFunc function,
     @required StringFunc other,
@@ -49,7 +52,11 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
       CodeCommentConfig((context, codeComment) {
         // Finds the nearest container for this comment.
         final container = context.ancestors.firstWhere(
-            (e) => e is CodeClass || e is CodeField || e is CodeFunction,
+            (e) =>
+                e is CodeClass ||
+                e is CodeInterface ||
+                e is CodeField ||
+                e is CodeFunction,
             orElse: () => null);
 
         var func;
@@ -57,6 +64,8 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
           // Determines the comment style for the given container.
           if (container is CodeClass) {
             func = clazz;
+          } else if (container is CodeInterface) {
+            func = interfaze;
           } else if (container is CodeField) {
             func = field;
           } else if (container is CodeFunction) {

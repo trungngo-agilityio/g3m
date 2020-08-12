@@ -7,28 +7,28 @@ void main() {
   group('data type', () {
     test('simple', () {
       var code = DartCode(
-        CodeDataType.simple('my car'),
+        CodeType.simple('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('array', () {
       var code = DartCode(
-        CodeDataType.array('car'),
+        CodeType.array('car'),
       );
       runAndExpect(code, 'List<Car>');
     });
 
     test('generic', () {
       var code = DartCode(
-        CodeDataType.genericSingle('list', 'car'),
+        CodeType.genericSingle('list', 'car'),
       );
       runAndExpect(code, 'List<Car>');
     });
 
     test('generic array', () {
       var code = DartCode(
-        CodeDataType.genericSingleArray('Vehicle', 'car'),
+        CodeType.genericSingleArray('Vehicle', 'car'),
       );
       runAndExpect(code, 'List<Vehicle<Car>>');
     });

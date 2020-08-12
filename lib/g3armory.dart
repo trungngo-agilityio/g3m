@@ -13,6 +13,10 @@ part 'src/armory/code/core/annotation.dart';
 
 part 'src/armory/code/core/block.dart';
 
+part 'src/armory/code/core/interface/interface.dart';
+
+part 'src/armory/code/core/interface/interface-list.dart';
+
 part 'src/armory/code/core/class/class-constructor-list.dart';
 
 part 'src/armory/code/core/class/class-constructor-name.dart';
@@ -41,9 +45,11 @@ part 'src/armory/code/core/comment.dart';
 
 part 'src/armory/code/core/config.dart';
 
-part 'src/armory/code/core/data-type-name.dart';
+part 'src/armory/code/core/type/type-name.dart';
 
-part 'src/armory/code/core/data-type.dart';
+part 'src/armory/code/core/type/type.dart';
+
+part 'src/armory/code/core/type/type-list.dart';
 
 part 'src/armory/code/core/field/field-list.dart';
 

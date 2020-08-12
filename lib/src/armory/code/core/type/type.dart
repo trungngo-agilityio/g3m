@@ -1,27 +1,27 @@
 part of g3.armory;
 
-/// Provides configuration for how [CodeDataType] node will render.
+/// Provides configuration for how [CodeType] node will render.
 ///
 /// Here are some useful predefined factory methods:
-/// [CodeDataTypeConfig.forJavaLike], [CodeDataTypeConfig.forDartLike]
+/// [CodeTypeConfig.forJavaLike], [CodeTypeConfig.forDartLike]
 /// that might work for many existing programming languages.
 ///
-class CodeDataTypeConfig extends CodeConfigNode<CodeDataType> {
-  CodeDataTypeConfig(NodeBuildFunc<CodeDataType> buildFunc, Node child)
+class CodeTypeConfig extends CodeConfigNode<CodeType> {
+  CodeTypeConfig(NodeBuildFunc<CodeType> buildFunc, Node child)
       : super(buildFunc, child);
 
   /// Creates a data type config just like java language.
   /// It will work for csharp, typescript and many others.
-  factory CodeDataTypeConfig.forJavaLike(Node child) =>
-      CodeDataTypeConfig._internal(child, false);
+  factory CodeTypeConfig.forJavaLike(Node child) =>
+      CodeTypeConfig._internal(child, false);
 
   /// Creates a data type config for dart language.
   ///
-  factory CodeDataTypeConfig.forDartLike(Node child) =>
-      CodeDataTypeConfig._internal(child, true);
+  factory CodeTypeConfig.forDartLike(Node child) =>
+      CodeTypeConfig._internal(child, true);
 
-  factory CodeDataTypeConfig._internal(Node child, bool isDart) =>
-      CodeDataTypeConfig((context, type) {
+  factory CodeTypeConfig._internal(Node child, bool isDart) =>
+      CodeTypeConfig((context, type) {
         final params = type.generic;
         final array = type.array;
 
@@ -53,18 +53,18 @@ class CodeDataTypeConfig extends CodeConfigNode<CodeDataType> {
         return name;
       }, child);
 
-  static CodeDataTypeConfig of(BuildContext context) {
-    return context.dependOnAncestorNodeOfExactType<CodeDataTypeConfig>();
+  static CodeTypeConfig of(BuildContext context) {
+    return context.dependOnAncestorNodeOfExactType<CodeTypeConfig>();
   }
 }
 
 /// Defines how to make a data type reference.
 ///
-/// Important: [CodeDataTypeConfig] is a required ancestor for this node.
+/// Important: [CodeTypeConfig] is a required ancestor for this node.
 ///
-class CodeDataType extends CodeConfigProxyNode<CodeDataType> {
+class CodeType extends CodeConfigProxyNode<CodeType> {
   /// The data type name.
-  final CodeDataTypeName name;
+  final CodeTypeName name;
 
   /// The list of generic params.
   final CodeGenericParamList generic;
@@ -72,37 +72,37 @@ class CodeDataType extends CodeConfigProxyNode<CodeDataType> {
   /// True indicates that this is an array type.
   final bool array;
 
-  CodeDataType(this.name, {this.generic, this.array});
+  CodeType(this.name, {this.generic, this.array});
 
-  factory CodeDataType.simple(String name) =>
-      CodeDataType(CodeDataTypeName.of(name));
+  factory CodeType.simple(String name) =>
+      CodeType(CodeTypeName.of(name));
 
-  factory CodeDataType.genericSingle(String name, String param) => CodeDataType(
-        CodeDataTypeName.of(name),
+  factory CodeType.genericSingle(String name, String param) => CodeType(
+        CodeTypeName.of(name),
         generic: CodeGenericParamList.single(param),
       );
 
-  factory CodeDataType.genericList(String name, List<String> params) =>
-      CodeDataType(
-        CodeDataTypeName.of(name),
+  factory CodeType.genericList(String name, List<String> params) =>
+      CodeType(
+        CodeTypeName.of(name),
         generic: CodeGenericParamList.list(params),
       );
 
-  factory CodeDataType.array(String name) => CodeDataType(
-        CodeDataTypeName.of(name),
+  factory CodeType.array(String name) => CodeType(
+        CodeTypeName.of(name),
         array: true,
       );
 
-  factory CodeDataType.genericSingleArray(String name, String param) =>
-      CodeDataType(
-        CodeDataTypeName.of(name),
+  factory CodeType.genericSingleArray(String name, String param) =>
+      CodeType(
+        CodeTypeName.of(name),
         generic: CodeGenericParamList.single(param),
         array: true,
       );
 
-  factory CodeDataType.genericListArray(String name, List<String> params) =>
-      CodeDataType(
-        CodeDataTypeName.of(name),
+  factory CodeType.genericListArray(String name, List<String> params) =>
+      CodeType(
+        CodeTypeName.of(name),
         generic: CodeGenericParamList.list(params),
         array: true,
       );

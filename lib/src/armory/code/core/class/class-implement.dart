@@ -11,10 +11,10 @@ class CodeClassExtendConfig extends CodeConfigNode<CodeClassExtend> {
 }
 
 class CodeClassExtend extends CodeConfigProxyNode<CodeClassExtend> {
-  final CodeDataType type;
+  final CodeType type;
 
   CodeClassExtend(this.type);
 
   factory CodeClassExtend.simple(String type) =>
-      CodeClassExtend(CodeDataType.simple(type));
+      CodeClassExtend(CodeType.simple(type));
 }

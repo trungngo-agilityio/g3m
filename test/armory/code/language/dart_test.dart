@@ -42,7 +42,7 @@ void main() {
               implements: CodeClassImplementList([
                 CodeClassImplement.simple('wheel'),
                 CodeClassImplement(
-                  CodeDataType.genericSingle('fuel', 'T'),
+                  CodeType.genericSingle('fuel', 'T'),
                 ),
               ]),
               fields: CodeFieldList([

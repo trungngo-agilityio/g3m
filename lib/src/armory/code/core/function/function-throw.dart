@@ -12,10 +12,10 @@ class CodeFunctionThrowConfig extends CodeConfigNode<CodeFunctionThrow> {
 }
 
 class CodeFunctionThrow extends CodeConfigProxyNode<CodeFunctionThrow> {
-  final CodeDataType name;
+  final CodeType name;
 
   CodeFunctionThrow(this.name);
 
   factory CodeFunctionThrow.simple(String name) =>
-      CodeFunctionThrow(CodeDataType.simple(name));
+      CodeFunctionThrow(CodeType.simple(name));
 }
