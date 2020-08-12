@@ -157,8 +157,10 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
             CodeVarNameConfig.forJavaLike(
               CodeIfConfig.forJavaLike(
                 CodeElseIfConfig.forJavaLike(
-                  CodeFunctionCallConfig.forJavaLike(
-                    child,
+                  CodeReturnConfig.forJavaLike(
+                    CodeFunctionCallConfig.forJavaLike(
+                      child,
+                    ),
                   ),
                 ),
               ),
