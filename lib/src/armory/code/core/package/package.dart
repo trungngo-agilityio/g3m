@@ -10,8 +10,9 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
   }) =>
       CodePackageConfig((context, package) {
         return CodeStatement(
-          Join.spaceSeparated([
-            Text(packageKeyword),
+          Container([
+            packageKeyword,
+            ' ',
             package.name,
           ]),
         );

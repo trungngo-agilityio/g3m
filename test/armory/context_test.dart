@@ -8,7 +8,7 @@ class _ContextAncestorDump implements Node {
   Node build(BuildContext context) {
     final names =
         context.ancestors.map((e) => e.runtimeType.toString()).join(', ');
-    return Text(names);
+    return Text.of(names);
   }
 }
 

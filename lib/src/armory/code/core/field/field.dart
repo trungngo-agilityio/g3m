@@ -28,17 +28,22 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
 class CodeField extends CodeConfigProxyNode<CodeField> {
   final CodeFieldName name;
   final CodeType type;
+  final CodeExpr init;
   final CodeComment comment;
 
   CodeField({
     this.name,
     this.type,
+    this.init,
     this.comment,
   });
 
-  factory CodeField.of({String name, String type, String comment}) => CodeField(
+  factory CodeField.of(
+          {String name, String type, dynamic init, String comment}) =>
+      CodeField(
         name: CodeFieldName.of(name),
         type: CodeType.simple(type),
+        init: CodeExpr.of(init),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

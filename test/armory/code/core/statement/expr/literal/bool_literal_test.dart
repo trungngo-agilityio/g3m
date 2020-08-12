@@ -1,12 +1,12 @@
 import 'package:g3m/g3armory.dart';
 import 'package:test/test.dart';
 
-import '../../../../utils.dart';
+import '../../../../../utils.dart';
 
 void main() {
   test('null', () {
     var code = JavaCode(
-      CodeNumericLiteral.of(null),
+      CodeBoolLiteral.of(null),
     );
 
     runAndExpect(
@@ -15,25 +15,25 @@ void main() {
     );
   });
 
-  test('from a string', () {
+  test('true', () {
     var code = JavaCode(
-      CodeNumericLiteral.of('1'),
+      CodeBoolLiteral.of(true),
     );
 
     runAndExpect(
       code,
-      '1',
+      'true',
     );
   });
 
-  test('from a number', () {
+  test('false', () {
     var code = JavaCode(
-      CodeNumericLiteral.of(2),
+      CodeBoolLiteral.of(false),
     );
 
     runAndExpect(
       code,
-      '2',
+      'false',
     );
   });
 }

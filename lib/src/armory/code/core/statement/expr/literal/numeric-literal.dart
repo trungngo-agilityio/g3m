@@ -8,11 +8,12 @@ class CodeNumericLiteralConfig extends CodeConfigNode<CodeNumericLiteral> {
   factory CodeNumericLiteralConfig.forJavaLike(Node child) =>
       CodeNumericLiteralConfig((context, literal) {
         if (literal.value == null) return CodeNullLiteral();
-        return Text(literal.value);
+        return Text.of(literal.value);
       }, child);
 }
 
-class CodeNumericLiteral extends CodeConfigProxyNode<CodeNumericLiteral> {
+class CodeNumericLiteral extends CodeConfigProxyNode<CodeNumericLiteral>
+    implements CodeExpr {
   final dynamic value;
 
   CodeNumericLiteral._(this.value);

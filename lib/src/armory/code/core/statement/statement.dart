@@ -6,7 +6,7 @@ class CodeStatementConfig extends CodeConfigNode<CodeStatement> {
 
   factory CodeStatementConfig.endWithCommaAndNewLine(Node child) =>
       CodeStatementConfig((context, statement) {
-        return Container([statement.expression, Text(';'), NewLine()]);
+        return Container([statement.expression, ';\n']);
       }, child);
 
   factory CodeStatementConfig.endWithNewLine(Node child) =>
@@ -20,5 +20,5 @@ class CodeStatement extends CodeConfigProxyNode<CodeStatement> {
 
   CodeStatement(this.expression);
 
-  factory CodeStatement.of(String text) => CodeStatement(Text(text));
+  factory CodeStatement.of(String text) => CodeStatement(Text.of(text));
 }

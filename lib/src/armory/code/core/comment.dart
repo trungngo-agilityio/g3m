@@ -84,7 +84,6 @@ class CodeComment extends CodeConfigProxyNode<CodeComment> {
 
   CodeComment(this.content);
 
-  factory CodeComment.of(String text) {
-    return CodeComment(Text(text));
-  }
+  factory CodeComment.of(String text) =>
+      text != null ? CodeComment(Text.of(text)) : null;
 }

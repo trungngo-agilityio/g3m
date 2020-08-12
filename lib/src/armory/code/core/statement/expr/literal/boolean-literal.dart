@@ -11,12 +11,13 @@ class CodeBoolLiteralConfig extends CodeConfigNode<CodeBoolLiteral> {
   }) =>
       CodeBoolLiteralConfig((context, literal) {
         if (literal.value == null) return CodeNullLiteral();
-        if (literal.value == true) return Text(trueKeyword);
-        return Text(falseKeyword);
+        if (literal.value == true) return Text.of(trueKeyword);
+        return Text.of(falseKeyword);
       }, child);
 }
 
-class CodeBoolLiteral extends CodeConfigProxyNode<CodeBoolLiteral> {
+class CodeBoolLiteral extends CodeConfigProxyNode<CodeBoolLiteral>
+    implements CodeExpr {
   final bool value;
 
   CodeBoolLiteral._(this.value);

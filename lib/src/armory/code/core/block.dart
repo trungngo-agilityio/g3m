@@ -36,12 +36,12 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
       String open, String close, bool newLine, Node child) {
     return CodeBlockConfig((context, codeBlock) {
       return Container([
-        newLine ? NewLine() : null,
-        open != null ? Text(open) : null,
-        NewLine(),
+        newLine ? '\n' : null,
+        open,
+        '\n',
         Indent(codeBlock.child),
-        NewLine(),
-        close != null ? Text(close) : null,
+        '\n',
+        close,
         NewLine(),
       ]);
     }, child);
@@ -65,5 +65,5 @@ class CodeBlock extends CodeConfigProxyNode<CodeBlock> {
       ? null
       : child is CodeBlock
           ? child
-          : CodeBlock(child is Node ? child : Text(child));
+          : CodeBlock(child is Node ? child : Text.of(child));
 }

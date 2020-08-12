@@ -12,7 +12,7 @@ void main() {
       Container([
         JavaCodeFile.of(
           'demo1',
-          body: Text('// You can put anything in this body.'),
+          body: Text.of('// You can put anything in this body.'),
           comment: CodeComment.of('Demo file level comment'),
           package: CodePackage.of('my personal vehicle'),
           imports: [
@@ -29,7 +29,7 @@ void main() {
               args: {
                 'first name': 'string',
               },
-              body: Text('var name = "John";\n'
+              body: Text.of('var name = "John";\n'
                   'print(name);\n'),
             ),
           ],
@@ -40,7 +40,7 @@ void main() {
             clazz(),
           ],
         ),
-        File('abc.txt', Text('hello world')),
+        File('abc.txt', Text.of('hello world')),
       ]),
     );
     await runAndExpect(root, '');
@@ -112,7 +112,7 @@ CodeFunction function() {
     comment: 'just a demo function',
     returns: ['void'],
     throws: ['accident exception', 'bad driver exception'],
-    body: Text('// Just any text'),
+    body: Text.of('// Just any text'),
   );
 }
 

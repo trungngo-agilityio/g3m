@@ -19,6 +19,6 @@ class CodeFunctionArgName extends CodeConfigProxyNode<CodeFunctionArgName> {
   CodeFunctionArgName(this.content);
 
   factory CodeFunctionArgName.of(String text) {
-    return text == null ? null : CodeFunctionArgName(Text(text));
+    return text == null ? null : CodeFunctionArgName(Text.of(text));
   }
 }

@@ -21,6 +21,6 @@ class CodeClassConstructorName
   CodeClassConstructorName(this.content);
 
   factory CodeClassConstructorName.of(String text) {
-    return text == null ? null : CodeClassConstructorName(Text(text));
+    return text == null ? null : CodeClassConstructorName(Text.of(text));
   }
 }

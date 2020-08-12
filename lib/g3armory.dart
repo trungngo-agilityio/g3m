@@ -89,6 +89,22 @@ part 'src/armory/code/core/statement/continue.dart';
 
 part 'src/armory/code/core/statement/expr.dart';
 
+part 'src/armory/code/core/statement/expr/literal/array-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/boolean-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/char-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/list-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/map-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/null-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/numeric-literal.dart';
+
+part 'src/armory/code/core/statement/expr/literal/string-literal.dart';
+
 part 'src/armory/code/core/statement/for-each.dart';
 
 part 'src/armory/code/core/statement/for.dart';
@@ -106,16 +122,6 @@ part 'src/armory/code/core/statement/statement.dart';
 part 'src/armory/code/core/statement/var-name.dart';
 
 part 'src/armory/code/core/statement/var.dart';
-
-part 'src/armory/code/core/statement/expr/null-literal.dart';
-
-part 'src/armory/code/core/statement/expr/char-literal.dart';
-
-part 'src/armory/code/core/statement/expr/string-literal.dart';
-
-part 'src/armory/code/core/statement/expr/numeric-literal.dart';
-
-part 'src/armory/code/core/statement/expr/boolean-literal.dart';
 
 part 'src/armory/code/core/statement/while.dart';
 

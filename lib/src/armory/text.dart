@@ -6,9 +6,14 @@ part of g3.armory;
 class Text extends NoChildNode implements Renderer {
   final String text;
 
-  Text(dynamic text) : text = text?.toString();
+  Text._(String text) : text = text?.toString();
 
-  factory Text.space([count]) => Text(' ' * (count ?? 1));
+  factory Text.of(dynamic text) {
+    final s = text?.toString();
+    return s == null ? null : Text._(s);
+  }
+
+  factory Text.space([count]) => Text._(' ' * (count ?? 1));
 
   @override
   void render(RenderContext context) {
@@ -386,7 +391,7 @@ class Join implements Node {
   factory Join.spaceSeparated(List<Node> children) => Join.of(' ', children);
 
   factory Join.of(String separator, List<Node> children) =>
-      Join(Text(separator), children);
+      Join(Text.of(separator), children);
 
   @override
   Node build(BuildContext context) {

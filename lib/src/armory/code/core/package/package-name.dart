@@ -21,6 +21,6 @@ class CodePackageName extends CodeConfigProxyNode<CodePackageName> {
   CodePackageName(this.content);
 
   factory CodePackageName.of(String text) {
-    return text == null ? null : CodePackageName(Text(text));
+    return text == null ? null : CodePackageName(Text.of(text));
   }
 }

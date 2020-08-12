@@ -18,6 +18,6 @@ class CodeTypeName extends CodeConfigProxyNode<CodeTypeName> {
   CodeTypeName(this.content);
 
   factory CodeTypeName.of(String text) {
-    return text == null ? null : CodeTypeName(Text(text));
+    return text == null ? null : CodeTypeName(Text.of(text));
   }
 }

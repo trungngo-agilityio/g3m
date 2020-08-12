@@ -19,15 +19,15 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
               : null,
           func.name,
           func.generic,
-          Text('('),
+          '(',
           func.args,
-          Text(')'),
+          ')',
           func.throws != null
               ? Container([
                   throwKeyword != null
                       ? Container([
-                          Text.space(),
-                          Text(throwKeyword),
+                          ' ',
+                          throwKeyword,
                         ])
                       : null,
                   Text.space(),

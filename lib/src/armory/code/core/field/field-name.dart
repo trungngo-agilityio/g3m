@@ -18,6 +18,6 @@ class CodeFieldName extends CodeConfigProxyNode<CodeFieldName> {
   CodeFieldName(this.content);
 
   factory CodeFieldName.of(String text) {
-    return text == null ? null : CodeFieldName(Text(text));
+    return text == null ? null : CodeFieldName(Text.of(text));
   }
 }
