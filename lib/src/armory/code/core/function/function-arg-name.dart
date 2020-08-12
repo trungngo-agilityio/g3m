@@ -1,7 +1,8 @@
 part of g3.armory;
 
 class CodeFunctionArgNameConfig extends CodeConfigNode<CodeFunctionArgName> {
-  CodeFunctionArgNameConfig(NodeBuildFunc<CodeFunctionArgName> buildFunc, Node child)
+  CodeFunctionArgNameConfig(
+      NodeBuildFunc<CodeFunctionArgName> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeFunctionArgNameConfig.of(StringFunc func, Node child) =>

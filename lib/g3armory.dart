@@ -95,11 +95,11 @@ part 'src/armory/code/core/statement.dart';
 
 part 'src/armory/code/core/syntax.dart';
 
-part 'src/armory/code/language/dart.dart';
+part 'src/armory/code/language/dart/dart.dart';
 
-part 'src/armory/code/language/java.dart';
+part 'src/armory/code/language/java/java.dart';
 
-part 'src/armory/code/language/markdown.dart';
+part 'src/armory/code/language/markdown/markdown.dart';
 
 part 'src/armory/container.dart';
 

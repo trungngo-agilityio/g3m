@@ -145,17 +145,17 @@ class DartCode extends ExactlyOneNode<DartCode> {
   Node _buildFunctionConfig(Node child) {
     return CodeFunctionNameConfig.forJavaLike(
       CodeFunctionArgNameConfig.forJavaLike(
-      CodeFunctionArgListConfig.commaSeparated(
-        CodeFunctionArgConfig.typeSpaceName(
-          CodeFunctionReturnListConfig.commaSeparated(
-            CodeFunctionReturnConfig.asIs(
-              CodeFunctionThrowListConfig.commaSeparated(
-                CodeFunctionThrowConfig.asIs(
-                  CodeFunctionListConfig.newLineSeparated(
-                    CodeFunctionConfig.forJavaLike(child),
+        CodeFunctionArgListConfig.commaSeparated(
+          CodeFunctionArgConfig.typeSpaceName(
+            CodeFunctionReturnListConfig.commaSeparated(
+              CodeFunctionReturnConfig.asIs(
+                CodeFunctionThrowListConfig.commaSeparated(
+                  CodeFunctionThrowConfig.asIs(
+                    CodeFunctionListConfig.newLineSeparated(
+                      CodeFunctionConfig.forJavaLike(child),
+                    ),
                   ),
                 ),
-              ),
               ),
             ),
           ),
