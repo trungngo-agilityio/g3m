@@ -13,8 +13,9 @@ void main() {
     test('empty', () {
       run(
         () => CodeInterface.of('person'),
+        '\n'
         'interface Person {\n'
-        '  \n'
+        '\n'
         '}\n',
       );
     });
@@ -25,8 +26,9 @@ void main() {
           'person',
           access: CodeAccess.private(),
         ),
+        '\n'
         'private interface Person {\n'
-        '  \n'
+        '\n'
         '}\n',
       );
     });
@@ -37,11 +39,12 @@ void main() {
           'person',
           comment: 'hello world',
         ),
+        '\n'
         '/**\n'
         ' * hello world\n'
         ' */\n'
         'interface Person {\n'
-        '  \n'
+        '\n'
         '}\n',
       );
     });
@@ -54,31 +57,27 @@ void main() {
             makeField('first name'),
           ],
         ),
+        '\n'
         'interface Person {\n'
-        '  \n'
-        '  \n'
         '  String firstName;\n'
-        '  \n'
         '}\n',
       );
     });
 
     test('with field list', () {
       run(
-        () => CodeClass.of(
+        () => CodeInterface.of(
           'person',
           fields: [
             makeField('first name'),
             makeField('last name'),
           ],
         ),
-        'class Person {\n'
-        '  \n'
-        '  \n'
+        '\n'
+        'interface Person {\n'
         '  String firstName;\n'
-        '  \n'
+        '\n'
         '  String lastName;\n'
-        '  \n'
         '}\n',
       );
     });
@@ -86,7 +85,7 @@ void main() {
     test('with function list', () {
       run(
         () {
-          return CodeClass.of(
+          return CodeInterface.of(
             'person',
             functions: [
               function('hello world 1'),
@@ -94,19 +93,17 @@ void main() {
             ],
           );
         },
-        'class Person {\n'
-        '  \n'
-        '  \n'
+        '\n'
+        'interface Person {\n'
         '  /**\n'
         '   * test hello world 1\n'
         '   */\n'
         '  String helloWorld1(String name, Person other);\n'
-        '  \n'
+        '\n'
         '  /**\n'
         '   * test hello world 2\n'
         '   */\n'
         '  String helloWorld2(String name, Person other);\n'
-        '  \n'
         '}\n',
       );
     });
@@ -120,10 +117,6 @@ void main() {
 
           final extend = CodeType.genericSingle('car', genericParam());
 
-          final implements = [
-            CodeType.genericSingle('vehicle', genericParam()),
-          ];
-
           final fields = [
             makeField('first name'),
             makeField('last name'),
@@ -134,17 +127,17 @@ void main() {
             function('hello world 2'),
           ];
 
-          return CodeClass.of(
+          return CodeInterface.of(
             'person',
             access: CodeAccess.publicAbstract(),
             generic: generic,
-            extend: extend,
-            implements: implements,
+            extend: [extend],
             fields: fields,
             functions: functions,
           );
         },
-        'public abstract class Person<T> extends Car<T> implements FourWheel, Vehicle<T> {\n'
+        '\n'
+        'public abstract interface Person<T> extends Car<T> implements FourWheel, Vehicle<T> {\n'
         '  \n'
         '  \n'
         '  String firstName;\n'

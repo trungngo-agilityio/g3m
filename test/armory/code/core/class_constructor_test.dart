@@ -16,8 +16,9 @@ void main() {
             'Another line.\n'
             'Another line.',
         access: CodeAccess.public(),
-        body: 'var a = 1;',
+        body: Container(['var a = 1;']),
       ),
+      '\n'
       'class Person {\n'
       '  /**\n'
       '   * Just a sample\n'
@@ -27,7 +28,6 @@ void main() {
       '  public Person() {\n'
       '    var a = 1;\n'
       '  }\n'
-      '  \n'
       '}\n',
     );
   });

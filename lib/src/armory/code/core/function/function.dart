@@ -10,6 +10,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
   }) =>
       CodeFunctionConfig((context, func) {
         final def = Container([
+          '\n',
           func.comment,
           func.returns != null
               ? Container([
@@ -37,7 +38,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
         ]);
 
         if (func.body == null) {
-          return CodeStatement(def);
+          return CodeStatement.of(def);
         } else {
           return Container([
             def,
@@ -74,7 +75,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     Map<String, String> args,
     List<String> returns,
     List<String> throws,
-    Node body,
+    List<dynamic> body,
   }) =>
       CodeFunction(
         name: CodeFunctionName.of(name),
@@ -83,6 +84,6 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,
         throws: throws != null ? CodeFunctionThrowList.list(throws) : null,
-        body: CodeBlock.of(body),
+        body: CodeBlock.of(CodeStatementList.of(body)),
       );
 }

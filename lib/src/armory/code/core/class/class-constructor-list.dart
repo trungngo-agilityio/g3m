@@ -14,8 +14,7 @@ class CodeClassConstructorListConfig
         }
 
         return Container([
-          NewLine(),
-          NewLine(),
+          '\n',
           Join.newLineSeparated(children),
         ]);
       }, child);

@@ -28,8 +28,9 @@ void main() {
     test('empty', () {
       run(
         () => CodeClass.of('person'),
+        '\n'
         'class Person {\n'
-        '  \n'
+        '\n'
         '}\n',
       );
     });
@@ -40,8 +41,9 @@ void main() {
           'person',
           access: CodeAccess.privateAbstract(),
         ),
+        '\n'
         'private abstract class Person {\n'
-        '  \n'
+        '\n'
         '}\n',
       );
     });
@@ -52,9 +54,10 @@ void main() {
           'person',
           comment: 'hello world',
         ),
+        '\n'
         '/// hello world\n'
         'class Person {\n'
-        '  \n'
+        '\n'
         '}\n',
       );
     });
@@ -67,11 +70,9 @@ void main() {
             makeField('first name'),
           ],
         ),
+        '\n'
         'class Person {\n'
-        '  \n'
-        '  \n'
         '  String firstName;\n'
-        '  \n'
         '}\n',
       );
     });
@@ -85,13 +86,11 @@ void main() {
             makeField('last name'),
           ],
         ),
+        '\n'
         'class Person {\n'
-        '  \n'
-        '  \n'
         '  String firstName;\n'
-        '  \n'
+        '\n'
         '  String lastName;\n'
-        '  \n'
         '}\n',
       );
     });
@@ -107,15 +106,13 @@ void main() {
             ],
           );
         },
+        '\n'
         'class Person {\n'
-        '  \n'
-        '  \n'
         '  /// test hello world 1\n'
         '  String helloWorld1(String name, Person other);\n'
-        '  \n'
+        '\n'
         '  /// test hello world 2\n'
         '  String helloWorld2(String name, Person other);\n'
-        '  \n'
         '}\n',
       );
     });

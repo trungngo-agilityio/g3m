@@ -24,6 +24,7 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
         }
 
         final def = Container([
+          '\n',
           func.comment,
           Trim.leftRight(
             Container([
@@ -41,12 +42,13 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
         ]);
 
         if (func.body == null) {
-          return CodeStatement(def);
+          return CodeStatement.of(def);
         } else {
           return Container([
             def,
             ' ',
             func.body,
+            '\n',
           ]);
         }
       }, child);
@@ -83,7 +85,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     List<String> returns,
     List<String> throws,
     String comment,
-    dynamic body,
+    Node body,
   }) =>
       CodeClassConstructor(
         name: CodeClassConstructorName.of(name),

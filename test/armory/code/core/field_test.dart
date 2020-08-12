@@ -11,7 +11,11 @@ void main() {
         type: 'string',
       ),
     );
-    runAndExpect(code, 'String firstName;\n');
+    runAndExpect(
+      code,
+      '\n'
+      'String firstName;\n',
+    );
   });
 
   test('with init', () {
@@ -22,7 +26,11 @@ void main() {
         init: CodeStringLiteral.of('john'),
       ),
     );
-    runAndExpect(code, 'String firstName = "john";\n');
+    runAndExpect(
+      code,
+      '\n'
+      'String firstName = "john";\n',
+    );
   });
 
   test('with comment', () {

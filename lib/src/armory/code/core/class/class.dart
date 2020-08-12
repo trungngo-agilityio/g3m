@@ -12,6 +12,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
   }) =>
       CodeClassConfig((context, clazz) {
         return Container([
+          '\n',
           clazz.comment,
           Trim.leftRight(
             Container([
@@ -39,8 +40,9 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
                   : null,
             ]),
           ),
-          Text.space(),
+          ' ',
           clazz.body,
+          '\n',
         ]);
       }, child);
 }
@@ -95,7 +97,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
         access: access,
         extend: extend,
         implements: CodeTypeList.of(implements),
-        body: CodeBlock(
+        body: CodeBlock.of(
           Container([
             CodeFieldList.of(fields),
             CodeClassConstructorList(constructors),

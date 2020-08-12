@@ -10,7 +10,7 @@ class CodeImportTypeConfig extends CodeConfigNode<CodeImportType> {
   }) =>
       CodeImportTypeConfig((context, import) {
         final package = context.dependOnAncestorNodeOfExactType<CodeImport>();
-        return CodeStatement(
+        return CodeStatement.of(
           Container([
             importKeyword,
             ' ',

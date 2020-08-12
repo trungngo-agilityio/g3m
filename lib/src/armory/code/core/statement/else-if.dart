@@ -10,22 +10,22 @@ class CodeElseIfConfig extends CodeConfigNode<CodeElseIf> {
     String elseKeyword = 'else',
   }) =>
       CodeElseIfConfig((context, expr) {
-        return CodeStatement(Container([
-          expr.comment,
+        return Container([
+          expr.comment ?? ' ',
           elseKeyword,
           ' ',
           ifKeyword,
           ' (',
           expr.condition,
           ') ',
-          expr.thenBlock,
-        ]));
+          CodeBlock.of(expr.thenBlock),
+        ]);
       }, child);
 }
 
 class CodeElseIf extends CodeConfigProxyNode<CodeElseIf> {
   final CodeExpr condition;
-  final CodeBlock thenBlock;
+  final CodeStatementList thenBlock;
   final CodeComment comment;
 
   CodeElseIf({
@@ -36,12 +36,12 @@ class CodeElseIf extends CodeConfigProxyNode<CodeElseIf> {
 
   factory CodeElseIf.of(
     dynamic condition,
-    dynamic thenBlock, {
+    List<dynamic> thenBlock, {
     String comment,
   }) =>
       CodeElseIf(
         condition: CodeExpr.of(condition),
-        thenBlock: CodeBlock.of(thenBlock),
+        thenBlock: CodeStatementList.of(thenBlock),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

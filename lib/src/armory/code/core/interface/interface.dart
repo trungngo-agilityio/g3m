@@ -11,6 +11,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
   }) =>
       CodeInterfaceConfig((context, interface) {
         return Container([
+          '\n',
           interface.comment,
           Trim.leftRight(
             Container([
@@ -32,6 +33,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
           ),
           ' ',
           interface.body,
+          '\n',
         ]);
       }, child);
 }
@@ -80,7 +82,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
         access: access,
         generic: CodeGenericParamList.of(generic),
         extend: CodeTypeList.of(extend),
-        body: CodeBlock(
+        body: CodeBlock.of(
           Container([
             CodeFieldList.of(fields),
             CodeFunctionList.of(functions),

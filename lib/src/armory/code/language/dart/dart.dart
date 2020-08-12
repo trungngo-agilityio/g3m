@@ -147,7 +147,7 @@ class DartCode extends ExactlyOneNode<DartCode> {
   Node _buildFieldConfig(Node child) {
     return CodeFieldNameConfig.forJavaLike(
       CodeFieldListConfig.newLineSeparated(
-        CodeFieldConfig.typeThenName(
+        CodeFieldConfig.forJavaLike(
           child,
         ),
       ),

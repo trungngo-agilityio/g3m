@@ -6,40 +6,56 @@ import '../../../utils.dart';
 void main() {
   test('simple', () async {
     var code = JavaCode(
-      CodeIf.of(true, 'print("Hello World!");'),
+      CodeIf.of(true, ['print("Hello World!")']),
     );
 
     await runAndExpect(
       code,
-      'continue;\n',
+      'if (true) {\n'
+      '  print("Hello World!");\n'
+      '}',
     );
   });
 
   test('with else', () async {
     var code = JavaCode(
-      CodeIf.of(true, 'print("do something");',
-          elseBlock: 'print("do something else");'),
+      CodeIf.of(true, ['print("do something")'],
+          elseBlock: ['print("do something else")']),
     );
 
     await runAndExpect(
       code,
-      'continue;\n',
+      'if (true) {\n'
+      '  print("do something");\n'
+      '} else {\n'
+      '  print("do something else");\n'
+      '}',
     );
   });
 
   test('with else if', () async {
     var code = JavaCode(
-      CodeIf.of(true, 'print("do something");',
-          elseIfBlocks: [
-            CodeElseIf.of(false, 'print("do something");'),
-            CodeElseIf.of(false, 'print("do something");'),
-          ],
-          elseBlock: 'print("do something else");'),
+      CodeIf.of(true, [
+        'print("do something");'
+      ], elseIfBlocks: [
+        CodeElseIf.of(false, ['print("do something")']),
+        CodeElseIf.of(false, ['print("do something")']),
+      ], elseBlock: [
+        'print("do something else")'
+      ]),
     );
 
     await runAndExpect(
       code,
-      'continue;\n',
+      'if (true) {\n'
+      '  print("do something");;\n'
+      '} else if (false) {\n'
+      '  print("do something");\n'
+      '} else if (false) {\n'
+      '  print("do something");\n'
+      '} else {\n'
+      '  print("do something else");\n'
+      '}',
     );
   });
 }

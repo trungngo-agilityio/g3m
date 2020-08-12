@@ -4,25 +4,20 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
   CodeFieldConfig(NodeBuildFunc<CodeField> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFieldConfig.typeThenName(Node child) =>
-      CodeFieldConfig((context, field) {
-        return CodeStatement(Container([
-          field.comment,
-          field.type,
-          Text.space(),
-          field.name,
-        ]));
-      }, child);
-
   factory CodeFieldConfig.forJavaLike(Node child) =>
       CodeFieldConfig((context, field) {
-        return CodeStatement(Container([
-          field.comment,
-          field.name,
-          Text.space(),
-          field.type,
-          field.init != null ? Container([' = ', field.init]) : null,
-        ]));
+        return Container([
+          '\n',
+          CodeStatement.of(
+            Container([
+              field.comment,
+              field.type,
+              ' ',
+              field.name,
+              field.init != null ? Container([' = ', field.init]) : null,
+            ]),
+          )
+        ]);
       }, child);
 }
 

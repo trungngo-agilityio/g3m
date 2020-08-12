@@ -81,7 +81,7 @@ void main() {
       var code = DartCode(
         CodeFunction.of(
           'hello',
-          body: Container(['// some sample comment', 'callAFunction()']),
+          body: ['// some sample comment', 'callAFunction()'],
         ),
       );
       runAndExpect(

@@ -24,14 +24,12 @@ void main() {
             ]),
           ],
           functions: [
-            CodeFunction.of(
-              'hello',
-              args: {
-                'first name': 'string',
-              },
-              body: Text.of('var name = "John";\n'
+            CodeFunction.of('hello', args: {
+              'first name': 'string',
+            }, body: [
+              Text.of('var name = "John";\n'
                   'print(name);\n'),
-            ),
+            ]),
           ],
           interfaces: [
             interfaze(),
@@ -89,7 +87,7 @@ CodeClass clazz() {
       CodeClassConstructor.of(
           comment: 'a demo constructor',
           args: {'name': 'string'},
-          body: '// Any free text can be here'),
+          body: Container(['// Any free text can be here'])),
     ],
     functions: [
       function(),
@@ -105,15 +103,15 @@ CodeClass clazz() {
 }
 
 CodeFunction function() {
-  return CodeFunction.of(
-    'drive',
-    generic: ['T'],
-    args: {'vehicle': 'car'},
-    comment: 'just a demo function',
-    returns: ['void'],
-    throws: ['accident exception', 'bad driver exception'],
-    body: Text.of('// Just any text'),
-  );
+  return CodeFunction.of('drive',
+      generic: ['T'],
+      args: {'vehicle': 'car'},
+      comment: 'just a demo function',
+      returns: ['void'],
+      throws: ['accident exception', 'bad driver exception'],
+      body: [
+        Text.of('// Just any text'),
+      ]);
 }
 
 CodeField field() {

@@ -9,7 +9,7 @@ class CodeReturnConfig extends CodeConfigNode<CodeReturn> {
     String returnKeyword = 'return',
   }) =>
       CodeReturnConfig((context, expr) {
-        return CodeStatement(Container([
+        return CodeStatement.of(Container([
           expr.comment,
           returnKeyword,
           ' ',

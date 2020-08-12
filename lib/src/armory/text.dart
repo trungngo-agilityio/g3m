@@ -258,7 +258,18 @@ class Indent implements Node {
     final config = IndentationConfig.of(context);
     var tab = config.useTab ? '\t' : ' ';
     tab *= config.size * level ?? 1;
-    return TextTransform(child, (s) => tab + s.split('\n').join('\n${tab}'));
+    return TextTransform(child, (s) {
+      s = s.trimLeft();
+
+      var lines = s.split('\n');
+      lines = lines.map((e) {
+        if (e.trim().isEmpty) return '';
+        return '${tab}${e}';
+      }).toList();
+
+      s = lines.join('\n');
+      return s.trimRight();
+    });
   }
 }
 

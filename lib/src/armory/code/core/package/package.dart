@@ -9,7 +9,7 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
     String packageKeyword = 'package',
   }) =>
       CodePackageConfig((context, package) {
-        return CodeStatement(
+        return CodeStatement.of(
           Container([
             packageKeyword,
             ' ',

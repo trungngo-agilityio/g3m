@@ -8,32 +8,35 @@ class CodeIfConfig extends CodeConfigNode<CodeIf> {
     Node child, {
     String ifKeyword = 'if',
     String elseKeyword = 'else',
+    String openBlock = '{',
+    String closeBlock = '{',
   }) =>
       CodeIfConfig((context, expr) {
-        return CodeStatement(Container([
+        return Container([
           expr.comment,
           ifKeyword,
           ' (',
           expr.condition,
           ') ',
-          expr.thenBlock,
-          expr.elseIfBlocks != null ? Container(expr.elseIfBlocks) : null,
+          CodeBlock.of(expr.thenBlock),
+          Container(expr.elseIfBlocks),
           expr.elseBlock != null
               ? Container([
+                  ' ',
                   elseKeyword,
                   ' ',
-                  expr.elseBlock,
+                  CodeBlock.of(expr.elseBlock),
                 ])
               : null,
-        ]));
+        ]);
       }, child);
 }
 
 class CodeIf extends CodeConfigProxyNode<CodeIf> {
   final CodeExpr condition;
-  final CodeBlock thenBlock;
+  final CodeStatementList thenBlock;
   final List<CodeElseIf> elseIfBlocks;
-  final CodeBlock elseBlock;
+  final CodeStatementList elseBlock;
   final CodeComment comment;
 
   CodeIf({
@@ -46,16 +49,16 @@ class CodeIf extends CodeConfigProxyNode<CodeIf> {
 
   factory CodeIf.of(
     dynamic condition,
-    dynamic thenBlock, {
+    List<dynamic> thenBlock, {
     List<CodeElseIf> elseIfBlocks,
-    dynamic elseBlock,
+    List<dynamic> elseBlock,
     String comment,
   }) =>
       CodeIf(
         condition: CodeExpr.of(condition),
-        thenBlock: CodeBlock.of(thenBlock),
+        thenBlock: CodeStatementList.of(thenBlock),
         elseIfBlocks: elseIfBlocks,
-        elseBlock: CodeBlock.of(elseBlock),
+        elseBlock: CodeStatementList.of(elseBlock),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

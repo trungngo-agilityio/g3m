@@ -1,7 +1,10 @@
 part of g3.armory;
 
-class _PlainTextExpr extends SingleChildNode implements CodeExpr {
-  _PlainTextExpr(Node child) : super(child);
+class _CodeFreeExpr extends SingleChildNode implements CodeExpr {
+  _CodeFreeExpr(Node child) : super(child);
+
+  factory _CodeFreeExpr.text(String text) =>
+      text != null ? _CodeFreeExpr(Text.of(text)) : null;
 }
 
 abstract class CodeExpr implements Node {
@@ -13,6 +16,8 @@ abstract class CodeExpr implements Node {
     // TODO, handle double etc
     if (value is int) return CodeNumericLiteral.of(value);
     if (value is String) return CodeStringLiteral.of(value);
-    return _PlainTextExpr(Text.of(value.toString()));
+    if (value is Node) return _CodeFreeExpr(value);
+    assert(false, '${value.runtimeType.toString()} is not an expression');
+    return null;
   }
 }

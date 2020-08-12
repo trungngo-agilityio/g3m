@@ -158,8 +158,10 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
               CodeIfConfig.forJavaLike(
                 CodeElseIfConfig.forJavaLike(
                   CodeReturnConfig.forJavaLike(
-                    CodeFunctionCallConfig.forJavaLike(
-                      child,
+                    CodeWhileConfig.forJavaLike(
+                      CodeFunctionCallConfig.forJavaLike(
+                        child,
+                      ),
                     ),
                   ),
                 ),
@@ -182,7 +184,7 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
   Node _buildFieldConfig(Node child) {
     return CodeFieldNameConfig.forJavaLike(
       CodeFieldListConfig.newLineSeparated(
-        CodeFieldConfig.typeThenName(
+        CodeFieldConfig.forJavaLike(
           child,
         ),
       ),

@@ -11,7 +11,7 @@ void main() {
 
     runAndExpect(
       code,
-      'String name;\n',
+      'String name',
     );
   });
 
@@ -23,7 +23,7 @@ void main() {
 
     runAndExpect(
       code,
-      'String name = "John Doe";\n',
+      'String name = "John Doe"\n',
     );
   });
 }

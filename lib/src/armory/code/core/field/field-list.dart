@@ -11,11 +11,7 @@ class CodeFieldListConfig extends CodeConfigNode<CodeFieldList> {
           return null;
         }
 
-        return Container([
-          NewLine(),
-          NewLine(),
-          Join.newLineSeparated(children),
-        ]);
+        return Container(['\n', Container(children)]);
       }, child);
 }
 

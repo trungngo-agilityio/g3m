@@ -6,13 +6,13 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
 
   factory CodeVarConfig.forJavaLike(Node child) =>
       CodeVarConfig((context, expr) {
-        return CodeStatement(Container([
+        return Container([
           expr.comment,
           expr.type,
           Text.space(),
           expr.name,
           expr.init != null ? Container([' = ', expr.init]) : null,
-        ]));
+        ]);
       }, child);
 
   factory CodeVarConfig.forDartLike(
@@ -21,7 +21,7 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
     String finalKeyword = 'final',
   }) =>
       CodeVarConfig((context, expr) {
-        return CodeStatement(Container([
+        return Container([
           expr.comment,
           expr.isFinal == true ? finalKeyword : varKeyword,
           ' ',
@@ -29,7 +29,7 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
           ' ',
           expr.type,
           expr.init != null ? Container([' = ', expr.init]) : null,
-        ]));
+        ]);
       }, child);
 }
 

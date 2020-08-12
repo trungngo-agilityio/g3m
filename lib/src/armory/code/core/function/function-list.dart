@@ -12,8 +12,7 @@ class CodeFunctionListConfig extends CodeConfigNode<CodeFunctionList> {
         }
 
         return Container([
-          NewLine(),
-          NewLine(),
+          '\n',
           Join.newLineSeparated(children),
         ]);
       }, child);

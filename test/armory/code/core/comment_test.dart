@@ -64,6 +64,7 @@ void main() {
           type: 'string',
           comment: 'hello',
         ),
+        '\n'
         '// hello\n'
         'String firstName;\n',
       );
@@ -87,11 +88,12 @@ void main() {
                 'world',
                 comment: 'hello',
               ),
+          '\n'
           '/**\n'
           ' * hello\n'
           ' */\n'
           'class World {\n'
-          '  \n'
+          '\n'
           '}\n');
     });
 

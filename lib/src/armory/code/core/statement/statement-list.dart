@@ -21,12 +21,9 @@ class CodeStatementList extends CodeConfigProxyNode<CodeStatementList> {
 
   CodeStatementList._(this.statements);
 
-  factory CodeStatementList.of(List<CodeStatement> statements) =>
-      statements?.isNotEmpty == true ? CodeStatementList._(statements) : null;
-
-  factory CodeStatementList.single(String line) =>
-      CodeStatementList._([CodeStatement.of(line)]);
-
-  factory CodeStatementList.list(List<String> lines) => CodeStatementList.of(
-      lines?.map((type) => CodeStatement.of(type))?.toList());
+  factory CodeStatementList.of(List<dynamic> statements) {
+    if (statements == null) return null;
+    return CodeStatementList._(
+        statements?.map((e) => CodeStatement.of(e))?.toList());
+  }
 }

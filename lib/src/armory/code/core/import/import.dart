@@ -10,7 +10,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
     String asKeyword = 'as',
   }) =>
       CodeImportConfig((context, import) {
-        return CodeStatement(
+        return CodeStatement.of(
           Container([
             importKeyword,
             ' \'',
@@ -31,7 +31,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
         if (import.types != null && import.types.isNotEmpty) {
           return Container(import.types);
         } else {
-          return CodeStatement(
+          return CodeStatement.of(
             Container([
               importKeyword,
               ' ',
