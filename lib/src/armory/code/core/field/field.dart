@@ -21,6 +21,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
           field.name,
           Text.space(),
           field.type,
+          field.init != null ? Container([' = ', field.init]) : null,
         ]));
       }, child);
 }

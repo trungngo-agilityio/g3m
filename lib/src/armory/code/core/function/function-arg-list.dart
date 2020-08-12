@@ -22,10 +22,10 @@ class CodeFunctionArgList extends CodeConfigProxyNode<CodeFunctionArgList> {
   CodeFunctionArgList(this.args);
 
   factory CodeFunctionArgList.ofNameType(String name, String type) =>
-      CodeFunctionArgList([CodeFunctionArg.ofNameType(name, type)]);
+      CodeFunctionArgList([CodeFunctionArg.of(name, type: type)]);
 
   factory CodeFunctionArgList.ofNameTypeMap(Map<String, String> types) =>
       CodeFunctionArgList(types?.entries
-          ?.map((e) => CodeFunctionArg.ofNameType(e.key, e.value))
+          ?.map((e) => CodeFunctionArg.of(e.key, type: e.value))
           ?.toList());
 }

@@ -5,13 +5,24 @@ import '../../utils.dart';
 
 void main() {
   test('simple', () {
-    var code = DartCode(
+    var code = JavaCode(
       CodeField.of(
         name: 'first name',
         type: 'string',
       ),
     );
     runAndExpect(code, 'String firstName;\n');
+  });
+
+  test('with init', () {
+    var code = JavaCode(
+      CodeField.of(
+        name: 'first name',
+        type: 'string',
+        init: CodeStringLiteral.of('john'),
+      ),
+    );
+    runAndExpect(code, 'String firstName = "john";\n');
   });
 
   test('with comment', () {

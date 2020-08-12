@@ -6,16 +6,23 @@ class CodeFunctionArgConfig extends CodeConfigNode<CodeFunctionArg> {
 
   factory CodeFunctionArgConfig.typeSpaceName(Node child) =>
       CodeFunctionArgConfig((context, arg) {
-        return Container([arg.type, Text.space(), arg.name]);
+        return Container([
+          arg.type,
+          ' ',
+          arg.name,
+          arg.init != null ? Container([' = ', arg.init]) : null,
+        ]);
       }, child);
 }
 
 class CodeFunctionArg extends CodeConfigProxyNode<CodeFunctionArg> {
   final CodeFunctionArgName name;
   final CodeType type;
+  final CodeExpr init;
 
-  CodeFunctionArg(this.name, this.type);
+  CodeFunctionArg(this.name, this.type, this.init);
 
-  factory CodeFunctionArg.ofNameType(String name, String type) =>
-      CodeFunctionArg(CodeFunctionArgName.of(name), CodeType.simple(type));
+  factory CodeFunctionArg.of(String name, {String type, dynamic init}) =>
+      CodeFunctionArg(CodeFunctionArgName.of(name), CodeType.simple(type),
+          CodeExpr.of(init));
 }

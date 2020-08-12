@@ -26,9 +26,9 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
           expr.isFinal == true ? finalKeyword : varKeyword,
           ' ',
           expr.name,
-          Text.space(),
+          ' ',
           expr.type,
-          expr.init != null ? Container([' = ', expr]) : null,
+          expr.init != null ? Container([' = ', expr.init]) : null,
         ]));
       }, child);
 }

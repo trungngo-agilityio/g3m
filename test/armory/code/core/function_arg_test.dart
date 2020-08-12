@@ -6,16 +6,23 @@ import '../../utils.dart';
 void main() {
   group('function arg', () {
     test('simple', () {
-      var code = DartCode(
-        CodeFunctionArg.ofNameType('my car', 'car'),
+      var code = JavaCode(
+        CodeFunctionArg.of('my car', type: 'car'),
       );
       runAndExpect(code, 'Car myCar');
+    });
+
+    test('with init', () {
+      var code = JavaCode(
+        CodeFunctionArg.of('name', type: 'String', init: 'john doe'),
+      );
+      runAndExpect(code, 'String name = "john doe"');
     });
   });
 
   group('function arg list', () {
     test('single', () {
-      var code = DartCode(
+      var code = JavaCode(
         CodeFunctionArgList.ofNameType('my car', 'car'),
       );
       runAndExpect(code, 'Car myCar');
@@ -29,7 +36,7 @@ void main() {
     });
 
     test('list - one', () {
-      var code = DartCode(
+      var code = JavaCode(
         CodeFunctionArgList.ofNameTypeMap({
           'my car': 'car',
         }),
@@ -38,7 +45,7 @@ void main() {
     });
 
     test('list - more than one', () {
-      var code = DartCode(
+      var code = JavaCode(
         CodeFunctionArgList.ofNameTypeMap({
           'my car': 'car',
           'my vehicle': 'vehicle',
