@@ -18,5 +18,9 @@ class CodeTypeListConfig extends CodeConfigNode<CodeTypeList> {
 class CodeTypeList extends CodeConfigProxyNode<CodeTypeList> {
   final List<CodeType> functions;
 
-  CodeTypeList(this.functions);
+  CodeTypeList._(this.functions)
+      : assert(functions != null && functions.isNotEmpty);
+
+  factory CodeTypeList.of(List<CodeType> functions) =>
+      functions == null || functions.isEmpty ? null : CodeTypeList._(functions);
 }

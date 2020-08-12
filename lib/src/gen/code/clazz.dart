@@ -16,7 +16,7 @@ class CodeClazzList with IterableMixin<CodeClazz> {
 
   CodeClazz clazz(
     Object name, {
-      bool interface,
+    bool interface,
     bool abstract,
     bool public,
     bool private,

@@ -7,7 +7,7 @@ void main() {
   group('generic param', () {
     test('generic param', () {
       var code = DartCode(
-        CodeGenericParam.simple('hello world'),
+        CodeGenericParam.of('hello world'),
       );
       runAndExpect(code, 'HelloWorld');
     });

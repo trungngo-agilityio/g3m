@@ -28,6 +28,4 @@ void main() {
       'String firstName;\n',
     );
   });
-
-
 }

@@ -11,13 +11,33 @@ class JavaCodeFile implements Node {
   /// The file name without extension.
   final String name;
 
-  /// The header file comment.
-  final Node comment;
-
   /// The file content.
   final Node source;
 
-  JavaCodeFile(this.name, this.comment, this.source);
+  JavaCodeFile(this.name, {this.source});
+
+  factory JavaCodeFile.of(
+    String name, {
+    CodePackage package,
+    CodeComment comment,
+    List<CodeImport> imports,
+    List<CodeFunction> functions,
+    List<CodeInterface> interfaces,
+    List<CodeClass> classes,
+    Node body,
+  }) {
+    var source = Container([
+      comment,
+      package,
+      CodeImportList(imports),
+      CodeFunctionList(functions),
+      CodeInterfaceList(interfaces),
+      CodeClassList(classes),
+      body,
+    ]);
+
+    return JavaCodeFile(name, source: source);
+  }
 
   @override
   Node build(BuildContext context) {
@@ -165,17 +185,9 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
     return CodeClassNameConfig.forJavaLike(
       CodeClassConfig.forJavaLike(
         CodeClassListConfig.newLineSeparated(
-          CodeClassExtendListConfig.forJavaLike(
-            CodeClassExtendConfig.asIs(
-              CodeClassImplementListConfig.forJavaLike(
-                CodeClassImplementConfig.asIs(
-                  CodeClassConstructorConfig.forJavaLike(
-                    CodeClassConstructorListConfig.newLineSeparated(
-                      child,
-                    ),
-                  ),
-                ),
-              ),
+          CodeClassConstructorConfig.forJavaLike(
+            CodeClassConstructorListConfig.newLineSeparated(
+              child,
             ),
           ),
         ),

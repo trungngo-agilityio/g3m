@@ -34,8 +34,7 @@ class CodeImportType extends CodeConfigProxyNode<CodeImportType> {
   }) =>
       CodeImportType(
         type: CodeTypeName.of(type),
-        alias: alias != null && alias.isNotEmpty
-            ? CodeTypeName.of(alias)
-            : null,
+        alias:
+            alias != null && alias.isNotEmpty ? CodeTypeName.of(alias) : null,
       );
 }

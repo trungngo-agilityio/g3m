@@ -111,7 +111,7 @@ class DartCode extends ExactlyOneNode<DartCode> {
   }
 
   Node _buildPackageConfig(Node child) {
-    return CodePackageNameConfig.forJavaLike(
+    return CodePackageNameConfig.forDartLike(
       CodePackageConfig.forJavaLike(child, packageKeyword: 'library'),
     );
   }
@@ -188,17 +188,9 @@ class DartCode extends ExactlyOneNode<DartCode> {
     return CodeClassNameConfig.forJavaLike(
       CodeClassConfig.forJavaLike(
         CodeClassListConfig.newLineSeparated(
-          CodeClassExtendListConfig.forJavaLike(
-            CodeClassExtendConfig.asIs(
-              CodeClassImplementListConfig.forJavaLike(
-                CodeClassImplementConfig.asIs(
-                  CodeClassConstructorConfig.forJavaLike(
-                    CodeClassConstructorListConfig.newLineSeparated(
-                      child,
-                    ),
-                  ),
-                ),
-              ),
+          CodeClassConstructorConfig.forJavaLike(
+            CodeClassConstructorListConfig.newLineSeparated(
+              child,
             ),
           ),
         ),

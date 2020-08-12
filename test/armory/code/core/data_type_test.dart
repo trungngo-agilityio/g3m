@@ -21,7 +21,7 @@ void main() {
 
     test('generic', () {
       var code = DartCode(
-        CodeType.genericSingle('list', 'car'),
+        CodeType.genericSingle('list', CodeGenericParam.of('car')),
       );
       runAndExpect(code, 'List<Car>');
     });

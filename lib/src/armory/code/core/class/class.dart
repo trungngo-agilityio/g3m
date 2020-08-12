@@ -16,15 +16,27 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
           Trim.leftRight(
             Container([
               clazz.access,
-              Text.space(),
-              Text(classKeyword),
-              Text.space(),
+              ' ',
+              classKeyword,
+              ' ',
               clazz.name,
               clazz.generic,
-              Text.space(),
-              clazz.extend,
-              Text.space(),
-              clazz.implements,
+              ' ',
+              clazz.extend != null
+                  ? Container([
+                      extendsKeyword,
+                      ' ',
+                      clazz.extend,
+                    ])
+                  : null,
+              ' ',
+              clazz.implements != null
+                  ? Container([
+                      implementsKeyword,
+                      ' ',
+                      clazz.implements,
+                    ])
+                  : null,
             ]),
           ),
           Text.space(),
@@ -44,15 +56,13 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   final CodeGenericParamList generic;
 
   /// The list of data types that this class extends from.
-  final CodeClassExtendList extend;
+  final CodeType extend;
 
   /// The list of data types that this class implements.
-  final CodeClassImplementList implements;
+  final CodeTypeList implements;
 
   /// Class-level code comment.
   final CodeComment comment;
-
-  final CodeClassConstructorList constructors;
 
   /// The class body.
   final CodeBlock body;
@@ -64,34 +74,32 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     this.extend,
     this.implements,
     this.comment,
-    this.constructors,
     this.body,
   }) : assert(name != null);
 
-  factory CodeClass.of({
-    String name,
+  factory CodeClass.of(
+    String name, {
     CodeAccess access,
-    CodeGenericParamList generic,
-    CodeClassExtendList extend,
-    CodeClassImplementList implements,
-    CodeClassConstructorList constructors,
-    CodeFieldList fields,
-    CodeFunctionList functions,
-    Node body,
+    List<CodeGenericParam> generic,
+    CodeType extend,
+    List<CodeType> implements,
+    List<CodeClassConstructor> constructors,
+    List<CodeField> fields,
+    List<CodeFunction> functions,
     String comment,
+    Node body,
   }) =>
       CodeClass(
         name: CodeClassName.of(name),
-        generic: generic,
+        generic: CodeGenericParamList(generic),
         access: access,
         extend: extend,
-        implements: implements,
-        constructors: constructors,
+        implements: CodeTypeList.of(implements),
         body: CodeBlock(
           Container([
-            fields,
-            constructors,
-            functions,
+            CodeFieldList(fields),
+            CodeClassConstructorList(constructors),
+            CodeFunctionList(functions),
             body,
           ]),
         ),

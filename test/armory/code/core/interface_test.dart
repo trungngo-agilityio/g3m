@@ -3,29 +3,6 @@ import 'package:test/test.dart';
 
 import '../../utils.dart';
 
-CodeField makeField(String name) => CodeField.of(
-      name: name,
-      type: 'string',
-    );
-
-CodeFunction makeFunction(String name) => CodeFunction.of(
-      name,
-      returns: ['string'],
-      args: {
-        'name': 'String',
-        'other': 'Person',
-      },
-      comment: 'test $name',
-    );
-
-CodeClassExtend makeExtend(String name) {
-  return CodeClassExtend(CodeType.simple(name));
-}
-
-CodeClassImplement makeImplement(String name) {
-  return CodeClassImplement(CodeType.simple(name));
-}
-
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) {
@@ -35,7 +12,7 @@ void main() {
 
     test('empty', () {
       run(
-        () => CodeInterface.of(name: 'person'),
+        () => CodeInterface.of('person'),
         'interface Person {\n'
         '  \n'
         '}\n',
@@ -45,7 +22,7 @@ void main() {
     test('with code access', () {
       run(
         () => CodeInterface.of(
-          name: 'person',
+          'person',
           access: CodeAccess.private(),
         ),
         'private interface Person {\n'
@@ -57,7 +34,7 @@ void main() {
     test('with comment', () {
       run(
         () => CodeInterface.of(
-          name: 'person',
+          'person',
           comment: 'hello world',
         ),
         '/**\n'
@@ -72,10 +49,10 @@ void main() {
     test('with field', () {
       run(
         () => CodeInterface.of(
-          name: 'person',
-          fields: CodeFieldList([
+          'person',
+          fields: [
             makeField('first name'),
-          ]),
+          ],
         ),
         'interface Person {\n'
         '  \n'
@@ -89,11 +66,11 @@ void main() {
     test('with field list', () {
       run(
         () => CodeClass.of(
-          name: 'person',
-          fields: CodeFieldList([
+          'person',
+          fields: [
             makeField('first name'),
             makeField('last name'),
-          ]),
+          ],
         ),
         'class Person {\n'
         '  \n'
@@ -110,11 +87,11 @@ void main() {
       run(
         () {
           return CodeClass.of(
-            name: 'person',
-            functions: CodeFunctionList([
-              makeFunction('hello world 1'),
-              makeFunction('hello world 2'),
-            ]),
+            'person',
+            functions: [
+              function('hello world 1'),
+              function('hello world 2'),
+            ],
           );
         },
         'class Person {\n'
@@ -137,34 +114,28 @@ void main() {
     test('with all ', () {
       run(
         () {
-          final generic = CodeGenericParamList([
-            CodeGenericParam.simple('t'),
-          ]);
+          final generic = [
+            genericParam(),
+          ];
 
-          final extend = CodeClassExtendList([
-            CodeClassExtend(CodeType(CodeTypeName.of('car'), generic: generic))
-          ]);
+          final extend = CodeType.genericSingle('car', genericParam());
 
-          final implements = CodeClassImplementList([
-            makeImplement('four wheel'),
-            CodeClassImplement(CodeType(
-              CodeTypeName.of('vehicle'),
-              generic: generic,
-            )),
-          ]);
+          final implements = [
+            CodeType.genericSingle('vehicle', genericParam()),
+          ];
 
-          final fields = CodeFieldList([
+          final fields = [
             makeField('first name'),
             makeField('last name'),
-          ]);
+          ];
 
-          final functions = CodeFunctionList([
-            makeFunction('hello world 1'),
-            makeFunction('hello world 2'),
-          ]);
+          final functions = [
+            function('hello world 1'),
+            function('hello world 2'),
+          ];
 
           return CodeClass.of(
-            name: 'person',
+            'person',
             access: CodeAccess.publicAbstract(),
             generic: generic,
             extend: extend,
@@ -192,3 +163,20 @@ void main() {
     });
   });
 }
+
+CodeGenericParam genericParam() => CodeGenericParam.of('t');
+
+CodeField makeField(String name) => CodeField.of(
+      name: name,
+      type: 'string',
+    );
+
+CodeFunction function(String name) => CodeFunction.of(
+      name,
+      returns: ['string'],
+      args: {
+        'name': 'String',
+        'other': 'Person',
+      },
+      comment: 'test $name',
+    );

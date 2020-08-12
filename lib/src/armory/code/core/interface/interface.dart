@@ -64,29 +64,28 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
     this.body,
   }) : assert(name != null);
 
-  factory CodeInterface.of({
-    String name,
-    CodeAccess access,
-    CodeGenericParamList generic,
-    CodeTypeList extend,
-    CodeTypeList implements,
-    CodeFieldList fields,
-    CodeFunctionList functions,
-    Node body,
+  factory CodeInterface.of(
+    String name, {
     String comment,
+    CodeAccess access,
+    List<CodeGenericParam> generic,
+    List<CodeType> extend,
+    List<CodeField> fields,
+    List<CodeFunction> functions,
+    Node body,
   }) =>
       CodeInterface(
         name: CodeTypeName.of(name),
-        generic: generic,
+        comment: comment != null ? CodeComment.of(comment) : null,
         access: access,
-        extend: extend,
+        generic: CodeGenericParamList(generic),
+        extend: CodeTypeList.of(extend),
         body: CodeBlock(
           Container([
-            fields,
-            functions,
+            CodeFieldList(fields),
+            CodeFunctionList(functions),
             body,
           ]),
         ),
-        comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

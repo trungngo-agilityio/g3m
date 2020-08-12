@@ -25,8 +25,8 @@ class CodeGenericParamList extends CodeConfigProxyNode<CodeGenericParamList> {
   CodeGenericParamList(this.params);
 
   factory CodeGenericParamList.single(String type) =>
-      CodeGenericParamList([CodeGenericParam.simple(type)]);
+      CodeGenericParamList([CodeGenericParam.of(type)]);
 
   factory CodeGenericParamList.list(List<String> types) => CodeGenericParamList(
-      types?.map((type) => CodeGenericParam.simple(type))?.toList());
+      types?.map((type) => CodeGenericParam.of(type))?.toList());
 }

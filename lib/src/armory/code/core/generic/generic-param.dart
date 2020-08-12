@@ -15,6 +15,6 @@ class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam> {
 
   CodeGenericParam(this.name);
 
-  factory CodeGenericParam.simple(String name) =>
+  factory CodeGenericParam.of(String name) =>
       CodeGenericParam(CodeType.simple(name));
 }

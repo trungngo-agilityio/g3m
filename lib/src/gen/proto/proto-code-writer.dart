@@ -19,9 +19,7 @@ class ProtoCodeWriter extends Writer {
   }
 
   void writeMessage(ProtoMessage message) {
-    for (final i in message.eval()) {
-
-    }
+    for (final i in message.eval()) {}
   }
 
   void writeMessageField(ProtoMessage message, ProtoMessageField field) {}

@@ -5,7 +5,7 @@ import '../../utils.dart';
 
 void main() {
   void run(Node child, String expected) async {
-    var code = DartCode(CodeClass.of(name: 'person', body: child));
+    var code = DartCode(CodeClass.of('person', body: child));
     await runAndExpect(code, expected);
   }
 

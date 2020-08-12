@@ -37,10 +37,8 @@ class HttpStatusScopeEx extends HttpStatusScope {
       unsupportedMediaType415,
       rangeNotSatisfiable416,
       expectationFailed417,
-  tooManyRequest429,
-  clientCloseRequest499
-
-  ;
+      tooManyRequest429,
+      clientCloseRequest499;
 
   HttpStatus internalServerError500,
       notImplemented501,

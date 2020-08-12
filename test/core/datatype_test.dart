@@ -38,6 +38,7 @@ void main() {
         'mutable list of user');
 
     expect(user.asDataType().asSet().name.toString(), 'set of user');
-    expect(user.asDataType().asMutableSet().name.toString(), 'mutable set of user');
+    expect(user.asDataType().asMutableSet().name.toString(),
+        'mutable set of user');
   });
 }

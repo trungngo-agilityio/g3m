@@ -18,14 +18,6 @@ CodeFunction makeFunction(String name) => CodeFunction.of(
       comment: 'test $name',
     );
 
-CodeClassExtend makeExtend(String name) {
-  return CodeClassExtend(CodeType.simple(name));
-}
-
-CodeClassImplement makeImplement(String name) {
-  return CodeClassImplement(CodeType.simple(name));
-}
-
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) {
@@ -35,7 +27,7 @@ void main() {
 
     test('empty', () {
       run(
-        () => CodeClass.of(name: 'person'),
+        () => CodeClass.of('person'),
         'class Person {\n'
         '  \n'
         '}\n',
@@ -45,7 +37,7 @@ void main() {
     test('with code access', () {
       run(
         () => CodeClass.of(
-          name: 'person',
+          'person',
           access: CodeAccess.privateAbstract(),
         ),
         'private abstract class Person {\n'
@@ -57,7 +49,7 @@ void main() {
     test('with comment', () {
       run(
         () => CodeClass.of(
-          name: 'person',
+          'person',
           comment: 'hello world',
         ),
         '/// hello world\n'
@@ -70,10 +62,10 @@ void main() {
     test('with field', () {
       run(
         () => CodeClass.of(
-          name: 'person',
-          fields: CodeFieldList([
+          'person',
+          fields: [
             makeField('first name'),
-          ]),
+          ],
         ),
         'class Person {\n'
         '  \n'
@@ -87,11 +79,11 @@ void main() {
     test('with field list', () {
       run(
         () => CodeClass.of(
-          name: 'person',
-          fields: CodeFieldList([
+          'person',
+          fields: [
             makeField('first name'),
             makeField('last name'),
-          ]),
+          ],
         ),
         'class Person {\n'
         '  \n'
@@ -108,11 +100,11 @@ void main() {
       run(
         () {
           return CodeClass.of(
-            name: 'person',
-            functions: CodeFunctionList([
+            'person',
+            functions: [
               makeFunction('hello world 1'),
               makeFunction('hello world 2'),
-            ]),
+            ],
           );
         },
         'class Person {\n'
@@ -131,35 +123,26 @@ void main() {
     test('with all ', () {
       run(
         () {
-          final generic = CodeGenericParamList([
-            CodeGenericParam.simple('t'),
-          ]);
+          final generic = [
+            CodeGenericParam.of('t'),
+          ];
 
-          final extend = CodeClassExtendList([
-            CodeClassExtend(
-                CodeType(CodeTypeName.of('car'), generic: generic))
-          ]);
+          final extend = null;
 
-          final implements = CodeClassImplementList([
-            makeImplement('four wheel'),
-            CodeClassImplement(CodeType(
-              CodeTypeName.of('vehicle'),
-              generic: generic,
-            )),
-          ]);
+          final implements = null;
 
-          final fields = CodeFieldList([
+          final fields = [
             makeField('first name'),
             makeField('last name'),
-          ]);
+          ];
 
-          final functions = CodeFunctionList([
+          final functions = [
             makeFunction('hello world 1'),
             makeFunction('hello world 2'),
-          ]);
+          ];
 
           return CodeClass.of(
-            name: 'person',
+            'person',
             access: CodeAccess.publicAbstract(),
             generic: generic,
             extend: extend,
