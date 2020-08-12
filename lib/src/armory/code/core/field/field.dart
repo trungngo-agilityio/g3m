@@ -14,7 +14,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
         ]));
       }, child);
 
-  factory CodeFieldConfig.nameThenType(Node child) =>
+  factory CodeFieldConfig.forJavaLike(Node child) =>
       CodeFieldConfig((context, field) {
         return CodeStatement(Container([
           field.comment,

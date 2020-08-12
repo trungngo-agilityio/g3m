@@ -391,7 +391,7 @@ class Join implements Node {
   factory Join.spaceSeparated(List<Node> children) => Join.of(' ', children);
 
   factory Join.of(String separator, List<Node> children) =>
-      Join(Text.of(separator), children);
+      children?.isNotEmpty == true ? Join(Text.of(separator), children) : null;
 
   @override
   Node build(BuildContext context) {
