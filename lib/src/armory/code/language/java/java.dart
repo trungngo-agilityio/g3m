@@ -68,8 +68,8 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
           _buildPackageConfig(
             _buildImportConfig(
               _buildTypeConfig(
-                CodeStatementListConfig.asIs(
-                  CodeStatementConfig.endWithCommaAndNewLine(
+                _buildExprConfig(
+                  _buildStatementConfig(
                     _buildDataType(
                       _buildCodeAccess(
                         _buildGenericConfig(
@@ -128,6 +128,34 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
       CodeTypeConfig.forJavaLike(
         CodeTypeListConfig.commaSeparated(
           child,
+        ),
+      ),
+    );
+  }
+
+  Node _buildExprConfig(Node child) {
+    return CodeNullLiteralConfig.forJavaLike(
+      CodeBoolLiteralConfig.forJavaLike(
+        CodeCharLiteralConfig.forJavaLike(
+          CodeStringLiteralConfig.forJavaLike(
+            CodeNumericLiteralConfig.forJavaLike(
+              child,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Node _buildStatementConfig(Node child) {
+    return CodeStatementListConfig.asIs(
+      CodeStatementConfig.endWithCommaAndNewLine(
+        CodeBreakConfig.forJavaLike(
+          CodeContinueConfig.forJavaLike(
+            CodeVarNameConfig.forJavaLike(
+              child,
+            ),
+          ),
         ),
       ),
     );
