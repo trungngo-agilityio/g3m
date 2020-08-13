@@ -4,25 +4,47 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
   CodeArrayLiteralConfig(NodeBuildFunc<CodeArrayLiteral> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeArrayLiteralConfig.forJavaLike(
+  factory CodeArrayLiteralConfig.of(
     Node child, {
     String openBracket = '[',
     String closeBracket = ']',
+    String separator = ',\n',
+    String prefix,
+    bool indent,
   }) =>
       CodeArrayLiteralConfig((context, literal) {
         if (literal.values == null) return CodeNullLiteral();
+        var body = Join.of(
+            separator,
+            literal.values
+                ?.map(
+                  (e) => Pad.left(prefix, e),
+                )
+                ?.toList());
         return Container([
           openBracket,
           literal.values.isNotEmpty
-              ? Container([
-                  ' ',
-                  Join.commaSeparated(literal.values),
-                  ' ',
-                ])
+              ? indent == true ? Indent(body) : body
               : null,
           closeBracket,
         ]);
       }, child);
+
+  factory CodeArrayLiteralConfig.forJsonLike(Node child) =>
+      CodeArrayLiteralConfig.of(child,
+          openBracket: '[\n',
+          closeBracket: '\n]',
+          separator: ',\n',
+          indent: true);
+
+  factory CodeArrayLiteralConfig.forYmlLike(Node child) =>
+      CodeArrayLiteralConfig.of(
+        child,
+        openBracket: '',
+        closeBracket: '\n',
+        separator: '\n',
+        prefix: '- ',
+      );
 }
 
 class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral>

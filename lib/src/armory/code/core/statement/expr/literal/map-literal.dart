@@ -4,7 +4,7 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
   CodeMapLiteralConfig(NodeBuildFunc<CodeMapLiteral> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeMapLiteralConfig.forJavaLike(
+  factory CodeMapLiteralConfig.forJsonLike(
     Node child, {
     String openBracket = '{',
     String closeBracket = '}',
@@ -30,6 +30,33 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
               : null,
           closeBracket,
         ]);
+      }, child);
+
+  factory CodeMapLiteralConfig.forYmlLike(
+    Node child, {
+    String separator = ': ',
+  }) =>
+      CodeMapLiteralConfig((context, literal) {
+        final config = IndentationConfig.of(context);
+
+        if (literal.values == null) return CodeNullLiteral();
+        var pairs = literal.values.entries.map(
+          (e) {
+            return Container([
+              e.key,
+              separator,
+              TextTransform(e.value, (s) {
+                if (s?.contains('\n') == true) {
+                  return '\n' +
+                      Indent.compute(s, config.useTab, config.size, 1);
+                }
+                return s;
+              }),
+            ]);
+          },
+        ).toList();
+
+        return literal.values.isNotEmpty ? Join.of('\n', pairs) : null;
       }, child);
 }
 

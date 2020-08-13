@@ -253,22 +253,26 @@ class Indent implements Node {
 
   Indent(this.child, {this.level = 1});
 
+  static String compute(String s, bool useTab, size, int level) {
+    var tab = useTab ? '\t' : ' ';
+    tab *= size * level ?? 1;
+    s = s.trimLeft();
+
+    var lines = s.split('\n');
+    lines = lines.map((e) {
+      if (e.trim().isEmpty) return '';
+      return '${tab}${e}';
+    }).toList();
+
+    s = lines.join('\n');
+    return s.trimRight();
+  }
+
   @override
   Node build(BuildContext context) {
     final config = IndentationConfig.of(context);
-    var tab = config.useTab ? '\t' : ' ';
-    tab *= config.size * level ?? 1;
     return TextTransform(child, (s) {
-      s = s.trimLeft();
-
-      var lines = s.split('\n');
-      lines = lines.map((e) {
-        if (e.trim().isEmpty) return '';
-        return '${tab}${e}';
-      }).toList();
-
-      s = lines.join('\n');
-      return s.trimRight();
+      return compute(s, config.useTab, config.size, level);
     });
   }
 }

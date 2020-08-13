@@ -16,6 +16,8 @@ abstract class CodeExpr implements Node {
     // TODO, handle double etc
     if (value is int) return CodeNumericLiteral.of(value);
     if (value is String) return CodeStringLiteral.of(value);
+    if (value is List<dynamic>) return CodeArrayLiteral.of(value);
+    if (value is Map<String, dynamic>) return CodeMapLiteral.of(value);
     if (value is Node) return _CodeFreeExpr(value);
     assert(false, '${value.runtimeType.toString()} is not an expression');
     return null;
