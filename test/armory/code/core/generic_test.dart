@@ -6,7 +6,7 @@ import '../../utils.dart';
 void main() {
   group('generic param', () {
     test('generic param', () {
-      var code = DartCode(
+      var code = JavaCode(
         CodeGenericParam.of('hello world'),
       );
       runAndExpect(code, 'HelloWorld');

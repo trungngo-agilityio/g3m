@@ -39,7 +39,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
       CodeField(
         name: CodeFieldName.of(name),
         type: CodeType.simple(type),
-        init: CodeExpr.of(init),
+        init: init != null ? CodeExpr.of(init) : null,
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

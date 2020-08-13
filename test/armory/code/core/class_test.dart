@@ -21,7 +21,7 @@ CodeFunction makeFunction(String name) => CodeFunction.of(
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) {
-      var code = DartCode(build());
+      var code = JavaCode(build());
       runAndExpect(code, expected);
     }
 
@@ -55,7 +55,9 @@ void main() {
           comment: 'hello world',
         ),
         '\n'
-        '/// hello world\n'
+        '/**\n'
+        ' * hello world\n'
+        ' */\n'
         'class Person {\n'
         '\n'
         '}\n',
@@ -108,10 +110,14 @@ void main() {
         },
         '\n'
         'class Person {\n'
-        '  /// test hello world 1\n'
+        '  /**\n'
+        '   * test hello world 1\n'
+        '   */\n'
         '  String helloWorld1(String name, Person other);\n'
         '\n'
-        '  /// test hello world 2\n'
+        '  /**\n'
+        '   * test hello world 2\n'
+        '   */\n'
         '  String helloWorld2(String name, Person other);\n'
         '}\n',
       );

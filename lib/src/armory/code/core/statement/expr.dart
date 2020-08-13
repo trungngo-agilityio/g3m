@@ -9,8 +9,8 @@ class _CodeFreeExpr extends SingleChildNode implements CodeExpr {
 
 abstract class CodeExpr implements Node {
   factory CodeExpr.of(dynamic value) {
-    if (value == null) return null;
     if (value is CodeExpr) return value;
+    if (value == null) return CodeNullLiteral();
     if (value is bool) return CodeBoolLiteral.of(value);
 
     // TODO, handle double etc

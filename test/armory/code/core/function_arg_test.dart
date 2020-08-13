@@ -29,7 +29,7 @@ void main() {
     });
 
     test('list - empty', () {
-      var code = DartCode(
+      var code = JavaCode(
         CodeFunctionArgList.ofNameTypeMap({}),
       );
       runAndExpect(code, '');

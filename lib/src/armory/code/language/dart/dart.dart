@@ -42,7 +42,7 @@ class DartCodeFile implements Node {
 
   @override
   Node build(BuildContext context) {
-    return DartCode(
+    return JavaCode(
       CodeFile(
         name: name,
         extension: extension,

@@ -24,5 +24,5 @@ class CodeFunctionArg extends CodeConfigProxyNode<CodeFunctionArg> {
 
   factory CodeFunctionArg.of(String name, {String type, dynamic init}) =>
       CodeFunctionArg(CodeFunctionArgName.of(name), CodeType.simple(type),
-          CodeExpr.of(init));
+          init != null ? CodeExpr.of(init) : null);
 }

@@ -139,8 +139,12 @@ class JavaCode extends ExactlyOneNode<JavaCode> {
         CodeCharLiteralConfig.forJavaLike(
           CodeStringLiteralConfig.forJavaLike(
             CodeNumericLiteralConfig.forJavaLike(
-              CodeVarConfig.forJavaLike(
-                child,
+              CodeArrayLiteralConfig.forJavaLike(
+                CodeMapLiteralConfig.forJavaLike(
+                  CodeVarConfig.forJavaLike(
+                    child,
+                  ),
+                ),
               ),
             ),
           ),
