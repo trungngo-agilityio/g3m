@@ -6,8 +6,8 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
 
   factory CodeInterfaceConfig.forJavaLike(
     Node child, {
-    String classKeyword = 'interface',
-    String extendsKeyword = 'extends',
+    String classKeyword = 'interface ',
+    String extendsKeyword = 'extends ',
   }) =>
       CodeInterfaceConfig((context, interface) {
         return Container([
@@ -16,16 +16,13 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
           Trim.leftRight(
             Container([
               interface.access,
-              ' ',
               classKeyword,
-              ' ',
               interface.name,
               interface.generic,
               ' ',
               interface.extend != null
                   ? Container([
                       extendsKeyword,
-                      ' ',
                       interface.extend,
                     ])
                   : null,
@@ -69,7 +66,12 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
   factory CodeInterface.of(
     String name, {
     String comment,
-    CodeAccess access,
+    bool private,
+    bool public,
+    bool protected,
+    bool internal,
+    bool abstract,
+    bool static,
     List<CodeGenericParam> generic,
     List<CodeType> extend,
     List<CodeField> fields,
@@ -79,7 +81,14 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
       CodeInterface(
         name: CodeTypeName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
-        access: access,
+        access: CodeAccess(
+          private: private,
+          public: public,
+          protected: protected,
+          internal: internal,
+          abstract: abstract,
+          static: static,
+        ),
         generic: CodeGenericParamList.of(generic),
         extend: CodeTypeList.of(extend),
         body: CodeBlock.of(

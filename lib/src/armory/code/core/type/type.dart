@@ -12,15 +12,16 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
 
   /// Creates a data type config just like java language.
   /// It will work for csharp, typescript and many others.
-  factory CodeTypeConfig.forJavaLike(Node child) =>
-      CodeTypeConfig._internal(child, false);
+  factory CodeTypeConfig.forJavaLike(Node child, {StringFunc mapper}) =>
+      CodeTypeConfig._internal(child, false, mapper);
 
   /// Creates a data type config for dart language.
   ///
-  factory CodeTypeConfig.forDartLike(Node child) =>
-      CodeTypeConfig._internal(child, true);
+  factory CodeTypeConfig.forDartLike(Node child, {StringFunc mapper}) =>
+      CodeTypeConfig._internal(child, true, mapper);
 
-  factory CodeTypeConfig._internal(Node child, bool isDart) =>
+  factory CodeTypeConfig._internal(
+          Node child, bool isDart, StringFunc mapper) =>
       CodeTypeConfig((context, type) {
         final params = type.generic;
         final array = type.array;
@@ -30,6 +31,10 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
           // If there is no complex settings, just return the
           // type name.
           return name;
+        }
+
+        if (mapper != null) {
+          name = TextTransform(name, mapper);
         }
 
         if (params != null) {

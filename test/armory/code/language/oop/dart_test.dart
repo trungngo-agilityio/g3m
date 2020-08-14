@@ -10,7 +10,7 @@ void main() {
     var root = Directory(
       '/tmp',
       Container([
-        JavaCodeFile.of(
+        DartCodeFile.of(
           'demo1',
           body: Text.of('// You can put anything in this body.'),
           comment: CodeComment.of('Demo file level comment'),

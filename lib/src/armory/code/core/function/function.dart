@@ -12,12 +12,14 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
         final def = Container([
           '\n',
           func.comment,
+          func.annotations,
           func.returns != null
               ? Container([
                   func.returns,
                   Text.space(),
                 ])
               : null,
+          func.access,
           func.name,
           func.generic,
           '(',
@@ -52,6 +54,8 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
 class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   final CodeFunctionName name;
   final CodeComment comment;
+  final CodeAnnotationList annotations;
+  final CodeAccess access;
   final CodeGenericParamList generic;
   final CodeFunctionArgList args;
   final CodeFunctionReturnList returns;
@@ -61,6 +65,8 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   CodeFunction({
     @required this.name,
     this.comment,
+    this.annotations,
+    this.access,
     this.generic,
     this.args,
     this.returns,
@@ -71,6 +77,14 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   factory CodeFunction.of(
     String name, {
     String comment,
+    List<CodeAnnotation> annotations,
+    bool override,
+    bool private,
+    bool public,
+    bool protected,
+    bool internal,
+    bool abstract,
+    bool static,
     List<String> generic,
     Map<String, String> args,
     List<String> returns,
@@ -80,6 +94,15 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
       CodeFunction(
         name: CodeFunctionName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
+        annotations: CodeAnnotationList.of(annotations),
+        access: CodeAccess(
+          override: override,
+          private: private,
+          public: public,
+          protected: protected,
+          internal: internal,
+          static: static,
+        ),
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,

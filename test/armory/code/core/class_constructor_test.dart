@@ -15,7 +15,7 @@ void main() {
         comment: 'Just a sample\n'
             'Another line.\n'
             'Another line.',
-        access: CodeAccess.public(),
+        public: true,
         body: Container(['var a = 1;']),
       ),
       '\n'

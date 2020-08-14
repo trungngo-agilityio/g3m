@@ -6,9 +6,9 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
 
   factory CodeClassConfig.forJavaLike(
     Node child, {
-    String classKeyword = 'class',
-    String extendsKeyword = 'extends',
-    String implementsKeyword = 'implements',
+    String classKeyword = 'class ',
+    String extendsKeyword = 'extends ',
+    String implementsKeyword = 'implements ',
   }) =>
       CodeClassConfig((context, clazz) {
         return Container([
@@ -17,16 +17,13 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
           Trim.leftRight(
             Container([
               clazz.access,
-              ' ',
               classKeyword,
-              ' ',
               clazz.name,
               clazz.generic,
               ' ',
               clazz.extend != null
                   ? Container([
                       extendsKeyword,
-                      ' ',
                       clazz.extend,
                     ])
                   : null,
@@ -34,7 +31,6 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
               clazz.implements != null
                   ? Container([
                       implementsKeyword,
-                      ' ',
                       clazz.implements,
                     ])
                   : null,
@@ -81,7 +77,12 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
 
   factory CodeClass.of(
     String name, {
-    CodeAccess access,
+    bool private,
+    bool public,
+    bool protected,
+    bool internal,
+    bool abstract,
+    bool static,
     List<CodeGenericParam> generic,
     CodeType extend,
     List<CodeType> implements,
@@ -94,7 +95,14 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
       CodeClass(
         name: CodeClassName.of(name),
         generic: CodeGenericParamList.of(generic),
-        access: access,
+        access: CodeAccess(
+          private: private,
+          public: public,
+          protected: protected,
+          internal: internal,
+          abstract: abstract,
+          static: static,
+        ),
         extend: extend,
         implements: CodeTypeList.of(implements),
         body: CodeBlock.of(

@@ -39,7 +39,8 @@ void main() {
       run(
         () => CodeClass.of(
           'person',
-          access: CodeAccess.privateAbstract(),
+          private: true,
+          abstract: true,
         ),
         '\n'
         'private abstract class Person {\n'
@@ -146,7 +147,8 @@ void main() {
 
           return CodeClass.of(
             'person',
-            access: CodeAccess.publicAbstract(),
+            public: true,
+            abstract: true,
             generic: generic,
             extend: extend,
             implements: implements,

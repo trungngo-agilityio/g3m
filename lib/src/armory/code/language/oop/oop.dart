@@ -27,6 +27,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeImportTypeConfig> importTypeConfig;
 
   // Type configs
+  OopCodeConfigBuildFunc<CodeTypeNameMapperConfig> typeNameMapperConfig;
   OopCodeConfigBuildFunc<CodeTypeNameConfig> typeNameConfig;
   OopCodeConfigBuildFunc<CodeTypeConfig> typeConfig;
   OopCodeConfigBuildFunc<CodeTypeListConfig> typeListConfig;
@@ -52,6 +53,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeReturnConfig> returnConfig;
   OopCodeConfigBuildFunc<CodeWhileConfig> whileConfig;
   OopCodeConfigBuildFunc<CodeFunctionCallConfig> functionCallConfig;
+
+  // annotation configs
+  OopCodeConfigBuildFunc<CodeAnnotationNameConfig> annotationNameConfig;
+  OopCodeConfigBuildFunc<CodeAnnotationListConfig> annotationListConfig;
+  OopCodeConfigBuildFunc<CodeAnnotationConfig> annotationConfig;
 
   // Generic configs
   OopCodeConfigBuildFunc<CodeGenericParamConfig> genericParamConfig;
@@ -103,6 +109,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.importTypeConfig,
 
     // Type configs
+    @required this.typeNameMapperConfig,
     @required this.typeNameConfig,
     @required this.typeConfig,
     @required this.typeListConfig,
@@ -128,6 +135,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.returnConfig,
     @required this.whileConfig,
     @required this.functionCallConfig,
+
+    // Annotation configs
+    @required this.annotationNameConfig,
+    @required this.annotationListConfig,
+    @required this.annotationConfig,
 
     // Generic configs
     @required this.genericParamConfig,
@@ -163,7 +175,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   }) : super(child) {
     indentConfig = (_, sub) => IndentConfig.useSpace2(sub);
     blockConfig ??= (_, sub) => CodeBlockConfig.curlyBracketSameLine(sub);
-    codeAccessConfig ??= (_, sub) => CodeAccessConfig.of(sub);
+    codeAccessConfig ??= (_, sub) => CodeAccessConfig.forJavaLike(sub);
 
     commentConfig ??= (_, sub) => CodeCommentConfig.forJavaLike(sub);
 
@@ -204,6 +216,13 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     returnConfig ??= (_, sub) => CodeReturnConfig.forJavaLike(sub);
     whileConfig ??= (_, sub) => CodeWhileConfig.forJavaLike(sub);
     functionCallConfig ??= (_, sub) => CodeFunctionCallConfig.forJavaLike(sub);
+
+    // Annotation configs
+    annotationNameConfig ??=
+        (_, sub) => CodeAnnotationNameConfig.forJavaLike(sub);
+    annotationListConfig ??=
+        (_, sub) => CodeAnnotationListConfig.forJavaLike(sub);
+    annotationConfig ??= (_, sub) => CodeAnnotationConfig.forJavaLike(sub);
 
     // Generic configs
     genericParamConfig ??= (_, sub) => CodeGenericParamConfig.forJavaLike(sub);
@@ -248,10 +267,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
         (_, sub) => CodeClassConstructorConfig.forJavaLike(sub);
   }
 
-  static Node abc(BuildContext context, Node child) {
-    return CodeAccessConfig.of(child);
-  }
-
   @override
   Node buildOne(BuildContext context, Node child) {
     final configs = <OopCodeConfigBuildFunc<Node>>[
@@ -271,6 +286,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       importTypeConfig,
 
       // Type configs
+      typeNameMapperConfig,
       typeNameConfig,
       typeConfig,
       typeListConfig,
@@ -296,6 +312,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       returnConfig,
       whileConfig,
       functionCallConfig,
+
+      // Annotation configs,
+      annotationNameConfig,
+      annotationListConfig,
+      annotationConfig,
 
       // Generic configs
       genericParamConfig,
@@ -332,7 +353,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     ];
 
     for (final i in configs.reversed) {
-      child = i(context, child);
+      if (i != null) child = i(context, child);
     }
 
     return child;

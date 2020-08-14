@@ -14,7 +14,7 @@ class DartCodeFile implements Node {
   /// The file content.
   final Node source;
 
-  DartCodeFile(
+  DartCodeFile._(
     this.name, {
     this.source,
   });
@@ -22,27 +22,30 @@ class DartCodeFile implements Node {
   factory DartCodeFile.of(
     String name, {
     CodePackage package,
-    CodeImportList imports,
     CodeComment comment,
-    CodeFunctionList functions,
-    CodeClassList classes,
+    List<CodeImport> imports,
+    List<CodeFunction> functions,
+    List<CodeInterface> interfaces,
+    List<CodeClass> classes,
     Node body,
   }) {
     var source = Container([
       comment,
       package,
-      imports,
-      functions,
-      classes,
+      CodeImportList.of(imports),
+      CodeFunctionList.of(functions),
+      CodeInterfaceList.of(interfaces),
+      CodeClassList.of(classes),
       body,
     ]);
 
-    return DartCodeFile(name, source: source);
+    // Node that dart code expect the file name to be class name.
+    return DartCodeFile._(name, source: source);
   }
 
   @override
   Node build(BuildContext context) {
-    return JavaCodeConfig(
+    return DartCodeConfig(
       CodeFile(
         name: name,
         extension: extension,
@@ -61,7 +64,14 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           child,
           indentConfig: null,
           blockConfig: null,
-          codeAccessConfig: null,
+          codeAccessConfig: (_, sub) => CodeAccessConfig.forJavaLike(
+            sub,
+            factoryKeyword: 'factory ',
+            publicKeyword: null,
+            privateKeyword: null,
+            protectedKeyword: null,
+            internalKeyword: null,
+          ),
 
           commentConfig: null,
 
@@ -75,6 +85,18 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           importTypeConfig: null,
 
           // Type configs
+
+          typeNameMapperConfig: (_, sub) => CodeTypeNameMapperConfig(sub, {
+            'void': 'void',
+            'null': 'null',
+            'byte': 'byte',
+            'short': 'short',
+            'int': 'int',
+            'long': 'long',
+            'float': 'float',
+            'double': 'double',
+            'boolean': 'boolean',
+          }),
           typeNameConfig: null,
           typeConfig: null,
           typeListConfig: null,
@@ -87,7 +109,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
-          varConfig: null,
+          varConfig: (_, sub) => CodeVarConfig.forDartLike(sub),
 
           // Statement configs
           statementList: null,
@@ -100,6 +122,10 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           returnConfig: null,
           whileConfig: null,
           functionCallConfig: null,
+
+          annotationNameConfig: null,
+          annotationListConfig: null,
+          annotationConfig: null,
 
           // Generic configs
           genericParamConfig: null,

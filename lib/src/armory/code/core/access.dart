@@ -4,17 +4,27 @@ class CodeAccessConfig extends CodeConfigNode<CodeAccess> {
   CodeAccessConfig(NodeBuildFunc<CodeAccess> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeAccessConfig.of(
+  factory CodeAccessConfig.forJavaLike(
     Node child, {
-    String privateKeyword = 'private',
-    String publicKeyword = 'public',
-    String protectedKeyword = 'protected',
-    String internalKeyword = 'internal',
-    String abstractKeyword = 'abstract',
-    String staticKeyword = 'static',
+    String overrideKeyword = '@override\n',
+    String factoryKeyword,
+    String privateKeyword = 'private ',
+    String publicKeyword = 'public ',
+    String protectedKeyword = 'protected ',
+    String internalKeyword = 'internal ',
+    String abstractKeyword = 'abstract ',
+    String staticKeyword = 'static ',
   }) =>
       CodeAccessConfig((context, access) {
         final keywords = <String>[];
+
+        if (access.override == true && overrideKeyword != null) {
+          keywords.add(overrideKeyword);
+        }
+
+        if (access.factory == true && factoryKeyword != null) {
+          keywords.add(factoryKeyword);
+        }
 
         if (access.private == true && privateKeyword != null) {
           keywords.add(privateKeyword);
@@ -42,11 +52,13 @@ class CodeAccessConfig extends CodeConfigNode<CodeAccess> {
 
         if (keywords.isEmpty) return null;
 
-        return Text.of(keywords.join(' '));
+        return Container(keywords);
       }, child);
 }
 
 class CodeAccess extends CodeConfigProxyNode<CodeAccess> {
+  final bool override;
+  final bool factory;
   final bool private;
   final bool public;
   final bool protected;
@@ -56,6 +68,8 @@ class CodeAccess extends CodeConfigProxyNode<CodeAccess> {
   final bool static;
 
   CodeAccess({
+    this.override,
+    this.factory,
     this.private,
     this.public,
     this.protected,
@@ -63,34 +77,4 @@ class CodeAccess extends CodeConfigProxyNode<CodeAccess> {
     this.abstract,
     this.static,
   });
-
-  factory CodeAccess.private() => CodeAccess(private: true);
-
-  factory CodeAccess.protected() => CodeAccess(protected: true);
-
-  factory CodeAccess.internal() => CodeAccess(internal: true);
-
-  factory CodeAccess.public() => CodeAccess(public: true);
-
-  factory CodeAccess.privateAbstract() =>
-      CodeAccess(private: true, abstract: true);
-
-  factory CodeAccess.protectedAbstract() =>
-      CodeAccess(protected: true, abstract: true);
-
-  factory CodeAccess.internalAbstract() =>
-      CodeAccess(internal: true, abstract: true);
-
-  factory CodeAccess.publicAbstract() =>
-      CodeAccess(public: true, abstract: true);
-
-  factory CodeAccess.privateStatic() => CodeAccess(private: true, static: true);
-
-  factory CodeAccess.protectedStatic() =>
-      CodeAccess(protected: true, static: true);
-
-  factory CodeAccess.internalStatic() =>
-      CodeAccess(internal: true, static: true);
-
-  factory CodeAccess.publicStatic() => CodeAccess(public: true, static: true);
 }

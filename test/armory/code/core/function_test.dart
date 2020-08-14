@@ -35,7 +35,41 @@ void main() {
       runAndExpect(code, 'String hello();\n');
     });
 
-    test('with generic', () {
+    test('with annotation', () async {
+      var code = JavaCodeConfig(
+        CodeFunction.of(
+          'hello',
+          annotations: [
+            CodeAnnotation.of('repository'),
+            CodeAnnotation.of('repository', args: [1, false]),
+          ],
+        ),
+      );
+      await runAndExpect(
+        code,
+        '@Repository()\n'
+        '@Repository(1, false)\n'
+        'hello();\n',
+      );
+    });
+
+    test('with access', () async {
+      var code = JavaCodeConfig(
+        CodeFunction.of(
+          'hello',
+          override: true,
+          private: true,
+          static: true,
+        ),
+      );
+      await runAndExpect(
+        code,
+        '@override\n'
+        'private static hello();\n',
+      );
+    });
+
+    test('with generic', () async {
       var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
@@ -45,7 +79,10 @@ void main() {
           },
         ),
       );
-      runAndExpect(code, 'hello<T>(T name);\n');
+      await runAndExpect(
+        code,
+        'hello<T>(T name);\n',
+      );
     });
 
     test('with throw', () {
@@ -58,11 +95,15 @@ void main() {
       runAndExpect(code, 'hello() throws InvalidArgumentException;\n');
     });
 
-    test('with all', () {
+    test('with all', () async {
       var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           returns: ['string'],
+          annotations: [
+            CodeAnnotation.of('repository'),
+            CodeAnnotation.of('repository', args: [1, false]),
+          ],
           generic: ['t'],
           args: {
             'name': 'string',
@@ -71,8 +112,12 @@ void main() {
           throws: ['invalid argument exception'],
         ),
       );
-      runAndExpect(code,
-          'String hello<T>(String name, T another) throws InvalidArgumentException;\n');
+      await runAndExpect(
+        code,
+        '@Repository()\n'
+        '@Repository(1, false)\n'
+        'String hello<T>(String name, T another) throws InvalidArgumentException;\n',
+      );
     });
   });
 

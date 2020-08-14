@@ -11,6 +11,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
           CodeStatement.of(
             Container([
               field.comment,
+              field.access,
               field.type,
               ' ',
               field.name,
@@ -23,21 +24,42 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
 
 class CodeField extends CodeConfigProxyNode<CodeField> {
   final CodeFieldName name;
+  final CodeAccess access;
   final CodeType type;
   final CodeExpr init;
   final CodeComment comment;
 
   CodeField({
     this.name,
+    this.access,
     this.type,
     this.init,
     this.comment,
   });
 
-  factory CodeField.of(
-          {String name, String type, dynamic init, String comment}) =>
+  factory CodeField.of({
+    String name,
+    bool override,
+    bool private,
+    bool public,
+    bool protected,
+    bool internal,
+    bool abstract,
+    bool static,
+    String type,
+    dynamic init,
+    String comment,
+  }) =>
       CodeField(
         name: CodeFieldName.of(name),
+        access: CodeAccess(
+          override: override,
+          private: private,
+          public: public,
+          protected: protected,
+          internal: internal,
+          static: static,
+        ),
         type: CodeType.simple(type),
         init: init != null ? CodeExpr.of(init) : null,
         comment: comment != null ? CodeComment.of(comment) : null,

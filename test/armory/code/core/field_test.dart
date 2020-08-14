@@ -29,7 +29,23 @@ void main() {
     runAndExpect(
       code,
       '\n'
-      'String firstName = "john";\n',
+          'String firstName = "john";\n',
+    );
+  });
+
+  test('with init', () async {
+    var code = JavaCodeConfig(
+      CodeField.of(
+        name: 'first name',
+        type: 'string',
+        private: true,
+        static: true,
+      ),
+    );
+    await runAndExpect(
+      code,
+      '\n'
+      'private static String firstName;\n',
     );
   });
 

@@ -73,6 +73,18 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           importTypeConfig: null,
 
           // Type configs
+          typeNameMapperConfig: (_, sub) => CodeTypeNameMapperConfig(sub, {
+            'void': 'void',
+            'null': 'null',
+            'byte': 'byte',
+            'short': 'short',
+            'int': 'int',
+            'long': 'long',
+            'float': 'float',
+            'double': 'double',
+            'boolean': 'boolean',
+            'char': 'char',
+          }),
           typeNameConfig: null,
           typeConfig: null,
           typeListConfig: null,
@@ -98,6 +110,10 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           returnConfig: null,
           whileConfig: null,
           functionCallConfig: null,
+
+          annotationNameConfig: null,
+          annotationListConfig: null,
+          annotationConfig: null,
 
           // Generic configs
           genericParamConfig: null,

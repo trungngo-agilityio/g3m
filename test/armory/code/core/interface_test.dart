@@ -24,7 +24,7 @@ void main() {
       run(
         () => CodeInterface.of(
           'person',
-          access: CodeAccess.private(),
+          private: true,
         ),
         '\n'
         'private interface Person {\n'
@@ -129,7 +129,8 @@ void main() {
 
           return CodeInterface.of(
             'person',
-            access: CodeAccess.publicAbstract(),
+            public: true,
+            abstract: true,
             generic: generic,
             extend: [extend],
             fields: fields,

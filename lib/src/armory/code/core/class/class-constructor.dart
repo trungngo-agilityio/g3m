@@ -29,10 +29,7 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
           Trim.leftRight(
             Container([
               func.access,
-              constructorKeyword != null && constructorKeyword.isNotEmpty
-                  ? Container([' ', constructorKeyword])
-                  : null,
-              ' ',
+              constructorKeyword,
               name,
               '(',
               func.args,
@@ -80,7 +77,11 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
 
   factory CodeClassConstructor.of({
     String name,
-    CodeAccess access,
+    bool factory,
+    bool private,
+    bool public,
+    bool protected,
+    bool internal,
     Map<String, String> args,
     List<String> returns,
     List<String> throws,
@@ -89,7 +90,13 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   }) =>
       CodeClassConstructor(
         name: CodeClassConstructorName.of(name),
-        access: access,
+        access: CodeAccess(
+          factory: factory,
+          private: private,
+          public: public,
+          protected: protected,
+          internal: internal,
+        ),
         comment: comment != null ? CodeComment.of(comment) : null,
         args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
         body: CodeBlock.of(body),
