@@ -40,6 +40,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeNumericLiteralConfig> numericLiteralConfig;
   OopCodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
   OopCodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
+  OopCodeConfigBuildFunc<CodeAwaitConfig> awaitConfig;
   OopCodeConfigBuildFunc<CodeVarConfig> varConfig;
 
   // Statement configs
@@ -48,6 +49,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeBreakConfig> breakConfig;
   OopCodeConfigBuildFunc<CodeContinueConfig> continueConfig;
   OopCodeConfigBuildFunc<CodeVarNameConfig> varNameConfig;
+
   OopCodeConfigBuildFunc<CodeIfConfig> ifConfig;
   OopCodeConfigBuildFunc<CodeElseIfConfig> elseIfConfig;
   OopCodeConfigBuildFunc<CodeReturnConfig> returnConfig;
@@ -122,6 +124,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.numericLiteralConfig,
     @required this.arrayLiteralConfig,
     @required this.mapLiteralConfig,
+    @required this.awaitConfig,
     @required this.varConfig,
 
     // Statement configs
@@ -203,6 +206,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
         (_, sub) => CodeNumericLiteralConfig.forJavaLike(sub);
     arrayLiteralConfig ??= (_, sub) => CodeArrayLiteralConfig.forJsonLike(sub);
     mapLiteralConfig ??= (_, sub) => CodeMapLiteralConfig.forJsonLike(sub);
+    awaitConfig ??= (_, sub) => CodeAwaitConfig.forJavaLike(sub);
     varConfig ??= (_, sub) => CodeVarConfig.forJavaLike(sub);
 
     // Statement configs
@@ -299,6 +303,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       numericLiteralConfig,
       arrayLiteralConfig,
       mapLiteralConfig,
+      awaitConfig,
       varConfig,
 
       // Statement configs

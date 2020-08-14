@@ -92,6 +92,7 @@ part 'src/armory/code/core/statement/else-if.dart';
 
 part 'src/armory/code/core/statement/expr.dart';
 
+part 'src/armory/code/core/statement/expr/await.dart';
 part 'src/armory/code/core/statement/expr/function-call.dart';
 
 part 'src/armory/code/core/statement/expr/literal/array-literal.dart';

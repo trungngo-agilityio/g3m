@@ -26,6 +26,44 @@ class JavaCodeFile implements Node {
     List<CodeClass> classes,
     Node body,
   }) {
+    // Node that java code expect the file name to be class name.
+    return JavaCodeFile._(
+      name,
+      source: JavaCode.of(
+        package: package,
+        comment: comment,
+        imports: imports,
+        functions: functions,
+        interfaces: interfaces,
+        classes: classes,
+        body: body
+      ),
+    );
+  }
+
+  @override
+  Node build(BuildContext context) {
+    return CodeFile(
+      name: name,
+      extension: extension,
+      syntax: syntax,
+      source: JavaCodeConfig(source),
+    );
+  }
+}
+
+class JavaCode extends SingleChildNode {
+  JavaCode(Node source) : super(JavaCodeConfig(source));
+
+  factory JavaCode.of({
+    CodePackage package,
+    CodeComment comment,
+    List<CodeImport> imports,
+    List<CodeFunction> functions,
+    List<CodeInterface> interfaces,
+    List<CodeClass> classes,
+    Node body,
+  }) {
     var source = Container([
       comment,
       package,
@@ -37,17 +75,7 @@ class JavaCodeFile implements Node {
     ]);
 
     // Node that java code expect the file name to be class name.
-    return JavaCodeFile._(name, source: source);
-  }
-
-  @override
-  Node build(BuildContext context) {
-    return CodeFile(
-      name: name,
-      extension: extension,
-      syntax: syntax,
-      source: JavaCodeConfig(source),
-    );
+    return JavaCode(source);
   }
 }
 

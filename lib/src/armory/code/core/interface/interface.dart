@@ -6,7 +6,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
 
   factory CodeInterfaceConfig.forJavaLike(
     Node child, {
-    String classKeyword = 'interface ',
+    String interfaceKeyword = 'interface ',
     String extendsKeyword = 'extends ',
   }) =>
       CodeInterfaceConfig((context, interface) {
@@ -16,7 +16,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
           Trim.leftRight(
             Container([
               interface.access,
-              classKeyword,
+              interfaceKeyword,
               interface.name,
               interface.generic,
               ' ',

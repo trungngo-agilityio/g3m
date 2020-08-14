@@ -25,22 +25,20 @@ class DartCodeFile implements Node {
     CodeComment comment,
     List<CodeImport> imports,
     List<CodeFunction> functions,
-    List<CodeInterface> interfaces,
     List<CodeClass> classes,
     Node body,
   }) {
-    var source = Container([
-      comment,
-      package,
-      CodeImportList.of(imports),
-      CodeFunctionList.of(functions),
-      CodeInterfaceList.of(interfaces),
-      CodeClassList.of(classes),
-      body,
-    ]);
-
-    // Node that dart code expect the file name to be class name.
-    return DartCodeFile._(name, source: source);
+    // Node that java code expect the file name to be class name.
+    return DartCodeFile._(
+      name,
+      source: DartCode.of(
+          package: package,
+          comment: comment,
+          imports: imports,
+          functions: functions,
+          classes: classes,
+          body: body),
+    );
   }
 
   @override
@@ -53,6 +51,31 @@ class DartCodeFile implements Node {
         source: source,
       ),
     );
+  }
+}
+
+class DartCode extends SingleChildNode {
+  DartCode(Node source) : super(DartCodeConfig(source));
+
+  factory DartCode.of({
+    CodePackage package,
+    CodeComment comment,
+    List<CodeImport> imports,
+    List<CodeFunction> functions,
+    List<CodeClass> classes,
+    Node body,
+  }) {
+    var source = Container([
+      comment,
+      package,
+      CodeImportList.of(imports),
+      CodeFunctionList.of(functions),
+      CodeClassList.of(classes),
+      body,
+    ]);
+
+    // Node that java code expect the file name to be class name.
+    return DartCode(source);
   }
 }
 
@@ -73,7 +96,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
             internalKeyword: null,
           ),
 
-          commentConfig: null,
+          commentConfig: (_, sub) => CodeCommentConfig.forDartLike(sub),
 
           // Package configs
           packageNameConfig: null,
@@ -95,7 +118,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
             'long': 'long',
             'float': 'float',
             'double': 'double',
-            'boolean': 'boolean',
+            'bool': 'bool',
           }),
           typeNameConfig: null,
           typeConfig: null,
@@ -150,7 +173,8 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Interface configs
           interfaceListConfig: null,
-          interfaceConfig: null,
+          interfaceConfig: (_, sub) =>
+              CodeInterfaceConfig.forJavaLike(sub, interfaceKeyword: 'class '),
 
           // Class configs
           classNameConfig: null,

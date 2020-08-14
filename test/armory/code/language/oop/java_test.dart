@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:g3m/g3armory.dart';
 import 'package:test/test.dart';
 
@@ -7,41 +5,94 @@ import '../../../utils.dart';
 
 void main() {
   test('all', () async {
-    var root = Directory(
-      '/tmp',
-      Container([
-        JavaCodeFile.of(
-          'demo1',
-          body: Text.of('// You can put anything in this body.'),
-          comment: CodeComment.of('Demo file level comment'),
-          package: CodePackage.of('my personal vehicle'),
-          imports: [
-            CodeImport.of('io'),
-            CodeImport.of('path', alias: 'ioPath'),
-            CodeImport.of('math', types: [
-              CodeImportType.of('vector'),
-              CodeImportType.of('human matrix'),
-            ]),
-          ],
-          functions: [
-            CodeFunction.of('hello', args: {
-              'first name': 'string',
-            }, body: [
-              Text.of('var name = "John";\n'
-                  'print(name);\n'),
-            ]),
-          ],
-          interfaces: [
-            interfaze(),
-          ],
-          classes: [
-            clazz(),
-          ],
-        ),
-        File('abc.txt', Text.of('hello world')),
-      ]),
+    var root = JavaCode.of(
+      body: Text.of('// You can put anything in this body.'),
+      comment: CodeComment.of('Demo file level comment'),
+      package: CodePackage.of('my personal vehicle'),
+      imports: [
+        CodeImport.of('io'),
+        CodeImport.of('path', alias: 'ioPath'),
+        CodeImport.of('math', types: [
+          CodeImportType.of('vector'),
+          CodeImportType.of('human matrix'),
+        ]),
+      ],
+      functions: [
+        CodeFunction.of('hello', args: {
+          'first name': 'string',
+        }, body: [
+          Text.of('var name = "John";\n'
+              'print(name);\n'),
+        ]),
+      ],
+      interfaces: [
+        interfaze(),
+      ],
+      classes: [
+        clazz(),
+      ],
     );
-    await runAndExpect(root, '');
+    await runAndExpect(
+      root,
+      '// Demo file level comment\n'
+      'package my.personal.vehicle;\n'
+      '\n'
+      '\n'
+      'import io.*;\n'
+      'import path.*;\n'
+      'import math.Vector;\n'
+      'import math.HumanMatrix;\n'
+      '\n'
+      '\n'
+      'hello(String firstName) {\n'
+      '  var name = "John";\n'
+      '  print(name);;\n'
+      '}\n'
+      '\n'
+      '\n'
+      'public abstract interface Person<T> extends Human {\n'
+      '  // The human first name.\n'
+      '  String firstName;\n'
+      '\n'
+      '\n'
+      '  /**\n'
+      '   * just a demo function\n'
+      '   */\n'
+      '  void drive<T>(Car vehicle) throws AccidentException, BadDriverException {\n'
+      '    // Just any text;\n'
+      '  }\n'
+      '  // just a free text class body \n'
+      '  // with Mustache template support.\n'
+      '  hello(John Doe);\n'
+      '}\n'
+      '\n'
+      '\n'
+      '\n'
+      'public abstract class Person<T> {\n'
+      '  // The human first name.\n'
+      '  String firstName;\n'
+      '\n'
+      '\n'
+      '  /**\n'
+      '   * a demo constructor\n'
+      '   */\n'
+      '  Person(String name) {\n'
+      '    // Any free text can be here\n'
+      '  }\n'
+      '\n'
+      '\n'
+      '  /**\n'
+      '   * just a demo function\n'
+      '   */\n'
+      '  void drive<T>(Car vehicle) throws AccidentException, BadDriverException {\n'
+      '    // Just any text;\n'
+      '  }\n'
+      '  // just a free text class body \n'
+      '  // with Mustache template support.\n'
+      '  hello(John Doe);\n'
+      '}\n'
+      '// You can put anything in this body.',
+    );
   });
 }
 
