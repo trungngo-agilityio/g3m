@@ -19,7 +19,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
                   Text.space(),
                 ])
               : null,
-          func.access,
+          func.modifier,
           func.name,
           func.generic,
           '(',
@@ -55,7 +55,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   final CodeFunctionName name;
   final CodeComment comment;
   final CodeAnnotationList annotations;
-  final CodeAccess access;
+  final CodeModifier modifier;
   final CodeGenericParamList generic;
   final CodeFunctionArgList args;
   final CodeFunctionReturnList returns;
@@ -66,7 +66,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
     @required this.name,
     this.comment,
     this.annotations,
-    this.access,
+    this.modifier,
     this.generic,
     this.args,
     this.returns,
@@ -97,7 +97,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
         name: CodeFunctionName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         annotations: CodeAnnotationList.of(annotations),
-        access: CodeAccess(
+        modifier: CodeModifier(
           override: override,
           private: private,
           public: public,

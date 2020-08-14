@@ -1,10 +1,10 @@
 part of g3.armory;
 
-class CodeAccessConfig extends CodeConfigNode<CodeAccess> {
-  CodeAccessConfig(NodeBuildFunc<CodeAccess> buildFunc, Node child)
+class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
+  CodeModifierConfig(NodeBuildFunc<CodeModifier> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeAccessConfig.forJavaLike(
+  factory CodeModifierConfig.forJavaLike(
     Node child, {
     String overrideKeyword = '@override\n',
     String factoryKeyword,
@@ -15,7 +15,7 @@ class CodeAccessConfig extends CodeConfigNode<CodeAccess> {
     String abstractKeyword = 'abstract ',
     String staticKeyword = 'static ',
   }) =>
-      CodeAccessConfig((context, access) {
+      CodeModifierConfig((context, access) {
         final keywords = <String>[];
 
         if (access.override == true && overrideKeyword != null) {
@@ -56,7 +56,7 @@ class CodeAccessConfig extends CodeConfigNode<CodeAccess> {
       }, child);
 }
 
-class CodeAccess extends CodeConfigProxyNode<CodeAccess> {
+class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
   final bool override;
   final bool factory;
   final bool private;
@@ -67,7 +67,7 @@ class CodeAccess extends CodeConfigProxyNode<CodeAccess> {
   final bool abstract;
   final bool static;
 
-  CodeAccess({
+  CodeModifier({
     this.override,
     this.factory,
     this.private,

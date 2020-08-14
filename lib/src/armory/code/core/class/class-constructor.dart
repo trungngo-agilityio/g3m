@@ -28,7 +28,7 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
           func.comment,
           Trim.leftRight(
             Container([
-              func.access,
+              func.modifier,
               constructorKeyword,
               name,
               '(',
@@ -56,7 +56,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   final CodeClassConstructorName name;
 
   /// Defines public, private, protected, etc.
-  final CodeAccess access;
+  final CodeModifier modifier;
 
   /// The comment level for constructor.
   final CodeComment comment;
@@ -69,7 +69,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
 
   CodeClassConstructor({
     this.name,
-    this.access,
+    this.modifier,
     this.comment,
     this.args,
     this.body,
@@ -90,7 +90,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   }) =>
       CodeClassConstructor(
         name: CodeClassConstructorName.of(name),
-        access: CodeAccess(
+        modifier: CodeModifier(
           factory: factory,
           private: private,
           public: public,

@@ -16,7 +16,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
           clazz.comment,
           Trim.leftRight(
             Container([
-              clazz.access,
+              clazz.modifier,
               classKeyword,
               clazz.name,
               clazz.generic,
@@ -48,7 +48,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
   final CodeClassName name;
 
   /// Defines public, private, protected, etc.
-  final CodeAccess access;
+  final CodeModifier modifier;
 
   /// The list of generic param applied for the class.
   final CodeGenericParamList generic;
@@ -67,7 +67,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
 
   CodeClass({
     @required this.name,
-    this.access,
+    this.modifier,
     this.generic,
     this.extend,
     this.implements,
@@ -95,7 +95,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
       CodeClass(
         name: CodeClassName.of(name),
         generic: CodeGenericParamList.of(generic),
-        access: CodeAccess(
+        modifier: CodeModifier(
           private: private,
           public: public,
           protected: protected,

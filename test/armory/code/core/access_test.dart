@@ -5,40 +5,40 @@ import '../../utils.dart';
 
 void main() {
   void run(Node node, String expected) async {
-    var code = CodeAccessConfig.forJavaLike(node);
+    var code = CodeModifierConfig.forJavaLike(node);
     await runAndExpect(code, expected);
   }
 
   test('override', () {
-    run(CodeAccess(override: true), '@override\n');
+    run(CodeModifier(override: true), '@override\n');
   });
 
   test('private', () {
-    run(CodeAccess(private: true), 'private ');
+    run(CodeModifier(private: true), 'private ');
   });
 
   test('public', () {
-    run(CodeAccess(public: true), 'public ');
+    run(CodeModifier(public: true), 'public ');
   });
 
   test('protected', () {
-    run(CodeAccess(protected: true), 'protected ');
+    run(CodeModifier(protected: true), 'protected ');
   });
 
   test('internal', () {
-    run(CodeAccess(internal: true), 'internal ');
+    run(CodeModifier(internal: true), 'internal ');
   });
 
   test('abstract', () {
-    run(CodeAccess(abstract: true), 'abstract ');
+    run(CodeModifier(abstract: true), 'abstract ');
   });
 
   test('static', () {
-    run(CodeAccess(static: true), 'static ');
+    run(CodeModifier(static: true), 'static ');
   });
   test('all', () async {
     await run(
-      CodeAccess(
+      CodeModifier(
           override: true,
           private: true,
           public: true,

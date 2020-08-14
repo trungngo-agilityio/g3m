@@ -11,7 +11,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
           CodeStatement.of(
             Container([
               field.comment,
-              field.access,
+              field.modifier,
               field.type,
               ' ',
               field.name,
@@ -24,14 +24,14 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
 
 class CodeField extends CodeConfigProxyNode<CodeField> {
   final CodeFieldName name;
-  final CodeAccess access;
+  final CodeModifier modifier;
   final CodeType type;
   final CodeExpr init;
   final CodeComment comment;
 
   CodeField({
     this.name,
-    this.access,
+    this.modifier,
     this.type,
     this.init,
     this.comment,
@@ -52,7 +52,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
   }) =>
       CodeField(
         name: CodeFieldName.of(name),
-        access: CodeAccess(
+        modifier: CodeModifier(
           override: override,
           private: private,
           public: public,

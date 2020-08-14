@@ -87,7 +87,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           child,
           indentConfig: null,
           blockConfig: null,
-          codeAccessConfig: (_, sub) => CodeAccessConfig.forJavaLike(
+          codeAccessConfig: (_, sub) => CodeModifierConfig.forJavaLike(
             sub,
             factoryKeyword: 'factory ',
             publicKeyword: null,

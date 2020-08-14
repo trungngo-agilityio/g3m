@@ -14,7 +14,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     extends ExactlyOneNode<T> {
   OopCodeConfigBuildFunc<IndentConfig> indentConfig;
   OopCodeConfigBuildFunc<CodeBlockConfig> blockConfig;
-  OopCodeConfigBuildFunc<CodeAccessConfig> codeAccessConfig;
+  OopCodeConfigBuildFunc<CodeModifierConfig> codeAccessConfig;
   OopCodeConfigBuildFunc<CodeCommentConfig> commentConfig;
 
   // Package configs
@@ -184,7 +184,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   }) : super(child) {
     indentConfig = (_, sub) => IndentConfig.useSpace2(sub);
     blockConfig ??= (_, sub) => CodeBlockConfig.curlyBracketSameLine(sub);
-    codeAccessConfig ??= (_, sub) => CodeAccessConfig.forJavaLike(sub);
+    codeAccessConfig ??= (_, sub) => CodeModifierConfig.forJavaLike(sub);
 
     commentConfig ??= (_, sub) => CodeCommentConfig.forJavaLike(sub);
 

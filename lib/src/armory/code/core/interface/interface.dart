@@ -15,7 +15,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
           interface.comment,
           Trim.leftRight(
             Container([
-              interface.access,
+              interface.modifier,
               interfaceKeyword,
               interface.name,
               interface.generic,
@@ -40,7 +40,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
   final CodeTypeName name;
 
   /// Defines public, private, protected, etc.
-  final CodeAccess access;
+  final CodeModifier modifier;
 
   /// The list of generic param applied for the class.
   final CodeGenericParamList generic;
@@ -56,7 +56,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
 
   CodeInterface({
     @required this.name,
-    this.access,
+    this.modifier,
     this.generic,
     this.extend,
     this.comment,
@@ -81,7 +81,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
       CodeInterface(
         name: CodeTypeName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
-        access: CodeAccess(
+        modifier: CodeModifier(
           private: private,
           public: public,
           protected: protected,
