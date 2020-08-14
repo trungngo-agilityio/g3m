@@ -4,7 +4,7 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
   CodeMapLiteralConfig(NodeBuildFunc<CodeMapLiteral> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeMapLiteralConfig.forJsonLike(
+  factory CodeMapLiteralConfig.forJavaLike(
     Node child, {
     String openBracket = '{',
     String closeBracket = '}',

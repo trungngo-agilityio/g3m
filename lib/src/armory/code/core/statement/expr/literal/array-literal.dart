@@ -4,7 +4,7 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
   CodeArrayLiteralConfig(NodeBuildFunc<CodeArrayLiteral> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeArrayLiteralConfig.forJsonLike(
+  factory CodeArrayLiteralConfig.forJavaLike(
     Node child, {
     String emptyArray = '[]',
     String openBracket = '[\n',
@@ -37,7 +37,7 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
       }, child);
 
   factory CodeArrayLiteralConfig.forYmlLike(Node child) =>
-      CodeArrayLiteralConfig.forJsonLike(
+      CodeArrayLiteralConfig.forJavaLike(
         child,
         emptyArray: '',
         openBracket: '',

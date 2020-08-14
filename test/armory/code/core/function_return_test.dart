@@ -42,4 +42,27 @@ void main() {
       runAndExpect(code, 'MyCar, MyVehicle');
     });
   });
+
+  group('stream & async', () {
+    test('async', () {
+      var code = DartCodeConfig(
+        CodeFunctionReturn.simple('my car', async: true),
+      );
+      runAndExpect(code, 'MyCar async');
+    });
+
+    test('stream', () {
+      var code = DartCodeConfig(
+        CodeFunctionReturn.simple('my car', stream: true),
+      );
+      runAndExpect(code, 'MyCar sync*');
+    });
+
+    test('async stream', () {
+      var code = DartCodeConfig(
+        CodeFunctionReturn.simple('my car', async: true, stream: true),
+      );
+      runAndExpect(code, 'MyCar async*');
+    });
+  });
 }

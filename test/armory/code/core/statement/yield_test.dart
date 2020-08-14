@@ -5,13 +5,24 @@ import '../../../utils.dart';
 
 void main() {
   test('simple', () async {
-    var code = JavaCodeConfig(
+    var code = DartCodeConfig(
       CodeYield.of(Text.of('a')),
     );
 
     await runAndExpect(
       code,
       'yield a',
+    );
+  });
+
+  test('async', () async {
+    var code = DartCodeConfig(
+      CodeYield.of(Text.of('a'), async: true),
+    );
+
+    await runAndExpect(
+      code,
+      'yield* a',
     );
   });
 }

@@ -133,7 +133,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
           awaitConfig: null,
-          yieldConfig: null,
+          yieldConfig: (_, sub) => CodeYieldConfig.forDartLike(sub),
           varConfig: (_, sub) => CodeVarConfig.forDartLike(sub),
 
           // Statement configs
@@ -168,7 +168,8 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           functionArgConfig: null,
           functionThrowListConfig: null,
           functionThrowConfig: null,
-          functionReturnConfig: null,
+          functionReturnConfig: (_, sub) =>
+              CodeFunctionReturnConfig.forDartLike(sub),
           functionReturnListConfig: null,
           functionListConfig: null,
           functionConfig: null,
