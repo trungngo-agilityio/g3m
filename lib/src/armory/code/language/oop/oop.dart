@@ -54,6 +54,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeIfConfig> ifConfig;
   OopCodeConfigBuildFunc<CodeElseIfConfig> elseIfConfig;
   OopCodeConfigBuildFunc<CodeReturnConfig> returnConfig;
+  OopCodeConfigBuildFunc<CodeForConfig> forConfig;
+  OopCodeConfigBuildFunc<CodeForEachConfig> forEachConfig;
   OopCodeConfigBuildFunc<CodeWhileConfig> whileConfig;
   OopCodeConfigBuildFunc<CodeFunctionCallConfig> functionCallConfig;
 
@@ -138,6 +140,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.ifConfig,
     @required this.elseIfConfig,
     @required this.returnConfig,
+    @required this.forConfig,
+    @required this.forEachConfig,
     @required this.whileConfig,
     @required this.functionCallConfig,
 
@@ -223,6 +227,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     ifConfig ??= (_, sub) => CodeIfConfig.forJavaLike(sub);
     elseIfConfig ??= (_, sub) => CodeElseIfConfig.forJavaLike(sub);
     returnConfig ??= (_, sub) => CodeReturnConfig.forJavaLike(sub);
+    forConfig ??= (_, sub) => CodeForConfig.forJavaLike(sub);
+    forEachConfig ??= (_, sub) => CodeForEachConfig.forJavaLike(sub);
     whileConfig ??= (_, sub) => CodeWhileConfig.forJavaLike(sub);
     functionCallConfig ??= (_, sub) => CodeFunctionCallConfig.forJavaLike(sub);
 
@@ -321,6 +327,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       ifConfig,
       elseIfConfig,
       returnConfig,
+      forConfig,
+      forEachConfig,
       whileConfig,
       functionCallConfig,
 

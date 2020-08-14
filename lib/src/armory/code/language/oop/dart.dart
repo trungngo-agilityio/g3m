@@ -145,6 +145,8 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           ifConfig: null,
           elseIfConfig: null,
           returnConfig: null,
+          forConfig: null,
+          forEachConfig: null,
           whileConfig: null,
           functionCallConfig: null,
 
