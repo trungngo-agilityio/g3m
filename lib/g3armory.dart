@@ -7,7 +7,13 @@ import 'package:meta/meta.dart';
 import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;
 
-part 'src/armory/code/core/access.dart';
+part 'src/armory/code/core/modifier.dart';
+part 'src/armory/code/core/enum/enum.dart';
+part 'src/armory/code/core/enum/enum-name.dart';
+part 'src/armory/code/core/enum/enum-list.dart';
+part 'src/armory/code/core/enum/enum-value.dart';
+part 'src/armory/code/core/enum/enum-value-name.dart';
+part 'src/armory/code/core/enum/enum-value-list.dart';
 
 part 'src/armory/code/core/annotation/annotation-list.dart';
 

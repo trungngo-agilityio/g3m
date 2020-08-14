@@ -24,6 +24,7 @@ class DartCodeFile implements Node {
     CodePackage package,
     CodeComment comment,
     List<CodeImport> imports,
+    List<CodeEnum> enums,
     List<CodeFunction> functions,
     List<CodeClass> classes,
     Node body,
@@ -35,6 +36,7 @@ class DartCodeFile implements Node {
           package: package,
           comment: comment,
           imports: imports,
+          enums: enums,
           functions: functions,
           classes: classes,
           body: body),
@@ -60,6 +62,7 @@ class DartCode extends SingleChildNode {
   factory DartCode.of({
     CodePackage package,
     CodeComment comment,
+    List<CodeEnum> enums,
     List<CodeImport> imports,
     List<CodeFunction> functions,
     List<CodeClass> classes,
@@ -69,6 +72,7 @@ class DartCode extends SingleChildNode {
       comment,
       package,
       CodeImportList.of(imports),
+      CodeEnumList.of(enums),
       CodeFunctionList.of(functions),
       CodeClassList.of(classes),
       body,
@@ -103,7 +107,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           packageConfig: null,
 
           // Import Configs
-          importConfig: null,
+          importConfig: (_, sub) => CodeImportConfig.forDartLike(sub),
           importListConfig: null,
           importTypeConfig: null,
 
@@ -175,6 +179,15 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           functionReturnListConfig: null,
           functionListConfig: null,
           functionConfig: null,
+
+          // Enum configs,
+          enumValueNameConfig: (_, sub) =>
+              CodeEnumValueNameConfig.forDartLike(sub),
+          enumValueListConfig: null,
+          enumValueConfig: null,
+          enumNameConfig: null,
+          enumListConfig: null,
+          enumConfig: null,
 
           // Interface configs
           interfaceListConfig: null,

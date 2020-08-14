@@ -85,6 +85,14 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeFunctionListConfig> functionListConfig;
   OopCodeConfigBuildFunc<CodeFunctionConfig> functionConfig;
 
+  // Enum configs
+  OopCodeConfigBuildFunc<CodeEnumValueNameConfig> enumValueNameConfig;
+  OopCodeConfigBuildFunc<CodeEnumValueListConfig> enumValueListConfig;
+  OopCodeConfigBuildFunc<CodeEnumValueConfig> enumValueConfig;
+  OopCodeConfigBuildFunc<CodeEnumNameConfig> enumNameConfig;
+  OopCodeConfigBuildFunc<CodeEnumListConfig> enumListConfig;
+  OopCodeConfigBuildFunc<CodeEnumConfig> enumConfig;
+
   // Interface configs
   OopCodeConfigBuildFunc<CodeInterfaceListConfig> interfaceListConfig;
   OopCodeConfigBuildFunc<CodeInterfaceConfig> interfaceConfig;
@@ -170,6 +178,14 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.functionReturnListConfig,
     @required this.functionListConfig,
     @required this.functionConfig,
+    @required this.enumValueNameConfig,
+    @required this.enumValueListConfig,
+    @required this.enumValueConfig,
+    @required this.enumNameConfig,
+    @required this.enumListConfig,
+    @required this.enumConfig,
+
+    // Enum configs
 
     // Interface configs
     @required this.interfaceListConfig,
@@ -267,6 +283,16 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     functionListConfig ??= (_, sub) => CodeFunctionListConfig.forJavaLike(sub);
     functionConfig ??= (_, sub) => CodeFunctionConfig.forJavaLike(sub);
 
+    // Enum configs
+    enumValueNameConfig ??=
+        (_, sub) => CodeEnumValueNameConfig.forJavaLike(sub);
+    enumValueListConfig ??=
+        (_, sub) => CodeEnumValueListConfig.forJavaLike(sub);
+    enumValueConfig ??= (_, sub) => CodeEnumValueConfig.forJavaLike(sub);
+    enumNameConfig ??= (_, sub) => CodeEnumNameConfig.forJavaLike(sub);
+    enumListConfig ??= (_, sub) => CodeEnumListConfig.forJavaLike(sub);
+    enumConfig ??= (_, sub) => CodeEnumConfig.forJavaLike(sub);
+
     // Interface configs
     interfaceListConfig ??=
         (_, sub) => CodeInterfaceListConfig.forJavaLike(sub);
@@ -357,6 +383,14 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       functionReturnListConfig,
       functionListConfig,
       functionConfig,
+
+      // Enum configs
+      enumValueNameConfig,
+      enumValueListConfig,
+      enumValueConfig,
+      enumNameConfig,
+      enumListConfig,
+      enumConfig,
 
       // Interface configs
       interfaceListConfig,

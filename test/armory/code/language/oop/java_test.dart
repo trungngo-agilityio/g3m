@@ -17,6 +17,15 @@ void main() {
           CodeImportType.of('human matrix'),
         ]),
       ],
+      enums: [
+        CodeEnum.of(
+          'color',
+          values: [
+            CodeEnumValue.of('blue'),
+            CodeEnumValue.of('dark green'),
+          ],
+        ),
+      ],
       functions: [
         CodeFunction.of('hello', args: {
           'first name': 'string',
@@ -42,6 +51,12 @@ void main() {
       'import path.*;\n'
       'import math.Vector;\n'
       'import math.HumanMatrix;\n'
+      '\n'
+      '\n'
+      'enum Color {\n'
+      '  BLUE,\n'
+      '  DARK_GREEN\n'
+      '}\n'
       '\n'
       '\n'
       'hello(String firstName) {\n'

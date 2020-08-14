@@ -12,10 +12,16 @@ void main() {
       imports: [
         CodeImport.of('io'),
         CodeImport.of('path', alias: 'ioPath'),
-        CodeImport.of('math', types: [
-          CodeImportType.of('vector'),
-          CodeImportType.of('human matrix'),
-        ]),
+        CodeImport.of('math'),
+      ],
+      enums: [
+        CodeEnum.of(
+          'color',
+          values: [
+            CodeEnumValue.of('blue'),
+            CodeEnumValue.of('dark green'),
+          ],
+        ),
       ],
       functions: [
         CodeFunction.of('hello', args: {
@@ -29,8 +35,50 @@ void main() {
         clazz(),
       ],
     );
-    await runAndExpect(root,
-        '');
+    await runAndExpect(
+      root,
+      '// Demo file level comment\n'
+      'package my.personal.vehicle;\n'
+      '\n'
+      '\n'
+      'import \'io\';\n'
+      'import \'path\' as io.path;\n'
+      'import \'math\';\n'
+      '\n'
+      '\n'
+      'enum Color {\n'
+      '  blue,\n'
+      '  darkGreen\n'
+      '}\n'
+      '\n'
+      '\n'
+      'hello(String firstName) {\n'
+      '  var name = "John";\n'
+      '  print(name);;\n'
+      '}\n'
+      '\n'
+      '\n'
+      'abstract class Person<T> {\n'
+      '  /// The human first name.\n'
+      '  String firstName;\n'
+      '\n'
+      '\n'
+      '  /// a demo constructor\n'
+      '  Person(String name) {\n'
+      '    // Any free text can be here\n'
+      '  }\n'
+      '\n'
+      '\n'
+      '  /// just a demo function\n'
+      '  void drive<T>(Car vehicle) throws AccidentException, BadDriverException {\n'
+      '    // Just any text;\n'
+      '  }\n'
+      '  // just a free text class body \n'
+      '  // with Mustache template support.\n'
+      '  hello(John Doe);\n'
+      '}\n'
+      '// You can put anything in this body.',
+    );
   });
 }
 

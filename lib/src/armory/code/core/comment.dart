@@ -24,56 +24,68 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
   factory CodeCommentConfig.forDartLike(Node child) =>
       CodeCommentConfig.forCode(
         child,
-        clazz: code.commentTripleSplash,
-        interfaze: code.commentTripleSplash,
-        field: code.commentTripleSplash,
-        function: code.commentTripleSplash,
-        other: code.commentDoubleSplash,
+        enumFunc: code.commentTripleSplash,
+        classFunc: code.commentTripleSplash,
+        interfaceFunc: code.commentTripleSplash,
+        fieldFunc: code.commentTripleSplash,
+        constructorFunc: code.commentTripleSplash,
+        functionFunc: code.commentTripleSplash,
+        otherFunc: code.commentDoubleSplash,
       );
 
   factory CodeCommentConfig.forJavaLike(Node child) =>
       CodeCommentConfig.forCode(
         child,
-        clazz: code.commentJavaDoc,
-        interfaze: code.commentJavaDoc,
-        field: code.commentDoubleSplash,
-        function: code.commentJavaDoc,
-        other: code.commentDoubleSplash,
+        enumFunc: code.commentJavaDoc,
+        classFunc: code.commentJavaDoc,
+        interfaceFunc: code.commentJavaDoc,
+        fieldFunc: code.commentDoubleSplash,
+        constructorFunc: code.commentJavaDoc,
+        functionFunc: code.commentJavaDoc,
+        otherFunc: code.commentDoubleSplash,
       );
 
   factory CodeCommentConfig.forCode(
     Node child, {
-    @required StringFunc clazz,
-    @required StringFunc interfaze,
-    @required StringFunc field,
-    @required StringFunc function,
-    @required StringFunc other,
+    @required StringFunc enumFunc,
+    @required StringFunc classFunc,
+    @required StringFunc interfaceFunc,
+    @required StringFunc fieldFunc,
+    @required StringFunc constructorFunc,
+    @required StringFunc functionFunc,
+    @required StringFunc otherFunc,
   }) =>
       CodeCommentConfig((context, codeComment) {
         // Finds the nearest container for this comment.
         final container = context.ancestors.firstWhere(
             (e) =>
+                e is CodeEnum ||
                 e is CodeClass ||
                 e is CodeInterface ||
                 e is CodeField ||
+                e is CodeClassConstructor ||
                 e is CodeFunction,
             orElse: () => null);
 
         var func;
         if (container != null) {
           // Determines the comment style for the given container.
-          if (container is CodeClass) {
-            func = clazz;
+          if (container is CodeEnum) {
+            func = enumFunc;
+          } else if (container is CodeClass) {
+            func = classFunc;
           } else if (container is CodeInterface) {
-            func = interfaze;
+            func = interfaceFunc;
           } else if (container is CodeField) {
-            func = field;
+            func = fieldFunc;
+          } else if (container is CodeClassConstructor) {
+            func = constructorFunc;
           } else if (container is CodeFunction) {
-            func = function;
+            func = functionFunc;
           }
         }
 
-        func ??= other;
+        func ??= otherFunc;
 
         return Container([TextTransform(codeComment.content, func), NewLine()]);
       }, child);
