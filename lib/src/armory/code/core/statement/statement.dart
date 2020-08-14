@@ -6,7 +6,7 @@ class CodeStatementConfig extends CodeConfigNode<CodeStatement> {
   CodeStatementConfig(NodeBuildFunc<CodeStatement> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeStatementConfig.endWithCommaAndNewLine(Node child) =>
+  factory CodeStatementConfig.forJavaLike(Node child) =>
       CodeStatementConfig((context, statement) {
         final expr = statement.expr;
         if (expr is _CodeStatementLike) return expr;

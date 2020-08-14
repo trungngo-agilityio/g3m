@@ -5,7 +5,7 @@ import '../../../utils.dart';
 
 void main() {
   test('simple', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeReturn.of(true),
     );
 

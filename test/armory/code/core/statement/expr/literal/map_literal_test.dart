@@ -5,7 +5,7 @@ import '../../../../../utils.dart';
 
 void main() {
   test('null', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeMapLiteral.of(null),
     );
 
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('empty array', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeMapLiteral.of({}),
     );
 
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('non empty array', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeMapLiteral.of({
         'bool': true,
         'name': null,

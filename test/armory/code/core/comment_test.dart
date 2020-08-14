@@ -54,7 +54,7 @@ void main() {
 
   group('by code config', () {
     void run(Node Function() build, String expected) {
-      runAndExpect(JavaCode(build()), expected);
+      runAndExpect(JavaCodeConfig(build()), expected);
     }
 
     test('field', () {

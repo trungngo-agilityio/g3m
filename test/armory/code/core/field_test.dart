@@ -5,7 +5,7 @@ import '../../utils.dart';
 
 void main() {
   test('simple', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeField.of(
         name: 'first name',
         type: 'string',
@@ -19,7 +19,7 @@ void main() {
   });
 
   test('with init', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeField.of(
         name: 'first name',
         type: 'string',
@@ -34,7 +34,7 @@ void main() {
   });
 
   test('with comment', () {
-    var code = DartCode(
+    var code = JavaCodeConfig(
       CodeField.of(
         name: 'first name',
         type: 'string',

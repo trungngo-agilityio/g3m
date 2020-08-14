@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:g3m/g3armory.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   test('all', () async {

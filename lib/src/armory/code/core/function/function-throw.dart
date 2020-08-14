@@ -5,7 +5,7 @@ class CodeFunctionThrowConfig extends CodeConfigNode<CodeFunctionThrow> {
       NodeBuildFunc<CodeFunctionThrow> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionThrowConfig.asIs(Node child) =>
+  factory CodeFunctionThrowConfig.forJavaLike(Node child) =>
       CodeFunctionThrowConfig((context, funcThrow) {
         return funcThrow.name;
       }, child);

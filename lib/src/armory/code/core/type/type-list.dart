@@ -4,7 +4,7 @@ class CodeTypeListConfig extends CodeConfigNode<CodeTypeList> {
   CodeTypeListConfig(NodeBuildFunc<CodeTypeList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeTypeListConfig.commaSeparated(Node child) =>
+  factory CodeTypeListConfig.forJavaLike(Node child) =>
       CodeTypeListConfig((context, param) {
         final children = param.functions;
         if (children == null || children.isEmpty) {

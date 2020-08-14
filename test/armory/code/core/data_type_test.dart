@@ -6,31 +6,31 @@ import '../../utils.dart';
 void main() {
   group('data type', () {
     test('simple', () {
-      var code = DartCode(
+      var code = JavaCodeConfig(
         CodeType.simple('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('array', () {
-      var code = DartCode(
+      var code = JavaCodeConfig(
         CodeType.array('car'),
       );
-      runAndExpect(code, 'List<Car>');
+      runAndExpect(code, 'Car[]');
     });
 
     test('generic', () {
-      var code = DartCode(
+      var code = JavaCodeConfig(
         CodeType.genericSingle('list', CodeGenericParam.of('car')),
       );
       runAndExpect(code, 'List<Car>');
     });
 
     test('generic array', () {
-      var code = DartCode(
+      var code = JavaCodeConfig(
         CodeType.genericSingleArray('Vehicle', 'car'),
       );
-      runAndExpect(code, 'List<Vehicle<Car>>');
+      runAndExpect(code, 'Vehicle<Car[]>');
     });
   });
 }

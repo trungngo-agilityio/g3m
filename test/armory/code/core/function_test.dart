@@ -6,14 +6,14 @@ import '../../utils.dart';
 void main() {
   group('no body', () {
     test('name only', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of('hello'),
       );
       runAndExpect(code, 'hello();\n');
     });
 
     test('with args', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           args: {
@@ -26,7 +26,7 @@ void main() {
     });
 
     test('with return', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           returns: ['string'],
@@ -36,7 +36,7 @@ void main() {
     });
 
     test('with generic', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           generic: ['T'],
@@ -49,7 +49,7 @@ void main() {
     });
 
     test('with throw', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           throws: ['invalid argument exception'],
@@ -59,7 +59,7 @@ void main() {
     });
 
     test('with all', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           returns: ['string'],
@@ -78,7 +78,7 @@ void main() {
 
   group('with body', () {
     test('name only', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
           body: ['// some sample comment', 'callAFunction()'],

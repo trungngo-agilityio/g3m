@@ -6,7 +6,7 @@ class CodeClassConstructorListConfig
       NodeBuildFunc<CodeClassConstructorList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassConstructorListConfig.newLineSeparated(Node child) =>
+  factory CodeClassConstructorListConfig.forJavaLike(Node child) =>
       CodeClassConstructorListConfig((context, param) {
         final children = param.functions;
         if (children == null || children.isEmpty) {

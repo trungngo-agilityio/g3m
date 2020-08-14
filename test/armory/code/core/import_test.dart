@@ -18,7 +18,7 @@ void main() {
 
   group('single import', () {
     test('no type', () async {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         single,
       );
 
@@ -29,7 +29,7 @@ void main() {
     });
 
     test('multiple types', () async {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         multi,
       );
 
@@ -42,7 +42,7 @@ void main() {
   });
   group('import list', () {
     test('all', () async {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeImportList.of([single, multi]),
       );
 

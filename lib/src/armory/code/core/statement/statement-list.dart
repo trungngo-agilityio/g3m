@@ -5,7 +5,7 @@ class CodeStatementListConfig extends CodeConfigNode<CodeStatementList> {
       NodeBuildFunc<CodeStatementList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeStatementListConfig.asIs(Node child) =>
+  factory CodeStatementListConfig.forJavaLike(Node child) =>
       CodeStatementListConfig((context, param) {
         final types = param.statements;
         if (types == null || types.isEmpty) {

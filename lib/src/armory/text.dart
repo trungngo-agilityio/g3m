@@ -206,7 +206,7 @@ class SentenceCase implements Node {
 /// Defines indentation config for all descendents.
 /// [Ident] can be used to indent child's output with this configuration.
 ///
-class IndentationConfig implements Node {
+class IndentConfig implements Node {
   /// True indicates that the code should use tab character for indentation.
   /// Otherwise, space will be used.
   final bool useTab;
@@ -216,23 +216,23 @@ class IndentationConfig implements Node {
 
   final Node child;
 
-  IndentationConfig({
+  IndentConfig({
     this.size = 2,
     this.useTab = false,
     this.child,
   });
 
-  IndentationConfig.useSpace2(Node child)
+  IndentConfig.useSpace2(Node child)
       : size = 2,
         useTab = false,
         child = child;
 
-  IndentationConfig.useSpace4(Node child)
+  IndentConfig.useSpace4(Node child)
       : size = 4,
         useTab = false,
         child = child;
 
-  IndentationConfig.useTab(Node child)
+  IndentConfig.useTab(Node child)
       : size = 1,
         useTab = true,
         child = child;
@@ -242,8 +242,8 @@ class IndentationConfig implements Node {
     return child;
   }
 
-  static IndentationConfig of(BuildContext context) {
-    return context.dependOnAncestorNodeOfExactType<IndentationConfig>();
+  static IndentConfig of(BuildContext context) {
+    return context.dependOnAncestorNodeOfExactType<IndentConfig>();
   }
 }
 
@@ -270,32 +270,10 @@ class Indent implements Node {
 
   @override
   Node build(BuildContext context) {
-    final config = IndentationConfig.of(context);
+    final config = IndentConfig.of(context);
     return TextTransform(child, (s) {
       return compute(s, config.useTab, config.size, level);
     });
-  }
-}
-
-class Bold implements Node {
-  final Node content;
-
-  Bold(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return content;
-  }
-}
-
-class Italic implements Node {
-  final Node content;
-
-  Italic(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return content;
   }
 }
 

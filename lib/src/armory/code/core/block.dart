@@ -7,8 +7,8 @@ part of g3.armory;
 /// [CodeBlockConfig.curlyBracketNewLine], [CodeBlockConfig.colonIndent]) that
 /// might work for many existing programming languages.
 ///
-/// Notes that this [IndentationConfig] is required ancestor of this node.
-/// See [DartCode] to see how this configuration is used for dart language.
+/// Notes that this [IndentConfig] is required ancestor of this node.
+/// See [DartCodeConfig] to see how this configuration is used for dart language.
 ///
 class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
   CodeBlockConfig(NodeBuildFunc<CodeBlock> buildFunc, Node child)

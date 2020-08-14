@@ -4,16 +4,21 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
   CodeArrayLiteralConfig(NodeBuildFunc<CodeArrayLiteral> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeArrayLiteralConfig.of(
+  factory CodeArrayLiteralConfig.forJsonLike(
     Node child, {
-    String openBracket = '[',
-    String closeBracket = ']',
+    String emptyArray = '[]',
+    String openBracket = '[\n',
+    String closeBracket = '\n]',
     String separator = ',\n',
     String prefix,
-    bool indent,
+    bool indent = true,
   }) =>
       CodeArrayLiteralConfig((context, literal) {
         if (literal.values == null) return CodeNullLiteral();
+        if (literal.values.isEmpty) {
+          return Text.of(emptyArray);
+        }
+
         var body = Join.of(
             separator,
             literal.values
@@ -21,6 +26,7 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
                   (e) => Pad.left(prefix, e),
                 )
                 ?.toList());
+
         return Container([
           openBracket,
           literal.values.isNotEmpty
@@ -30,16 +36,10 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
         ]);
       }, child);
 
-  factory CodeArrayLiteralConfig.forJsonLike(Node child) =>
-      CodeArrayLiteralConfig.of(child,
-          openBracket: '[\n',
-          closeBracket: '\n]',
-          separator: ',\n',
-          indent: true);
-
   factory CodeArrayLiteralConfig.forYmlLike(Node child) =>
-      CodeArrayLiteralConfig.of(
+      CodeArrayLiteralConfig.forJsonLike(
         child,
+        emptyArray: '',
         openBracket: '',
         closeBracket: '\n',
         separator: '\n',

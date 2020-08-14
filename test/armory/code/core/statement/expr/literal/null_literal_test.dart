@@ -5,7 +5,7 @@ import '../../../../../utils.dart';
 
 void main() {
   test('null', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeNullLiteral(),
     );
 

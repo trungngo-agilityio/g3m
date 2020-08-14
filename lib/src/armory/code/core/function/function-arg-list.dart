@@ -5,7 +5,7 @@ class CodeFunctionArgListConfig extends CodeConfigNode<CodeFunctionArgList> {
       NodeBuildFunc<CodeFunctionArgList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionArgListConfig.commaSeparated(Node child) =>
+  factory CodeFunctionArgListConfig.forJavaLike(Node child) =>
       CodeFunctionArgListConfig((context, param) {
         final children = param.args;
         if (children == null || children.isEmpty) {

@@ -5,7 +5,7 @@ import '../../../../../utils.dart';
 
 void main() {
   test('null', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeNumericLiteral.of(null),
     );
 
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('from a string', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeNumericLiteral.of('1'),
     );
 
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('from a number', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeNumericLiteral.of(2),
     );
 

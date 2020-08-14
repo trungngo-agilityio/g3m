@@ -6,7 +6,7 @@ import '../../utils.dart';
 void main() {
   group('function return', () {
     test('simple', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunctionReturn.simple('my car'),
       );
       runAndExpect(code, 'MyCar');
@@ -15,28 +15,28 @@ void main() {
 
   group('function return list', () {
     test('single', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunctionReturnList.single('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('list - empty', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunctionReturnList.list([]),
       );
       runAndExpect(code, '');
     });
 
     test('list - one', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunctionReturnList.list(['my car']),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('list - more than one', () {
-      var code = JavaCode(
+      var code = JavaCodeConfig(
         CodeFunctionReturnList.list(['my car', 'my vehicle']),
       );
       runAndExpect(code, 'MyCar, MyVehicle');

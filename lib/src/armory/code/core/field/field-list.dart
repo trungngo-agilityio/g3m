@@ -4,7 +4,7 @@ class CodeFieldListConfig extends CodeConfigNode<CodeFieldList> {
   CodeFieldListConfig(NodeBuildFunc<CodeFieldList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFieldListConfig.newLineSeparated(Node child) =>
+  factory CodeFieldListConfig.forJavaLike(Node child) =>
       CodeFieldListConfig((context, param) {
         final children = param.fields;
         if (children == null || children.isEmpty) {

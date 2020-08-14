@@ -5,7 +5,7 @@ class CodeFunctionReturnConfig extends CodeConfigNode<CodeFunctionReturn> {
       NodeBuildFunc<CodeFunctionReturn> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionReturnConfig.asIs(Node child) =>
+  factory CodeFunctionReturnConfig.forJavaLike(Node child) =>
       CodeFunctionReturnConfig((context, funcReturn) {
         return funcReturn.type;
       }, child);

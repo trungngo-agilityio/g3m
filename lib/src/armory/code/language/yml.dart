@@ -34,19 +34,12 @@ class YmlCodeFile implements Node {
   }
 }
 
-/// Defines global configuration for dart code generation.
-///
-/// Yml default syntax:
-/// - Indentation: 2 spaces
-/// - Comment: Triple splash
-/// - Block: Curly bracket start at the same line.
-///
 class YmlCode extends ExactlyOneNode<YmlCode> {
   YmlCode(Node child) : super(child);
 
   @override
   Node buildOne(BuildContext context, Node child) {
-    return IndentationConfig.useSpace2(
+    return IndentConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         _buildExprConfig(
           child,

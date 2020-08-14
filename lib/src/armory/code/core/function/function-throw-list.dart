@@ -6,7 +6,7 @@ class CodeFunctionThrowListConfig
       NodeBuildFunc<CodeFunctionThrowList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionThrowListConfig.commaSeparated(Node child) =>
+  factory CodeFunctionThrowListConfig.forJavaLike(Node child) =>
       CodeFunctionThrowListConfig((context, param) {
         final types = param.types;
         if (types == null || types.isEmpty) {

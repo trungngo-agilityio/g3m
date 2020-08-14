@@ -21,7 +21,7 @@ CodeFunction makeFunction(String name) => CodeFunction.of(
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) {
-      var code = JavaCode(build());
+      var code = JavaCodeConfig(build());
       runAndExpect(code, expected);
     }
 

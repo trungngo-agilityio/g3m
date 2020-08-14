@@ -41,7 +41,7 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
         }
 
         if (array == true) {
-          if (isDart) {
+          if (isDart == true) {
             // Dart has syntax for array (or immutable list) as
             // List<T> as a example.
             name = Pad.of('List<', '>', name);

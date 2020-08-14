@@ -91,49 +91,49 @@ void main() {
   group('Indent', () {
     group('Level', () {
       test('1 line', () {
-        var text = IndentationConfig.useTab(Indent(Text.of('hello'), level: 2));
+        var text = IndentConfig.useTab(Indent(Text.of('hello'), level: 2));
         runAndExpect(text, '\t\thello');
       });
 
       test('multi lines', () {
         var text =
-            IndentationConfig.useTab(Indent(Text.of('hello\nworld'), level: 2));
+            IndentConfig.useTab(Indent(Text.of('hello\nworld'), level: 2));
         runAndExpect(text, '\t\thello\n\t\tworld');
       });
     });
 
     group('Tab', () {
       test('1 line', () {
-        var text = IndentationConfig.useTab(Indent(Text.of('hello')));
+        var text = IndentConfig.useTab(Indent(Text.of('hello')));
         runAndExpect(text, '\thello');
       });
 
       test('multi lines', () {
-        var text = IndentationConfig.useTab(Indent(Text.of('hello\nworld')));
+        var text = IndentConfig.useTab(Indent(Text.of('hello\nworld')));
         runAndExpect(text, '\thello\n\tworld');
       });
     });
 
     group('Space 2', () {
       test('1 line', () {
-        var text = IndentationConfig.useSpace2(Indent(Text.of('hello')));
+        var text = IndentConfig.useSpace2(Indent(Text.of('hello')));
         runAndExpect(text, '  hello');
       });
 
       test('multi lines', () {
-        var text = IndentationConfig.useSpace2(Indent(Text.of('hello\nworld')));
+        var text = IndentConfig.useSpace2(Indent(Text.of('hello\nworld')));
         runAndExpect(text, '  hello\n  world');
       });
     });
 
     group('Space 4', () {
       test('1 line', () {
-        var text = IndentationConfig.useSpace4(Indent(Text.of('hello')));
+        var text = IndentConfig.useSpace4(Indent(Text.of('hello')));
         runAndExpect(text, '    hello');
       });
 
       test('multi lines', () {
-        var text = IndentationConfig.useSpace4(Indent(Text.of('hello\nworld')));
+        var text = IndentConfig.useSpace4(Indent(Text.of('hello\nworld')));
         runAndExpect(text, '    hello\n    world');
       });
     });

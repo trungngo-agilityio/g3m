@@ -6,7 +6,7 @@ import '../../utils.dart';
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) async {
-      var code = JavaCode(build());
+      var code = JavaCodeConfig(build());
       await runAndExpect(code, expected);
     }
 

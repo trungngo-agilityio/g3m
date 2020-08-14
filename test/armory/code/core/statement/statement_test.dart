@@ -5,7 +5,7 @@ import '../../../utils.dart';
 
 void main() {
   test('null', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeStatement.of(null),
     );
 
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('one', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeStatement.of('hello()'),
     );
 
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('list null', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeStatementList.of(null),
     );
 
@@ -38,7 +38,7 @@ void main() {
   });
 
   test('list empty', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeStatementList.of([]),
     );
 
@@ -49,7 +49,7 @@ void main() {
   });
 
   test('list one', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeStatementList.of(['hello()']),
     );
 
@@ -60,7 +60,7 @@ void main() {
   });
 
   test('list more than one', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeStatementList.of(['hello()', ' ', 'hello2()']),
     );
 

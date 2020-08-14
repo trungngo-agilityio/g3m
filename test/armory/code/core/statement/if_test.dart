@@ -5,7 +5,7 @@ import '../../../utils.dart';
 
 void main() {
   test('simple', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeIf.of(true, ['print("Hello World!")']),
     );
 
@@ -18,7 +18,7 @@ void main() {
   });
 
   test('with else', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeIf.of(true, ['print("do something")'],
           elseBlock: ['print("do something else")']),
     );
@@ -34,7 +34,7 @@ void main() {
   });
 
   test('with else if', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeIf.of(true, [
         'print("do something");'
       ], elseIfBlocks: [

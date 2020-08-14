@@ -5,7 +5,7 @@ import '../../../../utils.dart';
 
 void main() {
   test('no args', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeFunctionCall.of('hello world'),
     );
 
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('one arg', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeFunctionCall.of('hello world', args: ['john doe']),
     );
 
@@ -27,7 +27,7 @@ void main() {
   });
 
   test('more than one', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeFunctionCall.of('hello world', args: ['john doe', true, 1]),
     );
 

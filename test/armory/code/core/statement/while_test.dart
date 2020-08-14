@@ -5,15 +5,14 @@ import '../../../utils.dart';
 
 void main() {
   test('simple', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeWhile.of(true, ['print("Hello World!")']),
     );
 
     await runAndExpect(
-      code,
-      'while (true) {\n'
-      '  print("Hello World!");\n'
-      '}\n'
-    );
+        code,
+        'while (true) {\n'
+        '  print("Hello World!");\n'
+        '}\n');
   });
 }

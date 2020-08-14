@@ -5,7 +5,7 @@ class CodeInterfaceListConfig extends CodeConfigNode<CodeInterfaceList> {
       NodeBuildFunc<CodeInterfaceList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeInterfaceListConfig.newLineSeparated(Node child) =>
+  factory CodeInterfaceListConfig.forJavaLike(Node child) =>
       CodeInterfaceListConfig((context, param) {
         final children = param.interfaces;
         if (children == null || children.isEmpty) {

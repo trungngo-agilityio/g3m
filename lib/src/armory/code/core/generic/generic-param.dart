@@ -4,7 +4,7 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
   CodeGenericParamConfig(NodeBuildFunc<CodeGenericParam> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeGenericParamConfig.asIs(Node child) =>
+  factory CodeGenericParamConfig.forJavaLike(Node child) =>
       CodeGenericParamConfig((context, param) {
         return param.name;
       }, child);

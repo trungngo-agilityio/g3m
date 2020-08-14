@@ -37,7 +37,7 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
     String separator = ': ',
   }) =>
       CodeMapLiteralConfig((context, literal) {
-        final config = IndentationConfig.of(context);
+        final config = IndentConfig.of(context);
 
         if (literal.values == null) return CodeNullLiteral();
         var pairs = literal.values.entries.map(

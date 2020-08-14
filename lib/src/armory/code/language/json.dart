@@ -34,19 +34,12 @@ class JsonCodeFile implements Node {
   }
 }
 
-/// Defines global configuration for dart code generation.
-///
-/// Json default syntax:
-/// - Indentation: 2 spaces
-/// - Comment: Triple splash
-/// - Block: Curly bracket start at the same line.
-///
 class JsonCode extends ExactlyOneNode<JsonCode> {
   JsonCode(Node child) : super(child);
 
   @override
   Node buildOne(BuildContext context, Node child) {
-    return IndentationConfig.useSpace2(
+    return IndentConfig.useSpace2(
       CodeBlockConfig.curlyBracketSameLine(
         _buildExprConfig(
           child,

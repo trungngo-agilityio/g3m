@@ -5,7 +5,7 @@ import '../../../utils.dart';
 
 void main() {
   test('simple', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeVar.of('name', type: 'string'),
     );
 
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('with string init', () {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeVar.of('string',
           type: 'name', init: CodeStringLiteral.of('john doe')),
     );

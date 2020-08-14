@@ -4,7 +4,7 @@ class CodeFunctionArgConfig extends CodeConfigNode<CodeFunctionArg> {
   CodeFunctionArgConfig(NodeBuildFunc<CodeFunctionArg> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionArgConfig.typeSpaceName(Node child) =>
+  factory CodeFunctionArgConfig.forJavaLike(Node child) =>
       CodeFunctionArgConfig((context, arg) {
         return Container([
           arg.type,

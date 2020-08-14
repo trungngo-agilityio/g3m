@@ -5,7 +5,7 @@ import '../../../../../utils.dart';
 
 void main() {
   test('null', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeArrayLiteral.of(null),
     );
 
@@ -16,7 +16,7 @@ void main() {
   });
 
   test('empty array', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeArrayLiteral.of([]),
     );
 
@@ -27,13 +27,17 @@ void main() {
   });
 
   test('non empty array', () async {
-    var code = JavaCode(
+    var code = JavaCodeConfig(
       CodeArrayLiteral.of([false, null, 'A']),
     );
 
     await runAndExpect(
       code,
-      '[ false, null, "A" ]',
+      '[\n'
+      '  false,\n'
+      '  null,\n'
+      '  "A"\n'
+      ']',
     );
   });
 }

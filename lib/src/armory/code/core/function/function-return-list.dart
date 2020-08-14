@@ -6,7 +6,7 @@ class CodeFunctionReturnListConfig
       NodeBuildFunc<CodeFunctionReturnList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionReturnListConfig.commaSeparated(Node child) =>
+  factory CodeFunctionReturnListConfig.forJavaLike(Node child) =>
       CodeFunctionReturnListConfig((context, param) {
         final types = param.types;
         if (types == null || types.isEmpty) {

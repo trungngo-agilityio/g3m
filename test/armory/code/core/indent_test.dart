@@ -5,7 +5,7 @@ import '../../utils.dart';
 
 void main() {
   void run(String text, String expected) {
-    var code = IndentationConfig.useSpace2(Indent(Text.of(text)));
+    var code = IndentConfig.useSpace2(Indent(Text.of(text)));
     runAndExpect(code, expected);
   }
 
