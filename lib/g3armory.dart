@@ -9,10 +9,11 @@ import 'package:path/path.dart' as ioPath;
 
 part 'src/armory/code/core/access.dart';
 
+part 'src/armory/code/core/annotation/annotation-list.dart';
+
 part 'src/armory/code/core/annotation/annotation-name.dart';
 
 part 'src/armory/code/core/annotation/annotation.dart';
-part 'src/armory/code/core/annotation/annotation-list.dart';
 
 part 'src/armory/code/core/block.dart';
 
@@ -93,6 +94,7 @@ part 'src/armory/code/core/statement/else-if.dart';
 part 'src/armory/code/core/statement/expr.dart';
 
 part 'src/armory/code/core/statement/expr/await.dart';
+
 part 'src/armory/code/core/statement/expr/function-call.dart';
 
 part 'src/armory/code/core/statement/expr/literal/array-literal.dart';
@@ -130,6 +132,8 @@ part 'src/armory/code/core/statement/var-name.dart';
 part 'src/armory/code/core/statement/var.dart';
 
 part 'src/armory/code/core/statement/while.dart';
+
+part 'src/armory/code/core/statement/yield.dart';
 
 part 'src/armory/code/core/syntax.dart';
 

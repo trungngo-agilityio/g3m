@@ -30,14 +30,13 @@ class JavaCodeFile implements Node {
     return JavaCodeFile._(
       name,
       source: JavaCode.of(
-        package: package,
-        comment: comment,
-        imports: imports,
-        functions: functions,
-        interfaces: interfaces,
-        classes: classes,
-        body: body
-      ),
+          package: package,
+          comment: comment,
+          imports: imports,
+          functions: functions,
+          interfaces: interfaces,
+          classes: classes,
+          body: body),
     );
   }
 
@@ -125,6 +124,8 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
+          awaitConfig: null,
+          yieldConfig: null,
           varConfig: null,
 
           // Statement configs

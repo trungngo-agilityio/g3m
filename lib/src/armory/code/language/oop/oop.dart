@@ -41,6 +41,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   OopCodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
   OopCodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
   OopCodeConfigBuildFunc<CodeAwaitConfig> awaitConfig;
+  OopCodeConfigBuildFunc<CodeYieldConfig> yieldConfig;
   OopCodeConfigBuildFunc<CodeVarConfig> varConfig;
 
   // Statement configs
@@ -125,6 +126,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.arrayLiteralConfig,
     @required this.mapLiteralConfig,
     @required this.awaitConfig,
+        @required this.yieldConfig,
     @required this.varConfig,
 
     // Statement configs
@@ -207,6 +209,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     arrayLiteralConfig ??= (_, sub) => CodeArrayLiteralConfig.forJsonLike(sub);
     mapLiteralConfig ??= (_, sub) => CodeMapLiteralConfig.forJsonLike(sub);
     awaitConfig ??= (_, sub) => CodeAwaitConfig.forJavaLike(sub);
+    yieldConfig ??= (_, sub) => CodeYieldConfig.forJavaLike(sub);
     varConfig ??= (_, sub) => CodeVarConfig.forJavaLike(sub);
 
     // Statement configs
@@ -304,6 +307,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       arrayLiteralConfig,
       mapLiteralConfig,
       awaitConfig,
+      yieldConfig,
       varConfig,
 
       // Statement configs
