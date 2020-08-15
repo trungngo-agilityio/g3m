@@ -1,0 +1,103 @@
+part of g3.armory;
+
+class CodeCommentConfig extends CodeConfigNode<CodeComment> {
+  CodeCommentConfig(NodeBuildFunc<CodeComment> buildFunc, Node child)
+      : super(buildFunc, child);
+
+  factory CodeCommentConfig.byStringFunc(StringFunc func, Node child) =>
+      CodeCommentConfig((context, codeComment) {
+        return Container([TextTransform(codeComment.content, func), NewLine()]);
+      }, child);
+
+  factory CodeCommentConfig.doubleSplash(Node child) =>
+      CodeCommentConfig.byStringFunc(
+          StringFuncs.code.commentDoubleSplash, child);
+
+  factory CodeCommentConfig.tripleSplash(Node child) =>
+      CodeCommentConfig.byStringFunc(
+          StringFuncs.code.commentTripleSplash, child);
+
+  factory CodeCommentConfig.javaDoc(Node child) =>
+      CodeCommentConfig.byStringFunc(StringFuncs.code.commentJavaDoc, child);
+
+  factory CodeCommentConfig.hash(Node child) =>
+      CodeCommentConfig.byStringFunc(StringFuncs.code.commentHash, child);
+
+  factory CodeCommentConfig.forDartLike(Node child) =>
+      CodeCommentConfig.forCode(
+        child,
+        enumFunc: StringFuncs.code.commentTripleSplash,
+        classFunc: StringFuncs.code.commentTripleSplash,
+        interfaceFunc: StringFuncs.code.commentTripleSplash,
+        fieldFunc: StringFuncs.code.commentTripleSplash,
+        constructorFunc: StringFuncs.code.commentTripleSplash,
+        functionFunc: StringFuncs.code.commentTripleSplash,
+        otherFunc: StringFuncs.code.commentDoubleSplash,
+      );
+
+  factory CodeCommentConfig.forJavaLike(Node child) =>
+      CodeCommentConfig.forCode(
+        child,
+        enumFunc: StringFuncs.code.commentJavaDoc,
+        classFunc: StringFuncs.code.commentJavaDoc,
+        interfaceFunc: StringFuncs.code.commentJavaDoc,
+        fieldFunc: StringFuncs.code.commentDoubleSplash,
+        constructorFunc: StringFuncs.code.commentJavaDoc,
+        functionFunc: StringFuncs.code.commentJavaDoc,
+        otherFunc: StringFuncs.code.commentDoubleSplash,
+      );
+
+  factory CodeCommentConfig.forCode(
+    Node child, {
+    @required StringFunc enumFunc,
+    @required StringFunc classFunc,
+    @required StringFunc interfaceFunc,
+    @required StringFunc fieldFunc,
+    @required StringFunc constructorFunc,
+    @required StringFunc functionFunc,
+    @required StringFunc otherFunc,
+  }) =>
+      CodeCommentConfig((context, codeComment) {
+        // Finds the nearest container for this comment.
+        final container = context.ancestors.firstWhere(
+            (e) =>
+                e is CodeEnum ||
+                e is CodeClass ||
+                e is CodeInterface ||
+                e is CodeField ||
+                e is CodeClassConstructor ||
+                e is CodeFunction,
+            orElse: () => null);
+
+        var func;
+        if (container != null) {
+          // Determines the comment style for the given container.
+          if (container is CodeEnum) {
+            func = enumFunc;
+          } else if (container is CodeClass) {
+            func = classFunc;
+          } else if (container is CodeInterface) {
+            func = interfaceFunc;
+          } else if (container is CodeField) {
+            func = fieldFunc;
+          } else if (container is CodeClassConstructor) {
+            func = constructorFunc;
+          } else if (container is CodeFunction) {
+            func = functionFunc;
+          }
+        }
+
+        func ??= otherFunc;
+
+        return Container([TextTransform(codeComment.content, func), NewLine()]);
+      }, child);
+}
+
+class CodeComment extends CodeConfigProxyNode<CodeComment> {
+  final Node content;
+
+  CodeComment(this.content);
+
+  factory CodeComment.of(String text) =>
+      text != null ? CodeComment(Text.of(text)) : null;
+}

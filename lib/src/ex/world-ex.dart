@@ -22,6 +22,10 @@ class WorldEx {
 
   ModelScopeEx get model => _model ??= ModelScopeEx(field);
 
+  // ===========================================================================
+  // ER
+  // ===========================================================================
+
   ErRelationCardinalScopeEx _erRelationCardinal;
 
   ErRelationCardinalScopeEx get erRelationCardinal =>
@@ -37,6 +41,10 @@ class WorldEx {
   ErRelationScopeEx get erRelation =>
       _erRelation ??= ErRelationScopeEx(model, erRelationType);
 
+  // ===========================================================================
+  // Db
+  // ===========================================================================
+
   DbEngineScopeEx _dbEngine;
 
   DbEngineScopeEx get dbEngine => _dbEngine ??= DbEngineScopeEx();
@@ -50,6 +58,10 @@ class WorldEx {
   DbTableScopeEx get dbTable =>
       _dbTable ??= DbTableScopeEx(dbEngine, dbSchema, model, field);
 
+  // ===========================================================================
+  // Story
+  // ===========================================================================
+
   StoryActorScopeEx _storyActor;
 
   StoryActorScopeEx get storyActor => _storyActor ??= StoryActorScopeEx();
@@ -62,4 +74,32 @@ class WorldEx {
 
   StoryScopeEx get story =>
       _story ??= StoryScopeEx(storyActor, storyAction, model, dbTable);
+
+  // ===========================================================================
+  // Proto
+  // ===========================================================================
+
+  ProtoMessageFieldScopeEx _protoMessageField;
+
+  ProtoMessageFieldScopeEx get protoMessageField =>
+      _protoMessageField ??= ProtoMessageFieldScopeEx(type, constraint);
+
+  ProtoMessageScopeEx _protoMessage;
+
+  ProtoMessageScopeEx get protoMessage =>
+      _protoMessage ??= ProtoMessageScopeEx(protoMessageField);
+
+  ProtoLibScopeEx _protoLib;
+
+  ProtoLibScopeEx get protoLib => _protoLib ??= ProtoLibScopeEx(protoMessage);
+
+  ProtoRpcMethodScopeEx _protoRpcMethod;
+
+  ProtoRpcMethodScopeEx get protoRpcMethod =>
+      _protoRpcMethod ??= ProtoRpcMethodScopeEx(protoLib, protoMessage);
+
+  ProtoRpcScopeEx _protoRpc;
+
+  ProtoRpcScopeEx get protoRpc =>
+      _protoRpc ??= ProtoRpcScopeEx(protoLib, protoRpcMethod);
 }

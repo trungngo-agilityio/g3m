@@ -194,6 +194,37 @@ abstract class Expr<T extends Expr<T>> {
     if (_items.length == 1) return {_items.single};
     return _items;
   }
+
+  T filter(bool Function(T t) predicate) {
+    var res = _scope.none;
+    for (final i in eval()) {
+      if (predicate(i)) {
+        res += i;
+      }
+    }
+    return res;
+  }
+
+  T filterByName(dynamic name) {
+    final n = name?.toString();
+    return filter((t) => t.name?.toString() == n);
+  }
+
+  bool contains(T t) {
+    for (final i in t.eval()) {
+      var found = false;
+      for (final j in eval()) {
+        if (j == i) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) return false;
+    }
+
+    return true;
+  }
 }
 
 // ---------------------------------------------------------------------------

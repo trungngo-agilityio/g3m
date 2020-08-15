@@ -189,20 +189,25 @@ StringFunc norm = (s) => s?.trim()?.replaceAll(_normalizeExpr, ' ');
 
 StringFunc noop = (s) => s;
 StringFunc ignore = (s) => '';
-StringFunc upper = (s) => s.toUpperCase();
-StringFunc lower = (s) => s.toLowerCase();
-StringFunc camel = (s) => ReCase(s).camelCase;
-StringFunc pascal = (s) => ReCase(s).pascalCase;
-StringFunc snake = (s) => ReCase(s).snakeCase;
-StringFunc dot = (s) => ReCase(s).dotCase;
-StringFunc path = (s) => ReCase(s).pathCase;
-StringFunc param = (s) => ReCase(s).paramCase;
-StringFunc header = (s) => ReCase(s).headerCase;
-StringFunc title = (s) => ReCase(s).titleCase;
-StringFunc constant = (s) => ReCase(s).constantCase;
-StringFunc sentence = (s) => ReCase(s).sentenceCase;
-StringFunc quote = (s) => '\'${s.replaceAll('\'', '\\\'')}\'';
-StringFunc doubleQuote = (s) => '"${s.replaceAll('"', '\\"')}"';
+StringFunc upper = (s) => s != null && s.isNotEmpty ? s.toUpperCase() : s;
+StringFunc lower = (s) => s != null && s.isNotEmpty ? s.toLowerCase() : s;
+StringFunc camel = (s) => s != null && s.isNotEmpty ? ReCase(s).camelCase : s;
+StringFunc pascal = (s) => s != null && s.isNotEmpty ? ReCase(s).pascalCase : s;
+StringFunc snake = (s) => s != null && s.isNotEmpty ? ReCase(s).snakeCase : s;
+StringFunc dot = (s) => s != null && s.isNotEmpty ? ReCase(s).dotCase : s;
+StringFunc path = (s) => s != null && s.isNotEmpty ? ReCase(s).pathCase : s;
+StringFunc param = (s) => s != null && s.isNotEmpty ? ReCase(s).paramCase : s;
+StringFunc header = (s) => s != null && s.isNotEmpty ? ReCase(s).headerCase : s;
+StringFunc title = (s) => s != null && s.isNotEmpty ? ReCase(s).titleCase : s;
+StringFunc constant =
+    (s) => s != null && s.isNotEmpty ? ReCase(s).constantCase : s;
+
+StringFunc sentence =
+    (s) => s != null && s.isNotEmpty ? ReCase(s).sentenceCase : s;
+StringFunc quote =
+    (s) => s != null && s.isNotEmpty ? '\'${s.replaceAll('\'', '\\\'')}\'' : s;
+StringFunc doubleQuote =
+    (s) => s != null && s.isNotEmpty ? '"${s.replaceAll('"', '\\"')}"' : s;
 
 /// See: https://www.markdownguide.org/basic-syntax/
 class MarkdownFunc {
@@ -220,7 +225,8 @@ class MarkdownFunc {
 
   final StringFunc bold = (s) => '**$s** ';
   final StringFunc italic = (s) => '*$s* ';
-  final StringFunc code = (s) => '`$s`' ;
+  final StringFunc code = (s) => '`$s`';
+
   final String rule = '---';
 
   StringFunc link([String title]) {
