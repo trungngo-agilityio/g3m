@@ -1,4 +1,4 @@
-part of g3util;
+part of g3.util;
 
 mixin Proxy {
   Object _internal;

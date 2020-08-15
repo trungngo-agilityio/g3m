@@ -9,7 +9,7 @@ class CodeVarNameConfig extends CodeConfigNode<CodeVarName> {
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeVarNameConfig.forJavaLike(Node child) =>
-      CodeVarNameConfig.of(camel, child);
+      CodeVarNameConfig.of(StringFuncs.camel, child);
 }
 
 class CodeVarName extends CodeConfigProxyNode<CodeVarName> implements CodeExpr {

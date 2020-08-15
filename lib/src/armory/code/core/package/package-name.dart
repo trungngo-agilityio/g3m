@@ -9,10 +9,10 @@ class CodePackageNameConfig extends CodeConfigNode<CodePackageName> {
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodePackageNameConfig.forDartLike(Node child) =>
-      CodePackageNameConfig.of(camel, child);
+      CodePackageNameConfig.of(StringFuncs.camel, child);
 
   factory CodePackageNameConfig.forJavaLike(Node child) =>
-      CodePackageNameConfig.of(dot, child);
+      CodePackageNameConfig.of(StringFuncs.dot, child);
 }
 
 class CodePackageName extends CodeConfigProxyNode<CodePackageName> {

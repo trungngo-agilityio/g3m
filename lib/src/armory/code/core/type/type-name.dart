@@ -14,7 +14,7 @@ class CodeTypeNameMapperConfig extends SingleChildNode {
     if (parent != null && parent.map != null) {
       // Merges parent settings
       for (final i in parent.map.entries) {
-        map.putIfAbsent(camel(i.key), () => i.value);
+        map.putIfAbsent(StringFuncs.camel(i.key), () => i.value);
       }
     }
 
@@ -22,7 +22,7 @@ class CodeTypeNameMapperConfig extends SingleChildNode {
   }
 
   String translate(String name) {
-    final key = camel(name);
+    final key = StringFuncs.camel(name);
     return map.containsKey(key) ? map[key] : name;
   }
 }
@@ -43,7 +43,7 @@ class CodeTypeNameConfig extends CodeConfigNode<CodeTypeName> {
       }, child);
 
   factory CodeTypeNameConfig.forJavaLike(Node child) =>
-      CodeTypeNameConfig.of(pascal, child);
+      CodeTypeNameConfig.of(StringFuncs.pascal, child);
 }
 
 class CodeTypeName extends CodeConfigProxyNode<CodeTypeName> {

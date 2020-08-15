@@ -9,7 +9,7 @@ class CodeFunctionNameConfig extends CodeConfigNode<CodeFunctionName> {
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeFunctionNameConfig.forJavaLike(Node child) =>
-      CodeFunctionNameConfig.of(camel, child);
+      CodeFunctionNameConfig.of(StringFuncs.camel, child);
 }
 
 class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName> {

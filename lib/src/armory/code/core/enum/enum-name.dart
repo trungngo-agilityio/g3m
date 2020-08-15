@@ -9,7 +9,7 @@ class CodeEnumNameConfig extends CodeConfigNode<CodeEnumName> {
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeEnumNameConfig.forJavaLike(Node child) =>
-      CodeEnumNameConfig.of(pascal, child);
+      CodeEnumNameConfig.of(StringFuncs.pascal, child);
 }
 
 class CodeEnumName extends CodeConfigProxyNode<CodeEnumName> {

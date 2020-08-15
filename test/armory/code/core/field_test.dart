@@ -30,7 +30,7 @@ void main() {
     runAndExpect(
       code,
       '\n'
-          'String firstName = "john";\n',
+      'String firstName = "john";\n',
     );
   });
 

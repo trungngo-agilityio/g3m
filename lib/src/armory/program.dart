@@ -77,17 +77,17 @@ class _Context implements BuildContext, RenderContext {
     }
   }
 
-  void render() async {
+  void render() {
     if (node is Renderer) {
-      await (node as Renderer).render(this);
+      (node as Renderer).render(this);
     }
 
     for (final i in _children) {
-      await i.render();
+      i.render();
     }
 
     if (node is PostRenderer) {
-      await (node as PostRenderer).postRender(this);
+      (node as PostRenderer).postRender(this);
     }
   }
 
@@ -114,14 +114,14 @@ class Program {
 
   Program._(this.root);
 
-  void _execute() async {
+  void _execute() {
     final context = _Context(null, Directory.absolute('.', root));
     context.build();
-    await context.render();
+    context.render();
   }
 
-  static void execute(Node root) async {
+  static void execute(Node root) {
     final program = Program._(root);
-    await program._execute();
+    program._execute();
   }
 }

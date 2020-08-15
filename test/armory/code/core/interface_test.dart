@@ -159,7 +159,6 @@ void main() {
   });
 }
 
-
 CodeField makeField(String name) => CodeField.of(
       name: name,
       type: 'string',

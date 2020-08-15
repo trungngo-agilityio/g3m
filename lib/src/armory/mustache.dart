@@ -50,17 +50,17 @@ class Mustache implements Node, PostRenderer {
   @override
   void postRender(RenderContext context) {
     final defaultFunctions = <String, StringFunc>{
-      'upper': upper,
-      'lower': lower,
-      'camel': camel,
-      'pascal': pascal,
-      'snake': snake,
-      'dot': dot,
-      'path': path,
-      'param': param,
-      'header': header,
-      'title': title,
-      'constant': constant,
+      'upper': StringFuncs.upper,
+      'lower': StringFuncs.lower,
+      'camel': StringFuncs.camel,
+      'pascal': StringFuncs.pascal,
+      'snake': StringFuncs.snake,
+      'dot': StringFuncs.dot,
+      'path': StringFuncs.path,
+      'param': StringFuncs.param,
+      'header': StringFuncs.header,
+      'title': StringFuncs.title,
+      'constant': StringFuncs.constant,
     };
 
     final map = <String, dynamic>{};

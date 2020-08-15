@@ -10,7 +10,7 @@ class CodeAnnotationNameConfig extends CodeConfigNode<CodeAnnotationName> {
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeAnnotationNameConfig.forJavaLike(Node child) =>
-      CodeAnnotationNameConfig.of(pascal, child);
+      CodeAnnotationNameConfig.of(StringFuncs.pascal, child);
 }
 
 class CodeAnnotationName extends CodeConfigProxyNode<CodeAnnotationName> {

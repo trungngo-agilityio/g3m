@@ -11,7 +11,7 @@ class CodeClassConstructorNameConfig
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeClassConstructorNameConfig.forJavaLike(Node child) =>
-      CodeClassConstructorNameConfig.of(pascal, child);
+      CodeClassConstructorNameConfig.of(StringFuncs.pascal, child);
 }
 
 class CodeClassConstructorName

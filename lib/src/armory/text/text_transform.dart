@@ -45,7 +45,7 @@ class UpperCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, upper);
+    return TextTransform(content, StringFuncs.upper);
   }
 }
 
@@ -56,7 +56,7 @@ class LowerCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, lower);
+    return TextTransform(content, StringFuncs.lower);
   }
 }
 
@@ -67,7 +67,7 @@ class PascalCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, pascal);
+    return TextTransform(content, StringFuncs.pascal);
   }
 }
 
@@ -78,7 +78,7 @@ class CamelCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, camel);
+    return TextTransform(content, StringFuncs.camel);
   }
 }
 
@@ -89,7 +89,7 @@ class SnakeCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, snake);
+    return TextTransform(content, StringFuncs.snake);
   }
 }
 
@@ -100,7 +100,7 @@ class PathCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, path);
+    return TextTransform(content, StringFuncs.path);
   }
 }
 
@@ -111,7 +111,7 @@ class DotCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, dot);
+    return TextTransform(content, StringFuncs.dot);
   }
 }
 
@@ -122,7 +122,7 @@ class ParamCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, param);
+    return TextTransform(content, StringFuncs.param);
   }
 }
 
@@ -133,7 +133,7 @@ class HeaderCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, header);
+    return TextTransform(content, StringFuncs.header);
   }
 }
 
@@ -144,7 +144,7 @@ class TitleCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, title);
+    return TextTransform(content, StringFuncs.title);
   }
 }
 
@@ -155,7 +155,7 @@ class ConstantCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, constant);
+    return TextTransform(content, StringFuncs.constant);
   }
 }
 
@@ -166,6 +166,6 @@ class SentenceCase implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(content, sentence);
+    return TextTransform(content, StringFuncs.sentence);
   }
 }

@@ -2,7 +2,7 @@ library g3.armory;
 
 import 'dart:io' as io;
 
-import 'package:g3m/g3gen.dart';
+import 'package:g3m/g3util.dart';
 import 'package:meta/meta.dart';
 import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;

@@ -10,10 +10,10 @@ class CodeEnumValueNameConfig extends CodeConfigNode<CodeEnumValueName> {
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeEnumValueNameConfig.forDartLike(Node child) =>
-      CodeEnumValueNameConfig.of(camel, child);
+      CodeEnumValueNameConfig.of(StringFuncs.camel, child);
 
   factory CodeEnumValueNameConfig.forJavaLike(Node child) =>
-      CodeEnumValueNameConfig.of(constant, child);
+      CodeEnumValueNameConfig.of(StringFuncs.constant, child);
 }
 
 class CodeEnumValueName extends CodeConfigProxyNode<CodeEnumValueName> {
