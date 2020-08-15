@@ -14,8 +14,8 @@ class Scope implements Node {
   Node build(BuildContext context) {
     final name = PromptResult.of(context)?.value('name');
     return Container([
-      Console.error('Generate ${name} expression.'),
-      DartCode.of(
+      DartCodeFile.of(
+        name,
         package: CodePackage.of('g3m core'),
         classes: [
           _exprClass(name),
@@ -185,47 +185,37 @@ ProtoLibScope({{constructorArgs}});
 }
 
 void main() async {
-  final program = SingleChildNode(
-    OutputRedirect.console(
-      Container([
-        PromptLoop(
-          'Continue?',
-          init: true,
-          onDone: (_) {
-            return Console.info('Thank you!!!');
-          },
-          onContinue: (_) {
-            return Container([
-              // Prompts the target class name.
-              PromptString(
-                'name',
-                message: 'name',
-                child: Scope(
-                  fields: {
-                    'lib': 'ProtoLib',
-                    'fields': 'ProtoMessageField',
-                    'models': 'ProtoMessageModel',
-                  },
-                  isValidText: '_messages.isNonEmptyValidSet;',
-                ),
-              ),
-
-              PromptBool('happy', message: 'Happy Now?', init: true),
-              PromptChooseUtil('style',
-                  message: 'Please select your style',
-                  options: {
-                    'a': 'Sass',
-                    'b': 'Less',
-                    'c': 'Css',
-                  },
-                  init: 'Css', onDone: (ctx) {
-                return Console.info(Container([
-                  PromptResult.of(ctx).value('style'),
-                ]));
-              }),
-            ]);
-          },
+  var promptLoop = PromptLoop(
+    'Continue?',
+    init: true,
+    onDone: (_) {
+      // On finish,
+      return Console.info('Thank you!!!');
+    },
+    onContinue: (_) {
+      return Container([
+        // Prompts the target class name.
+        PromptString(
+          'name',
+          message: 'name',
+          child: Scope(
+            fields: {
+              'lib': 'ProtoLib',
+              'fields': 'ProtoMessageField',
+              'models': 'ProtoMessageModel',
+            },
+            isValidText: '_messages.isNonEmptyValidSet;',
+          ),
         ),
+      ]);
+    },
+  );
+
+  final program = SingleChildNode(
+    Directory.relative(
+      '.out',
+      Container([
+        promptLoop,
       ]),
     ),
   );

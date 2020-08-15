@@ -15,6 +15,7 @@ abstract class RenderContext {
   String path;
   StringSink out;
   int blockLevel;
+  void abort();
 }
 
 abstract class Node {

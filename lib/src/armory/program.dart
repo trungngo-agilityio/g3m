@@ -106,6 +106,13 @@ class _Context implements BuildContext, RenderContext {
   set path(value) {
     _path = value;
   }
+
+  bool _aborted;
+
+  @override
+  void abort() {
+    _aborted = true;
+  }
 }
 
 class Program {
@@ -114,7 +121,7 @@ class Program {
   Program._(this.root);
 
   void _execute() async {
-    final context = _Context(null, Directory.absolute('/tmp/g3', root));
+    final context = _Context(null, Directory.absolute('.', root));
     context.build();
     await context.render();
   }

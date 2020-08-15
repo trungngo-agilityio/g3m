@@ -6,6 +6,13 @@ enum _DirectoryPathKind {
   temp,
 }
 
+/// This node helps to redirect the children's output stream to
+/// a new directory.
+///
+/// Usage:
+/// - [Directory.absolute] creates a new directory node that
+/// redirects all children's output to an absolute directory.
+///
 class Directory extends SingleChildNode implements Renderer {
   /// The relative or absolute path, depending on the path [_kind].
   final String _path;
@@ -39,23 +46,27 @@ class Directory extends SingleChildNode implements Renderer {
   ///
   @override
   void render(RenderContext context) {
-    String dir;
+    String path;
+
     if (_kind == _DirectoryPathKind.temp) {
       // Creates a new temp directory.
-      dir = io.Directory.systemTemp.createTempSync(_path).path;
+      path = io.Directory.systemTemp.createTempSync(_path).path;
     } else {
       if (_kind == _DirectoryPathKind.absolute) {
-        dir = ioPath.absolute(_path);
+        path = ioPath.absolute(_path);
       } else {
-        dir = ioPath.absolute(context.path, _path);
+        // Gets the path that is relative to the context.
+        path = ioPath.absolute(context.path, _path);
       }
 
       // Creates the directory
-      io.Directory(dir).createSync(recursive: true);
+      final dir = io.Directory(path);
+      dir.createSync(recursive: true);
+      path = dir.absolute.path;
     }
 
     // Redirects the output directory to the new one.
     // All sub sequence file output will be written to here.
-    context.path = dir;
+    context.path = path;
   }
 }
