@@ -157,20 +157,21 @@ void main() {
             functions: functions,
           );
         },
-        'public abstract class Person<T> extends Car<T> implements FourWheel, Vehicle<T> {\n'
-        '  \n'
-        '  \n'
+        '\n'
+        'public abstract class Person<T> {\n'
         '  String firstName;\n'
-        '  \n'
+        '\n'
         '  String lastName;\n'
-        '  \n'
-        '  \n'
-        '  /// test hello world 1\n'
+        '\n'
+        '  /**\n'
+        '   * test hello world 1\n'
+        '   */\n'
         '  String helloWorld1(String name, Person other);\n'
-        '  \n'
-        '  /// test hello world 2\n'
+        '\n'
+        '  /**\n'
+        '   * test hello world 2\n'
+        '   */\n'
         '  String helloWorld2(String name, Person other);\n'
-        '  \n'
         '}\n',
       );
     });

@@ -39,7 +39,7 @@ void main() {
     await runAndExpect(
       root,
       '// Demo file level comment\n'
-      'package my.personal.vehicle;\n'
+      'library my.personal.vehicle;\n'
       '\n'
       '\n'
       'import \'io\';\n'

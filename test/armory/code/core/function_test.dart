@@ -132,11 +132,11 @@ void main() {
       );
       runAndExpect(
         code,
+        '\n'
         'hello() {\n'
         '  // some sample comment;\n'
         '  callAFunction();\n'
-        '  \n'
-        '}\n',
+        '}',
       );
     });
   });

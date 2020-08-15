@@ -10,7 +10,7 @@ void main() {
       var code = JavaCodeConfig(
         CodePackage.of('my car'),
       );
-      runAndExpect(code, 'package myCar;');
+      runAndExpect(code, 'package myCar;\n');
     });
   });
 }

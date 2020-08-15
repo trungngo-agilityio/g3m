@@ -103,8 +103,9 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           commentConfig: (_, sub) => CodeCommentConfig.forDartLike(sub),
 
           // Package configs
-          packageNameConfig: null,
-          packageConfig: null,
+          packageNameConfig: (_, sub) => CodePackageNameConfig.forDartLike(sub),
+          packageConfig: (_, sub) =>
+              CodePackageConfig.forJavaLike(sub, packageKeyword: 'library'),
 
           // Import Configs
           importConfig: (_, sub) => CodeImportConfig.forDartLike(sub),

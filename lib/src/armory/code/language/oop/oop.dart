@@ -1,6 +1,6 @@
 part of g3.armory;
 
-typedef OopCodeConfigBuildFunc<T extends Node> = T Function(
+typedef CodeConfigBuildFunc<T extends Node> = T Function(
     BuildContext context, Node node);
 
 /// Defines global configuration for dart code generation.
@@ -12,98 +12,98 @@ typedef OopCodeConfigBuildFunc<T extends Node> = T Function(
 ///
 abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     extends ExactlyOneNode<T> {
-  OopCodeConfigBuildFunc<IndentConfig> indentConfig;
-  OopCodeConfigBuildFunc<CodeBlockConfig> blockConfig;
-  OopCodeConfigBuildFunc<CodeModifierConfig> codeAccessConfig;
-  OopCodeConfigBuildFunc<CodeCommentConfig> commentConfig;
+  CodeConfigBuildFunc<IndentConfig> indentConfig;
+  CodeConfigBuildFunc<CodeBlockConfig> blockConfig;
+  CodeConfigBuildFunc<CodeModifierConfig> codeAccessConfig;
+  CodeConfigBuildFunc<CodeCommentConfig> commentConfig;
 
   // Package configs
-  OopCodeConfigBuildFunc<CodePackageNameConfig> packageNameConfig;
-  OopCodeConfigBuildFunc<CodePackageConfig> packageConfig;
+  CodeConfigBuildFunc<CodePackageNameConfig> packageNameConfig;
+  CodeConfigBuildFunc<CodePackageConfig> packageConfig;
 
   // Import Configs
-  OopCodeConfigBuildFunc<CodeImportConfig> importConfig;
-  OopCodeConfigBuildFunc<CodeImportListConfig> importListConfig;
-  OopCodeConfigBuildFunc<CodeImportTypeConfig> importTypeConfig;
+  CodeConfigBuildFunc<CodeImportConfig> importConfig;
+  CodeConfigBuildFunc<CodeImportListConfig> importListConfig;
+  CodeConfigBuildFunc<CodeImportTypeConfig> importTypeConfig;
 
   // Type configs
-  OopCodeConfigBuildFunc<CodeTypeNameMapperConfig> typeNameMapperConfig;
-  OopCodeConfigBuildFunc<CodeTypeNameConfig> typeNameConfig;
-  OopCodeConfigBuildFunc<CodeTypeConfig> typeConfig;
-  OopCodeConfigBuildFunc<CodeTypeListConfig> typeListConfig;
+  CodeConfigBuildFunc<CodeTypeNameMapperConfig> typeNameMapperConfig;
+  CodeConfigBuildFunc<CodeTypeNameConfig> typeNameConfig;
+  CodeConfigBuildFunc<CodeTypeConfig> typeConfig;
+  CodeConfigBuildFunc<CodeTypeListConfig> typeListConfig;
 
   // Expr configs
-  OopCodeConfigBuildFunc<CodeNullLiteralConfig> nullLiteralConfig;
-  OopCodeConfigBuildFunc<CodeBoolLiteralConfig> boolLiteralConfig;
-  OopCodeConfigBuildFunc<CodeCharLiteralConfig> charLiteralConfig;
-  OopCodeConfigBuildFunc<CodeStringLiteralConfig> stringLiteralConfig;
-  OopCodeConfigBuildFunc<CodeNumericLiteralConfig> numericLiteralConfig;
-  OopCodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
-  OopCodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
-  OopCodeConfigBuildFunc<CodeAwaitConfig> awaitConfig;
-  OopCodeConfigBuildFunc<CodeYieldConfig> yieldConfig;
-  OopCodeConfigBuildFunc<CodeVarConfig> varConfig;
+  CodeConfigBuildFunc<CodeNullLiteralConfig> nullLiteralConfig;
+  CodeConfigBuildFunc<CodeBoolLiteralConfig> boolLiteralConfig;
+  CodeConfigBuildFunc<CodeCharLiteralConfig> charLiteralConfig;
+  CodeConfigBuildFunc<CodeStringLiteralConfig> stringLiteralConfig;
+  CodeConfigBuildFunc<CodeNumericLiteralConfig> numericLiteralConfig;
+  CodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
+  CodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
+  CodeConfigBuildFunc<CodeAwaitConfig> awaitConfig;
+  CodeConfigBuildFunc<CodeYieldConfig> yieldConfig;
+  CodeConfigBuildFunc<CodeVarConfig> varConfig;
 
   // Statement configs
-  OopCodeConfigBuildFunc<CodeStatementListConfig> statementList;
-  OopCodeConfigBuildFunc<CodeStatementConfig> statement;
-  OopCodeConfigBuildFunc<CodeBreakConfig> breakConfig;
-  OopCodeConfigBuildFunc<CodeContinueConfig> continueConfig;
-  OopCodeConfigBuildFunc<CodeVarNameConfig> varNameConfig;
+  CodeConfigBuildFunc<CodeStatementListConfig> statementList;
+  CodeConfigBuildFunc<CodeStatementConfig> statement;
+  CodeConfigBuildFunc<CodeBreakConfig> breakConfig;
+  CodeConfigBuildFunc<CodeContinueConfig> continueConfig;
+  CodeConfigBuildFunc<CodeVarNameConfig> varNameConfig;
 
-  OopCodeConfigBuildFunc<CodeIfConfig> ifConfig;
-  OopCodeConfigBuildFunc<CodeElseIfConfig> elseIfConfig;
-  OopCodeConfigBuildFunc<CodeReturnConfig> returnConfig;
-  OopCodeConfigBuildFunc<CodeForConfig> forConfig;
-  OopCodeConfigBuildFunc<CodeForEachConfig> forEachConfig;
-  OopCodeConfigBuildFunc<CodeWhileConfig> whileConfig;
-  OopCodeConfigBuildFunc<CodeFunctionCallConfig> functionCallConfig;
+  CodeConfigBuildFunc<CodeIfConfig> ifConfig;
+  CodeConfigBuildFunc<CodeElseIfConfig> elseIfConfig;
+  CodeConfigBuildFunc<CodeReturnConfig> returnConfig;
+  CodeConfigBuildFunc<CodeForConfig> forConfig;
+  CodeConfigBuildFunc<CodeForEachConfig> forEachConfig;
+  CodeConfigBuildFunc<CodeWhileConfig> whileConfig;
+  CodeConfigBuildFunc<CodeFunctionCallConfig> functionCallConfig;
 
   // annotation configs
-  OopCodeConfigBuildFunc<CodeAnnotationNameConfig> annotationNameConfig;
-  OopCodeConfigBuildFunc<CodeAnnotationListConfig> annotationListConfig;
-  OopCodeConfigBuildFunc<CodeAnnotationConfig> annotationConfig;
+  CodeConfigBuildFunc<CodeAnnotationNameConfig> annotationNameConfig;
+  CodeConfigBuildFunc<CodeAnnotationListConfig> annotationListConfig;
+  CodeConfigBuildFunc<CodeAnnotationConfig> annotationConfig;
 
   // Generic configs
-  OopCodeConfigBuildFunc<CodeGenericParamConfig> genericParamConfig;
-  OopCodeConfigBuildFunc<CodeGenericParamListConfig> genericParamListConfig;
+  CodeConfigBuildFunc<CodeGenericParamConfig> genericParamConfig;
+  CodeConfigBuildFunc<CodeGenericParamListConfig> genericParamListConfig;
 
   // Field configs
-  OopCodeConfigBuildFunc<CodeFieldNameConfig> fieldNameConfig;
-  OopCodeConfigBuildFunc<CodeFieldListConfig> fieldListConfig;
-  OopCodeConfigBuildFunc<CodeFieldConfig> fieldConfig;
+  CodeConfigBuildFunc<CodeFieldNameConfig> fieldNameConfig;
+  CodeConfigBuildFunc<CodeFieldListConfig> fieldListConfig;
+  CodeConfigBuildFunc<CodeFieldConfig> fieldConfig;
 
   // Function configs
-  OopCodeConfigBuildFunc<CodeFunctionNameConfig> functionNameConfig;
-  OopCodeConfigBuildFunc<CodeFunctionArgNameConfig> functionArgNameConfig;
-  OopCodeConfigBuildFunc<CodeFunctionArgListConfig> functionArgListConfig;
-  OopCodeConfigBuildFunc<CodeFunctionArgConfig> functionArgConfig;
-  OopCodeConfigBuildFunc<CodeFunctionThrowListConfig> functionThrowListConfig;
-  OopCodeConfigBuildFunc<CodeFunctionThrowConfig> functionThrowConfig;
-  OopCodeConfigBuildFunc<CodeFunctionReturnConfig> functionReturnConfig;
-  OopCodeConfigBuildFunc<CodeFunctionReturnListConfig> functionReturnListConfig;
-  OopCodeConfigBuildFunc<CodeFunctionListConfig> functionListConfig;
-  OopCodeConfigBuildFunc<CodeFunctionConfig> functionConfig;
+  CodeConfigBuildFunc<CodeFunctionNameConfig> functionNameConfig;
+  CodeConfigBuildFunc<CodeFunctionArgNameConfig> functionArgNameConfig;
+  CodeConfigBuildFunc<CodeFunctionArgListConfig> functionArgListConfig;
+  CodeConfigBuildFunc<CodeFunctionArgConfig> functionArgConfig;
+  CodeConfigBuildFunc<CodeFunctionThrowListConfig> functionThrowListConfig;
+  CodeConfigBuildFunc<CodeFunctionThrowConfig> functionThrowConfig;
+  CodeConfigBuildFunc<CodeFunctionReturnConfig> functionReturnConfig;
+  CodeConfigBuildFunc<CodeFunctionReturnListConfig> functionReturnListConfig;
+  CodeConfigBuildFunc<CodeFunctionListConfig> functionListConfig;
+  CodeConfigBuildFunc<CodeFunctionConfig> functionConfig;
 
   // Enum configs
-  OopCodeConfigBuildFunc<CodeEnumValueNameConfig> enumValueNameConfig;
-  OopCodeConfigBuildFunc<CodeEnumValueListConfig> enumValueListConfig;
-  OopCodeConfigBuildFunc<CodeEnumValueConfig> enumValueConfig;
-  OopCodeConfigBuildFunc<CodeEnumNameConfig> enumNameConfig;
-  OopCodeConfigBuildFunc<CodeEnumListConfig> enumListConfig;
-  OopCodeConfigBuildFunc<CodeEnumConfig> enumConfig;
+  CodeConfigBuildFunc<CodeEnumValueNameConfig> enumValueNameConfig;
+  CodeConfigBuildFunc<CodeEnumValueListConfig> enumValueListConfig;
+  CodeConfigBuildFunc<CodeEnumValueConfig> enumValueConfig;
+  CodeConfigBuildFunc<CodeEnumNameConfig> enumNameConfig;
+  CodeConfigBuildFunc<CodeEnumListConfig> enumListConfig;
+  CodeConfigBuildFunc<CodeEnumConfig> enumConfig;
 
   // Interface configs
-  OopCodeConfigBuildFunc<CodeInterfaceListConfig> interfaceListConfig;
-  OopCodeConfigBuildFunc<CodeInterfaceConfig> interfaceConfig;
+  CodeConfigBuildFunc<CodeInterfaceListConfig> interfaceListConfig;
+  CodeConfigBuildFunc<CodeInterfaceConfig> interfaceConfig;
 
   // Class configs
-  OopCodeConfigBuildFunc<CodeClassNameConfig> classNameConfig;
-  OopCodeConfigBuildFunc<CodeClassListConfig> classListConfig;
-  OopCodeConfigBuildFunc<CodeClassConfig> classConfig;
-  OopCodeConfigBuildFunc<CodeClassConstructorListConfig>
+  CodeConfigBuildFunc<CodeClassNameConfig> classNameConfig;
+  CodeConfigBuildFunc<CodeClassListConfig> classListConfig;
+  CodeConfigBuildFunc<CodeClassConfig> classConfig;
+  CodeConfigBuildFunc<CodeClassConstructorListConfig>
       classConstructorListConfig;
-  OopCodeConfigBuildFunc<CodeClassConstructorConfig> classConstructorConfig;
+  CodeConfigBuildFunc<CodeClassConstructorConfig> classConstructorConfig;
 
   OopCodeConfig(
     Node child, {
@@ -310,7 +310,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
 
   @override
   Node buildOne(BuildContext context, Node child) {
-    final configs = <OopCodeConfigBuildFunc<Node>>[
+    final configs = <CodeConfigBuildFunc<Node>>[
       indentConfig,
       blockConfig,
       codeAccessConfig,

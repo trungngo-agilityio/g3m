@@ -31,7 +31,7 @@ void main() {
       var code = JavaCodeConfig(
         CodeType.genericSingleArray('Vehicle', 'car'),
       );
-      runAndExpect(code, 'Vehicle<Car[]>');
+      runAndExpect(code, 'Vehicle<Car>[]');
     });
   });
 }

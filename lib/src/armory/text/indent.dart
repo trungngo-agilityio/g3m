@@ -51,8 +51,10 @@ class Indent implements Node {
   Indent(this.child, {this.level = 1});
 
   static String compute(String s, bool useTab, size, int level) {
+    if (level < 1) return s;
     var tab = useTab ? '\t' : ' ';
     tab *= size * level ?? 1;
+
     s = s.trimLeft();
 
     var lines = s.split('\n');

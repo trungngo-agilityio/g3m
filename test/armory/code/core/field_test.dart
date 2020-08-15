@@ -60,7 +60,8 @@ void main() {
     );
     runAndExpect(
       code,
-      '/// hello world\n'
+      '\n'
+      '// hello world\n'
       'String firstName;\n',
     );
   });

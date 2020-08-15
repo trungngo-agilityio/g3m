@@ -18,13 +18,13 @@ void main() {
 
   test('with string init', () {
     var code = JavaCodeConfig(
-      CodeVar.of('string',
-          type: 'name', init: CodeStringLiteral.of('john doe')),
+      CodeVar.of('name',
+          type: 'string', init: CodeStringLiteral.of('john doe')),
     );
 
     runAndExpect(
       code,
-      'String name = "John Doe"\n',
+      'String name = "john doe"',
     );
   });
 }
