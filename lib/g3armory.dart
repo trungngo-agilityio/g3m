@@ -6,14 +6,7 @@ import 'package:g3m/g3gen.dart';
 import 'package:meta/meta.dart';
 import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;
-
-part 'src/armory/code/core/modifier.dart';
-part 'src/armory/code/core/enum/enum.dart';
-part 'src/armory/code/core/enum/enum-name.dart';
-part 'src/armory/code/core/enum/enum-list.dart';
-part 'src/armory/code/core/enum/enum-value.dart';
-part 'src/armory/code/core/enum/enum-value-name.dart';
-part 'src/armory/code/core/enum/enum-value-list.dart';
+import 'package:prompts/prompts.dart' as prompts;
 
 part 'src/armory/code/core/annotation/annotation-list.dart';
 
@@ -40,6 +33,18 @@ part 'src/armory/code/core/class/class.dart';
 part 'src/armory/code/core/comment.dart';
 
 part 'src/armory/code/core/config.dart';
+
+part 'src/armory/code/core/enum/enum-list.dart';
+
+part 'src/armory/code/core/enum/enum-name.dart';
+
+part 'src/armory/code/core/enum/enum-value-list.dart';
+
+part 'src/armory/code/core/enum/enum-value-name.dart';
+
+part 'src/armory/code/core/enum/enum-value.dart';
+
+part 'src/armory/code/core/enum/enum.dart';
 
 part 'src/armory/code/core/field/field-list.dart';
 
@@ -82,6 +87,10 @@ part 'src/armory/code/core/import/import.dart';
 part 'src/armory/code/core/interface/interface-list.dart';
 
 part 'src/armory/code/core/interface/interface.dart';
+
+part 'src/armory/code/core/modifier.dart';
+
+part 'src/armory/code/core/mustache.dart';
 
 part 'src/armory/code/core/package/package-name.dart';
 
@@ -149,32 +158,52 @@ part 'src/armory/code/core/type/type-name.dart';
 
 part 'src/armory/code/core/type/type.dart';
 
-part "src/armory/code/language/json.dart";
-
-part 'src/armory/code/language/markdown/markdown.dart';
-
-part 'src/armory/code/language/oop/dart.dart';
-
-part 'src/armory/code/language/oop/java.dart';
-
 part 'src/armory/code/language/oop/oop.dart';
-
-part "src/armory/code/language/yml.dart";
 
 part 'src/armory/container.dart';
 
 part 'src/armory/context.dart';
 
-part 'src/armory/git.dart';
-
-part 'src/armory/io.dart';
-
 part 'src/armory/mustache.dart';
 
 part 'src/armory/node.dart';
+
+part 'src/armory/output/directory.dart';
+
+part 'src/armory/output/dot-keep-file.dart';
+
+part 'src/armory/output/file.dart';
+
+part 'src/armory/output/output-redirect.dart';
 
 part 'src/armory/program.dart';
 
 part 'src/armory/project.dart';
 
-part 'src/armory/text.dart';
+part 'src/armory/prompt/prompt.dart';
+
+part 'src/armory/prompt/prompt_result.dart';
+
+part 'src/armory/prompt/prompt_bool.dart';
+
+part 'src/armory/prompt/prompt_string.dart';
+
+part 'src/armory/prompt/prompt_choose.dart';
+
+part 'src/armory/prompt/prompt_choose_util.dart';
+
+part 'src/armory/prompt/prompt_int.dart';
+
+part 'src/armory/prompt/prompt_loop.dart';
+
+part 'src/armory/text/indent.dart';
+
+part 'src/armory/text/join.dart';
+
+part 'src/armory/text/pad.dart';
+
+part 'src/armory/text/text.dart';
+
+part 'src/armory/text/text_transform.dart';
+
+part 'src/armory/text/trim.dart';

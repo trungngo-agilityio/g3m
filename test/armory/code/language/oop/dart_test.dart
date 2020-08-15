@@ -1,4 +1,5 @@
 import 'package:g3m/g3armory.dart';
+import 'package:g3m/g3armory_dart.dart';
 import 'package:test/test.dart';
 
 import '../../../utils.dart';
@@ -104,12 +105,12 @@ CodeClass clazz() {
     functions: [
       function(),
     ],
-    body: Mustache.of(
+    body: Mustache.template(
       '\n'
       '// just a free text class body \n'
       '// with Mustache template support.\n'
       'hello({{name}});',
-      {'name': 'John Doe'},
+      values: {'name': 'John Doe'},
     ),
   );
 }

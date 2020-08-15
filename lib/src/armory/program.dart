@@ -48,11 +48,20 @@ class _Context implements BuildContext, RenderContext {
         }
       }
     } else {
-      final builtNode = node.build(this);
-      if (builtNode != null) {
-        final context = _Context(this, builtNode)..build();
-        _children.add(context);
-      }
+      var end = false;
+      do {
+        final builtNode = node.build(this);
+        if (builtNode != null) {
+          final context = _Context(this, builtNode)..build();
+          _children.add(context);
+        }
+
+        if (node is LoopNode) {
+          end = (node as LoopNode)?.isDone;
+        } else {
+          end = true;
+        }
+      } while (!end);
     }
   }
 
@@ -105,9 +114,7 @@ class Program {
   Program._(this.root);
 
   void _execute() async {
-    final tempDir = io.Directory.systemTemp.createTempSync('g3').path;
-
-    final context = _Context(null, Directory(tempDir, root));
+    final context = _Context(null, Directory.absolute('/tmp/g3', root));
     context.build();
     await context.render();
   }

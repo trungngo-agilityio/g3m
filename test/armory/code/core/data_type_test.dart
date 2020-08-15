@@ -1,4 +1,5 @@
 import 'package:g3m/g3armory.dart';
+import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
@@ -21,7 +22,7 @@ void main() {
 
     test('generic', () {
       var code = JavaCodeConfig(
-        CodeType.genericSingle('list', CodeGenericParam.of('car')),
+        CodeType.genericSingle('list', 'car'),
       );
       runAndExpect(code, 'List<Car>');
     });

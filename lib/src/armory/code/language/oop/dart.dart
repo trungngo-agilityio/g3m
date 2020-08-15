@@ -1,4 +1,4 @@
-part of g3.armory;
+part of g3.armory.dart;
 
 /// Defines a dart code fine.
 /// This help to enforce the dart syntax and [DartCodeConfig] will

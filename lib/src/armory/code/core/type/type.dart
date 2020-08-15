@@ -81,10 +81,9 @@ class CodeType extends CodeConfigProxyNode<CodeType> {
 
   factory CodeType.simple(String name) => CodeType(CodeTypeName.of(name));
 
-  factory CodeType.genericSingle(String name, CodeGenericParam param) =>
-      CodeType(
+  factory CodeType.genericSingle(String name, String param) => CodeType(
         CodeTypeName.of(name),
-        generic: CodeGenericParamList.of([param]),
+        generic: CodeGenericParamList.of([CodeGenericParam.of(param)]),
       );
 
   factory CodeType.genericList(String name, List<String> params) => CodeType(

@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:g3m/g3armory.dart';
+import 'package:g3m/g3armory_yml.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
 
 void main() {
   test('all', () async {
-    var root = Directory(
-      '/tmp',
+    var root = Directory.temp(
+      'g3armory',
       YmlCodeFile.of(
         'yml-demo1',
         body: {

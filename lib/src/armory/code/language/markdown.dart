@@ -1,4 +1,4 @@
-part of g3.armory;
+part of g3.armory.markdown;
 
 class MarkdownFile implements Node {
   final String name;

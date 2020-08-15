@@ -1,4 +1,5 @@
 import 'package:g3m/g3armory.dart';
+import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
@@ -112,10 +113,10 @@ void main() {
       run(
         () {
           final generic = [
-            genericParam(),
+            CodeGenericParam.of('t'),
           ];
 
-          final extend = CodeType.genericSingle('car', genericParam());
+          final extend = CodeType.genericSingle('car', 't');
 
           final fields = [
             makeField('first name'),
@@ -158,7 +159,6 @@ void main() {
   });
 }
 
-CodeGenericParam genericParam() => CodeGenericParam.of('t');
 
 CodeField makeField(String name) => CodeField.of(
       name: name,

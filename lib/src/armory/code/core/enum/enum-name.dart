@@ -1,13 +1,12 @@
 part of g3.armory;
 
-
 class CodeEnumNameConfig extends CodeConfigNode<CodeEnumName> {
   CodeEnumNameConfig(NodeBuildFunc<CodeEnumName> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeEnumNameConfig.of(StringFunc func, Node child) =>
       CodeEnumNameConfig(
-              (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.content, func), child);
 
   factory CodeEnumNameConfig.forJavaLike(Node child) =>
       CodeEnumNameConfig.of(pascal, child);

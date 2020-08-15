@@ -39,6 +39,17 @@ class SingleChildNode implements Node {
   }
 }
 
+class NodeBuilder implements Node {
+  final Node Function(BuildContext context) _builder;
+
+  NodeBuilder(this._builder);
+
+  @override
+  Node build(BuildContext context) {
+    return _builder(context);
+  }
+}
+
 abstract class ExactlyOneNode<T extends ExactlyOneNode<T>> implements Node {
   final Node _child;
 
@@ -55,6 +66,10 @@ abstract class ExactlyOneNode<T extends ExactlyOneNode<T>> implements Node {
   }
 
   Node buildOne(BuildContext context, Node child);
+}
+
+abstract class LoopNode extends Node {
+  bool get isDone;
 }
 
 abstract class Renderer {

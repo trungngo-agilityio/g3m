@@ -9,6 +9,6 @@ class Project implements Node {
   @override
   Node build(BuildContext context) {
     // Makes folder a parent node for all sub project.
-    return Directory(path, content);
+    return Directory.relative(path, content);
   }
 }

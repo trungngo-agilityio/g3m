@@ -1,14 +1,15 @@
 import 'dart:io';
 
 import 'package:g3m/g3armory.dart';
+import 'package:g3m/g3armory_json.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
 
 void main() {
   test('all', () async {
-    var root = Directory(
-      '/tmp',
+    var root = Directory.temp(
+      'g3armory',
       JsonCodeFile.of(
         'json-demo1',
         body: {
