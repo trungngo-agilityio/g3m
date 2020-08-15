@@ -1,12 +1,24 @@
 part of g3.armory;
 
 class _Context implements BuildContext, RenderContext {
+  /// The parent context if any.
   final _Context parent;
+
+  /// The node that this context is built for.
   final Node node;
+
+  @override
+  String dir;
+
+  @override
+  String file;
 
   List<_Context> _children;
 
-  _Context(this.parent, this.node);
+  _Context(this.parent, this.node) {
+    dir = parent?.dir;
+    file = parent?.file;
+  }
 
   @override
   T dependOnAncestorNodeOfExactType<T extends Node>() {
@@ -79,32 +91,14 @@ class _Context implements BuildContext, RenderContext {
     }
   }
 
-  int _blockLevel;
-
-  @override
-  int get blockLevel => _blockLevel ?? parent?.blockLevel;
-
-  @override
-  set blockLevel(value) => _blockLevel = value;
-
   StringSink _out;
 
   @override
   StringSink get out => _out ?? parent?.out ?? io.stdout;
 
-  String _path;
-
-  @override
-  String get path => _path ?? parent?.path;
-
   @override
   set out(value) {
     _out = value;
-  }
-
-  @override
-  set path(value) {
-    _path = value;
   }
 
   bool _aborted;

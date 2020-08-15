@@ -13,13 +13,15 @@ enum _DirectoryPathKind {
 /// - [Directory.absolute] creates a new directory node that
 /// redirects all children's output to an absolute directory.
 ///
-class Directory extends SingleChildNode implements Renderer {
+class Directory implements Node {
   /// The relative or absolute path, depending on the path [_kind].
   final String _path;
 
   final _DirectoryPathKind _kind;
 
-  Directory._(this._path, this._kind, Node child) : super(child);
+  final Node _child;
+
+  Directory._(this._path, this._kind, this._child);
 
   /// Redirect all file output to the specified absolute [path].
   ///
@@ -41,11 +43,8 @@ class Directory extends SingleChildNode implements Renderer {
     return Directory._(path, _DirectoryPathKind.temp, child);
   }
 
-  /// On render, redirect the current render context directory
-  /// to somewhere else.
-  ///
   @override
-  void render(RenderContext context) {
+  Node build(BuildContext context) {
     String path;
 
     if (_kind == _DirectoryPathKind.temp) {
@@ -56,7 +55,7 @@ class Directory extends SingleChildNode implements Renderer {
         path = ioPath.absolute(_path);
       } else {
         // Gets the path that is relative to the context.
-        path = ioPath.absolute(context.path, _path);
+        path = ioPath.absolute(context.dir, _path);
       }
 
       // Creates the directory
@@ -67,6 +66,7 @@ class Directory extends SingleChildNode implements Renderer {
 
     // Redirects the output directory to the new one.
     // All sub sequence file output will be written to here.
-    context.path = path;
+    context.dir = path;
+    return _child;
   }
 }

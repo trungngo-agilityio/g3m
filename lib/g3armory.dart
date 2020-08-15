@@ -168,6 +168,8 @@ part 'src/armory/mustache.dart';
 
 part 'src/armory/node.dart';
 
+part 'src/armory/output/console.dart';
+
 part 'src/armory/output/directory.dart';
 
 part 'src/armory/output/dot-keep-file.dart';
@@ -182,11 +184,7 @@ part 'src/armory/project.dart';
 
 part 'src/armory/prompt/prompt.dart';
 
-part 'src/armory/prompt/prompt_result.dart';
-
 part 'src/armory/prompt/prompt_bool.dart';
-
-part 'src/armory/prompt/prompt_string.dart';
 
 part 'src/armory/prompt/prompt_choose.dart';
 
@@ -195,6 +193,10 @@ part 'src/armory/prompt/prompt_choose_util.dart';
 part 'src/armory/prompt/prompt_int.dart';
 
 part 'src/armory/prompt/prompt_loop.dart';
+
+part 'src/armory/prompt/prompt_result.dart';
+
+part 'src/armory/prompt/prompt_string.dart';
 
 part 'src/armory/text/indent.dart';
 

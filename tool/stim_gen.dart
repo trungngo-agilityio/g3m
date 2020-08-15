@@ -194,6 +194,7 @@ void main() async {
     },
     onContinue: (_) {
       return Container([
+        DotKeepFile(),
         // Prompts the target class name.
         PromptString(
           'name',

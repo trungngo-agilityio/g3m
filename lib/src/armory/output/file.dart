@@ -15,16 +15,20 @@ class File implements Node, Renderer, PostRenderer {
   // The internal string buffer that captures all children's output.
   StringBuffer _buf;
 
+  /// Create a new file with the specified file [name].
+  /// The file path is related to the directory specified by the nearest
+  /// [Directory] ancestor.
+  ///
   File(this.name, this.content);
 
   @override
   Node build(BuildContext context) {
+    context.file = ioPath.join(context.dir, name);
     return content;
   }
 
   @override
   void render(RenderContext context) {
-    context.blockLevel = 0;
     // Redirect all children's output to the new string buffer.
     _buf = StringBuffer();
     context.out = _buf;
@@ -32,14 +36,16 @@ class File implements Node, Renderer, PostRenderer {
 
   @override
   void postRender(RenderContext context) async {
-    final path = ioPath.join(context.path, name);
+    final path = context.file;
     final relativePath = ioPath.relative(path);
 
     final file = io.File(path);
     final content = _buf.toString();
     _buf = null;
 
-    if (file.existsSync()) {
+    if (!file.existsSync()) {
+      print('$relativePath has been generated.');
+    } else {
       // Reads out the existing content to compare with the latest
       // content. If the content has been modified, prompt the user
       // to see if they want to overwrite it.
