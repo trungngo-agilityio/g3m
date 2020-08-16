@@ -128,8 +128,11 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
+          cascadeConfig: null,
+          spreadConfig: null,
           awaitConfig: null,
           yieldConfig: null,
+          refConfig: null,
           varConfig: null,
 
           // Statement configs

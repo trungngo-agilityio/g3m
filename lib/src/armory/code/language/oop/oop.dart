@@ -40,8 +40,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeNumericLiteralConfig> numericLiteralConfig;
   CodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
   CodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
+  CodeConfigBuildFunc<CodeCascadeConfig> cascadeConfig;
+  CodeConfigBuildFunc<CodeSpreadConfig> spreadConfig;
   CodeConfigBuildFunc<CodeAwaitConfig> awaitConfig;
   CodeConfigBuildFunc<CodeYieldConfig> yieldConfig;
+  CodeConfigBuildFunc<CodeRefConfig> refConfig;
   CodeConfigBuildFunc<CodeVarConfig> varConfig;
 
   // Statement configs
@@ -146,8 +149,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.numericLiteralConfig,
     @required this.arrayLiteralConfig,
     @required this.mapLiteralConfig,
+    @required this.cascadeConfig,
+    @required this.spreadConfig,
     @required this.awaitConfig,
     @required this.yieldConfig,
+    @required this.refConfig,
     @required this.varConfig,
 
     // Statement configs
@@ -219,125 +225,139 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.classConstructorListConfig,
     @required this.classConstructorConfig,
   }) : super(child) {
-    indentConfig = (_, sub) => IndentConfig.useSpace2(sub);
-    blockConfig ??= (_, sub) => CodeBlockConfig.curlyBracketSameLine(sub);
-    codeAccessConfig ??= (_, sub) => CodeModifierConfig.forJavaLike(sub);
+    indentConfig = (_, child) => IndentConfig.useSpace2(child);
+    blockConfig ??= (_, child) => CodeBlockConfig.curlyBracketSameLine(child);
+    codeAccessConfig ??= (_, child) => CodeModifierConfig.forJavaLike(child);
 
-    commentConfig ??= (_, sub) => CodeCommentConfig.forJavaLike(sub);
+    commentConfig ??= (_, child) => CodeCommentConfig.forJavaLike(child);
 
     // Package configs
-    packageNameConfig ??= (_, sub) => CodePackageNameConfig.forJavaLike(sub);
-    packageConfig ??= (_, sub) => CodePackageConfig.forJavaLike(sub);
+    packageNameConfig ??=
+        (_, child) => CodePackageNameConfig.forJavaLike(child);
+    packageConfig ??= (_, child) => CodePackageConfig.forJavaLike(child);
 
     // Import Configs
-    importConfig ??= (_, sub) => CodeImportConfig.forJavaLike(sub);
-    importListConfig ??= (_, sub) => CodeImportListConfig.forJavaLike(sub);
-    importTypeConfig ??= (_, sub) => CodeImportTypeConfig.forJavaLike(sub);
+    importConfig ??= (_, child) => CodeImportConfig.forJavaLike(child);
+    importListConfig ??= (_, child) => CodeImportListConfig.forJavaLike(child);
+    importTypeConfig ??= (_, child) => CodeImportTypeConfig.forJavaLike(child);
 
     // Type configs
-    typeNameConfig ??= (_, sub) => CodeTypeNameConfig.forJavaLike(sub);
-    typeConfig ??= (_, sub) => CodeTypeConfig.forJavaLike(sub);
-    typeListConfig ??= (_, sub) => CodeTypeListConfig.forJavaLike(sub);
+    typeNameConfig ??= (_, child) => CodeTypeNameConfig.forJavaLike(child);
+    typeConfig ??= (_, child) => CodeTypeConfig.forJavaLike(child);
+    typeListConfig ??= (_, child) => CodeTypeListConfig.forJavaLike(child);
 
     // Expr configs
-    nullLiteralConfig ??= (_, sub) => CodeNullLiteralConfig.forJavaLike(sub);
-    boolLiteralConfig ??= (_, sub) => CodeBoolLiteralConfig.forJavaLike(sub);
-    charLiteralConfig ??= (_, sub) => CodeCharLiteralConfig.forJavaLike(sub);
+    nullLiteralConfig ??=
+        (_, child) => CodeNullLiteralConfig.forJavaLike(child);
+    boolLiteralConfig ??=
+        (_, child) => CodeBoolLiteralConfig.forJavaLike(child);
+    charLiteralConfig ??=
+        (_, child) => CodeCharLiteralConfig.forJavaLike(child);
     stringLiteralConfig ??=
-        (_, sub) => CodeStringLiteralConfig.forJavaLike(sub);
+        (_, child) => CodeStringLiteralConfig.forJavaLike(child);
     numericLiteralConfig ??=
-        (_, sub) => CodeNumericLiteralConfig.forJavaLike(sub);
-    arrayLiteralConfig ??= (_, sub) => CodeArrayLiteralConfig.forJavaLike(sub);
-    mapLiteralConfig ??= (_, sub) => CodeMapLiteralConfig.forJavaLike(sub);
-    awaitConfig ??= (_, sub) => CodeAwaitConfig.forJavaLike(sub);
+        (_, child) => CodeNumericLiteralConfig.forJavaLike(child);
+    arrayLiteralConfig ??=
+        (_, child) => CodeArrayLiteralConfig.forJavaLike(child);
+    mapLiteralConfig ??= (_, child) => CodeMapLiteralConfig.forJavaLike(child);
+    cascadeConfig ??= (_, child) => CodeCascadeConfig.noSupport(child);
+    spreadConfig ??= (_, child) => CodeSpreadConfig.noSupport(child);
+    awaitConfig ??= (_, child) => CodeAwaitConfig.forJavaLike(child);
 
     // Important: Yield is not supported by default.
-    yieldConfig ??= (_, sub) => CodeYieldConfig.noSupport(sub);
-    varConfig ??= (_, sub) => CodeVarConfig.forJavaLike(sub);
+    yieldConfig ??= (_, child) => CodeYieldConfig.noSupport(child);
+    refConfig ??= (_, child) => CodeRefConfig.forJavaLike(child);
+    varConfig ??= (_, child) => CodeVarConfig.forJavaLike(child);
 
     // Statement configs
-    statementList ??= (_, sub) => CodeStatementListConfig.forJavaLike(sub);
-    statement ??= (_, sub) => CodeStatementConfig.forJavaLike(sub);
-    breakConfig ??= (_, sub) => CodeBreakConfig.forJavaLike(sub);
-    continueConfig ??= (_, sub) => CodeContinueConfig.forJavaLike(sub);
-    varNameConfig ??= (_, sub) => CodeVarNameConfig.forJavaLike(sub);
-    ifConfig ??= (_, sub) => CodeIfConfig.forJavaLike(sub);
-    elseIfConfig ??= (_, sub) => CodeElseIfConfig.forJavaLike(sub);
-    returnConfig ??= (_, sub) => CodeReturnConfig.forJavaLike(sub);
-    forConfig ??= (_, sub) => CodeForConfig.forJavaLike(sub);
-    forEachConfig ??= (_, sub) => CodeForEachConfig.forJavaLike(sub);
-    whileConfig ??= (_, sub) => CodeWhileConfig.forJavaLike(sub);
-    functionCallConfig ??= (_, sub) => CodeFunctionCallConfig.forJavaLike(sub);
+    statementList ??= (_, child) => CodeStatementListConfig.forJavaLike(child);
+    statement ??= (_, child) => CodeStatementConfig.forJavaLike(child);
+    breakConfig ??= (_, child) => CodeBreakConfig.forJavaLike(child);
+    continueConfig ??= (_, child) => CodeContinueConfig.forJavaLike(child);
+    varNameConfig ??= (_, child) => CodeVarNameConfig.forJavaLike(child);
+    ifConfig ??= (_, child) => CodeIfConfig.forJavaLike(child);
+    elseIfConfig ??= (_, child) => CodeElseIfConfig.forJavaLike(child);
+    returnConfig ??= (_, child) => CodeReturnConfig.forJavaLike(child);
+    forConfig ??= (_, child) => CodeForConfig.forJavaLike(child);
+    forEachConfig ??= (_, child) => CodeForEachConfig.forJavaLike(child);
+    whileConfig ??= (_, child) => CodeWhileConfig.forJavaLike(child);
+    functionCallConfig ??=
+        (_, child) => CodeFunctionCallConfig.forJavaLike(child);
 
     // Annotation configs
     annotationNameConfig ??=
-        (_, sub) => CodeAnnotationNameConfig.forJavaLike(sub);
+        (_, child) => CodeAnnotationNameConfig.forJavaLike(child);
     annotationListConfig ??=
-        (_, sub) => CodeAnnotationListConfig.forJavaLike(sub);
-    annotationConfig ??= (_, sub) => CodeAnnotationConfig.forJavaLike(sub);
+        (_, child) => CodeAnnotationListConfig.forJavaLike(child);
+    annotationConfig ??= (_, child) => CodeAnnotationConfig.forJavaLike(child);
 
     // Generic configs
-    genericParamConfig ??= (_, sub) => CodeGenericParamConfig.forJavaLike(sub);
+    genericParamConfig ??=
+        (_, child) => CodeGenericParamConfig.forJavaLike(child);
     genericParamListConfig ??=
-        (_, sub) => CodeGenericParamListConfig.forJavaLike(sub);
+        (_, child) => CodeGenericParamListConfig.forJavaLike(child);
 
     // Field configs
-    fieldNameConfig ??= (_, sub) => CodeFieldNameConfig.forJavaLike(sub);
-    fieldListConfig ??= (_, sub) => CodeFieldListConfig.forJavaLike(sub);
-    fieldConfig ??= (_, sub) => CodeFieldConfig.forJavaLike(sub);
+    fieldNameConfig ??= (_, child) => CodeFieldNameConfig.forJavaLike(child);
+    fieldListConfig ??= (_, child) => CodeFieldListConfig.forJavaLike(child);
+    fieldConfig ??= (_, child) => CodeFieldConfig.forJavaLike(child);
 
     // Arg configs
-    argNameConfig ??= (_, sub) => CodeArgNameConfig.forJavaLike(sub);
-    argListConfig ??= (_, sub) => CodeArgListConfig.forJavaLike(sub);
-    argConfig ??= (_, sub) => CodeArgConfig.forJavaLike(sub);
+    argNameConfig ??= (_, child) => CodeArgNameConfig.forJavaLike(child);
+    argListConfig ??= (_, child) => CodeArgListConfig.forJavaLike(child);
+    argConfig ??= (_, child) => CodeArgConfig.forJavaLike(child);
 
     // Function configs
     functionThrowListConfig ??=
-        (_, sub) => CodeFunctionThrowListConfig.forJavaLike(sub);
+        (_, child) => CodeFunctionThrowListConfig.forJavaLike(child);
     functionThrowConfig ??=
-        (_, sub) => CodeFunctionThrowConfig.forJavaLike(sub);
+        (_, child) => CodeFunctionThrowConfig.forJavaLike(child);
     functionReturnConfig ??=
-        (_, sub) => CodeFunctionReturnConfig.forJavaLike(sub);
+        (_, child) => CodeFunctionReturnConfig.forJavaLike(child);
     functionReturnListConfig ??=
-        (_, sub) => CodeFunctionReturnListConfig.forJavaLike(sub);
-    functionNameConfig ??= (_, sub) => CodeFunctionNameConfig.forJavaLike(sub);
-    functionListConfig ??= (_, sub) => CodeFunctionListConfig.forJavaLike(sub);
-    functionConfig ??= (_, sub) => CodeFunctionConfig.forJavaLike(sub);
+        (_, child) => CodeFunctionReturnListConfig.forJavaLike(child);
+    functionNameConfig ??=
+        (_, child) => CodeFunctionNameConfig.forJavaLike(child);
+    functionListConfig ??=
+        (_, child) => CodeFunctionListConfig.forJavaLike(child);
+    functionConfig ??= (_, child) => CodeFunctionConfig.forJavaLike(child);
 
     // Enum configs
     enumValueNameConfig ??=
-        (_, sub) => CodeEnumValueNameConfig.forJavaLike(sub);
+        (_, child) => CodeEnumValueNameConfig.forJavaLike(child);
     enumValueListConfig ??=
-        (_, sub) => CodeEnumValueListConfig.forJavaLike(sub);
-    enumValueConfig ??= (_, sub) => CodeEnumValueConfig.forJavaLike(sub);
-    enumNameConfig ??= (_, sub) => CodeEnumNameConfig.forJavaLike(sub);
-    enumListConfig ??= (_, sub) => CodeEnumListConfig.forJavaLike(sub);
-    enumConfig ??= (_, sub) => CodeEnumConfig.forJavaLike(sub);
+        (_, child) => CodeEnumValueListConfig.forJavaLike(child);
+    enumValueConfig ??= (_, child) => CodeEnumValueConfig.forJavaLike(child);
+    enumNameConfig ??= (_, child) => CodeEnumNameConfig.forJavaLike(child);
+    enumListConfig ??= (_, child) => CodeEnumListConfig.forJavaLike(child);
+    enumConfig ??= (_, child) => CodeEnumConfig.forJavaLike(child);
 
     // Property Config
-    propertyNameConfig ??= (_, sub) => CodePropertyNameConfig.forJavaLike(sub);
-    propertyListConfig ??= (_, sub) => CodePropertyListConfig.forJavaLike(sub);
+    propertyNameConfig ??=
+        (_, child) => CodePropertyNameConfig.forJavaLike(child);
+    propertyListConfig ??=
+        (_, child) => CodePropertyListConfig.forJavaLike(child);
     propertyGetterConfig ??=
-        (_, sub) => CodePropertyGetterConfig.forJavaLike(sub);
+        (_, child) => CodePropertyGetterConfig.forJavaLike(child);
     propertySetterConfig ??=
-        (_, sub) => CodePropertySetterConfig.forJavaLike(sub);
-    propertyConfig ??= (_, sub) => CodePropertyConfig.forJavaLike(sub);
+        (_, child) => CodePropertySetterConfig.forJavaLike(child);
+    propertyConfig ??= (_, child) => CodePropertyConfig.forJavaLike(child);
 
     // Interface configs
     interfaceListConfig ??=
-        (_, sub) => CodeInterfaceListConfig.forJavaLike(sub);
-    interfaceConfig ??= (_, sub) => CodeInterfaceConfig.forJavaLike(sub);
+        (_, child) => CodeInterfaceListConfig.forJavaLike(child);
+    interfaceConfig ??= (_, child) => CodeInterfaceConfig.forJavaLike(child);
 
     // Class configs
-    classNameConfig ??= (_, sub) => CodeClassNameConfig.forJavaLike(sub);
-    classListConfig ??= (_, sub) => CodeClassListConfig.forJavaLike(sub);
-    classConfig ??= (_, sub) => CodeClassConfig.forJavaLike(sub);
+    classNameConfig ??= (_, child) => CodeClassNameConfig.forJavaLike(child);
+    classListConfig ??= (_, child) => CodeClassListConfig.forJavaLike(child);
+    classConfig ??= (_, child) => CodeClassConfig.forJavaLike(child);
     classConstructorNameConfig ??=
-        (_, sub) => CodeClassConstructorNameConfig.forJavaLike(sub);
+        (_, child) => CodeClassConstructorNameConfig.forJavaLike(child);
     classConstructorListConfig ??=
-        (_, sub) => CodeClassConstructorListConfig.forJavaLike(sub);
+        (_, child) => CodeClassConstructorListConfig.forJavaLike(child);
     classConstructorConfig ??=
-        (_, sub) => CodeClassConstructorConfig.forJavaLike(sub);
+        (_, child) => CodeClassConstructorConfig.forJavaLike(child);
   }
 
   @override
@@ -372,8 +392,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       numericLiteralConfig,
       arrayLiteralConfig,
       mapLiteralConfig,
+      cascadeConfig,
+      spreadConfig,
       awaitConfig,
       yieldConfig,
+      refConfig,
       varConfig,
 
       // Statement configs

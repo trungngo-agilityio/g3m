@@ -136,8 +136,11 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
+          cascadeConfig: (_, child) => CodeCascadeConfig.forDartLike(child),
+          spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
           awaitConfig: null,
           yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
+          refConfig: null,
           varConfig: (_, child) => CodeVarConfig.forDartLike(child),
 
           // Statement configs

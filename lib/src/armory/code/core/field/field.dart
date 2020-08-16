@@ -68,21 +68,23 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
     String type,
     dynamic init,
     String comment,
-  }) =>
-      CodeField(
-        name: CodeFieldName.of(name),
-        annotations: CodeAnnotationList.of(annotations),
-        modifier: CodeModifier(
-          override: override,
-          private: private,
-          public: public,
-          protected: protected,
-          internal: internal,
-          static: static,
-          isFinal: isFinal,
-        ),
-        type: CodeType.simple(type),
-        init: init != null ? CodeExpr.of(init) : null,
-        comment: comment != null ? CodeComment.of(comment) : null,
-      );
+  }) {
+    var modifier = CodeModifier(
+      override: override,
+      private: private,
+      public: public,
+      protected: protected,
+      internal: internal,
+      static: static,
+      isFinal: isFinal,
+    );
+    return CodeField(
+      name: CodeFieldName.of(name, modifier: modifier),
+      annotations: CodeAnnotationList.of(annotations),
+      modifier: modifier,
+      type: CodeType.simple(type),
+      init: init != null ? CodeExpr.of(init) : null,
+      comment: comment != null ? CodeComment.of(comment) : null,
+    );
+  }
 }

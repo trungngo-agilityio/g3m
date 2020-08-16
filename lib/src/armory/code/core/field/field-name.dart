@@ -10,9 +10,7 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
 
   factory CodeFieldNameConfig.forDartLike(Node child) =>
       CodeFieldNameConfig((context, name) {
-        final field = context.findAncestorNodeOfExactType<CodeField>();
-        final modifier = field?.modifier;
-
+        final modifier = name.modifier;
         Node res = TextTransform(name.content, StringFuncs.camel);
 
         if (modifier?.private == true ||
@@ -32,9 +30,15 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
 class CodeFieldName extends CodeConfigProxyNode<CodeFieldName> {
   final Node content;
 
-  CodeFieldName(this.content);
+  final CodeModifier modifier;
 
-  factory CodeFieldName.of(String text) {
-    return text == null ? null : CodeFieldName(Text.of(text));
+  CodeFieldName._(this.content, {this.modifier});
+
+  factory CodeFieldName.of(
+    String text, {
+    CodeModifier modifier,
+  }) {
+    if (text == null) return null;
+    return CodeFieldName._(Text.of(text), modifier: modifier);
   }
 }

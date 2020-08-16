@@ -9,26 +9,37 @@ class Dependency extends Expr<Dependency> {
   Dependency(this.scope):
       super(scope);
 
-  String _version;
+  Dependency _version;
 
 
-  String get version {
+  Dependency get version {
     return _version;
   }
 
-   set version(String value) {
+   set version(Dependency value) {
     _version = value;
     assert(value != null, 'value is required');
     for (var i in eval()) {
-      i._version = value;;
+      i._version = value;
     };
   }
 }
 
 
 class DependencyScope extends Scope<Dependency> {
+  final DependencyScope version;
+
+  DependencyScope(this.version);
+
+
   @override
   Dependency make() {
-    return Dependency(this);
+    return Dependency(this)
+        ..version = version.none;
+  }
+
+  Dependency call(Dependency version) {
+    return add(this)
+        ..version = version;
   }
 }
