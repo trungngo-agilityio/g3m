@@ -45,13 +45,11 @@ class DartCodeFile implements Node {
 
   @override
   Node build(BuildContext context) {
-    return DartCodeConfig(
-      CodeFile(
-        name: name,
-        extension: extension,
-        syntax: syntax,
-        source: source,
-      ),
+    return CodeFile(
+      name: name,
+      extension: extension,
+      syntax: syntax,
+      source: DartCodeConfig(source),
     );
   }
 }
@@ -91,8 +89,8 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           child,
           indentConfig: null,
           blockConfig: null,
-          codeAccessConfig: (_, sub) => CodeModifierConfig.forJavaLike(
-            sub,
+          codeAccessConfig: (_, child) => CodeModifierConfig.forJavaLike(
+            child,
             factoryKeyword: 'factory ',
             publicKeyword: null,
             privateKeyword: null,
@@ -100,21 +98,21 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
             internalKeyword: null,
           ),
 
-          commentConfig: (_, sub) => CodeCommentConfig.forDartLike(sub),
+          commentConfig: (_, child) => CodeCommentConfig.forDartLike(child),
 
           // Package configs
-          packageNameConfig: (_, sub) => CodePackageNameConfig.forDartLike(sub),
-          packageConfig: (_, sub) =>
-              CodePackageConfig.forJavaLike(sub, packageKeyword: 'library'),
+          packageNameConfig: (_, child) =>
+              CodePackageNameConfig.forDartLike(child),
+          packageConfig: (_, child) => CodePackageConfig.forDartLike(child),
 
           // Import Configs
-          importConfig: (_, sub) => CodeImportConfig.forDartLike(sub),
+          importConfig: (_, child) => CodeImportConfig.forDartLike(child),
           importListConfig: null,
           importTypeConfig: null,
 
           // Type configs
 
-          typeNameMapperConfig: (_, sub) => CodeTypeNameMapperConfig(sub, {
+          typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig(child, {
             'void': 'void',
             'null': 'null',
             'byte': 'byte',
@@ -133,13 +131,14 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           nullLiteralConfig: null,
           boolLiteralConfig: null,
           charLiteralConfig: null,
-          stringLiteralConfig: null,
+          stringLiteralConfig: (_, child) =>
+              CodeStringLiteralConfig.forDartLike(child),
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
           awaitConfig: null,
-          yieldConfig: (_, sub) => CodeYieldConfig.forDartLike(sub),
-          varConfig: (_, sub) => CodeVarConfig.forDartLike(sub),
+          yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
+          varConfig: (_, child) => CodeVarConfig.forDartLike(child),
 
           // Statement configs
           statementList: null,
@@ -151,7 +150,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           elseIfConfig: null,
           returnConfig: null,
           forConfig: null,
-          forEachConfig: null,
+          forEachConfig: (_, child) => CodeForEachConfig.forDartLike(child),
           whileConfig: null,
           functionCallConfig: null,
 
@@ -164,42 +163,60 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           genericParamListConfig: null,
 
           // Field configs
-          fieldNameConfig: null,
+          fieldNameConfig: (_, child) => CodeFieldNameConfig.forDartLike(child),
           fieldListConfig: null,
-          fieldConfig: null,
+          fieldConfig: (_, child) => CodeFieldConfig.forDartLike(child),
+
+          // Arg configs
+          argNameConfig: null,
+          argListConfig: null,
+          argConfig: (_, child) => CodeArgConfig.forDartLike(child),
 
           // Function configs
-          functionNameConfig: null,
-          functionArgNameConfig: null,
-          functionArgListConfig: null,
-          functionArgConfig: null,
-          functionThrowListConfig: null,
-          functionThrowConfig: null,
-          functionReturnConfig: (_, sub) =>
-              CodeFunctionReturnConfig.forDartLike(sub),
+          functionThrowListConfig: (_, child) =>
+              CodeFunctionThrowListConfig.ignored(child),
+          functionThrowConfig: (_, child) =>
+              CodeFunctionThrowConfig.ignored(child),
+          functionReturnConfig: (_, child) =>
+              CodeFunctionReturnConfig.forDartLike(child),
           functionReturnListConfig: null,
+          functionNameConfig: (_, child) =>
+              CodeFunctionNameConfig.forDartLike(child),
           functionListConfig: null,
-          functionConfig: null,
+          functionConfig: (_, child) => CodeFunctionConfig.forDartLike(child),
 
           // Enum configs,
-          enumValueNameConfig: (_, sub) =>
-              CodeEnumValueNameConfig.forDartLike(sub),
+          enumValueNameConfig: (_, child) =>
+              CodeEnumValueNameConfig.forDartLike(child),
           enumValueListConfig: null,
           enumValueConfig: null,
           enumNameConfig: null,
           enumListConfig: null,
           enumConfig: null,
 
+          // Property configs
+          propertyNameConfig: (_, child) =>
+              CodePropertyNameConfig.forDartLike(child),
+          propertyListConfig: null,
+          propertyGetterConfig: (_, child) =>
+              CodePropertyGetterConfig.forDartLike(child),
+          propertySetterConfig: (_, child) =>
+              CodePropertySetterConfig.forDartLike(child),
+          propertyConfig: (_, child) => CodePropertyConfig.forDartLike(child),
+
           // Interface configs
           interfaceListConfig: null,
-          interfaceConfig: (_, sub) =>
-              CodeInterfaceConfig.forJavaLike(sub, interfaceKeyword: 'class '),
+          interfaceConfig: (_, child) => CodeInterfaceConfig.forJavaLike(child,
+              interfaceKeyword: 'class '),
 
           // Class configs
-          classNameConfig: null,
+          classNameConfig: (_, child) => CodeClassNameConfig.forDartLike(child),
           classListConfig: null,
           classConfig: null,
+          classConstructorNameConfig: (_, child) =>
+              CodeClassConstructorNameConfig.forDartLike(child),
           classConstructorListConfig: null,
-          classConstructorConfig: null,
+          classConstructorConfig: (_, child) =>
+              CodeClassConstructorConfig.forDartLike(child),
         );
 }

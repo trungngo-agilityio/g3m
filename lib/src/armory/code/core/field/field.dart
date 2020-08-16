@@ -4,13 +4,28 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
   CodeFieldConfig(NodeBuildFunc<CodeField> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeFieldConfig.forDartLike(Node child) =>
+      CodeFieldConfig._internal(child, overrideAsAnnotation: true);
+
   factory CodeFieldConfig.forJavaLike(Node child) =>
+      CodeFieldConfig._internal(child);
+
+  factory CodeFieldConfig._internal(
+    Node child, {
+    bool overrideAsAnnotation,
+  }) =>
       CodeFieldConfig((context, field) {
         return Container([
           '\n',
           CodeStatement.of(
             Container([
               field.comment,
+              field.annotations,
+              // In the case of dart language, override is an annotation.
+              // For csharp, it is an modifier.
+              overrideAsAnnotation == true && field.modifier?.override == true
+                  ? '@override\n'
+                  : null,
               field.modifier,
               field.type,
               ' ',
@@ -24,6 +39,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
 
 class CodeField extends CodeConfigProxyNode<CodeField> {
   final CodeFieldName name;
+  final CodeAnnotationList annotations;
   final CodeModifier modifier;
   final CodeType type;
   final CodeExpr init;
@@ -31,6 +47,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
 
   CodeField({
     this.name,
+    this.annotations,
     this.modifier,
     this.type,
     this.init,
@@ -39,6 +56,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
 
   factory CodeField.of({
     String name,
+    List<CodeAnnotation> annotations,
     bool override,
     bool private,
     bool public,
@@ -46,12 +64,14 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
     bool internal,
     bool abstract,
     bool static,
+    bool isFinal,
     String type,
     dynamic init,
     String comment,
   }) =>
       CodeField(
         name: CodeFieldName.of(name),
+        annotations: CodeAnnotationList.of(annotations),
         modifier: CodeModifier(
           override: override,
           private: private,
@@ -59,6 +79,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
           protected: protected,
           internal: internal,
           static: static,
+          isFinal: isFinal,
         ),
         type: CodeType.simple(type),
         init: init != null ? CodeExpr.of(init) : null,

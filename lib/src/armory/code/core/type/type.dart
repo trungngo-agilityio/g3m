@@ -79,33 +79,46 @@ class CodeType extends CodeConfigProxyNode<CodeType> {
 
   CodeType(this.name, {this.generic, this.array});
 
-  factory CodeType.simple(String name) => CodeType(CodeTypeName.of(name));
+  factory CodeType.of({
+    CodeTypeName name,
+    CodeGenericParamList generic,
+    bool array,
+  }) {
+    if (name == null) return null;
+    return CodeType(name, generic: generic, array: array);
+  }
 
-  factory CodeType.genericSingle(String name, String param) => CodeType(
-        CodeTypeName.of(name),
-        generic: CodeGenericParamList.of([CodeGenericParam.of(param)]),
+  factory CodeType.simple(String name) => CodeType.of(
+        name: CodeTypeName.of(name),
       );
 
-  factory CodeType.genericList(String name, List<String> params) => CodeType(
-        CodeTypeName.of(name),
+  factory CodeType.genericSingle(String name, String param) => CodeType.of(
+        name: CodeTypeName.of(name),
+        generic: CodeGenericParamList.of(
+          [CodeGenericParam.of(param)],
+        ),
+      );
+
+  factory CodeType.genericList(String name, List<String> params) => CodeType.of(
+        name: CodeTypeName.of(name),
         generic: CodeGenericParamList.of(
             params?.map((e) => CodeGenericParam.of(e))?.toList()),
       );
 
-  factory CodeType.array(String name) => CodeType(
-        CodeTypeName.of(name),
+  factory CodeType.array(String name) => CodeType.of(
+        name: CodeTypeName.of(name),
         array: true,
       );
 
-  factory CodeType.genericSingleArray(String name, String param) => CodeType(
-        CodeTypeName.of(name),
+  factory CodeType.genericSingleArray(String name, String param) => CodeType.of(
+        name: CodeTypeName.of(name),
         generic: CodeGenericParamList.of([CodeGenericParam.of(param)]),
         array: true,
       );
 
   factory CodeType.genericListArray(String name, List<String> params) =>
-      CodeType(
-        CodeTypeName.of(name),
+      CodeType.of(
+        name: CodeTypeName.of(name),
         generic: CodeGenericParamList.of(
             params?.map((e) => CodeGenericParam.of(e))?.toList()),
         array: true,

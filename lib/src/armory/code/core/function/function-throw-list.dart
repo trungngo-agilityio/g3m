@@ -6,6 +6,9 @@ class CodeFunctionThrowListConfig
       NodeBuildFunc<CodeFunctionThrowList> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeFunctionThrowListConfig.ignored(Node child) =>
+      CodeFunctionThrowListConfig(null, child);
+
   factory CodeFunctionThrowListConfig.forJavaLike(Node child) =>
       CodeFunctionThrowListConfig((context, param) {
         final types = param.types;
@@ -13,7 +16,11 @@ class CodeFunctionThrowListConfig
           return null;
         }
 
-        return Join.commaSeparated(types);
+        return TextTransform(Join.commaSeparated(types), (s) {
+          s = s?.trim();
+          if (s?.isNotEmpty == true) s = ' throws ' + s;
+          return s;
+        });
       }, child);
 }
 

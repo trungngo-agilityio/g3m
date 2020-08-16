@@ -11,7 +11,26 @@ class CodeClassConstructorNameConfig
           (context, name) => TextTransform(name.content, func), child);
 
   factory CodeClassConstructorNameConfig.forJavaLike(Node child) =>
-      CodeClassConstructorNameConfig.of(StringFuncs.pascal, child);
+      // Java does not allow named constructor, skip it.
+      CodeClassConstructorNameConfig.of(StringFuncs.noop, child);
+
+  factory CodeClassConstructorNameConfig.forDartLike(Node child) =>
+      CodeClassConstructorNameConfig((context, name) {
+        final field =
+            context.findAncestorNodeOfExactType<CodeClassConstructor>();
+        final modifier = field?.modifier;
+
+        Node res = TextTransform(name.content, StringFuncs.camel);
+
+        if (modifier?.private == true ||
+            modifier?.protected == true ||
+            modifier?.internal == true) {
+          // Add '_' prefix for non public field.
+          res = Pad.left('_', res);
+        }
+
+        return res;
+      }, child);
 }
 
 class CodeClassConstructorName

@@ -6,7 +6,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
 
   factory CodeModifierConfig.forJavaLike(
     Node child, {
-    String overrideKeyword = '@override\n',
+    String overrideKeyword,
     String factoryKeyword,
     String privateKeyword = 'private ',
     String publicKeyword = 'public ',
@@ -14,6 +14,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
     String internalKeyword = 'internal ',
     String abstractKeyword = 'abstract ',
     String staticKeyword = 'static ',
+    String finalKeyword = 'final ',
   }) =>
       CodeModifierConfig((context, access) {
         final keywords = <String>[];
@@ -50,6 +51,10 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
           keywords.add(staticKeyword);
         }
 
+        if (access.isFinal == true && finalKeyword != null) {
+          keywords.add(finalKeyword);
+        }
+
         if (keywords.isEmpty) return null;
 
         return Container(keywords);
@@ -66,6 +71,7 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
 
   final bool abstract;
   final bool static;
+  final bool isFinal;
 
   CodeModifier({
     this.override,
@@ -76,5 +82,6 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
     this.internal,
     this.abstract,
     this.static,
+    this.isFinal,
   });
 }

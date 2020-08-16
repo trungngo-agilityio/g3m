@@ -8,6 +8,23 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
       CodeFieldNameConfig(
           (context, name) => TextTransform(name.content, func), child);
 
+  factory CodeFieldNameConfig.forDartLike(Node child) =>
+      CodeFieldNameConfig((context, name) {
+        final field = context.findAncestorNodeOfExactType<CodeField>();
+        final modifier = field?.modifier;
+
+        Node res = TextTransform(name.content, StringFuncs.camel);
+
+        if (modifier?.private == true ||
+            modifier?.protected == true ||
+            modifier?.internal == true) {
+          // Add '_' prefix for non public field.
+          res = Pad.left('_', res);
+        }
+
+        return res;
+      }, child);
+
   factory CodeFieldNameConfig.forJavaLike(Node child) =>
       CodeFieldNameConfig.of(StringFuncs.camel, child);
 }

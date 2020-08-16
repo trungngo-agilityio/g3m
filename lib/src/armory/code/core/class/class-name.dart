@@ -10,6 +10,23 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
 
   factory CodeClassNameConfig.forJavaLike(Node child) =>
       CodeClassNameConfig.of(StringFuncs.pascal, child);
+
+  factory CodeClassNameConfig.forDartLike(Node child) =>
+      CodeClassNameConfig((context, name) {
+        final clazz = context.findAncestorNodeOfExactType<CodeClass>();
+        final modifier = clazz?.modifier;
+
+        Node res = TextTransform(name.content, StringFuncs.pascal);
+
+        if (modifier?.private == true ||
+            modifier?.protected == true ||
+            modifier?.internal == true) {
+          // Add '_' prefix for non public clazz.
+          res = Pad.left('_', res);
+        }
+
+        return res;
+      }, child);
 }
 
 class CodeClassName extends CodeConfigProxyNode<CodeClassName> {

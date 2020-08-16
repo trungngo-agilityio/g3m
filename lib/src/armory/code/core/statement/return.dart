@@ -9,18 +9,19 @@ class CodeReturnConfig extends CodeConfigNode<CodeReturn> {
     String returnKeyword = 'return',
   }) =>
       CodeReturnConfig((context, expr) {
-        return CodeStatement.of(Container([
+        return Container([
           expr.comment,
           returnKeyword,
           ' ',
           expr.expr,
-        ]));
+        ]);
       }, child);
 }
 
 class CodeReturn extends CodeConfigProxyNode<CodeReturn> {
   final CodeExpr expr;
   final CodeComment comment;
+
 
   CodeReturn({
     this.expr,

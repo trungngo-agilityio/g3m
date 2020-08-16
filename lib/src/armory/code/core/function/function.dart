@@ -4,15 +4,30 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
   CodeFunctionConfig(NodeBuildFunc<CodeFunction> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFunctionConfig.forJavaLike(
+  factory CodeFunctionConfig.forDartLike(Node child) =>
+      CodeFunctionConfig._internal(child, overrideAsAnnotation: true);
+
+  factory CodeFunctionConfig.forJavaLike(Node child) =>
+      CodeFunctionConfig._internal(
+        child,
+      );
+
+  factory CodeFunctionConfig._internal(
     Node child, {
     String throwKeyword = 'throws',
+    bool overrideAsAnnotation,
   }) =>
       CodeFunctionConfig((context, func) {
         final def = Container([
           '\n',
           func.comment,
           func.annotations,
+
+          // In the case of dart language, override is an annotation.
+          // For csharp, it is an modifier.
+          overrideAsAnnotation == true && func.modifier?.override == true
+              ? '@override\n'
+              : null,
           func.returns != null
               ? Container([
                   func.returns,
@@ -25,18 +40,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
           '(',
           func.args,
           ')',
-          func.throws != null
-              ? Container([
-                  throwKeyword != null
-                      ? Container([
-                          ' ',
-                          throwKeyword,
-                        ])
-                      : null,
-                  Text.space(),
-                  func.throws,
-                ])
-              : null,
+          func.throws,
         ]);
 
         if (func.body == null) {
@@ -57,7 +61,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
   final CodeAnnotationList annotations;
   final CodeModifier modifier;
   final CodeGenericParamList generic;
-  final CodeFunctionArgList args;
+  final CodeArgList args;
   final CodeFunctionReturnList returns;
   final CodeFunctionThrowList throws;
   final CodeBlock body;
@@ -106,7 +110,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
           static: static,
         ),
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
-        args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
+        args: args != null ? CodeArgList.ofNameTypeMap(args) : null,
         returns: returns != null ? CodeFunctionReturnList.list(returns) : null,
         throws: throws != null ? CodeFunctionThrowList.list(throws) : null,
         body: CodeBlock.of(CodeStatementList.of(body)),

@@ -43,4 +43,5 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
         args: args?.map((e) => CodeExpr.of(e))?.toList(),
       );
+
 }

@@ -73,15 +73,17 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeFieldListConfig> fieldListConfig;
   CodeConfigBuildFunc<CodeFieldConfig> fieldConfig;
 
+  // Arg configs
+  CodeConfigBuildFunc<CodeArgNameConfig> argNameConfig;
+  CodeConfigBuildFunc<CodeArgListConfig> argListConfig;
+  CodeConfigBuildFunc<CodeArgConfig> argConfig;
+
   // Function configs
-  CodeConfigBuildFunc<CodeFunctionNameConfig> functionNameConfig;
-  CodeConfigBuildFunc<CodeFunctionArgNameConfig> functionArgNameConfig;
-  CodeConfigBuildFunc<CodeFunctionArgListConfig> functionArgListConfig;
-  CodeConfigBuildFunc<CodeFunctionArgConfig> functionArgConfig;
   CodeConfigBuildFunc<CodeFunctionThrowListConfig> functionThrowListConfig;
   CodeConfigBuildFunc<CodeFunctionThrowConfig> functionThrowConfig;
   CodeConfigBuildFunc<CodeFunctionReturnConfig> functionReturnConfig;
   CodeConfigBuildFunc<CodeFunctionReturnListConfig> functionReturnListConfig;
+  CodeConfigBuildFunc<CodeFunctionNameConfig> functionNameConfig;
   CodeConfigBuildFunc<CodeFunctionListConfig> functionListConfig;
   CodeConfigBuildFunc<CodeFunctionConfig> functionConfig;
 
@@ -93,6 +95,13 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeEnumListConfig> enumListConfig;
   CodeConfigBuildFunc<CodeEnumConfig> enumConfig;
 
+  // Property configs
+  CodeConfigBuildFunc<CodePropertyNameConfig> propertyNameConfig;
+  CodeConfigBuildFunc<CodePropertyListConfig> propertyListConfig;
+  CodeConfigBuildFunc<CodePropertyGetterConfig> propertyGetterConfig;
+  CodeConfigBuildFunc<CodePropertySetterConfig> propertySetterConfig;
+  CodeConfigBuildFunc<CodePropertyConfig> propertyConfig;
+
   // Interface configs
   CodeConfigBuildFunc<CodeInterfaceListConfig> interfaceListConfig;
   CodeConfigBuildFunc<CodeInterfaceConfig> interfaceConfig;
@@ -101,6 +110,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeClassNameConfig> classNameConfig;
   CodeConfigBuildFunc<CodeClassListConfig> classListConfig;
   CodeConfigBuildFunc<CodeClassConfig> classConfig;
+  CodeConfigBuildFunc<CodeClassConstructorNameConfig>
+      classConstructorNameConfig;
   CodeConfigBuildFunc<CodeClassConstructorListConfig>
       classConstructorListConfig;
   CodeConfigBuildFunc<CodeClassConstructorConfig> classConstructorConfig;
@@ -167,15 +178,17 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.fieldListConfig,
     @required this.fieldConfig,
 
+    // Arg configs
+    @required this.argNameConfig,
+    @required this.argListConfig,
+    @required this.argConfig,
+
     // Function configs
-    @required this.functionNameConfig,
-    @required this.functionArgNameConfig,
-    @required this.functionArgListConfig,
-    @required this.functionArgConfig,
     @required this.functionThrowListConfig,
     @required this.functionThrowConfig,
     @required this.functionReturnConfig,
     @required this.functionReturnListConfig,
+    @required this.functionNameConfig,
     @required this.functionListConfig,
     @required this.functionConfig,
     @required this.enumValueNameConfig,
@@ -184,6 +197,13 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.enumNameConfig,
     @required this.enumListConfig,
     @required this.enumConfig,
+
+    // Property configs
+    @required this.propertyNameConfig,
+    @required this.propertyListConfig,
+    @required this.propertyGetterConfig,
+    @required this.propertySetterConfig,
+    @required this.propertyConfig,
 
     // Enum configs
 
@@ -195,6 +215,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.classNameConfig,
     @required this.classListConfig,
     @required this.classConfig,
+    @required this.classConstructorNameConfig,
     @required this.classConstructorListConfig,
     @required this.classConstructorConfig,
   }) : super(child) {
@@ -265,13 +286,12 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     fieldListConfig ??= (_, sub) => CodeFieldListConfig.forJavaLike(sub);
     fieldConfig ??= (_, sub) => CodeFieldConfig.forJavaLike(sub);
 
+    // Arg configs
+    argNameConfig ??= (_, sub) => CodeArgNameConfig.forJavaLike(sub);
+    argListConfig ??= (_, sub) => CodeArgListConfig.forJavaLike(sub);
+    argConfig ??= (_, sub) => CodeArgConfig.forJavaLike(sub);
+
     // Function configs
-    functionNameConfig ??= (_, sub) => CodeFunctionNameConfig.forJavaLike(sub);
-    functionArgNameConfig ??=
-        (_, sub) => CodeFunctionArgNameConfig.forJavaLike(sub);
-    functionArgListConfig ??=
-        (_, sub) => CodeFunctionArgListConfig.forJavaLike(sub);
-    functionArgConfig ??= (_, sub) => CodeFunctionArgConfig.forJavaLike(sub);
     functionThrowListConfig ??=
         (_, sub) => CodeFunctionThrowListConfig.forJavaLike(sub);
     functionThrowConfig ??=
@@ -280,6 +300,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
         (_, sub) => CodeFunctionReturnConfig.forJavaLike(sub);
     functionReturnListConfig ??=
         (_, sub) => CodeFunctionReturnListConfig.forJavaLike(sub);
+    functionNameConfig ??= (_, sub) => CodeFunctionNameConfig.forJavaLike(sub);
     functionListConfig ??= (_, sub) => CodeFunctionListConfig.forJavaLike(sub);
     functionConfig ??= (_, sub) => CodeFunctionConfig.forJavaLike(sub);
 
@@ -293,6 +314,15 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     enumListConfig ??= (_, sub) => CodeEnumListConfig.forJavaLike(sub);
     enumConfig ??= (_, sub) => CodeEnumConfig.forJavaLike(sub);
 
+    // Property Config
+    propertyNameConfig ??= (_, sub) => CodePropertyNameConfig.forJavaLike(sub);
+    propertyListConfig ??= (_, sub) => CodePropertyListConfig.forJavaLike(sub);
+    propertyGetterConfig ??=
+        (_, sub) => CodePropertyGetterConfig.forJavaLike(sub);
+    propertySetterConfig ??=
+        (_, sub) => CodePropertySetterConfig.forJavaLike(sub);
+    propertyConfig ??= (_, sub) => CodePropertyConfig.forJavaLike(sub);
+
     // Interface configs
     interfaceListConfig ??=
         (_, sub) => CodeInterfaceListConfig.forJavaLike(sub);
@@ -302,6 +332,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     classNameConfig ??= (_, sub) => CodeClassNameConfig.forJavaLike(sub);
     classListConfig ??= (_, sub) => CodeClassListConfig.forJavaLike(sub);
     classConfig ??= (_, sub) => CodeClassConfig.forJavaLike(sub);
+    classConstructorNameConfig ??=
+        (_, sub) => CodeClassConstructorNameConfig.forJavaLike(sub);
     classConstructorListConfig ??=
         (_, sub) => CodeClassConstructorListConfig.forJavaLike(sub);
     classConstructorConfig ??=
@@ -372,15 +404,17 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       fieldListConfig,
       fieldConfig,
 
+      // Arg configs
+      argNameConfig,
+      argListConfig,
+      argConfig,
+
       // Function configs
-      functionNameConfig,
-      functionArgNameConfig,
-      functionArgListConfig,
-      functionArgConfig,
       functionThrowListConfig,
       functionThrowConfig,
       functionReturnConfig,
       functionReturnListConfig,
+      functionNameConfig,
       functionListConfig,
       functionConfig,
 
@@ -392,6 +426,13 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       enumListConfig,
       enumConfig,
 
+      // Property configs
+      propertyNameConfig,
+      propertyListConfig,
+      propertyGetterConfig,
+      propertySetterConfig,
+      propertyConfig,
+
       // Interface configs
       interfaceListConfig,
       interfaceConfig,
@@ -401,6 +442,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       classNameConfig,
       classListConfig,
       classConfig,
+      classConstructorNameConfig,
       classConstructorListConfig,
       classConstructorConfig,
     ];

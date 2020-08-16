@@ -4,24 +4,29 @@ class CodeForEachConfig extends CodeConfigNode<CodeForEach> {
   CodeForEachConfig(NodeBuildFunc<CodeForEach> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeForEachConfig.forDartLike(Node child) {
+    return CodeForEachConfig.forJavaLike(child, inKeyword: 'in ');
+  }
+
   factory CodeForEachConfig.forJavaLike(
     Node child, {
     String forEachKeyword = 'for',
     String inKeyword = ': ',
-  }) =>
-      CodeForEachConfig((context, expr) {
-        return Container([
-          expr.comment,
-          forEachKeyword,
-          ' (',
-          expr.item,
-          inKeyword,
-          expr.collection,
-          ') ',
-          CodeBlock.of(expr.body),
-          '\n'
-        ]);
-      }, child);
+  }) {
+    return CodeForEachConfig((context, expr) {
+      return Container([
+        expr.comment,
+        forEachKeyword,
+        ' (',
+        expr.item,
+        inKeyword,
+        expr.collection,
+        ') ',
+        CodeBlock.of(expr.body),
+        '\n'
+      ]);
+    }, child);
+  }
 }
 
 class CodeForEach extends CodeConfigProxyNode<CodeForEach> {

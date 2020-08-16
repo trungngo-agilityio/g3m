@@ -159,15 +159,17 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           fieldListConfig: null,
           fieldConfig: null,
 
+          // Arg configs
+          argNameConfig: null,
+          argListConfig: null,
+          argConfig: null,
+
           // Function configs
-          functionNameConfig: null,
-          functionArgNameConfig: null,
-          functionArgListConfig: null,
-          functionArgConfig: null,
           functionThrowListConfig: null,
           functionThrowConfig: null,
           functionReturnConfig: null,
           functionReturnListConfig: null,
+          functionNameConfig: null,
           functionListConfig: null,
           functionConfig: null,
 
@@ -179,6 +181,13 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           enumListConfig: null,
           enumConfig: null,
 
+          // Property configs
+          propertyNameConfig: null,
+          propertyListConfig: null,
+          propertyGetterConfig: null,
+          propertySetterConfig: null,
+          propertyConfig: null,
+
           // Interface configs
           interfaceListConfig: null,
           interfaceConfig: null,
@@ -188,6 +197,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           classNameConfig: null,
           classListConfig: null,
           classConfig: null,
+          classConstructorNameConfig: null,
           classConstructorListConfig: null,
           classConstructorConfig: null,
         );

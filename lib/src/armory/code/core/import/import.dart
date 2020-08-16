@@ -6,22 +6,39 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
 
   factory CodeImportConfig.forDartLike(
     Node child, {
-    String importKeyword = 'import',
+    String importKeyword = 'import ',
     String asKeyword = 'as',
-  }) =>
-      CodeImportConfig((context, import) {
-        return CodeStatement.of(
-          Container([
-            importKeyword,
-            ' \'',
-            import.package,
-            '\'',
-            import.alias != null
-                ? Container([' ', asKeyword, ' ', import.alias])
-                : null,
-          ]),
-        );
-      }, child);
+    bool packageIgnored = true,
+    bool pathIgnored = false,
+    bool aliasIgnored = false,
+    String pathQuote = '\'',
+  }) {
+    return CodeImportConfig((context, import) {
+      // For dart, the package path is used.
+      Node pathNode;
+      if (pathIgnored != true && import.path != null) {
+        pathNode = Pad.of(pathQuote, pathQuote, Text.of(import.path));
+      }
+
+      // Include the package name if that is not ignored.
+      Node packageNode;
+      if (packageIgnored != true) packageNode = import.package;
+
+      Node aliasNode;
+      if (aliasIgnored != true && import.alias != null) {
+        aliasNode = Container([' ', asKeyword, ' ', import.alias]);
+      }
+
+      return CodeStatement.of(
+        Container([
+          importKeyword,
+          packageNode,
+          pathNode,
+          aliasNode,
+        ]),
+      );
+    }, child);
+  }
 
   factory CodeImportConfig.forJavaLike(
     Node child, {
@@ -44,24 +61,39 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
 }
 
 class CodeImport extends CodeConfigProxyNode<CodeImport> {
+  /// The package name to import.
   final CodePackageName package;
+
+  /// The alias name for the package.
   final CodePackageName alias;
+
+  /// The list of optional types to import in the package.
   final List<CodeImportType> types;
 
+  /// The optional file path of where to find the package.
+  final String path;
+
   CodeImport({
-    @required this.package,
+    this.package,
     this.alias,
     this.types,
+    this.path,
   });
 
   factory CodeImport.of(
     String package, {
     String alias,
     List<CodeImportType> types,
+    String path,
   }) =>
       CodeImport(
         package: CodePackageName.of(package),
         alias: alias != null ? CodePackageName.of(alias) : null,
+        path: path,
         types: types,
       );
+
+  /// Import all types from the specified [path].
+  ///
+  factory CodeImport.allFromPath(String path) => CodeImport(path: path);
 }

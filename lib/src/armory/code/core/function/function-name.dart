@@ -10,6 +10,23 @@ class CodeFunctionNameConfig extends CodeConfigNode<CodeFunctionName> {
 
   factory CodeFunctionNameConfig.forJavaLike(Node child) =>
       CodeFunctionNameConfig.of(StringFuncs.camel, child);
+
+  factory CodeFunctionNameConfig.forDartLike(Node child) =>
+      CodeFunctionNameConfig((context, name) {
+        final field = context.findAncestorNodeOfExactType<CodeFunction>();
+        final modifier = field?.modifier;
+
+        Node res = TextTransform(name.content, StringFuncs.camel);
+
+        if (modifier?.private == true ||
+            modifier?.protected == true ||
+            modifier?.internal == true) {
+          // Add '_' prefix for non public field.
+          res = Pad.left('_', res);
+        }
+
+        return res;
+      }, child);
 }
 
 class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName> {

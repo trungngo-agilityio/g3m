@@ -5,46 +5,67 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
       NodeBuildFunc<CodeClassConstructor> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassConstructorConfig.forJavaLike(
+  factory CodeClassConstructorConfig.forDartLike(Node child) =>
+      CodeClassConstructorConfig._internal(child,
+          appendConstructorName: true, appendClassName: true);
+
+  factory CodeClassConstructorConfig.forJavaLike(Node child) =>
+      CodeClassConstructorConfig._internal(child,
+          appendConstructorName: false, appendClassName: true);
+
+  factory CodeClassConstructorConfig._internal(
     Node child, {
     String constructorKeyword,
     bool appendClassName = true,
+    bool appendConstructorName = false,
   }) =>
-      CodeClassConstructorConfig((context, func) {
+      CodeClassConstructorConfig((context, constructor) {
         final clazz = context.dependOnAncestorNodeOfExactType<CodeClass>();
 
         Node name;
 
-        if (appendClassName && func.name != null) {
-          name = Container([clazz.name, '.', func.name]);
+        if (appendClassName == true &&
+            appendConstructorName == true &&
+            constructor.name != null) {
+          name = Container([clazz.name, '.', constructor.name]);
         } else if (appendClassName) {
           name = clazz.name;
         } else {
-          name = func.name;
+          name = constructor.name;
+        }
+
+        Node init;
+        if (constructor.init?.isNotEmpty == true) {
+          init = Container([
+            ':\n',
+            Indent(Join.of(',\n', constructor.init), level: 2),
+            ' ',
+          ]);
         }
 
         final def = Container([
           '\n',
-          func.comment,
+          constructor.comment,
           Trim.leftRight(
             Container([
-              func.modifier,
+              constructor.modifier,
               constructorKeyword,
               name,
               '(',
-              func.args,
+              constructor.args,
               ')',
+              init,
             ]),
           ),
         ]);
 
-        if (func.body == null) {
+        if (constructor.body == null) {
           return CodeStatement.of(def);
         } else {
           return Container([
             def,
             ' ',
-            func.body,
+            constructor.body,
             '\n',
           ]);
         }
@@ -62,7 +83,10 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   final CodeComment comment;
 
   /// The constructor argument list.
-  final CodeFunctionArgList args;
+  final CodeArgList args;
+
+  /// The list of initializer expressions
+  final List<CodeExpr> init;
 
   /// The class implementation body
   final CodeBlock body;
@@ -72,6 +96,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     this.modifier,
     this.comment,
     this.args,
+    this.init,
     this.body,
   });
 
@@ -83,9 +108,8 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     bool protected,
     bool internal,
     Map<String, String> args,
-    List<String> returns,
-    List<String> throws,
     String comment,
+    List<dynamic> init,
     Node body,
   }) =>
       CodeClassConstructor(
@@ -98,7 +122,8 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
           internal: internal,
         ),
         comment: comment != null ? CodeComment.of(comment) : null,
-        args: args != null ? CodeFunctionArgList.ofNameTypeMap(args) : null,
+        init: init?.map((e) => CodeExpr.of(e))?.toList(),
+        args: args != null ? CodeArgList.ofNameTypeMap(args) : null,
         body: CodeBlock.of(body),
       );
 }

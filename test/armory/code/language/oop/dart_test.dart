@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('all', () async {
+  test('all', () {
     var root = DartCode.of(
       body: Text.of('// You can put anything in this body.'),
       comment: CodeComment.of('Demo file level comment'),
@@ -25,7 +25,7 @@ void main() {
         ),
       ],
       functions: [
-        CodeFunction.of('hello', args: {
+        CodeFunction.of('hello', override: true, args: {
           'first name': 'string',
         }, body: [
           Text.of('var name = "John";\n'
@@ -36,7 +36,7 @@ void main() {
         clazz(),
       ],
     );
-    await runAndExpect(
+    runAndExpect(
       root,
       '// Demo file level comment\n'
       'library my.personal.vehicle;\n'
@@ -88,7 +88,7 @@ CodeGenericParam genericParam() => CodeGenericParam.of('T');
 CodeClass clazz() {
   return CodeClass.of(
     'person',
-    public: true,
+    private: true,
     abstract: true,
     generic: [CodeGenericParam.of('T')],
     extend: null,
@@ -98,7 +98,9 @@ CodeClass clazz() {
     ],
     constructors: [
       CodeClassConstructor.of(
+          name: 'of',
           comment: 'a demo constructor',
+          factory: true,
           args: {'name': 'string'},
           body: Container(['// Any free text can be here'])),
     ],
@@ -119,6 +121,7 @@ CodeFunction function() {
   return CodeFunction.of('drive',
       generic: ['T'],
       args: {'vehicle': 'car'},
+      internal: true,
       comment: 'just a demo function',
       returns: ['void'],
       throws: ['accident exception', 'bad driver exception'],
@@ -131,6 +134,8 @@ CodeField field() {
   return CodeField.of(
     name: 'first name',
     type: 'string',
+    override: true,
+    private: true,
     comment: 'The human first name.',
   );
 }

@@ -178,7 +178,7 @@ ProtoLibScope({{constructorArgs}});
         'scopes': scopes,
         'fieldMap': Indent(fieldMap, level: 2),
         'addFields': Indent(addFields, level: 3),
-        'fieldList': CodeFunctionArgList.ofNameTypeMap(fields),
+        'fieldList': CodeArgList.ofNameTypeMap(fields),
       },
     );
   }

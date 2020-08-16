@@ -14,6 +14,6 @@ abstract class CodeConfigProxyNode<T extends CodeConfigProxyNode<T>>
     final config = context.dependOnAncestorNodeOfExactType<CodeConfigNode<T>>();
 
     // Delegates the builder function to ancestor config.
-    return config.buildFunc(context, this);
+    return config.buildFunc != null ? config.buildFunc(context, this) : null;
   }
 }

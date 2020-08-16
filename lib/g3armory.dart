@@ -26,8 +26,6 @@ part 'src/armory/code/core/class/class-list.dart';
 
 part 'src/armory/code/core/class/class-name.dart';
 
-part 'src/armory/code/core/class/class-property.dart';
-
 part 'src/armory/code/core/class/class.dart';
 
 part 'src/armory/code/core/comment.dart';
@@ -52,13 +50,23 @@ part 'src/armory/code/core/field/field-name.dart';
 
 part 'src/armory/code/core/field/field.dart';
 
+part 'src/armory/code/core/property/property-list.dart';
+
+part 'src/armory/code/core/property/property-name.dart';
+
+part 'src/armory/code/core/property/property.dart';
+
+part 'src/armory/code/core/property/property-setter.dart';
+
+part 'src/armory/code/core/property/property-getter.dart';
+
 part 'src/armory/code/core/file.dart';
 
-part 'src/armory/code/core/function/function-arg-list.dart';
+part 'src/armory/code/core/arg/arg_list.dart';
 
-part 'src/armory/code/core/function/function-arg-name.dart';
+part 'src/armory/code/core/arg/arg_name.dart';
 
-part 'src/armory/code/core/function/function-arg.dart';
+part 'src/armory/code/core/arg/arg.dart';
 
 part 'src/armory/code/core/function/function-list.dart';
 
