@@ -44,13 +44,15 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
         ]);
 
         if (func.body == null) {
-          return CodeStatement.of(def);
+          return CodeExpr.open(def);
         } else {
-          return Container([
-            def,
-            Text.space(),
-            func.body,
-          ]);
+          return CodeExpr.closed(
+            Container([
+              def,
+              Text.space(),
+              func.body,
+            ]),
+          );
         }
       }, child);
 }

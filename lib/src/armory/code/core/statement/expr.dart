@@ -1,15 +1,15 @@
 part of g3.armory;
 
-class _CodeFreeExpr extends SingleChildNode implements CodeExpr {
+class _CodeFreeExpr extends SingleChildNode implements OldCodeExpr {
   _CodeFreeExpr(Node child) : super(child);
 
   factory _CodeFreeExpr.text(String text) =>
       text != null ? _CodeFreeExpr(Text.of(text)) : null;
 }
 
-abstract class CodeExpr implements Node {
-  factory CodeExpr.of(dynamic value) {
-    if (value is CodeExpr) return value;
+abstract class OldCodeExpr implements Node {
+  factory OldCodeExpr.of(dynamic value) {
+    if (value is OldCodeExpr) return value;
     if (value == null) return CodeNullLiteral();
     if (value is bool) return CodeBoolLiteral.of(value);
 

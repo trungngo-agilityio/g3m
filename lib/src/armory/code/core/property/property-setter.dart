@@ -52,7 +52,8 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
   }
 }
 
-class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter> {
+class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
+    implements _CodeStatementLike {
   /// The property name. This is optional in the case it is used
   /// outside of a property.
   final CodePropertyName name;
@@ -69,13 +70,26 @@ class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter> {
   /// The setter implementation.
   final CodeBlock body;
 
-  CodePropertySetter({
+  CodePropertySetter._({
     this.name,
     this.type,
     this.comment,
     this.annotations,
     this.body,
   });
+
+  factory CodePropertySetter._parse(dynamic value) {
+    return _parseNode<CodePropertySetter>(value, (v) {
+
+      final children = _parseNodeList<Node>(value, (v) {
+        return CodeExpr.of(v);
+      });
+
+      return CodePropertySetter._(
+        body: CodeBlock.of(Container(children)),
+      );
+    });
+  }
 
   factory CodePropertySetter.of({
     String name,
@@ -84,7 +98,7 @@ class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter> {
     List<CodeAnnotation> annotations,
     List<dynamic> body,
   }) =>
-      CodePropertySetter(
+      CodePropertySetter._(
         name: CodePropertyName.of(name),
         type: CodeType.simple(type),
         comment: comment != null ? CodeComment.of(comment) : null,

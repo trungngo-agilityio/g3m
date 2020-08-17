@@ -9,19 +9,21 @@ class CodeReturnConfig extends CodeConfigNode<CodeReturn> {
     String returnKeyword = 'return',
   }) =>
       CodeReturnConfig((context, expr) {
-        return Container([
-          expr.comment,
-          returnKeyword,
-          ' ',
-          expr.expr,
-        ]);
+        return CodeExpr.open(
+          Container([
+            expr.comment,
+            returnKeyword,
+            ' ',
+            expr.expr,
+          ]),
+        );
       }, child);
 }
 
-class CodeReturn extends CodeConfigProxyNode<CodeReturn> {
-  final CodeExpr expr;
+class CodeReturn extends CodeConfigProxyNode<CodeReturn>
+    implements OldCodeExpr {
+  final OldCodeExpr expr;
   final CodeComment comment;
-
 
   CodeReturn({
     this.expr,
@@ -33,7 +35,7 @@ class CodeReturn extends CodeConfigProxyNode<CodeReturn> {
     String comment,
   }) =>
       CodeReturn(
-        expr: CodeExpr.of(expr),
+        expr: OldCodeExpr.of(expr),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

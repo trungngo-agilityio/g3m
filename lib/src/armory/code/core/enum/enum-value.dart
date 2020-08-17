@@ -16,7 +16,7 @@ class CodeEnumValueConfig extends CodeConfigNode<CodeEnumValue> {
 
 class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue> {
   final CodeEnumValueName name;
-  final CodeExpr init;
+  final OldCodeExpr init;
   final CodeComment comment;
 
   CodeEnumValue({
@@ -32,7 +32,7 @@ class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue> {
   }) =>
       CodeEnumValue(
         name: CodeEnumValueName.of(name),
-        init: init != null ? CodeExpr.of(init) : null,
+        init: init != null ? OldCodeExpr.of(init) : null,
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

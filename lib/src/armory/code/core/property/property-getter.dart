@@ -45,13 +45,15 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
       ]);
 
       if (getter.body == null) {
-        return CodeStatement.of(def);
+        return CodeExpr.open(def);
       } else {
-        return Container([
-          def,
-          Text.space(),
-          getter.body,
-        ]);
+        return CodeExpr.closed(
+          Container([
+            def,
+            Text.space(),
+            getter.body,
+          ]),
+        );
       }
     }, child);
   }
@@ -73,13 +75,23 @@ class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter> {
   /// The getter implementation.
   final CodeBlock body;
 
-  CodePropertyGetter({
+  CodePropertyGetter._({
     this.name,
     this.type,
     this.comment,
     this.annotations,
     this.body,
   });
+
+  factory CodePropertyGetter._parse(dynamic value) {
+    return _parseNode<CodePropertyGetter>(value, (v) {
+      final statements = CodeStatementList._parse(v);
+      Node body = statements ?? v;
+      return CodePropertyGetter._(
+        body: CodeBlock.of(body),
+      );
+    });
+  }
 
   factory CodePropertyGetter.of({
     String name,
@@ -88,7 +100,7 @@ class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter> {
     List<CodeAnnotation> annotations,
     List<dynamic> body,
   }) =>
-      CodePropertyGetter(
+      CodePropertyGetter._(
         name: CodePropertyName.of(name),
         type: CodeType.simple(type),
         comment: comment != null ? CodeComment.of(comment) : null,

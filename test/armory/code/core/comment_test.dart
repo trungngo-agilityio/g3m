@@ -67,20 +67,22 @@ void main() {
         ),
         '\n'
         '// hello\n'
-        'String firstName;\n',
+        'String firstName',
       );
     });
 
     test('function', () {
       run(
-          () => CodeFunction.of(
-                'world',
-                comment: 'hello',
-              ),
-          '/**\n'
-          ' * hello\n'
-          ' */\n'
-          'world();\n');
+        () => CodeFunction.of(
+          'world',
+          comment: 'hello',
+        ),
+        '\n'
+        '/**\n'
+        ' * hello\n'
+        ' */\n'
+        'world()',
+      );
     });
 
     test('class', () {
@@ -96,17 +98,6 @@ void main() {
           'class World {\n'
           '\n'
           '}\n');
-    });
-
-    test('statement', () {
-      run(
-        () => Container([
-          CodeComment.of('world'),
-          CodeStatement.of('hello'),
-        ]),
-        '// world\n'
-        'hello;\n',
-      );
     });
   });
 }

@@ -1,12 +1,11 @@
-part of g3m.core.dep;
-
+part of g3m.core.dep
 
 
 class Author extends Expr<Author> {
   @override
   final AuthorScope scope;
 
-  Author(this.scope):
+  Author(this.scope, {this.test}):
       super(scope);
 
   Dependency _author;
@@ -21,7 +20,7 @@ class Author extends Expr<Author> {
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._author = value;
-    };
+    }
   }
 }
 

@@ -60,14 +60,16 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
         ]);
 
         if (constructor.body == null) {
-          return CodeStatement.of(def);
+          return CodeExpr.open(def);
         } else {
-          return Container([
-            def,
-            ' ',
-            constructor.body,
-            '\n',
-          ]);
+          return CodeExpr.closed(
+            Container([
+              def,
+              ' ',
+              constructor.body,
+              '\n',
+            ]),
+          );
         }
       }, child);
 }
@@ -86,7 +88,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   final CodeArgList args;
 
   /// The list of initializer expressions
-  final List<CodeExpr> init;
+  final List<OldCodeExpr> init;
 
   /// The class implementation body
   final CodeBlock body;
@@ -101,6 +103,40 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   });
 
   factory CodeClassConstructor.of({
+    dynamic name,
+    bool factory,
+    bool private,
+    bool public,
+    bool protected,
+    bool internal,
+    dynamic requiredArgs,
+    dynamic optionalArgs,
+    dynamic namedArgs,
+    dynamic comment,
+    List<dynamic> init,
+    dynamic body,
+  }) {
+    return CodeClassConstructor(
+      name: CodeClassConstructorName.of(name),
+      modifier: CodeModifier(
+        factory: factory,
+        private: private,
+        public: public,
+        protected: protected,
+        internal: internal,
+      ),
+      args: CodeArgList.of(
+        required: requiredArgs,
+        optional: optionalArgs,
+        named: namedArgs,
+      ),
+      init: init?.map((e) => OldCodeExpr.of(e))?.toList(),
+      comment: CodeComment.of(comment),
+      body: CodeBlock.of(CodeStatement.of(body)),
+    );
+  }
+
+  factory CodeClassConstructor.simple({
     String name,
     bool factory,
     bool private,
@@ -122,7 +158,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
           internal: internal,
         ),
         comment: comment != null ? CodeComment.of(comment) : null,
-        init: init?.map((e) => CodeExpr.of(e))?.toList(),
+        init: init?.map((e) => OldCodeExpr.of(e))?.toList(),
         args: args != null ? CodeArgList.ofNameTypeMap(args) : null,
         body: CodeBlock.of(body),
       );

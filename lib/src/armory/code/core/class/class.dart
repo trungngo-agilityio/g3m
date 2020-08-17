@@ -90,7 +90,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     List<CodeField> fields,
     List<CodeFunction> functions,
     String comment,
-    Node body,
+    dynamic body,
   }) =>
       CodeClass(
         name: CodeClassName.of(name),
@@ -106,12 +106,14 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
         extend: extend,
         implements: CodeTypeList.of(implements),
         body: CodeBlock.of(
-          Container([
-            CodeFieldList.of(fields),
-            CodeClassConstructorList(constructors),
-            CodeFunctionList.of(functions),
-            body,
-          ]),
+          CodeStatement.of(
+            Container([
+              Container(fields),
+              CodeClassConstructorList(constructors),
+              CodeFunctionList.of(functions),
+              CodeStatementList._parse(body) ?? body,
+            ]),
+          ),
         ),
         comment: comment != null ? CodeComment.of(comment) : null,
       );

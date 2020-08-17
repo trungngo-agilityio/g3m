@@ -8,35 +8,24 @@ class CodeStatementConfig extends CodeConfigNode<CodeStatement> {
 
   factory CodeStatementConfig.forJavaLike(Node child) =>
       CodeStatementConfig((context, statement) {
-        final expr = statement.expr;
-        if (expr is _CodeStatementLike) return expr;
-
-        return TextTransform(statement.expr, (s) {
-          s = s?.trim();
-          if (s.isNotEmpty) return s + ';\n';
-          return '\n';
-        });
-      }, child);
-
-  factory CodeStatementConfig.endWithNewLine(Node child) =>
-      CodeStatementConfig((context, statement) {
-        return Container([statement.expr, NewLine()]);
+        return statement.child;
       }, child);
 }
 
 class CodeStatement extends CodeConfigProxyNode<CodeStatement> {
-  final CodeExpr expr;
+  final Node child;
+  final bool terminated;
 
-  CodeStatement(this.expr);
+  CodeStatement._(@required this.child, {this.terminated});
+
+  factory CodeStatement._parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeStatement>(value, (v) {
+      if (v is Node) return CodeStatement._(v);
+      return CodeStatement._(CodeExpr.of(value));
+    }, error: error);
+  }
 
   factory CodeStatement.of(dynamic text) {
-    if (text == null) return null;
-    if (text is CodeStatement) return text;
-
-    // Treats the whole string is a free text expression.
-    if (text is String) {
-      return CodeStatement(_CodeFreeExpr.text(text?.trim()));
-    }
-    return CodeStatement(CodeExpr.of(text));
+    return CodeStatement._parse(text);
   }
 }

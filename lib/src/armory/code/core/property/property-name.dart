@@ -10,7 +10,6 @@ class CodePropertyNameConfig extends CodeConfigNode<CodePropertyName> {
 
   factory CodePropertyNameConfig.forDartLike(Node child) =>
       CodePropertyNameConfig((context, name) {
-
         final property = context.findAncestorNodeOfExactType<CodeProperty>();
         final modifier = property?.modifier;
 
@@ -33,9 +32,13 @@ class CodePropertyNameConfig extends CodeConfigNode<CodePropertyName> {
 class CodePropertyName extends CodeConfigProxyNode<CodePropertyName> {
   final Node content;
 
-  CodePropertyName(this.content);
+  CodePropertyName._(this.content);
 
-  factory CodePropertyName.of(String text) {
-    return text == null ? null : CodePropertyName(Text.of(text));
+  factory CodePropertyName.of(dynamic text) {
+    return _parseNode<CodePropertyName>(text, (v) {
+      if (v is CodeField) return CodePropertyName._(v.name.content);
+      if (v is CodeFieldName) return CodePropertyName._(v.content);
+      return CodePropertyName._(Text.of(v));
+    });
   }
 }

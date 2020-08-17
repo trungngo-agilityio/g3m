@@ -32,33 +32,42 @@ class Scope implements Node {
       (e) {
         var fieldName = e.key;
         var fieldType = e.value;
+
         var field =
             CodeField.of(name: fieldName, type: fieldType, private: true);
         var fieldRef = CodeRef.ofField(field);
 
         var iVar = CodeVar.of('i', isFinal: true);
+
         return Container([
           field,
           CodeProperty.of(
-            name: fieldName,
+            name: field,
             type: fieldType,
-            getter: CodePropertyGetter.of(body: [
-              CodeReturn.of(fieldRef),
-            ]),
-            setter: CodePropertySetter.of(body: [
-              Container([fieldRef, ' = value']),
+            getter: CodeReturn.of(fieldRef),
+            setter: [
+              CodeExpr.of(Container([fieldRef, ' = value'])),
+
               CodeFunctionCall.of(
                 'assert',
                 args: [Text.of('value != null'), 'value is required'],
               ),
+
               CodeForEach(
-                item: CodeExpr.of(iVar),
-                collection: CodeExpr.of(CodeFunctionCall.of('eval')),
+                item: OldCodeExpr.of(iVar),
+                collection: OldCodeExpr.of(CodeFunctionCall.of('eval')),
                 body: CodeStatementList.of([
-                  Container([CodeRef.ofVar(iVar), '.', fieldRef, ' = value']),
+                  CodeExpr.of(
+                    Container([
+                      CodeRef.ofVar(iVar),
+                      '.',
+                      fieldRef,
+                      ' = value',
+                    ]),
+                  ),
                 ]),
               ),
-            ]),
+            ],
           ),
         ]);
       },
@@ -76,7 +85,8 @@ class Scope implements Node {
       extend: CodeType.genericSingle('expr', name),
       constructors: [
         CodeClassConstructor.of(
-          args: {'scope': null},
+          requiredArgs: ['scope'],
+          namedArgs: {'test': null},
           init: [
             CodeFunctionCall.of('super', args: [
               CodeRef.ofField(scopeField),
@@ -87,7 +97,7 @@ class Scope implements Node {
       fields: [
         scopeField,
       ],
-      body: Container([...exprFields]),
+      body: exprFields,
     );
   }
 
@@ -160,7 +170,7 @@ class Scope implements Node {
       name + ' scope',
       extend: CodeType.genericSingle('scope', name),
       constructors: [
-        CodeClassConstructor.of(
+        CodeClassConstructor.simple(
             args: fields?.map((key, value) => MapEntry(key, null))),
       ],
       fields: scopeFields,

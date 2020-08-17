@@ -37,7 +37,7 @@ class CodeVar extends CodeConfigProxyNode<CodeVar> {
   final CodeVarName name;
   final CodeType type;
   final bool isFinal;
-  final CodeExpr init;
+  final OldCodeExpr init;
   final CodeComment comment;
 
   CodeVar({

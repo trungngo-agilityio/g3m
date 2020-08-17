@@ -1,12 +1,11 @@
-part of g3m.core.dep;
-
+part of g3m.core.dep
 
 
 class Dependency extends Expr<Dependency> {
   @override
   final DependencyScope scope;
 
-  Dependency(this.scope):
+  Dependency(this.scope, {this.test}):
       super(scope);
 
   Dependency _version;
@@ -21,7 +20,7 @@ class Dependency extends Expr<Dependency> {
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._version = value;
-    };
+    }
   }
 }
 

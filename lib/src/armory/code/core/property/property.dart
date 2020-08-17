@@ -76,7 +76,7 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty> {
   final CodeType type;
 
   /// The property initializer
-  final CodeExpr init;
+  final OldCodeExpr init;
 
   /// Get getter function for the property
   final CodePropertyGetter getter;
@@ -99,7 +99,7 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty> {
   });
 
   factory CodeProperty.of({
-    String name,
+    dynamic name,
     List<CodeAnnotation> annotations,
     bool override,
     bool private,
@@ -110,8 +110,8 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty> {
     bool static,
     bool isFinal,
     String type,
-    CodePropertyGetter getter,
-    CodePropertySetter setter,
+    dynamic getter,
+    dynamic setter,
     dynamic init,
     String comment,
   }) =>
@@ -128,9 +128,9 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty> {
           isFinal: isFinal,
         ),
         type: CodeType.simple(type),
-        init: init != null ? CodeExpr.of(init) : null,
-        getter: getter,
-        setter: setter,
+        init: init != null ? OldCodeExpr.of(init) : null,
+        getter: CodePropertyGetter._parse(getter),
+        setter: CodePropertySetter._parse(setter),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }

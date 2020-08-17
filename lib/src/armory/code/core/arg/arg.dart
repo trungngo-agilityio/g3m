@@ -63,17 +63,45 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> {
   final CodeType type;
 
   /// The argument initializer
-  final CodeExpr init;
+  final OldCodeExpr init;
 
   CodeArg._({this.name, this.type, this.init});
 
+  /// Try parse a dynamic value to an argument object.
+  static CodeArg _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode(value, (v) {
+      if (v is List && v.isNotEmpty && v.length < 4) {
+        var hasError = false;
+        // Parse the argument as an array of name, type, init.
+        var res = CodeArg.of(
+          name: CodeArgName.of(v[0]),
+          type: v.length < 2
+              ? null
+              : CodeType._parse(v[1], error: () {
+                  hasError = true;
+                }),
+          init: v.length < 3 ? null : OldCodeExpr.of(v[2]),
+        );
+
+        if (hasError) return null;
+        return res;
+      } else if (v is MapEntry) {
+        return CodeArg.of(name: v.key, type: v.value);
+      } else {
+        return CodeArg.of(name: CodeArgName.of(value), type: null);
+      }
+    }, error: error);
+  }
+
   factory CodeArg.of({
-    @required String name,
-    @required String type,
+    @required dynamic name,
+    @required dynamic type,
     dynamic init,
   }) =>
       CodeArg._(
           name: CodeArgName.of(name),
-          type: CodeType.simple(type),
-          init: init != null ? CodeExpr.of(init) : null);
+          type: CodeType._parse(type, error: () {
+            throw '$type is not a valid data type';
+          }),
+          init: init != null ? OldCodeExpr.of(init) : null);
 }

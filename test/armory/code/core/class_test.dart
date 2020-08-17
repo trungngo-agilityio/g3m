@@ -4,21 +4,6 @@ import 'package:test/test.dart';
 
 import '../../utils.dart';
 
-CodeField makeField(String name) => CodeField.of(
-      name: name,
-      type: 'string',
-    );
-
-CodeFunction makeFunction(String name) => CodeFunction.of(
-      name,
-      returns: ['string'],
-      args: {
-        'name': 'String',
-        'other': 'Person',
-      },
-      comment: 'test $name',
-    );
-
 void main() {
   group('comment', () {
     void run(Node Function() build, String expected) {
@@ -177,3 +162,18 @@ void main() {
     });
   });
 }
+
+CodeField makeField(String name) => CodeField.of(
+      name: name,
+      type: 'string',
+    );
+
+CodeFunction makeFunction(String name) => CodeFunction.of(
+      name,
+      returns: ['string'],
+      args: {
+        'name': 'String',
+        'other': 'Person',
+      },
+      comment: 'test $name',
+    );

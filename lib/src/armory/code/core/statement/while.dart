@@ -22,7 +22,7 @@ class CodeWhileConfig extends CodeConfigNode<CodeWhile> {
 }
 
 class CodeWhile extends CodeConfigProxyNode<CodeWhile> {
-  final CodeExpr condition;
+  final OldCodeExpr condition;
   final CodeStatementList body;
   final CodeComment comment;
 
@@ -38,7 +38,7 @@ class CodeWhile extends CodeConfigProxyNode<CodeWhile> {
     String comment,
   }) =>
       CodeWhile(
-        condition: CodeExpr.of(condition),
+        condition: OldCodeExpr.of(condition),
         body: CodeStatementList.of(body),
         comment: comment != null ? CodeComment.of(comment) : null,
       );

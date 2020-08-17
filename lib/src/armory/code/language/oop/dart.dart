@@ -144,8 +144,9 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           varConfig: (_, child) => CodeVarConfig.forDartLike(child),
 
           // Statement configs
-          statementList: null,
-          statement: null,
+          exprConfig: null,
+          statementListConfig: null,
+          statementConfig: null,
           breakConfig: null,
           continueConfig: null,
           varNameConfig: null,
@@ -172,7 +173,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Arg configs
           argNameConfig: null,
-          argListConfig: null,
+          argListConfig: (_, child) => CodeArgListConfig.forDartLike(child),
           argConfig: (_, child) => CodeArgConfig.forDartLike(child),
 
           // Function configs

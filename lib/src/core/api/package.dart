@@ -1,12 +1,11 @@
-part of g3m.core.dep;
-
+part of g3m.core.dep
 
 
 class Package extends Expr<Package> {
   @override
   final PackageScope scope;
 
-  Package(this.scope):
+  Package(this.scope, {this.test}):
       super(scope);
 
   Dependency _dependencies;
@@ -21,7 +20,7 @@ class Package extends Expr<Package> {
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._dependencies = value;
-    };
+    }
   }
   Dependency _subDep;
 
@@ -35,7 +34,7 @@ class Package extends Expr<Package> {
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._subDep = value;
-    };
+    }
   }
   Author _authors;
 
@@ -49,7 +48,7 @@ class Package extends Expr<Package> {
     assert(value != null, 'value is required');
     for (var i in eval()) {
       i._authors = value;
-    };
+    }
   }
 }
 

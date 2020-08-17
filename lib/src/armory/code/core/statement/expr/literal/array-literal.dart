@@ -48,12 +48,12 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
 }
 
 class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral>
-    implements CodeExpr {
-  final List<CodeExpr> values;
+    implements OldCodeExpr {
+  final List<OldCodeExpr> values;
 
   CodeArrayLiteral._(this.values);
 
   factory CodeArrayLiteral.of(List<dynamic> values) {
-    return CodeArrayLiteral._(values?.map((e) => CodeExpr.of(e))?.toList());
+    return CodeArrayLiteral._(values?.map((e) => OldCodeExpr.of(e))?.toList());
   }
 }

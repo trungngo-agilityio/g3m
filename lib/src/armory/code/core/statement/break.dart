@@ -1,6 +1,6 @@
 part of g3.armory;
 
-class CodeBreakConfig extends CodeConfigNode<CodeBreak> {
+class CodeBreakConfig extends CodeConfigNode<CodeBreak> implements OldCodeExpr {
   CodeBreakConfig(NodeBuildFunc<CodeBreak> buildFunc, Node child)
       : super(buildFunc, child);
 

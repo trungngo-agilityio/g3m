@@ -13,7 +13,7 @@ class CodeNumericLiteralConfig extends CodeConfigNode<CodeNumericLiteral> {
 }
 
 class CodeNumericLiteral extends CodeConfigProxyNode<CodeNumericLiteral>
-    implements CodeExpr {
+    implements OldCodeExpr {
   final dynamic value;
 
   CodeNumericLiteral._(this.value);

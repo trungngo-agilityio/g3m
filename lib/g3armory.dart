@@ -165,6 +165,7 @@ part 'src/armory/code/core/statement/while.dart';
 part 'src/armory/code/core/statement/yield.dart';
 
 part 'src/armory/code/core/syntax.dart';
+part 'src/armory/code/core/expr.dart';
 
 part 'src/armory/code/core/type/type-list.dart';
 

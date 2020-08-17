@@ -14,24 +14,27 @@ class CodeForEachConfig extends CodeConfigNode<CodeForEach> {
     String inKeyword = ': ',
   }) {
     return CodeForEachConfig((context, expr) {
-      return Container([
-        expr.comment,
-        forEachKeyword,
-        ' (',
-        expr.item,
-        inKeyword,
-        expr.collection,
-        ') ',
-        CodeBlock.of(expr.body),
-        '\n'
-      ]);
+      return CodeExpr.closed(
+        Container([
+          expr.comment,
+          forEachKeyword,
+          ' (',
+          expr.item,
+          inKeyword,
+          expr.collection,
+          ') ',
+          CodeBlock.of(expr.body),
+          '\n'
+        ]),
+      );
     }, child);
   }
 }
 
-class CodeForEach extends CodeConfigProxyNode<CodeForEach> {
-  final CodeExpr item;
-  final CodeExpr collection;
+class CodeForEach extends CodeConfigProxyNode<CodeForEach>
+    implements _CodeStatementLike, OldCodeExpr {
+  final OldCodeExpr item;
+  final OldCodeExpr collection;
   final CodeStatementList body;
   final CodeComment comment;
 
@@ -49,8 +52,8 @@ class CodeForEach extends CodeConfigProxyNode<CodeForEach> {
     String comment,
   }) =>
       CodeForEach(
-        item: CodeExpr.of(item),
-        collection: CodeExpr.of(collection),
+        item: OldCodeExpr.of(item),
+        collection: OldCodeExpr.of(collection),
         body: CodeStatementList.of(body),
         comment: comment != null ? CodeComment.of(comment) : null,
       );

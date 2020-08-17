@@ -33,7 +33,7 @@ class CodeIfConfig extends CodeConfigNode<CodeIf> {
 }
 
 class CodeIf extends CodeConfigProxyNode<CodeIf> {
-  final CodeExpr condition;
+  final OldCodeExpr condition;
   final CodeStatementList thenBlock;
   final List<CodeElseIf> elseIfBlocks;
   final CodeStatementList elseBlock;
@@ -55,7 +55,7 @@ class CodeIf extends CodeConfigProxyNode<CodeIf> {
     String comment,
   }) =>
       CodeIf(
-        condition: CodeExpr.of(condition),
+        condition: OldCodeExpr.of(condition),
         thenBlock: CodeStatementList.of(thenBlock),
         elseIfBlocks: elseIfBlocks,
         elseBlock: CodeStatementList.of(elseBlock),

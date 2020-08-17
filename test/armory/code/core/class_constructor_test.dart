@@ -12,7 +12,7 @@ void main() {
 
   test('hello', () async {
     await run(
-      CodeClassConstructor.of(
+      CodeClassConstructor.simple(
         comment: 'Just a sample\n'
             'Another line.\n'
             'Another line.',

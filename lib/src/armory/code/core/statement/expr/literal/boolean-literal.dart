@@ -17,7 +17,7 @@ class CodeBoolLiteralConfig extends CodeConfigNode<CodeBoolLiteral> {
 }
 
 class CodeBoolLiteral extends CodeConfigProxyNode<CodeBoolLiteral>
-    implements CodeExpr {
+    implements OldCodeExpr {
   final bool value;
 
   CodeBoolLiteral._(this.value);

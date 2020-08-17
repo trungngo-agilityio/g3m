@@ -7,18 +7,26 @@ class CodeAnnotationNameConfig extends CodeConfigNode<CodeAnnotationName> {
 
   factory CodeAnnotationNameConfig.of(StringFunc func, Node child) =>
       CodeAnnotationNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.expr, func), child);
 
+  /// For java like language, annotation name is pascal case.
   factory CodeAnnotationNameConfig.forJavaLike(Node child) =>
       CodeAnnotationNameConfig.of(StringFuncs.pascal, child);
 }
 
 class CodeAnnotationName extends CodeConfigProxyNode<CodeAnnotationName> {
-  final Node content;
+  final CodeExpr expr;
 
-  CodeAnnotationName(this.content);
+  CodeAnnotationName._(this.expr);
 
-  factory CodeAnnotationName.of(String text) {
-    return text == null ? null : CodeAnnotationName(Text.of(text));
+  factory CodeAnnotationName.of(dynamic value) {
+    // Try to parse the input value as the exactly first.
+    return _parseNode<CodeAnnotationName>(value, (v) {
+      // Try to parse the value as the expression name.
+      final name = CodeExpr.of(v);
+      return CodeAnnotationName._(name);
+    }, error: () {
+      throw '${value} is not a valid code annotation.';
+    });
   }
 }

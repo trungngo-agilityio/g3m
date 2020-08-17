@@ -49,9 +49,18 @@ class CodeTypeNameConfig extends CodeConfigNode<CodeTypeName> {
 class CodeTypeName extends CodeConfigProxyNode<CodeTypeName> {
   final Node content;
 
-  CodeTypeName(this.content);
+  CodeTypeName._(this.content);
 
-  factory CodeTypeName.of(String text) {
-    return text == null ? null : CodeTypeName(Text.of(text));
+  static CodeTypeName _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<Node>(value, (v) {
+      if (v is String) return CodeTypeName._(Text.of(v));
+      return null;
+    }, error: error);
+  }
+
+  factory CodeTypeName.of(dynamic value) {
+    return _parse(value, error: () {
+      throw 'cannot parse $value as a type name';
+    });
   }
 }

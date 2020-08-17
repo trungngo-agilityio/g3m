@@ -21,9 +21,27 @@ class CodeStatementList extends CodeConfigProxyNode<CodeStatementList> {
 
   CodeStatementList._(this.statements);
 
-  factory CodeStatementList.of(List<dynamic> statements) {
-    if (statements == null) return null;
-    return CodeStatementList._(
-        statements?.map((e) => CodeStatement.of(e))?.toList());
+  factory CodeStatementList._parse(
+    dynamic value, {
+    _NodeParseErrorFunc error,
+  }) {
+    return _parseNode<CodeStatementList>(value, (v) {
+      // Try to parse the body as the node list.
+      final statements = _parseNodeList<CodeStatement>(v, (v) {
+        return CodeStatement._parse(v);
+      });
+
+      if (statements != null) {
+        // Found result.
+        return CodeStatementList._(statements);
+      }
+
+      return null;
+    }, error: error);
   }
+
+  factory CodeStatementList.of(dynamic value) =>
+      CodeStatementList._parse(value, error: () {
+        throw 'cannot parse ${value} as statement list';
+      });
 }

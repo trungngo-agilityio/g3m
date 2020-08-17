@@ -37,9 +37,10 @@ class CodeClassConstructorName
     extends CodeConfigProxyNode<CodeClassConstructorName> {
   final Node content;
 
-  CodeClassConstructorName(this.content);
+  CodeClassConstructorName._(this.content);
 
-  factory CodeClassConstructorName.of(String text) {
-    return text == null ? null : CodeClassConstructorName(Text.of(text));
-  }
+  static CodeClassConstructorName of(dynamic name) => _parseNode(name, (v) {
+        if (name is Node) return CodeClassConstructorName._(name);
+        return CodeClassConstructorName._(Text.of(name));
+      });
 }

@@ -24,7 +24,7 @@ class CodeElseIfConfig extends CodeConfigNode<CodeElseIf> {
 }
 
 class CodeElseIf extends CodeConfigProxyNode<CodeElseIf> {
-  final CodeExpr condition;
+  final OldCodeExpr condition;
   final CodeStatementList thenBlock;
   final CodeComment comment;
 
@@ -40,7 +40,7 @@ class CodeElseIf extends CodeConfigProxyNode<CodeElseIf> {
     String comment,
   }) =>
       CodeElseIf(
-        condition: CodeExpr.of(condition),
+        condition: OldCodeExpr.of(condition),
         thenBlock: CodeStatementList.of(thenBlock),
         comment: comment != null ? CodeComment.of(comment) : null,
       );

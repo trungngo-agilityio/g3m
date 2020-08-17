@@ -16,7 +16,7 @@ class CodeCharLiteralConfig extends CodeConfigNode<CodeCharLiteral> {
 }
 
 class CodeCharLiteral extends CodeConfigProxyNode<CodeCharLiteral>
-    implements CodeExpr {
+    implements OldCodeExpr {
   final String value;
 
   CodeCharLiteral._(this.value);

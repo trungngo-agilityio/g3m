@@ -6,14 +6,16 @@ class CodeFunctionCallConfig extends CodeConfigNode<CodeFunctionCall> {
 
   factory CodeFunctionCallConfig.forJavaLike(Node child) =>
       CodeFunctionCallConfig((context, func) {
-        return Container([
-          func.comment,
-          func.name,
-          func.generic,
-          '(',
-          Join.commaSeparated(func.args),
-          ')',
-        ]);
+        return CodeExpr.open(
+          Container([
+            func.comment,
+            func.name,
+            func.generic,
+            '(',
+            Join.commaSeparated(func.args),
+            ')',
+          ]),
+        );
       }, child);
 }
 
@@ -21,7 +23,7 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
   final CodeFunctionName name;
   final CodeComment comment;
   final CodeGenericParamList generic;
-  final List<CodeExpr> args;
+  final List<OldCodeExpr> args;
 
   CodeFunctionCall({
     @required this.name,
@@ -41,7 +43,6 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
         name: CodeFunctionName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
-        args: args?.map((e) => CodeExpr.of(e))?.toList(),
+        args: args?.map((e) => OldCodeExpr.of(e))?.toList(),
       );
-
 }

@@ -77,15 +77,29 @@ class CodeType extends CodeConfigProxyNode<CodeType> {
   /// True indicates that this is an array type.
   final bool array;
 
-  CodeType(this.name, {this.generic, this.array});
+  CodeType._({this.name, this.generic, this.array});
+
+  static CodeType _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeType>(value, (v) {
+      var name = CodeTypeName._parse(v);
+      if (name != null) {
+        return CodeType._(name: name);
+      }
+
+      return null;
+    }, error: error);
+  }
 
   factory CodeType.of({
-    CodeTypeName name,
+    dynamic name,
     CodeGenericParamList generic,
     bool array,
   }) {
-    if (name == null) return null;
-    return CodeType(name, generic: generic, array: array);
+    return CodeType._(
+      name: CodeTypeName.of(name),
+      generic: generic,
+      array: array,
+    );
   }
 
   factory CodeType.simple(String name) => CodeType.of(

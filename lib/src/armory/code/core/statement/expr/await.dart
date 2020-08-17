@@ -17,11 +17,11 @@ class CodeAwaitConfig extends CodeConfigNode<CodeAwait> {
 }
 
 class CodeAwait extends CodeConfigProxyNode<CodeAwait> {
-  final CodeExpr expr;
+  final OldCodeExpr expr;
 
   CodeAwait(
     this.expr,
   );
 
-  factory CodeAwait.of(dynamic expr) => CodeAwait(CodeExpr.of(expr));
+  factory CodeAwait.of(dynamic expr) => CodeAwait(OldCodeExpr.of(expr));
 }

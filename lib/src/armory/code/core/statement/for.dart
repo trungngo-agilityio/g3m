@@ -9,26 +9,28 @@ class CodeForConfig extends CodeConfigNode<CodeFor> {
     String forKeyword = 'for',
   }) =>
       CodeForConfig((context, expr) {
-        return Container([
-          expr.comment,
-          forKeyword,
-          ' (',
-          expr.init,
-          '; ',
-          expr.condition,
-          '; ',
-          expr.step,
-          ') ',
-          CodeBlock.of(expr.body),
-          '\n'
-        ]);
+        return CodeExpr.closed(
+          Container([
+            expr.comment,
+            forKeyword,
+            ' (',
+            expr.init,
+            '; ',
+            expr.condition,
+            '; ',
+            expr.step,
+            ') ',
+            CodeBlock.of(expr.body),
+            '\n'
+          ]),
+        );
       }, child);
 }
 
 class CodeFor extends CodeConfigProxyNode<CodeFor> {
-  final CodeExpr init;
-  final CodeExpr condition;
-  final CodeExpr step;
+  final OldCodeExpr init;
+  final OldCodeExpr condition;
+  final OldCodeExpr step;
   final CodeStatementList body;
   final CodeComment comment;
 
@@ -48,9 +50,9 @@ class CodeFor extends CodeConfigProxyNode<CodeFor> {
     String comment,
   }) =>
       CodeFor(
-        init: CodeExpr.of(init),
-        condition: CodeExpr.of(condition),
-        step: CodeExpr.of(step),
+        init: OldCodeExpr.of(init),
+        condition: OldCodeExpr.of(condition),
+        step: OldCodeExpr.of(step),
         body: CodeStatementList.of(body),
         comment: comment != null ? CodeComment.of(comment) : null,
       );

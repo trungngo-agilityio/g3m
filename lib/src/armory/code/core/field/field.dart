@@ -17,7 +17,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
       CodeFieldConfig((context, field) {
         return Container([
           '\n',
-          CodeStatement.of(
+          CodeExpr.open(
             Container([
               field.comment,
               field.annotations,
@@ -42,7 +42,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
   final CodeAnnotationList annotations;
   final CodeModifier modifier;
   final CodeType type;
-  final CodeExpr init;
+  final OldCodeExpr init;
   final CodeComment comment;
 
   CodeField({
@@ -83,7 +83,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
       annotations: CodeAnnotationList.of(annotations),
       modifier: modifier,
       type: CodeType.simple(type),
-      init: init != null ? CodeExpr.of(init) : null,
+      init: init != null ? OldCodeExpr.of(init) : null,
       comment: comment != null ? CodeComment.of(comment) : null,
     );
   }

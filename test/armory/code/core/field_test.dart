@@ -15,6 +15,22 @@ void main() {
     runAndExpect(
       code,
       '\n'
+      'String firstName',
+    );
+  });
+
+  test('with statement', () {
+    var code = JavaCodeConfig(
+      CodeStatement.of(
+        CodeField.of(
+          name: 'first name',
+          type: 'string',
+        ),
+      ),
+    );
+    runAndExpect(
+      code,
+      '\n'
       'String firstName;\n',
     );
   });

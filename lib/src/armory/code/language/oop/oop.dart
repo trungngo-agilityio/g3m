@@ -48,8 +48,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeVarConfig> varConfig;
 
   // Statement configs
-  CodeConfigBuildFunc<CodeStatementListConfig> statementList;
-  CodeConfigBuildFunc<CodeStatementConfig> statement;
+  CodeConfigBuildFunc<CodeExprConfig> exprConfig;
+  CodeConfigBuildFunc<CodeStatementListConfig> statementListConfig;
+  CodeConfigBuildFunc<CodeStatementConfig> statementConfig;
   CodeConfigBuildFunc<CodeBreakConfig> breakConfig;
   CodeConfigBuildFunc<CodeContinueConfig> continueConfig;
   CodeConfigBuildFunc<CodeVarNameConfig> varNameConfig;
@@ -157,8 +158,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.varConfig,
 
     // Statement configs
-    @required this.statementList,
-    @required this.statement,
+        @required this.exprConfig,
+    @required this.statementListConfig,
+    @required this.statementConfig,
     @required this.breakConfig,
     @required this.continueConfig,
     @required this.varNameConfig,
@@ -270,8 +272,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     varConfig ??= (_, child) => CodeVarConfig.forJavaLike(child);
 
     // Statement configs
-    statementList ??= (_, child) => CodeStatementListConfig.forJavaLike(child);
-    statement ??= (_, child) => CodeStatementConfig.forJavaLike(child);
+    exprConfig ??= (_, child) => CodeExprConfig.forJavaLike(child);
+    statementListConfig ??= (_, child) => CodeStatementListConfig.forJavaLike(child);
+    statementConfig ??= (_, child) => CodeStatementConfig.forJavaLike(child);
     breakConfig ??= (_, child) => CodeBreakConfig.forJavaLike(child);
     continueConfig ??= (_, child) => CodeContinueConfig.forJavaLike(child);
     varNameConfig ??= (_, child) => CodeVarNameConfig.forJavaLike(child);
@@ -400,8 +403,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       varConfig,
 
       // Statement configs
-      statementList,
-      statement,
+      exprConfig,
+      statementListConfig,
+      statementConfig,
       breakConfig,
       continueConfig,
       varNameConfig,

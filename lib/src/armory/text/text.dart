@@ -8,12 +8,11 @@ class Text extends NoChildNode implements Renderer {
 
   Text._(String text) : text = text?.toString();
 
-  factory Text.of(dynamic text) {
-    final s = text?.toString();
-    return s == null ? null : Text._(s);
+  factory Text.of(dynamic value) {
+    return _parseNode<Text>(value, (v) => Text._(v?.toString()));
   }
 
-  factory Text.space([count]) => Text._(' ' * (count ?? 1));
+  factory Text.space([int count]) => Text._(' ' * (count ?? 1));
 
   @override
   void render(RenderContext context) {

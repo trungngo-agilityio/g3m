@@ -10,7 +10,11 @@ void main() {
       var code = JavaCodeConfig(
         CodeFunction.of('hello'),
       );
-      runAndExpect(code, 'hello();\n');
+      runAndExpect(
+        code,
+        '\n'
+        'hello()',
+      );
     });
 
     test('with args', () {

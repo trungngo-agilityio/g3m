@@ -4,27 +4,79 @@ class CodeArgListConfig extends CodeConfigNode<CodeArgList> {
   CodeArgListConfig(NodeBuildFunc<CodeArgList> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeArgListConfig.forDartLike(Node child) =>
+      CodeArgListConfig._internal(child, isDart: true);
+
   factory CodeArgListConfig.forJavaLike(Node child) =>
-      CodeArgListConfig((context, param) {
-        final children = param.args;
-        if (children == null || children.isEmpty) {
-          return null;
+      CodeArgListConfig._internal(child);
+
+  factory CodeArgListConfig._internal(
+    Node child, {
+    bool isDart = false,
+  }) =>
+      CodeArgListConfig((context, expr) {
+        Node required = expr.required?.isNotEmpty == true
+            ? Join.commaSeparated(expr.required)
+            : null;
+
+        Node optional = expr.optional?.isNotEmpty == true
+            ? Join.commaSeparated(expr.optional)
+            : null;
+
+        Node named = expr.named?.isNotEmpty == true
+            ? Join.commaSeparated(expr.named)
+            : null;
+
+        final args = <Node>[];
+
+        if (required != null) {
+          args.add(required);
         }
 
-        return Join.commaSeparated(children);
+        if (optional != null) {
+          if (isDart == true) optional = Pad.squareBrackets(optional);
+          args.add(optional);
+        }
+
+        if (named != null) {
+          if (isDart == true) named = Pad.curlyBrackets(named);
+          args.add(named);
+        }
+
+        return Join.commaSeparated(args);
       }, child);
 }
 
 class CodeArgList extends CodeConfigProxyNode<CodeArgList> {
-  final List<CodeArg> args;
+  /// The list of required arguments.
+  final List<CodeArg> required;
 
-  CodeArgList(this.args);
+  /// The list of positioned arguments.
+  final List<CodeArg> optional;
+
+  /// The list of named arguments.
+  final List<CodeArg> named;
+
+  CodeArgList._({this.required, this.optional, this.named});
+
+  factory CodeArgList.of({
+    dynamic required,
+    dynamic optional,
+    dynamic named,
+  }) {
+    return CodeArgList._(
+      required: _parseNodeList(required, CodeArg._parse),
+      optional: _parseNodeList(optional, CodeArg._parse),
+      named: _parseNodeList(named, CodeArg._parse),
+    );
+  }
 
   factory CodeArgList.ofNameType(String name, String type) =>
-      CodeArgList([CodeArg.of(name: name, type: type)]);
+      CodeArgList.of(required: [CodeArg.of(name: name, type: type)]);
 
   factory CodeArgList.ofNameTypeMap(Map<String, String> types) =>
-      CodeArgList(types?.entries
-          ?.map((e) => CodeArg.of(name: e.key, type: e.value))
-          ?.toList());
+      CodeArgList.of(
+          required: types?.entries
+              ?.map((e) => CodeArg.of(name: e.key, type: e.value))
+              ?.toList());
 }

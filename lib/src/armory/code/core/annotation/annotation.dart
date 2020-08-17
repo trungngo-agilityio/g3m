@@ -9,42 +9,49 @@ class CodeAnnotationConfig extends CodeConfigNode<CodeAnnotation> {
     annotationKeyword = '@',
   }) =>
       CodeAnnotationConfig((context, annotation) {
-        return Container([
-          annotation.comment,
-          annotationKeyword,
-          annotation.name,
-          annotation.generic,
-          '(',
-          Join.commaSeparated(annotation.args),
-          ')\n',
-        ]);
+        return CodeExpr.closed(
+          Container([
+            annotation.comment,
+            annotationKeyword,
+            annotation.name,
+            annotation.generic,
+            '(',
+            Join.commaSeparated(annotation.args),
+            ')\n',
+          ]),
+        );
       }, child);
 }
 
 class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation> {
+  /// The annotation name.
   final CodeAnnotationName name;
-  final CodeComment comment;
-  final CodeGenericParamList generic;
-  final List<CodeExpr> args;
 
-  CodeAnnotation({
+  /// Additional comment can be put at the annotation.
+  final CodeComment comment;
+
+  final CodeGenericParamList generic;
+
+  final List<OldCodeExpr> args;
+
+  CodeAnnotation._({
     @required this.name,
     this.comment,
     this.generic,
     this.args,
-  });
+  }) : assert(name != null, 'annotation name is required');
 
   factory CodeAnnotation.of(
-    String name, {
+    dynamic name, {
     String comment,
     List<String> generic,
     List<dynamic> args,
     Node body,
   }) =>
-      CodeAnnotation(
+      CodeAnnotation._(
         name: CodeAnnotationName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         generic: generic != null ? CodeGenericParamList.list(generic) : null,
-        args: args?.map((e) => CodeExpr.of(e))?.toList(),
+        args: args?.map((e) => OldCodeExpr.of(e))?.toList(),
       );
 }

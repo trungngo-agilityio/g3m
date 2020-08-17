@@ -31,7 +31,7 @@ class Scope implements Node {
       extend: CodeType.genericSingle('expr', name),
       comment: 'This express provide abc',
       constructors: [
-        CodeClassConstructor.of(args: {
+        CodeClassConstructor.simple(args: {
           'scope': 'action scope',
         }),
       ],

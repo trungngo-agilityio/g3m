@@ -153,7 +153,7 @@ CodeClass clazz() {
       field(),
     ],
     constructors: [
-      CodeClassConstructor.of(
+      CodeClassConstructor.simple(
           comment: 'a demo constructor',
           args: {'name': 'string'},
           body: Container(['// Any free text can be here'])),

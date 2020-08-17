@@ -6,7 +6,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
 
   factory CodeCommentConfig.byStringFunc(StringFunc func, Node child) =>
       CodeCommentConfig((context, codeComment) {
-        return Container([TextTransform(codeComment.content, func), NewLine()]);
+        return Container([TextTransform(codeComment.text, func), NewLine()]);
       }, child);
 
   factory CodeCommentConfig.doubleSplash(Node child) =>
@@ -89,15 +89,22 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
 
         func ??= otherFunc;
 
-        return Container([TextTransform(codeComment.content, func), NewLine()]);
+        return Container([TextTransform(codeComment.text, func), NewLine()]);
       }, child);
 }
 
 class CodeComment extends CodeConfigProxyNode<CodeComment> {
-  final Node content;
+  final Node text;
 
-  CodeComment(this.content);
+  CodeComment(this.text);
 
-  factory CodeComment.of(String text) =>
-      text != null ? CodeComment(Text.of(text)) : null;
+  factory CodeComment.of(dynamic value) {
+    return _parseNode<CodeComment>(value, (v) {
+      if (v is Node) {
+        return CodeComment(v);
+      } else {
+        return CodeComment(Text.of(v?.toString()));
+      }
+    });
+  }
 }
