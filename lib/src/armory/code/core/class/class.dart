@@ -86,7 +86,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> {
     List<CodeGenericParam> generic,
     CodeType extend,
     List<CodeType> implements,
-    List<CodeClassConstructor> constructors,
+    List<CodeConstructor> constructors,
     List<CodeField> fields,
     List<CodeFunction> functions,
     String comment,

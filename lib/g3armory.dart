@@ -22,11 +22,11 @@ part 'src/armory/code/core/arg/arg_name.dart';
 
 part 'src/armory/code/core/block.dart';
 
-part 'src/armory/code/core/class/class-constructor-list.dart';
+part 'src/armory/code/core/constructor/constructor-list.dart';
 
-part 'src/armory/code/core/class/class-constructor-name.dart';
+part 'src/armory/code/core/constructor/constructor-name.dart';
 
-part 'src/armory/code/core/class/class-constructor.dart';
+part 'src/armory/code/core/constructor/constructor.dart';
 
 part 'src/armory/code/core/class/class-list.dart';
 

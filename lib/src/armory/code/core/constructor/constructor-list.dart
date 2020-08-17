@@ -1,13 +1,13 @@
 part of g3.armory;
 
-class CodeClassConstructorListConfig
+class CodeConstructorListConfig
     extends CodeConfigNode<CodeClassConstructorList> {
-  CodeClassConstructorListConfig(
+  CodeConstructorListConfig(
       NodeBuildFunc<CodeClassConstructorList> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassConstructorListConfig.forJavaLike(Node child) =>
-      CodeClassConstructorListConfig((context, param) {
+  factory CodeConstructorListConfig.forJavaLike(Node child) =>
+      CodeConstructorListConfig((context, param) {
         final children = param.functions;
         if (children == null || children.isEmpty) {
           return null;
@@ -22,7 +22,7 @@ class CodeClassConstructorListConfig
 
 class CodeClassConstructorList
     extends CodeConfigProxyNode<CodeClassConstructorList> {
-  final List<CodeClassConstructor> functions;
+  final List<CodeConstructor> functions;
 
   CodeClassConstructorList(this.functions);
 }

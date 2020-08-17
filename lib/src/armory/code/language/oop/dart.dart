@@ -218,9 +218,9 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           classListConfig: null,
           classConfig: null,
           classConstructorNameConfig: (_, child) =>
-              CodeClassConstructorNameConfig.forDartLike(child),
+              CodeConstructorNameConfig.forDartLike(child),
           classConstructorListConfig: null,
           classConstructorConfig: (_, child) =>
-              CodeClassConstructorConfig.forDartLike(child),
+              CodeConstructorConfig.forDartLike(child),
         );
 }

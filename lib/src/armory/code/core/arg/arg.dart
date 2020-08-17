@@ -20,7 +20,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
   }) {
     return CodeArgConfig((context, arg) {
       final container = context.ancestors.firstWhere(
-          (e) => e is CodeClassConstructor || e is CodeFunction,
+          (e) => e is CodeConstructor || e is CodeFunction,
           orElse: () => null);
 
       Node type = arg.type;
@@ -33,7 +33,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
             ? Container([type, separator, name])
             : Container([name, separator, type]);
       } else if (name != null) {
-        if (container is CodeClassConstructor && acceptThisSyntax == true) {
+        if (container is CodeConstructor && acceptThisSyntax == true) {
           // Appends ".this" prefix to the constructor argument.
           typeAndName = Pad.left('this.', name);
         } else {

@@ -62,7 +62,7 @@ void main() {
   group('dart', () {
     test('with this', () {
       runDart(
-        CodeClassConstructor.simple(
+        CodeConstructor.simple(
           args: {'car': null},
         ),
         '\n'
@@ -74,7 +74,7 @@ void main() {
 
     test('with init', () {
       runDart(
-        CodeClassConstructor.simple(
+        CodeConstructor.simple(
           args: {'car': null},
           init: [
             CodeFunctionCall.of('assert', args: [false]),
@@ -93,7 +93,7 @@ void main() {
 
   test('with body', () {
     runDart(
-      CodeClassConstructor.simple(
+      CodeConstructor.simple(
         args: {'car': null},
         init: [
           CodeFunctionCall.of('assert', args: [false]),
@@ -115,7 +115,7 @@ void main() {
   });
 }
 
-void runDart(CodeClassConstructor constructor, String expected) {
+void runDart(CodeConstructor constructor, String expected) {
   var code = DartCodeConfig(
     CodeClass.of('hello', constructors: [
       constructor,

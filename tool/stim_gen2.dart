@@ -84,7 +84,7 @@ class Scope implements Node {
       name,
       extend: CodeType.genericSingle('expr', name),
       constructors: [
-        CodeClassConstructor.of(
+        CodeConstructor.of(
           requiredArgs: ['scope'],
           namedArgs: {'test': null},
           init: [
@@ -170,7 +170,7 @@ class Scope implements Node {
       name + ' scope',
       extend: CodeType.genericSingle('scope', name),
       constructors: [
-        CodeClassConstructor.simple(
+        CodeConstructor.simple(
             args: fields?.map((key, value) => MapEntry(key, null))),
       ],
       fields: scopeFields,

@@ -1,25 +1,25 @@
 part of g3.armory;
 
-class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
-  CodeClassConstructorConfig(
-      NodeBuildFunc<CodeClassConstructor> buildFunc, Node child)
+class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
+  CodeConstructorConfig(
+      NodeBuildFunc<CodeConstructor> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassConstructorConfig.forDartLike(Node child) =>
-      CodeClassConstructorConfig._internal(child,
+  factory CodeConstructorConfig.forDartLike(Node child) =>
+      CodeConstructorConfig._internal(child,
           appendConstructorName: true, appendClassName: true);
 
-  factory CodeClassConstructorConfig.forJavaLike(Node child) =>
-      CodeClassConstructorConfig._internal(child,
+  factory CodeConstructorConfig.forJavaLike(Node child) =>
+      CodeConstructorConfig._internal(child,
           appendConstructorName: false, appendClassName: true);
 
-  factory CodeClassConstructorConfig._internal(
+  factory CodeConstructorConfig._internal(
     Node child, {
     String constructorKeyword,
     bool appendClassName = true,
     bool appendConstructorName = false,
   }) =>
-      CodeClassConstructorConfig((context, constructor) {
+      CodeConstructorConfig((context, constructor) {
         final clazz = context.dependOnAncestorNodeOfExactType<CodeClass>();
 
         Node name;
@@ -74,9 +74,9 @@ class CodeClassConstructorConfig extends CodeConfigNode<CodeClassConstructor> {
       }, child);
 }
 
-class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
+class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
   /// The constructor name. This is often optional.
-  final CodeClassConstructorName name;
+  final CodeConstructorName name;
 
   /// Defines public, private, protected, etc.
   final CodeModifier modifier;
@@ -93,7 +93,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
   /// The class implementation body
   final CodeBlock body;
 
-  CodeClassConstructor({
+  CodeConstructor({
     this.name,
     this.modifier,
     this.comment,
@@ -102,7 +102,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     this.body,
   });
 
-  factory CodeClassConstructor.of({
+  factory CodeConstructor.of({
     dynamic name,
     bool factory,
     bool private,
@@ -116,8 +116,8 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     List<dynamic> init,
     dynamic body,
   }) {
-    return CodeClassConstructor(
-      name: CodeClassConstructorName.of(name),
+    return CodeConstructor(
+      name: CodeConstructorName.of(name),
       modifier: CodeModifier(
         factory: factory,
         private: private,
@@ -136,7 +136,7 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     );
   }
 
-  factory CodeClassConstructor.simple({
+  factory CodeConstructor.simple({
     String name,
     bool factory,
     bool private,
@@ -148,8 +148,8 @@ class CodeClassConstructor extends CodeConfigProxyNode<CodeClassConstructor> {
     List<dynamic> init,
     Node body,
   }) =>
-      CodeClassConstructor(
-        name: CodeClassConstructorName.of(name),
+      CodeConstructor(
+        name: CodeConstructorName.of(name),
         modifier: CodeModifier(
           factory: factory,
           private: private,

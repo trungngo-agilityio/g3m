@@ -114,11 +114,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeClassNameConfig> classNameConfig;
   CodeConfigBuildFunc<CodeClassListConfig> classListConfig;
   CodeConfigBuildFunc<CodeClassConfig> classConfig;
-  CodeConfigBuildFunc<CodeClassConstructorNameConfig>
+  CodeConfigBuildFunc<CodeConstructorNameConfig>
       classConstructorNameConfig;
-  CodeConfigBuildFunc<CodeClassConstructorListConfig>
+  CodeConfigBuildFunc<CodeConstructorListConfig>
       classConstructorListConfig;
-  CodeConfigBuildFunc<CodeClassConstructorConfig> classConstructorConfig;
+  CodeConfigBuildFunc<CodeConstructorConfig> classConstructorConfig;
 
   OopCodeConfig(
     Node child, {
@@ -356,11 +356,11 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     classListConfig ??= (_, child) => CodeClassListConfig.forJavaLike(child);
     classConfig ??= (_, child) => CodeClassConfig.forJavaLike(child);
     classConstructorNameConfig ??=
-        (_, child) => CodeClassConstructorNameConfig.forJavaLike(child);
+        (_, child) => CodeConstructorNameConfig.forJavaLike(child);
     classConstructorListConfig ??=
-        (_, child) => CodeClassConstructorListConfig.forJavaLike(child);
+        (_, child) => CodeConstructorListConfig.forJavaLike(child);
     classConstructorConfig ??=
-        (_, child) => CodeClassConstructorConfig.forJavaLike(child);
+        (_, child) => CodeConstructorConfig.forJavaLike(child);
   }
 
   @override

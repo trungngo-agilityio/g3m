@@ -65,7 +65,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
                 e is CodeClass ||
                 e is CodeInterface ||
                 e is CodeField ||
-                e is CodeClassConstructor ||
+                e is CodeConstructor ||
                 e is CodeFunction,
             orElse: () => null);
 
@@ -80,7 +80,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
             func = interfaceFunc;
           } else if (container is CodeField) {
             func = fieldFunc;
-          } else if (container is CodeClassConstructor) {
+          } else if (container is CodeConstructor) {
             func = constructorFunc;
           } else if (container is CodeFunction) {
             func = functionFunc;

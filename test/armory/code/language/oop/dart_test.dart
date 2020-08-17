@@ -97,7 +97,7 @@ CodeClass clazz() {
       field(),
     ],
     constructors: [
-      CodeClassConstructor.simple(
+      CodeConstructor.simple(
           name: 'of',
           comment: 'a demo constructor',
           factory: true,
