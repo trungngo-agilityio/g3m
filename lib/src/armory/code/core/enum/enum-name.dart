@@ -6,16 +6,17 @@ class CodeEnumNameConfig extends CodeConfigNode<CodeEnumName> {
 
   factory CodeEnumNameConfig.of(StringFunc func, Node child) =>
       CodeEnumNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeEnumNameConfig.forJavaLike(Node child) =>
       CodeEnumNameConfig.of(StringFuncs.pascal, child);
 }
 
-class CodeEnumName extends CodeConfigProxyNode<CodeEnumName> {
-  final Node content;
+class CodeEnumName extends CodeConfigProxyNode<CodeEnumName>
+    implements NamedNode {
+  final Node name;
 
-  CodeEnumName(this.content);
+  CodeEnumName(this.name);
 
   factory CodeEnumName.of(String text) {
     return text == null ? null : CodeEnumName(Text.of(text));

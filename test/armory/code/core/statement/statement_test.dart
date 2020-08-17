@@ -5,71 +5,79 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('null', () async {
+  test('null', () {
     var code = JavaCodeConfig(
       CodeStatement.of(null),
     );
 
-    await runAndExpect(
+    run(
       code,
       '',
     );
   });
 
-  test('one', () async {
+  test('one', () {
     var code = JavaCodeConfig(
       CodeStatement.of('hello()'),
     );
 
-    await runAndExpect(
+    run(
       code,
-      'hello();\n',
+      'hello()',
     );
   });
 
-  test('list null', () async {
+  test('list null', () {
     var code = JavaCodeConfig(
       CodeStatementList.of(null),
     );
 
-    await runAndExpect(
+    run(
       code,
       '',
     );
   });
 
-  test('list empty', () async {
+  test('list empty', () {
     var code = JavaCodeConfig(
       CodeStatementList.of([]),
     );
 
-    await runAndExpect(
+    run(
       code,
       '',
     );
   });
 
-  test('list one', () async {
+  test('list one', () {
     var code = JavaCodeConfig(
       CodeStatementList.of(['hello()']),
     );
 
-    await runAndExpect(
+    run(
       code,
-      'hello();\n',
+      'hello()',
     );
   });
 
-  test('list more than one', () async {
+  test('list more than one', () {
     var code = JavaCodeConfig(
-      CodeStatementList.of(['hello()', ' ', 'hello2()']),
+      CodeStatementList.of([
+        CodeReturn.of('a'),
+        CodeBreak(),
+        CodeContinue(),
+      ]),
     );
 
-    await runAndExpect(
+    run(
       code,
-      'hello();\n'
-      '\n'
-      'hello2();\n',
+      'return "a";\n'
+      'break;\n'
+      'continue;\n',
     );
   });
+}
+
+void run(Node code, String expected) {
+  runAndExpect(JavaCodeConfig(code), expected);
 }

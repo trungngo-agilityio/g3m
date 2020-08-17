@@ -26,8 +26,9 @@ class CodeEnumConfig extends CodeConfigNode<CodeEnum> {
       }, child);
 }
 
-class CodeEnum extends CodeConfigProxyNode<CodeEnum> {
+class CodeEnum extends CodeConfigProxyNode<CodeEnum> implements NamedNode {
   /// The class name.
+  @override
   final CodeEnumName name;
 
   /// Defines public, private, protected, etc.

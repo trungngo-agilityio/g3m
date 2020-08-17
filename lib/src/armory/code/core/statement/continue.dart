@@ -9,7 +9,7 @@ class CodeContinueConfig extends CodeConfigNode<CodeContinue> {
     String continueKeyword = 'continue',
   }) =>
       CodeContinueConfig((context, package) {
-        return CodeStatement.of(continueKeyword);
+        return CodeExpr._(Text.of(continueKeyword), false);
       }, child);
 }
 

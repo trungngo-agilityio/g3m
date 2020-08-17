@@ -43,8 +43,9 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
       }, child);
 }
 
-class CodeClass extends CodeConfigProxyNode<CodeClass> {
+class CodeClass extends CodeConfigProxyNode<CodeClass> implements NamedNode {
   /// The class name.
+  @override
   final CodeClassName name;
 
   /// Defines public, private, protected, etc.

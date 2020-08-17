@@ -59,8 +59,10 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
   }
 }
 
-class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter> {
+class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter>
+    implements NamedNode {
   /// The property name.
+  @override
   final CodePropertyName name;
 
   /// The property data type.

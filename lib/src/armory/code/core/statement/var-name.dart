@@ -12,7 +12,8 @@ class CodeVarNameConfig extends CodeConfigNode<CodeVarName> {
       CodeVarNameConfig.of(StringFuncs.camel, child);
 }
 
-class CodeVarName extends CodeConfigProxyNode<CodeVarName> implements OldCodeExpr {
+class CodeVarName extends CodeConfigProxyNode<CodeVarName>
+    implements OldCodeExpr {
   final Node content;
 
   CodeVarName(this.content);

@@ -20,7 +20,7 @@ class CodeExprConfig extends CodeConfigNode<CodeExpr> {
         // - If the container is not an expression then we will need
         //   to generate an extra ";".
         //
-        if (expr.terminated) return expr.child;
+        if (expr.terminated == true) return expr.child;
 
         final container = context.ancestors.firstWhere(
             (e) =>
@@ -66,11 +66,12 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
   factory CodeExpr.closed(Node child) =>
       child == null ? null : CodeExpr._(child, true);
 
-  factory CodeExpr._parse(dynamic value, {_NodeParseErrorFunc error}) {
+  factory CodeExpr._parse(dynamic value,
+      {bool terminated, _NodeParseErrorFunc error}) {
     return _parseNode(value, (v) {
       Node child;
       if (v is Node) {
-        child = CodeExpr.open(v);
+        return CodeExpr._(v, terminated);
       } else if (v == null) {
         child = CodeNullLiteral();
       } else if (value is bool) {
@@ -86,16 +87,17 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
       } else {
         child = Text.of(v);
       }
-      return CodeExpr.open(child);
+      return CodeExpr._(child, terminated);
     }, error: error);
   }
 
-  factory CodeExpr.of(dynamic value) {
-    return CodeExpr._parse(value);
+  factory CodeExpr.of(dynamic value, {bool closed}) {
+    return CodeExpr._parse(value, terminated: closed);
   }
 
-  static List<CodeExpr> listOf(dynamic value) {
-    return _parseNodeList<CodeExpr>(value, (v) => CodeExpr.of(v))
+  static List<CodeExpr> listOf(dynamic value, {bool terminated}) {
+    return _parseNodeList<CodeExpr>(
+            value, (v) => CodeExpr.of(v, closed: terminated))
         ?.where((e) => e != null)
         ?.toList();
   }

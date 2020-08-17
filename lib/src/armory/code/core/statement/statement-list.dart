@@ -7,12 +7,24 @@ class CodeStatementListConfig extends CodeConfigNode<CodeStatementList> {
 
   factory CodeStatementListConfig.forJavaLike(Node child) =>
       CodeStatementListConfig((context, param) {
-        final types = param.statements;
-        if (types == null || types.isEmpty) {
+        final list = param.statements;
+        if (list == null || list.isEmpty) {
           return null;
         }
+        // Finds the nearest container for this comment.
+        final container = context.ancestors.firstWhere(
+            (e) => e is CodeBlock || e is CodeConstructor,
+            orElse: () => null);
 
-        return Join.notSeparated(types);
+        if (container is CodeConstructor) {
+          return Container([
+            ':\n',
+            Indent(Join.of(',\n', list), level: 2),
+            ' ',
+          ]);
+        } else {
+          return Join.notSeparated(list);
+        }
       }, child);
 }
 
@@ -23,12 +35,13 @@ class CodeStatementList extends CodeConfigProxyNode<CodeStatementList> {
 
   factory CodeStatementList._parse(
     dynamic value, {
+    bool closed,
     _NodeParseErrorFunc error,
   }) {
     return _parseNode<CodeStatementList>(value, (v) {
       // Try to parse the body as the node list.
       final statements = _parseNodeList<CodeStatement>(v, (v) {
-        return CodeStatement._parse(v);
+        return CodeStatement._parse(v, closed: closed);
       });
 
       if (statements != null) {
@@ -40,8 +53,8 @@ class CodeStatementList extends CodeConfigProxyNode<CodeStatementList> {
     }, error: error);
   }
 
-  factory CodeStatementList.of(dynamic value) =>
-      CodeStatementList._parse(value, error: () {
+  factory CodeStatementList.of(dynamic value, {bool closed}) =>
+      CodeStatementList._parse(value, closed: closed, error: () {
         throw 'cannot parse ${value} as statement list';
       });
 }

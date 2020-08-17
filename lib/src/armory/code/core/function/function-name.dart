@@ -6,7 +6,7 @@ class CodeFunctionNameConfig extends CodeConfigNode<CodeFunctionName> {
 
   factory CodeFunctionNameConfig.of(StringFunc func, Node child) =>
       CodeFunctionNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeFunctionNameConfig.forJavaLike(Node child) =>
       CodeFunctionNameConfig.of(StringFuncs.camel, child);
@@ -16,7 +16,7 @@ class CodeFunctionNameConfig extends CodeConfigNode<CodeFunctionName> {
         final field = context.findAncestorNodeOfExactType<CodeFunction>();
         final modifier = field?.modifier;
 
-        Node res = TextTransform(name.content, StringFuncs.camel);
+        Node res = TextTransform(name.name, StringFuncs.camel);
 
         if (modifier?.private == true ||
             modifier?.protected == true ||
@@ -29,10 +29,12 @@ class CodeFunctionNameConfig extends CodeConfigNode<CodeFunctionName> {
       }, child);
 }
 
-class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName> {
-  final Node content;
+class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName>
+    implements NamedNode {
+  @override
+  final Node name;
 
-  CodeFunctionName(this.content);
+  CodeFunctionName(this.name);
 
   factory CodeFunctionName.of(String text) {
     return text == null ? null : CodeFunctionName(Text.of(text));

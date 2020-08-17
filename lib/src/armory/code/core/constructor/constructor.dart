@@ -1,8 +1,7 @@
 part of g3.armory;
 
 class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
-  CodeConstructorConfig(
-      NodeBuildFunc<CodeConstructor> buildFunc, Node child)
+  CodeConstructorConfig(NodeBuildFunc<CodeConstructor> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeConstructorConfig.forDartLike(Node child) =>
@@ -34,15 +33,6 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
           name = constructor.name;
         }
 
-        Node init;
-        if (constructor.init?.isNotEmpty == true) {
-          init = Container([
-            ':\n',
-            Indent(Join.of(',\n', constructor.init), level: 2),
-            ' ',
-          ]);
-        }
-
         final def = Container([
           '\n',
           constructor.comment,
@@ -54,7 +44,7 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
               '(',
               constructor.args,
               ')',
-              init,
+              constructor.init,
             ]),
           ),
         ]);
@@ -74,8 +64,10 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
       }, child);
 }
 
-class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
+class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
+    implements NamedNode {
   /// The constructor name. This is often optional.
+  @override
   final CodeConstructorName name;
 
   /// Defines public, private, protected, etc.
@@ -88,7 +80,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
   final CodeArgList args;
 
   /// The list of initializer expressions
-  final List<OldCodeExpr> init;
+  final CodeStatementList init;
 
   /// The class implementation body
   final CodeBlock body;
@@ -102,6 +94,26 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
     this.body,
   });
 
+  /// Creates a constructor method.
+  /// - [name] is a dynamic field that accepts:
+  ///   - a [String] name
+  ///   - any object that implements [NamedNode]. This field will have the
+  ///     the same name with the other object.
+  ///   - any object. In this case, the whole object will be converted
+  ///     to string.
+  ///
+  /// - zero or one of [public], [private], [protected], and [internal] should
+  ///   be specified to control the constructor access modifier.
+  ///
+  /// - [requiredArgs], [optionalArgs], and [namedArgs] are the list of
+  /// arguments of the constructor. For language that does not support
+  /// optional and named args, those will be rendered just like required arg.
+  /// See [CodeArg.of] method to see different format can be sent into the
+  /// argument.
+  ///
+  /// - [init] is the list of initializers for the constructor.
+  /// - [body] is the constructor function body.
+  ///
   factory CodeConstructor.of({
     dynamic name,
     bool factory,
@@ -113,7 +125,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
     dynamic optionalArgs,
     dynamic namedArgs,
     dynamic comment,
-    List<dynamic> init,
+    dynamic init,
     dynamic body,
   }) {
     return CodeConstructor(
@@ -130,36 +142,9 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor> {
         optional: optionalArgs,
         named: namedArgs,
       ),
-      init: init?.map((e) => OldCodeExpr.of(e))?.toList(),
+      init: CodeStatementList.of(init, closed: true),
       comment: CodeComment.of(comment),
-      body: CodeBlock.of(CodeStatement.of(body)),
+      body: CodeBlock.of(CodeStatementList.of(body)),
     );
   }
-
-  factory CodeConstructor.simple({
-    String name,
-    bool factory,
-    bool private,
-    bool public,
-    bool protected,
-    bool internal,
-    Map<String, String> args,
-    String comment,
-    List<dynamic> init,
-    Node body,
-  }) =>
-      CodeConstructor(
-        name: CodeConstructorName.of(name),
-        modifier: CodeModifier(
-          factory: factory,
-          private: private,
-          public: public,
-          protected: protected,
-          internal: internal,
-        ),
-        comment: comment != null ? CodeComment.of(comment) : null,
-        init: init?.map((e) => OldCodeExpr.of(e))?.toList(),
-        args: args != null ? CodeArgList.ofNameTypeMap(args) : null,
-        body: CodeBlock.of(body),
-      );
 }

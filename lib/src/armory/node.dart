@@ -51,11 +51,11 @@ List<T> _parseNodeList<T>(dynamic value, _NodeParseFunc next,
   }
 
   // Removes out all null value.
-  res = res?.where((e) => e != null)?.toList();
-
-  if (res?.isNotEmpty != true) res = null;
-
-  if (res == null && error != null) error();
+  if (res == null) {
+    if (error != null) error();
+  } else {
+    res = res.where((e) => e != null)?.toList();
+  }
 
   return res;
 }

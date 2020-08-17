@@ -53,8 +53,9 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
   }
 }
 
-class CodeArg extends CodeConfigProxyNode<CodeArg> {
+class CodeArg extends CodeConfigProxyNode<CodeArg> implements NamedNode {
   /// The argument name.
+  @override
   final CodeArgName name;
 
   /// The argument data type. This is required in most case, however, for

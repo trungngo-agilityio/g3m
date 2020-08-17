@@ -37,26 +37,35 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
       }, child);
 }
 
-class CodeField extends CodeConfigProxyNode<CodeField> {
+class CodeField extends CodeConfigProxyNode<CodeField> implements NamedNode {
+  // The field name. This is required.
+  @override
   final CodeFieldName name;
+
   final CodeAnnotationList annotations;
+
+  // The field's comment.
   final CodeModifier modifier;
+
+  // The field data type. This is required.
   final CodeType type;
-  final OldCodeExpr init;
+
+  final CodeStatementList init;
+
   final CodeComment comment;
 
   CodeField({
-    this.name,
+    @required this.name,
     this.annotations,
     this.modifier,
-    this.type,
+    @required this.type,
     this.init,
     this.comment,
   });
 
   factory CodeField.of({
-    String name,
-    List<CodeAnnotation> annotations,
+    dynamic name,
+    dynamic annotations,
     bool override,
     bool private,
     bool public,
@@ -65,7 +74,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
     bool abstract,
     bool static,
     bool isFinal,
-    String type,
+    dynamic type,
     dynamic init,
     String comment,
   }) {
@@ -82,9 +91,10 @@ class CodeField extends CodeConfigProxyNode<CodeField> {
       name: CodeFieldName.of(name, modifier: modifier),
       annotations: CodeAnnotationList.of(annotations),
       modifier: modifier,
-      type: CodeType.simple(type),
-      init: init != null ? OldCodeExpr.of(init) : null,
-      comment: comment != null ? CodeComment.of(comment) : null,
+      type:
+          CodeType._parse(type, error: () => '$type is not a valid data type.'),
+      init: CodeStatementList.of(init, closed: true),
+      comment: CodeComment.of(comment),
     );
   }
 }

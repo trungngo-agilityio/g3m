@@ -114,10 +114,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeClassNameConfig> classNameConfig;
   CodeConfigBuildFunc<CodeClassListConfig> classListConfig;
   CodeConfigBuildFunc<CodeClassConfig> classConfig;
-  CodeConfigBuildFunc<CodeConstructorNameConfig>
-      classConstructorNameConfig;
-  CodeConfigBuildFunc<CodeConstructorListConfig>
-      classConstructorListConfig;
+  CodeConfigBuildFunc<CodeConstructorNameConfig> classConstructorNameConfig;
+  CodeConfigBuildFunc<CodeConstructorListConfig> classConstructorListConfig;
   CodeConfigBuildFunc<CodeConstructorConfig> classConstructorConfig;
 
   OopCodeConfig(
@@ -158,7 +156,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.varConfig,
 
     // Statement configs
-        @required this.exprConfig,
+    @required this.exprConfig,
     @required this.statementListConfig,
     @required this.statementConfig,
     @required this.breakConfig,
@@ -273,7 +271,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
 
     // Statement configs
     exprConfig ??= (_, child) => CodeExprConfig.forJavaLike(child);
-    statementListConfig ??= (_, child) => CodeStatementListConfig.forJavaLike(child);
+    statementListConfig ??=
+        (_, child) => CodeStatementListConfig.forJavaLike(child);
     statementConfig ??= (_, child) => CodeStatementConfig.forJavaLike(child);
     breakConfig ??= (_, child) => CodeBreakConfig.forJavaLike(child);
     continueConfig ??= (_, child) => CodeContinueConfig.forJavaLike(child);

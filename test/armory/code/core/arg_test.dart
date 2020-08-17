@@ -62,8 +62,8 @@ void main() {
   group('dart', () {
     test('with this', () {
       runDart(
-        CodeConstructor.simple(
-          args: {'car': null},
+        CodeConstructor.of(
+          requiredArgs: {'car': null},
         ),
         '\n'
         'class Hello {\n'
@@ -74,8 +74,8 @@ void main() {
 
     test('with init', () {
       runDart(
-        CodeConstructor.simple(
-          args: {'car': null},
+        CodeConstructor.of(
+          requiredArgs: {'car': null},
           init: [
             CodeFunctionCall.of('assert', args: [false]),
             CodeFunctionCall.of('assert', args: [true]),
@@ -93,22 +93,22 @@ void main() {
 
   test('with body', () {
     runDart(
-      CodeConstructor.simple(
-        args: {'car': null},
+      CodeConstructor.of(
+        requiredArgs: {'car': null},
         init: [
           CodeFunctionCall.of('assert', args: [false]),
-          CodeFunctionCall.of('assert', args: [true]),
+          'assert(car != null)'
         ],
-        body: CodeStatementList.of([
+        body: [
           CodeFunctionCall.of('print', args: ['hello world']),
-        ]),
+        ],
       ),
       '\n'
       'class Hello {\n'
       '  Hello(this.car):\n'
       '      assert(false),\n'
-      '      assert(true) {\n'
-      '    print("hello world");\n'
+      '      assert(car != null) {\n'
+      '    print(\'hello world\');\n'
       '  }\n'
       '}\n',
     );
@@ -122,11 +122,5 @@ void runDart(CodeConstructor constructor, String expected) {
     ]),
   );
 
-  runAndExpect(
-    code,
-    '\n'
-    'class Hello {\n'
-    '  Hello(this.car);\n'
-    '}\n',
-  );
+  runAndExpect(code, expected);
 }

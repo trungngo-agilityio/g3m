@@ -57,7 +57,9 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
       }, child);
 }
 
-class CodeFunction extends CodeConfigProxyNode<CodeFunction> {
+class CodeFunction extends CodeConfigProxyNode<CodeFunction>
+    implements NamedNode {
+  @override
   final CodeFunctionName name;
   final CodeComment comment;
   final CodeAnnotationList annotations;

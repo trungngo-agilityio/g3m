@@ -12,7 +12,7 @@ void main() {
 
     await runAndExpect(
       code,
-      'return true;\n',
+      'return true',
     );
   });
 }

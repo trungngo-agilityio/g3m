@@ -97,11 +97,11 @@ CodeClass clazz() {
       field(),
     ],
     constructors: [
-      CodeConstructor.simple(
+      CodeConstructor.of(
           name: 'of',
           comment: 'a demo constructor',
           factory: true,
-          args: {'name': 'string'},
+          requiredArgs: {'name': 'string'},
           body: Container(['// Any free text can be here'])),
     ],
     functions: [

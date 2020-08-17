@@ -62,8 +62,10 @@ class CodePropertyConfig extends CodeConfigNode<CodeProperty> {
       }, child);
 }
 
-class CodeProperty extends CodeConfigProxyNode<CodeProperty> {
+class CodeProperty extends CodeConfigProxyNode<CodeProperty>
+    implements NamedNode {
   /// The property name.
+  @override
   final CodePropertyName name;
 
   /// The list of annotations for the property.

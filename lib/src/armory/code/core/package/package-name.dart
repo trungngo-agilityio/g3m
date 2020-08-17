@@ -18,15 +18,17 @@ class CodePackageNameConfig extends CodeConfigNode<CodePackageName> {
     nameFunc ??= StringFuncs.snake;
 
     return CodePackageNameConfig((context, name) {
-      return TextTransform(name.content, nameFunc);
+      return TextTransform(name.name, nameFunc);
     }, child);
   }
 }
 
-class CodePackageName extends CodeConfigProxyNode<CodePackageName> {
-  final Node content;
+class CodePackageName extends CodeConfigProxyNode<CodePackageName>
+    implements NamedNode {
+  @override
+  final Node name;
 
-  CodePackageName(this.content);
+  CodePackageName(this.name);
 
   factory CodePackageName.of(String text) {
     return text == null ? null : CodePackageName(Text.of(text));

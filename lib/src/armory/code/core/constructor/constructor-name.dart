@@ -1,7 +1,6 @@
 part of g3.armory;
 
-class CodeConstructorNameConfig
-    extends CodeConfigNode<CodeConstructorName> {
+class CodeConstructorNameConfig extends CodeConfigNode<CodeConstructorName> {
   CodeConstructorNameConfig(
       NodeBuildFunc<CodeConstructorName> buildFunc, Node child)
       : super(buildFunc, child);
@@ -16,8 +15,7 @@ class CodeConstructorNameConfig
 
   factory CodeConstructorNameConfig.forDartLike(Node child) =>
       CodeConstructorNameConfig((context, name) {
-        final field =
-            context.findAncestorNodeOfExactType<CodeConstructor>();
+        final field = context.findAncestorNodeOfExactType<CodeConstructor>();
         final modifier = field?.modifier;
 
         Node res = TextTransform(name.name, StringFuncs.camel);
@@ -33,8 +31,8 @@ class CodeConstructorNameConfig
       }, child);
 }
 
-class CodeConstructorName
-    extends CodeConfigProxyNode<CodeConstructorName> implements NamedNode {
+class CodeConstructorName extends CodeConfigProxyNode<CodeConstructorName>
+    implements NamedNode {
   @override
   final Node name;
 

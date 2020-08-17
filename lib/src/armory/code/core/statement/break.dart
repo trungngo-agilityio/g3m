@@ -9,7 +9,7 @@ class CodeBreakConfig extends CodeConfigNode<CodeBreak> implements OldCodeExpr {
     String breakKeyword = 'break',
   }) =>
       CodeBreakConfig((context, package) {
-        return CodeStatement.of(breakKeyword);
+        return CodeExpr._(Text._(breakKeyword), false);
       }, child);
 }
 

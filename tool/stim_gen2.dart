@@ -47,12 +47,10 @@ class Scope implements Node {
             getter: CodeReturn.of(fieldRef),
             setter: [
               CodeExpr.of(Container([fieldRef, ' = value'])),
-
               CodeFunctionCall.of(
                 'assert',
                 args: [Text.of('value != null'), 'value is required'],
               ),
-
               CodeForEach(
                 item: OldCodeExpr.of(iVar),
                 collection: OldCodeExpr.of(CodeFunctionCall.of('eval')),
@@ -85,8 +83,8 @@ class Scope implements Node {
       extend: CodeType.genericSingle('expr', name),
       constructors: [
         CodeConstructor.of(
-          requiredArgs: ['scope'],
-          namedArgs: {'test': null},
+          requiredArgs: 'scope',
+          namedArgs: 'test',
           init: [
             CodeFunctionCall.of('super', args: [
               CodeRef.ofField(scopeField),
@@ -170,8 +168,7 @@ class Scope implements Node {
       name + ' scope',
       extend: CodeType.genericSingle('scope', name),
       constructors: [
-        CodeConstructor.simple(
-            args: fields?.map((key, value) => MapEntry(key, null))),
+        CodeConstructor.of(requiredArgs: fields?.keys),
       ],
       fields: scopeFields,
       functions: [

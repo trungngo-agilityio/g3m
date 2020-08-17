@@ -13,19 +13,19 @@ class CodeCascadeConfig extends CodeConfigNode<CodeCascade> {
     String cascadeKeyword = '..',
   }) =>
       CodeCascadeConfig((context, expr) {
-        return CodeExpr.open(
-          Container([
+        return Container(
+          [
             cascadeKeyword,
             expr.expr,
-          ]),
+          ],
         );
       }, child);
 }
 
 class CodeCascade extends CodeConfigProxyNode<CodeCascade> {
-  final OldCodeExpr expr;
+  final CodeExpr expr;
 
   CodeCascade._(this.expr);
 
-  factory CodeCascade.of(dynamic expr) => CodeCascade._(OldCodeExpr.of(expr));
+  factory CodeCascade.of(dynamic expr) => CodeCascade._(CodeExpr.of(expr));
 }

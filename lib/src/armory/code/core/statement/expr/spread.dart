@@ -21,9 +21,9 @@ class CodeSpreadConfig extends CodeConfigNode<CodeSpread> {
 }
 
 class CodeSpread extends CodeConfigProxyNode<CodeSpread> {
-  final OldCodeExpr expr;
+  final CodeExpr expr;
 
   CodeSpread._(this.expr);
 
-  factory CodeSpread.of(dynamic expr) => CodeSpread._(OldCodeExpr.of(expr));
+  factory CodeSpread.of(dynamic expr) => CodeSpread._(CodeExpr._(expr, false));
 }

@@ -6,12 +6,12 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
 
   factory CodeFieldNameConfig.of(StringFunc func, Node child) =>
       CodeFieldNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeFieldNameConfig.forDartLike(Node child) =>
       CodeFieldNameConfig((context, name) {
         final modifier = name.modifier;
-        Node res = TextTransform(name.content, StringFuncs.camel);
+        Node res = TextTransform(name.name, StringFuncs.camel);
 
         if (modifier?.private == true ||
             modifier?.protected == true ||
@@ -27,18 +27,20 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
       CodeFieldNameConfig.of(StringFuncs.camel, child);
 }
 
-class CodeFieldName extends CodeConfigProxyNode<CodeFieldName> {
-  final Node content;
+class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
+    implements NamedNode {
+  @override
+  final Node name;
 
   final CodeModifier modifier;
 
-  CodeFieldName._(this.content, {this.modifier});
+  CodeFieldName._(this.name, {this.modifier});
 
   factory CodeFieldName.of(
-    String text, {
+    dynamic name, {
     CodeModifier modifier,
   }) {
-    if (text == null) return null;
-    return CodeFieldName._(Text.of(text), modifier: modifier);
+    if (name == null) return null;
+    return CodeFieldName._(Text.of(name), modifier: modifier);
   }
 }

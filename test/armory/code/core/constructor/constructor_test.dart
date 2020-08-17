@@ -5,19 +5,22 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  void run(Node child, String expected) async {
+  void run(Node child, String expected) {
     var code = JavaCodeConfig(CodeClass.of('person', body: child));
-    await runAndExpect(code, expected);
+    runAndExpect(code, expected);
   }
 
-  test('hello', () async {
-    await run(
-      CodeConstructor.simple(
+  test('body test', () {
+    run(
+      CodeConstructor.of(
         comment: 'Just a sample\n'
             'Another line.\n'
             'Another line.',
         public: true,
-        body: Container(['var a = 1;']),
+        requiredArgs: [
+          ['first name', 'string', 'john doe']
+        ],
+        body: 'var a = 1;',
       ),
       '\n'
       'class Person {\n'
@@ -26,7 +29,7 @@ void main() {
       '   * Another line.\n'
       '   * Another line.\n'
       '   */\n'
-      '  public Person() {\n'
+      '  public Person(String firstName = "john doe") {\n'
       '    var a = 1;\n'
       '  }\n'
       '}\n',

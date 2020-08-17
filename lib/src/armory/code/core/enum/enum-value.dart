@@ -14,7 +14,9 @@ class CodeEnumValueConfig extends CodeConfigNode<CodeEnumValue> {
       }, child);
 }
 
-class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue> {
+class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue>
+    implements NamedNode {
+  @override
   final CodeEnumValueName name;
   final OldCodeExpr init;
   final CodeComment comment;

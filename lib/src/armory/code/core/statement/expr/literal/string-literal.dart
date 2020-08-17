@@ -14,7 +14,6 @@ class CodeStringLiteralConfig extends CodeConfigNode<CodeStringLiteral> {
   }) =>
       CodeStringLiteralConfig((context, literal) {
         if (literal.value == null) return CodeNullLiteral();
-
         return Pad.of(quoteString, quoteString, literal.value);
       }, child);
 }

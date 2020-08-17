@@ -35,8 +35,10 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
       }, child);
 }
 
-class CodeInterface extends CodeConfigProxyNode<CodeInterface> {
+class CodeInterface extends CodeConfigProxyNode<CodeInterface>
+    implements NamedNode {
   /// The class name.
+  @override
   final CodeTypeName name;
 
   /// Defines public, private, protected, etc.

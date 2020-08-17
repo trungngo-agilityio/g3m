@@ -53,9 +53,10 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
 }
 
 class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
-    implements _CodeStatementLike {
+    implements NamedNode {
   /// The property name. This is optional in the case it is used
   /// outside of a property.
+  @override
   final CodePropertyName name;
 
   /// The property data type.
@@ -80,7 +81,6 @@ class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
 
   factory CodePropertySetter._parse(dynamic value) {
     return _parseNode<CodePropertySetter>(value, (v) {
-
       final children = _parseNodeList<Node>(value, (v) {
         return CodeExpr.of(v);
       });

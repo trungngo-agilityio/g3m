@@ -36,7 +36,7 @@ class CodeTypeNameConfig extends CodeConfigNode<CodeTypeName> {
         final mapperConfig =
             context.findAncestorNodeOfExactType<CodeTypeNameMapperConfig>();
 
-        return TextTransform(name.content, (s) {
+        return TextTransform(name.name, (s) {
           s = func(s);
           return mapperConfig?.translate(s) ?? s;
         });
@@ -46,10 +46,12 @@ class CodeTypeNameConfig extends CodeConfigNode<CodeTypeName> {
       CodeTypeNameConfig.of(StringFuncs.pascal, child);
 }
 
-class CodeTypeName extends CodeConfigProxyNode<CodeTypeName> {
-  final Node content;
+class CodeTypeName extends CodeConfigProxyNode<CodeTypeName>
+    implements NamedNode {
+  @override
+  final Node name;
 
-  CodeTypeName._(this.content);
+  CodeTypeName._(this.name);
 
   static CodeTypeName _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<Node>(value, (v) {

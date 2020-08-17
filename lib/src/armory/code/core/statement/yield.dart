@@ -18,7 +18,7 @@ class CodeYieldConfig extends CodeConfigNode<CodeYield> {
 }
 
 class CodeYield extends CodeConfigProxyNode<CodeYield> {
-  final OldCodeExpr expr;
+  final CodeExpr expr;
   final bool async;
   final CodeComment comment;
 
@@ -34,7 +34,7 @@ class CodeYield extends CodeConfigProxyNode<CodeYield> {
     String comment,
   }) =>
       CodeYield(
-        expr: OldCodeExpr.of(expr),
+        expr: CodeExpr.of(expr),
         async: async,
         comment: comment != null ? CodeComment.of(comment) : null,
       );

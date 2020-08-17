@@ -20,9 +20,8 @@ class CodeReturnConfig extends CodeConfigNode<CodeReturn> {
       }, child);
 }
 
-class CodeReturn extends CodeConfigProxyNode<CodeReturn>
-    implements OldCodeExpr {
-  final OldCodeExpr expr;
+class CodeReturn extends CodeConfigProxyNode<CodeReturn> {
+  final CodeExpr expr;
   final CodeComment comment;
 
   CodeReturn({
@@ -35,7 +34,7 @@ class CodeReturn extends CodeConfigProxyNode<CodeReturn>
     String comment,
   }) =>
       CodeReturn(
-        expr: OldCodeExpr.of(expr),
+        expr: CodeExpr.of(expr),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
 }
