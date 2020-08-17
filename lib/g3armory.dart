@@ -50,6 +50,8 @@ part 'src/armory/code/core/enum/enum-value.dart';
 
 part 'src/armory/code/core/enum/enum.dart';
 
+part 'src/armory/code/core/expr/expr.dart';
+
 part 'src/armory/code/core/field/field-list.dart';
 
 part 'src/armory/code/core/field/field-name.dart';
@@ -165,7 +167,6 @@ part 'src/armory/code/core/statement/while.dart';
 part 'src/armory/code/core/statement/yield.dart';
 
 part 'src/armory/code/core/syntax.dart';
-part 'src/armory/code/core/expr.dart';
 
 part 'src/armory/code/core/type/type-list.dart';
 

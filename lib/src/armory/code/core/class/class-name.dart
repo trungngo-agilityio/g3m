@@ -6,7 +6,7 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
 
   factory CodeClassNameConfig.of(StringFunc func, Node child) =>
       CodeClassNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeClassNameConfig.forJavaLike(Node child) =>
       CodeClassNameConfig.of(StringFuncs.pascal, child);
@@ -16,7 +16,7 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
         final clazz = context.findAncestorNodeOfExactType<CodeClass>();
         final modifier = clazz?.modifier;
 
-        Node res = TextTransform(name.content, StringFuncs.pascal);
+        Node res = TextTransform(name.name, StringFuncs.pascal);
 
         if (modifier?.private == true ||
             modifier?.protected == true ||
@@ -29,12 +29,21 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
       }, child);
 }
 
-class CodeClassName extends CodeConfigProxyNode<CodeClassName> {
-  final Node content;
+class CodeClassName extends CodeConfigProxyNode<CodeClassName>
+    implements NamedNode {
+  @override
+  final Node name;
 
-  CodeClassName(this.content);
+  CodeClassName._(this.name);
 
-  factory CodeClassName.of(String text) {
-    return text == null ? null : CodeClassName(Text.of(text));
+  factory CodeClassName.of(dynamic value) {
+    return _parseNode<CodeClassName>(value, (v) {
+      // Try to parse the value as the expression name.
+      final name = NamedNode.nameOf(v);
+      assert(name != null, 'class name must not be null');
+      return CodeClassName._(name);
+    }, error: () {
+      throw '${value} is not a valid argument.';
+    });
   }
 }

@@ -8,7 +8,7 @@ class CodeClassConstructorNameConfig
 
   factory CodeClassConstructorNameConfig.of(StringFunc func, Node child) =>
       CodeClassConstructorNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeClassConstructorNameConfig.forJavaLike(Node child) =>
       // Java does not allow named constructor, skip it.
@@ -20,7 +20,7 @@ class CodeClassConstructorNameConfig
             context.findAncestorNodeOfExactType<CodeClassConstructor>();
         final modifier = field?.modifier;
 
-        Node res = TextTransform(name.content, StringFuncs.camel);
+        Node res = TextTransform(name.name, StringFuncs.camel);
 
         if (modifier?.private == true ||
             modifier?.protected == true ||
@@ -34,13 +34,22 @@ class CodeClassConstructorNameConfig
 }
 
 class CodeClassConstructorName
-    extends CodeConfigProxyNode<CodeClassConstructorName> {
-  final Node content;
+    extends CodeConfigProxyNode<CodeClassConstructorName> implements NamedNode {
+  @override
+  final Node name;
 
-  CodeClassConstructorName._(this.content);
+  CodeClassConstructorName._(this.name);
 
-  static CodeClassConstructorName of(dynamic name) => _parseNode(name, (v) {
-        if (name is Node) return CodeClassConstructorName._(name);
-        return CodeClassConstructorName._(Text.of(name));
-      });
+  static CodeClassConstructorName of(dynamic value) {
+    // Try to parse the input as the constructor name itself.
+    return _parseNode<CodeClassConstructorName>(value, (v) {
+      // Try to parse the input as the constructor name expression.
+      final name = NamedNode.nameOf(v);
+
+      // Accepts the name, even null value.
+      return CodeClassConstructorName._(name);
+    }, error: () {
+      throw '$value is not a valid constructor';
+    });
+  }
 }

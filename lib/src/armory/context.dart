@@ -120,3 +120,22 @@ abstract class Renderer {
 abstract class PostRenderer {
   void postRender(RenderContext context);
 }
+
+abstract class NamedNode {
+  dynamic get name;
+
+  static Node nameOf(dynamic value) {
+    if (value == null) return null;
+    if (value is NamedNode) {
+      // Recursively try to parse the name of the child.
+      return nameOf(value.name);
+    } else {
+      // Return the value as the name itself.
+      if (value is Node) {
+        return value;
+      } else {
+        return Text.of(value);
+      }
+    }
+  }
+}

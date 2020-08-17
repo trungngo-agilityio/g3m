@@ -14,7 +14,6 @@ class CodeAnnotationConfig extends CodeConfigNode<CodeAnnotation> {
             annotation.comment,
             annotationKeyword,
             annotation.name,
-            annotation.generic,
             '(',
             Join.commaSeparated(annotation.args),
             ')\n',
@@ -23,8 +22,10 @@ class CodeAnnotationConfig extends CodeConfigNode<CodeAnnotation> {
       }, child);
 }
 
-class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation> {
+class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation>
+    implements NamedNode {
   /// The annotation name.
+  @override
   final CodeAnnotationName name;
 
   /// Additional comment can be put at the annotation.
@@ -32,7 +33,7 @@ class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation> {
 
   final CodeGenericParamList generic;
 
-  final List<OldCodeExpr> args;
+  final List<CodeExpr> args;
 
   CodeAnnotation._({
     @required this.name,
@@ -43,15 +44,13 @@ class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation> {
 
   factory CodeAnnotation.of(
     dynamic name, {
-    String comment,
-    List<String> generic,
-    List<dynamic> args,
-    Node body,
-  }) =>
-      CodeAnnotation._(
-        name: CodeAnnotationName.of(name),
-        comment: comment != null ? CodeComment.of(comment) : null,
-        generic: generic != null ? CodeGenericParamList.list(generic) : null,
-        args: args?.map((e) => OldCodeExpr.of(e))?.toList(),
-      );
+    dynamic comment,
+    dynamic args,
+  }) {
+    return CodeAnnotation._(
+      name: CodeAnnotationName.of(name),
+      comment: comment != null ? CodeComment.of(comment) : null,
+      args: CodeExpr.listOf(args),
+    );
+  }
 }

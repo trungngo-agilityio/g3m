@@ -68,12 +68,35 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
 
   factory CodeExpr._parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode(value, (v) {
-      if (v is Node) return CodeExpr.open(v);
-      return CodeExpr.open(Text.of(v));
+      Node child;
+      if (v is Node) {
+        child = CodeExpr.open(v);
+      } else if (v == null) {
+        child = CodeNullLiteral();
+      } else if (value is bool) {
+        child = CodeBoolLiteral.of(value);
+      } else if (value is String) {
+        child = CodeStringLiteral.of(value);
+      } else if (value is num) {
+        child = CodeNumericLiteral.of(value);
+      } else if (value is List<dynamic>) {
+        child = CodeArrayLiteral.of(value);
+      } else if (value is Map<String, dynamic>) {
+        child = CodeMapLiteral.of(value);
+      } else {
+        child = Text.of(v);
+      }
+      return CodeExpr.open(child);
     }, error: error);
   }
 
   factory CodeExpr.of(dynamic value) {
     return CodeExpr._parse(value);
+  }
+
+  static List<CodeExpr> listOf(dynamic value) {
+    return _parseNodeList<CodeExpr>(value, (v) => CodeExpr.of(v))
+        ?.where((e) => e != null)
+        ?.toList();
   }
 }

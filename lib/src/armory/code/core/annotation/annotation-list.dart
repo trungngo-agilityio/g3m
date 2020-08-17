@@ -15,8 +15,15 @@ class CodeAnnotationList extends CodeConfigProxyNode<CodeAnnotationList> {
 
   CodeAnnotationList._(this.annotations);
 
-  factory CodeAnnotationList.of(List<CodeAnnotation> annotations) =>
-      annotations?.isNotEmpty == true
-          ? CodeAnnotationList._(annotations)
-          : null;
+  factory CodeAnnotationList.of(dynamic value) {
+    // Try to parse the input as a single list object.
+    return _parseNode<CodeAnnotationList>(value, (v) {
+      // Parse as a list of objects.
+      var list =
+          _parseNodeList<CodeAnnotation>(value, (v) => CodeAnnotation.of(v));
+
+      if (list == null) return null;
+      return CodeAnnotationList._(list);
+    });
+  }
 }
