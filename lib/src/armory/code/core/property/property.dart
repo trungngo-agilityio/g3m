@@ -126,7 +126,7 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
           isPublic: public,
           isProtected: protected,
           isInternal: internal,
-          static: static,
+          isStatic: static,
           isFinal: isFinal,
         ),
         type: CodeType.simple(type),

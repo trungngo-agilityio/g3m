@@ -46,7 +46,7 @@ class Scope implements Node {
             type: fieldType,
             getter: CodeReturn.of(fieldRef),
             setter: [
-              CodeExpr.of(Container([fieldRef, ' = value'])),
+              Container([fieldRef, ' = value;\n']),
               CodeFunctionCall.of(
                 'assert',
                 args: [Text.of('value != null'), 'value is required'],
@@ -55,14 +55,12 @@ class Scope implements Node {
                 item: OldCodeExpr.of(iVar),
                 collection: OldCodeExpr.of(CodeFunctionCall.of('eval')),
                 body: CodeStatementList.of([
-                  CodeExpr.of(
-                    Container([
-                      CodeRef.ofVar(iVar),
-                      '.',
-                      fieldRef,
-                      ' = value',
-                    ]),
-                  ),
+                  Container([
+                    CodeRef.ofVar(iVar),
+                    '.',
+                    fieldRef,
+                    ' = value;\n',
+                  ]),
                 ]),
               ),
             ],
@@ -79,27 +77,23 @@ class Scope implements Node {
     );
 
     return CodeClass.of(
-      name,
+      name: name,
       extend: CodeType.genericSingle('expr', name),
-      constructors: [
-        CodeConstructor.of(
-          requiredArgs: 'scope',
-          namedArgs: 'test',
-          init: [
-            CodeFunctionCall.of('super', args: [
-              CodeRef.ofField(scopeField),
-            ]),
-          ],
-        ),
-      ],
-      fields: [
-        scopeField,
-      ],
+      constructors: CodeConstructor.of(
+        requiredArgs: 'scope',
+        init: CodeFunctionCall.of('super', args: [
+          CodeRef.ofField(scopeField),
+        ]),
+      ),
+      fields: scopeField,
       body: exprFields,
     );
   }
 
   CodeClass _scopeClass(String name) {
+    final exprClassName = CodeClassName.of(name);
+    final scopeClassName = CodeClassName.of(name + ' scope');
+
     final scopeFields = fields?.entries?.map((e) {
       return CodeField.of(
         name: e.key,
@@ -130,46 +124,34 @@ class Scope implements Node {
     final makeFunction = CodeFunction.of(
       name: 'make',
       isOverride: true,
-      returns: [
-        name,
-      ],
-      body: [
-        CodeReturn.of(Container(
-          [
-            StringFuncs.pascal(name),
-            '(',
-            'this',
-            ')',
-            '\n',
-            Indent(makeFields, level: 2),
-          ],
-        )),
-      ],
+      returns: name,
+      body: CodeReturn.of(Container(
+        [
+          exprClassName,
+          '(this)\n',
+          Indent(makeFields, level: 2),
+        ],
+      )),
     );
 
+    var typedArgs = fields?.entries?.map((e) => [e.key, e.value])?.toList();
     final callFunction = CodeFunction.of(
       name: 'call',
-      returns: [name],
-      requiredArgs: fields?.entries?.map((e) => [e.key, e.value])?.toList(),
-      body: [
-        CodeReturn.of(Container(
-          [
-            'add(',
-            'this',
-            ')',
-            '\n',
-            Indent(copyFields, level: 2),
-          ],
-        )),
-      ],
+      returns: name,
+      requiredArgs: typedArgs,
+      body: CodeReturn.of(Container(
+        [
+          'add(this)\n',
+          Indent(copyFields, level: 2),
+        ],
+      )),
     );
 
+    var requiredArgs = fields?.entries?.map((e) => e.key)?.toList();
     return CodeClass.of(
-      name + ' scope',
+      name: scopeClassName,
       extend: CodeType.genericSingle('scope', name),
-      constructors: [
-        CodeConstructor.of(requiredArgs: fields?.keys),
-      ],
+      constructors: CodeConstructor.of(requiredArgs: requiredArgs),
       fields: scopeFields,
       functions: [
         makeFunction,

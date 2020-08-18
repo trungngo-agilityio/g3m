@@ -6,7 +6,7 @@ import '../../../utils.dart';
 
 void main() {
   void run(Node child, String expected) {
-    var code = JavaCodeConfig(CodeClass.of('person', body: child));
+    var code = JavaCodeConfig(CodeClass.of(name: 'person', body: child));
     runAndExpect(code, expected);
   }
 

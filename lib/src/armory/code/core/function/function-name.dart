@@ -68,8 +68,8 @@ class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName>
         isPublic: isPublic,
         isProtected: isProtected,
         isInternal: isInternal,
-        abstract: isAbstract,
-        static: isStatic,
+        isAbstract: isAbstract,
+        isStatic: isStatic,
       ),
     );
   }

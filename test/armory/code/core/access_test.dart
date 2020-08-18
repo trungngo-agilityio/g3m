@@ -30,11 +30,11 @@ void main() {
   });
 
   test('abstract', () {
-    run(CodeModifier(abstract: true), 'abstract ');
+    run(CodeModifier(isAbstract: true), 'abstract ');
   });
 
   test('static', () {
-    run(CodeModifier(static: true), 'static ');
+    run(CodeModifier(isStatic: true), 'static ');
   });
   test('all', () {
     run(
@@ -44,8 +44,8 @@ void main() {
           isPublic: true,
           isProtected: true,
           isInternal: true,
-          abstract: true,
-          static: true),
+          isAbstract: true,
+          isStatic: true),
       'private public protected internal abstract static ',
     );
   });

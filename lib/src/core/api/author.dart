@@ -5,7 +5,7 @@ class Author extends Expr<Author> {
   @override
   final AuthorScope scope;
 
-  Author(this.scope, {this.test}):
+  Author(this.scope):
       super(scope);
 
   Dependency _author;
@@ -17,8 +17,7 @@ class Author extends Expr<Author> {
 
    set author(Dependency value) {
     _author = value;
-    assert(value != null, 'value is required');
-    for (var i in eval()) {
+    assert(value != null, 'value is required')for (var i in eval()) {
       i._author = value;
     }
   }

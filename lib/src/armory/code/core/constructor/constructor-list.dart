@@ -1,14 +1,13 @@
 part of g3.armory;
 
-class CodeConstructorListConfig
-    extends CodeConfigNode<CodeClassConstructorList> {
+class CodeConstructorListConfig extends CodeConfigNode<CodeConstructorList> {
   CodeConstructorListConfig(
-      NodeBuildFunc<CodeClassConstructorList> buildFunc, Node child)
+      NodeBuildFunc<CodeConstructorList> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeConstructorListConfig.forJavaLike(Node child) =>
       CodeConstructorListConfig((context, param) {
-        final children = param.functions;
+        final children = param.constructors;
         if (children == null || children.isEmpty) {
           return null;
         }
@@ -20,9 +19,23 @@ class CodeConstructorListConfig
       }, child);
 }
 
-class CodeClassConstructorList
-    extends CodeConfigProxyNode<CodeClassConstructorList> {
-  final List<CodeConstructor> functions;
+class CodeConstructorList extends CodeConfigProxyNode<CodeConstructorList> {
+  final List<CodeConstructor> constructors;
 
-  CodeClassConstructorList(this.functions);
+  CodeConstructorList._(this.constructors);
+
+  static CodeConstructorList _parse(dynamic value,
+      {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeConstructorList>(value, (v) {
+      final list = _parseNodeList<CodeConstructor>(v, null);
+      if (list != null) return CodeConstructorList._(list);
+      return null;
+    }, error: error);
+  }
+
+  factory CodeConstructorList.of(dynamic values) {
+    return CodeConstructorList._parse(values, error: () {
+      throw '$values is not a valid constructor list';
+    });
+  }
 }

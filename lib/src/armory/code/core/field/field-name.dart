@@ -75,7 +75,7 @@ class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
           isPublic: isPublic,
           isProtected: isProtected,
           isInternal: isInternal,
-          static: isStatic,
+          isStatic: isStatic,
           isFinal: isFinal,
         ),
       );

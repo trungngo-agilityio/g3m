@@ -43,11 +43,11 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
           keywords.add(internalKeyword);
         }
 
-        if (access.abstract == true && abstractKeyword != null) {
+        if (access.isAbstract == true && abstractKeyword != null) {
           keywords.add(abstractKeyword);
         }
 
-        if (access.static == true && staticKeyword != null) {
+        if (access.isStatic == true && staticKeyword != null) {
           keywords.add(staticKeyword);
         }
 
@@ -69,8 +69,8 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
   final bool isProtected;
   final bool isInternal;
 
-  final bool abstract;
-  final bool static;
+  final bool isAbstract;
+  final bool isStatic;
   final bool isFinal;
 
   CodeModifier({
@@ -80,8 +80,8 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
     this.isPublic,
     this.isProtected,
     this.isInternal,
-    this.abstract,
-    this.static,
+    this.isAbstract,
+    this.isStatic,
     this.isFinal,
   });
 }

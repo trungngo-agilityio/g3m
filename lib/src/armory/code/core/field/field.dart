@@ -126,7 +126,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
         isPublic: public,
         isProtected: protected,
         isInternal: internal,
-        static: static,
+        isStatic: static,
         isFinal: isFinal,
       ),
       type:

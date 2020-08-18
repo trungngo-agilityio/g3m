@@ -93,7 +93,7 @@ void main() {
 
 void runDart(CodeConstructor constructor, String expected) {
   var code = DartCodeConfig(
-    CodeClass.of('hello', constructors: [
+    CodeClass.of(name: 'hello', constructors: [
       constructor,
     ]),
   );

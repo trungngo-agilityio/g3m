@@ -88,7 +88,7 @@ void main() {
     test('class', () {
       run(
           () => CodeClass.of(
-                'world',
+                name: 'world',
                 comment: 'hello',
               ),
           '\n'

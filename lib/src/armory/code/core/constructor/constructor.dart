@@ -85,7 +85,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
   /// The class implementation body
   final CodeBlock body;
 
-  CodeConstructor({
+  CodeConstructor._({
     this.name,
     this.modifier,
     this.comment,
@@ -128,7 +128,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
     dynamic init,
     dynamic body,
   }) {
-    return CodeConstructor(
+    return CodeConstructor._(
       name: CodeConstructorName.of(name),
       modifier: CodeModifier(
         factory: factory,

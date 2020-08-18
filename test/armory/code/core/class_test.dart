@@ -13,7 +13,7 @@ void main() {
 
     test('empty', () {
       run(
-        () => CodeClass.of('person'),
+        () => CodeClass.of(name: 'person'),
         '\n'
         'class Person {\n'
         '\n'
@@ -24,9 +24,9 @@ void main() {
     test('with code access', () {
       run(
         () => CodeClass.of(
-          'person',
-          private: true,
-          abstract: true,
+          name: 'person',
+          isPrivate: true,
+          isAbstract: true,
         ),
         '\n'
         'private abstract class Person {\n'
@@ -38,7 +38,7 @@ void main() {
     test('with comment', () {
       run(
         () => CodeClass.of(
-          'person',
+          name: 'person',
           comment: 'hello world',
         ),
         '\n'
@@ -54,7 +54,7 @@ void main() {
     test('with field', () {
       run(
         () => CodeClass.of(
-          'person',
+          name: 'person',
           fields: [
             makeField('first name'),
           ],
@@ -69,7 +69,7 @@ void main() {
     test('with field list', () {
       run(
         () => CodeClass.of(
-          'person',
+          name: 'person',
           fields: [
             makeField('first name'),
             makeField('last name'),
@@ -88,7 +88,7 @@ void main() {
       run(
         () {
           return CodeClass.of(
-            'person',
+            name: 'person',
             functions: [
               makeFunction('hello world 1'),
               makeFunction('hello world 2'),
@@ -132,9 +132,9 @@ void main() {
           ];
 
           return CodeClass.of(
-            'person',
-            public: true,
-            abstract: true,
+            name: 'person',
+            isPublic: true,
+            isAbstract: true,
             generic: generic,
             extend: extend,
             implements: implements,

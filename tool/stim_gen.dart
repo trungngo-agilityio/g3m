@@ -27,7 +27,7 @@ class Scope implements Node {
 
   CodeClass _exprClass(String name) {
     return CodeClass.of(
-      name,
+      name: name,
       extend: CodeType.genericSingle('expr', name),
       comment: 'This express provide abc',
       constructors: [
@@ -48,7 +48,7 @@ class Scope implements Node {
 
   CodeClass _scopeClass(String name) {
     return CodeClass.of(
-      name,
+      name: name,
       extend: CodeType.genericSingle('scope', name),
       body: _scopeClassBody(name),
     );

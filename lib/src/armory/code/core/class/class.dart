@@ -76,46 +76,48 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
     this.body,
   }) : assert(name != null);
 
-  factory CodeClass.of(
-    String name, {
-    bool private,
-    bool public,
-    bool protected,
-    bool internal,
-    bool abstract,
-    bool static,
-    List<CodeGenericParam> generic,
-    CodeType extend,
-    List<CodeType> implements,
-    List<CodeConstructor> constructors,
-    List<CodeField> fields,
-    List<CodeFunction> functions,
-    String comment,
+  factory CodeClass.of({
+    @required dynamic name,
+    bool isPrivate,
+    bool isPublic,
+    bool isProtected,
+    bool isInternal,
+    bool isAbstract,
+    bool isStatic,
+    dynamic generic,
+    dynamic extend,
+    dynamic implements,
+    dynamic constructors,
+    dynamic fields,
+    dynamic functions,
+    dynamic comment,
     dynamic body,
   }) =>
       CodeClass(
         name: CodeClassName.of(name),
         generic: CodeGenericParamList.of(generic),
         modifier: CodeModifier(
-          isPrivate: private,
-          isPublic: public,
-          isProtected: protected,
-          isInternal: internal,
-          abstract: abstract,
-          static: static,
+          isPrivate: isPrivate,
+          isPublic: isPublic,
+          isProtected: isProtected,
+          isInternal: isInternal,
+          isAbstract: isAbstract,
+          isStatic: isStatic,
         ),
         extend: extend,
         implements: CodeTypeList.of(implements),
         body: CodeBlock.of(
-          CodeStatement.of(
-            Container([
-              Container(fields),
-              CodeClassConstructorList(constructors),
-              CodeFunctionList.of(functions),
-              CodeStatementList._parse(body) ?? body,
-            ]),
-          ),
+          Container([
+            CodeStatement.of(
+              Container([
+                CodeFieldList.of(fields),
+                CodeConstructorList.of(constructors),
+                CodeFunctionList.of(functions),
+              ]),
+            ),
+            CodeStatementList.of(body),
+          ]),
         ),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
       );
 }

@@ -5,7 +5,7 @@ class Dependency extends Expr<Dependency> {
   @override
   final DependencyScope scope;
 
-  Dependency(this.scope, {this.test}):
+  Dependency(this.scope):
       super(scope);
 
   Dependency _version;
@@ -17,8 +17,7 @@ class Dependency extends Expr<Dependency> {
 
    set version(Dependency value) {
     _version = value;
-    assert(value != null, 'value is required');
-    for (var i in eval()) {
+    assert(value != null, 'value is required')for (var i in eval()) {
       i._version = value;
     }
   }

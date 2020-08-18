@@ -87,9 +87,9 @@ CodeGenericParam genericParam() => CodeGenericParam.of(name: 'T');
 
 CodeClass clazz() {
   return CodeClass.of(
-    'person',
-    private: true,
-    abstract: true,
+    name: 'person',
+    isPrivate: true,
+    isAbstract: true,
     generic: [CodeGenericParam.of(name: 'T')],
     extend: null,
     implements: null,
