@@ -24,6 +24,8 @@ abstract class BuildContext {
   /// The current output file absolute path;
   ///
   String file;
+
+  bool yesToAll;
 }
 
 abstract class RenderContext {
@@ -34,6 +36,8 @@ abstract class RenderContext {
   StringSink out;
 
   void abort();
+
+  bool yesToAll;
 }
 
 /// The abstract node type that all nodes in the tree must

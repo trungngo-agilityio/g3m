@@ -15,9 +15,14 @@ class _Context implements BuildContext, RenderContext {
 
   List<_Context> _children;
 
-  _Context(this.parent, this.node) {
+  Program _program;
+
+  _Context.root(this._program, this.node) : parent = null;
+
+  _Context.childOf(this.parent, this.node) {
     dir = parent?.dir;
     file = parent?.file;
+    _program = parent?._program;
   }
 
   @override
@@ -54,7 +59,7 @@ class _Context implements BuildContext, RenderContext {
           if (i != null) {
             final child = i is Node ? i : Text.of(i);
 
-            final context = _Context(this, child)..build();
+            final context = _Context.childOf(this, child)..build();
             _children.add(context);
           }
         }
@@ -64,7 +69,7 @@ class _Context implements BuildContext, RenderContext {
       do {
         final builtNode = node.build(this);
         if (builtNode != null) {
-          final context = _Context(this, builtNode)..build();
+          final context = _Context.childOf(this, builtNode)..build();
           _children.add(context);
         }
 
@@ -107,15 +112,28 @@ class _Context implements BuildContext, RenderContext {
   void abort() {
     _aborted = true;
   }
+
+  @override
+  bool get yesToAll {
+    return _program._yesToAll;
+  }
+
+  @override
+  set yesToAll(bool value) {
+    _program._yesToAll = value;
+  }
 }
 
 class Program {
   final Node root;
 
+  bool _yesToAll;
+
   Program._(this.root);
 
   void _execute() {
-    final context = _Context(null, Directory.absolute('.', root));
+    final context = _Context.root(this, Directory.absolute('.', root));
+
     context.build();
     context.render();
   }

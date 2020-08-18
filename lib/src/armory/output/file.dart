@@ -54,14 +54,18 @@ class File implements Node, Renderer, PostRenderer {
       if (existingContent == content) {
         // The content has not been modified, just skip it.
         print('$relativePath not modified.');
+      } else if (context.yesToAll == true) {
+        print('$relativePath has been overwritten.');
       } else {
         // The content has been modified. Need to prompt.
-        final yes = 'Yes. Overwrite';
         final no = 'No, skip it.';
+        final yes = 'Yes. Overwrite';
+        final yesToAll = 'Yes and stop asking. Overwrite everything';
         final abort = 'Abort';
         final options = {
-          'y': yes,
           'n': no,
+          'y': yes,
+          '*': yesToAll,
           'a': abort,
         };
 
@@ -84,8 +88,11 @@ class File implements Node, Renderer, PostRenderer {
           // Skips the file.
           print('$relativePath has been skipped.');
           return;
-        } else {
+        } else if (choice == yesToAll) {
           // Overwrite the file.
+          print('$relativePath and all other changes will be overwrite.');
+          context.yesToAll = true;
+        } else {
           print('$relativePath has been overwritten.');
         }
       }
