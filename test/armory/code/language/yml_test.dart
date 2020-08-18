@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 import '../../utils.dart';
 
 void main() {
-  test('all', () async {
+  test('all', ()  {
     var root = Directory.temp(
       'g3armory',
       YmlCodeFile.of(
@@ -27,6 +27,6 @@ void main() {
         },
       ),
     );
-    await runAndExpect(root, '');
+     runAndExpect(root, '');
   });
 }

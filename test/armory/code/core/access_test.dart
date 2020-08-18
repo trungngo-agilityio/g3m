@@ -4,9 +4,9 @@ import 'package:test/test.dart';
 import '../../utils.dart';
 
 void main() {
-  void run(Node node, String expected) async {
+  void run(Node node, String expected)  {
     var code = CodeModifierConfig.forJavaLike(node);
-    await runAndExpect(code, expected);
+     runAndExpect(code, expected);
   }
 
   test('override', () {
@@ -36,8 +36,8 @@ void main() {
   test('static', () {
     run(CodeModifier(static: true), 'static ');
   });
-  test('all', () async {
-    await run(
+  test('all', ()  {
+     run(
       CodeModifier(
           override: true,
           private: true,

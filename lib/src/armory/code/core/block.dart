@@ -35,11 +35,13 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
   factory CodeBlockConfig.openCloseIndent(
       String open, String close, bool newLine, Node child) {
     return CodeBlockConfig((context, codeBlock) {
+      var body = codeBlock.body;
+      if (body == null) return Text._('{}');
       return Container([
         newLine ? '\n' : null,
         open,
         '\n',
-        Indent(codeBlock.body),
+        Indent(body),
         '\n',
         close,
       ]);
@@ -58,7 +60,7 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
 class CodeBlock extends CodeConfigProxyNode<CodeBlock> {
   final Node body;
 
-  CodeBlock(this.body);
+  CodeBlock._(this.body);
 
-  factory CodeBlock.of(Node body) => body != null ? CodeBlock(body) : null;
+  factory CodeBlock.of(Node body) => body != null ? CodeBlock._(body) : null;
 }

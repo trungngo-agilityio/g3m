@@ -23,6 +23,17 @@ class CodeEnumList extends CodeConfigProxyNode<CodeEnumList> {
 
   CodeEnumList._(this.enums);
 
-  factory CodeEnumList.of(List<CodeEnum> enums) =>
-      enums?.isNotEmpty == true ? CodeEnumList._(enums) : null;
+  static CodeEnumList _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeEnumList>(value, (v) {
+      final list = _parseNodeList<CodeEnum>(v, CodeEnum._parse);
+      if (list != null) return CodeEnumList._(list);
+      return null;
+    }, error: error);
+  }
+
+  factory CodeEnumList.of(dynamic values) {
+    return CodeEnumList._parse(values, error: () {
+      throw '$values is not a valid enum value list';
+    });
+  }
 }

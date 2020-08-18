@@ -98,13 +98,19 @@ class CodeComment extends CodeConfigProxyNode<CodeComment> {
 
   CodeComment(this.text);
 
-  factory CodeComment.of(dynamic value) {
+  static CodeComment _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeComment>(value, (v) {
       if (v is Node) {
         return CodeComment(v);
       } else {
         return CodeComment(Text.of(v?.toString()));
       }
+    });
+  }
+
+  factory CodeComment.of(dynamic value) {
+    return CodeComment._parse(value, error: () {
+      throw '$value is not a valid comment';
     });
   }
 }

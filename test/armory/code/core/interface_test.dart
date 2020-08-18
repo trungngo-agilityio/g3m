@@ -6,9 +6,9 @@ import '../../utils.dart';
 
 void main() {
   group('comment', () {
-    void run(Node Function() build, String expected) async {
+    void run(Node Function() build, String expected)  {
       var code = JavaCodeConfig(build());
-      await runAndExpect(code, expected);
+       runAndExpect(code, expected);
     }
 
     test('empty', () {
@@ -83,8 +83,8 @@ void main() {
       );
     });
 
-    test('with function list', () async {
-      await run(
+    test('with function list', ()  {
+       run(
         () {
           return CodeInterface.of(
             'person',

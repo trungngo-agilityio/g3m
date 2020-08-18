@@ -20,23 +20,23 @@ void main() {
     );
 
     group('single import', () {
-      test('no type', () async {
+      test('no type', ()  {
         var code = JavaCodeConfig(
           single,
         );
 
-        await runAndExpect(
+         runAndExpect(
           code,
           'import human.*;\n',
         );
       });
 
-      test('multiple types', () async {
+      test('multiple types', ()  {
         var code = JavaCodeConfig(
           multi,
         );
 
-        await runAndExpect(
+         runAndExpect(
           code,
           'import human.Vehicle;\n'
           'import human.Person;\n',
@@ -45,12 +45,12 @@ void main() {
     });
 
     group('import list', () {
-      test('all', () async {
+      test('all', ()  {
         var code = JavaCodeConfig(
           CodeImportList.of([single, multi]),
         );
 
-        await runAndExpect(
+         runAndExpect(
           code,
           '\n'
           '\n'

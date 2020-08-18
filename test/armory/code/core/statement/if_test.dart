@@ -5,12 +5,12 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('simple', () async {
+  test('simple', () {
     var code = JavaCodeConfig(
       CodeIf.of(true, ['print("Hello World!")']),
     );
 
-    await runAndExpect(
+    runAndExpect(
       code,
       'if (true) {\n'
       '  print("Hello World!");\n'
@@ -18,13 +18,13 @@ void main() {
     );
   });
 
-  test('with else', () async {
+  test('with else', () {
     var code = JavaCodeConfig(
       CodeIf.of(true, ['print("do something")'],
           elseBlock: ['print("do something else")']),
     );
 
-    await runAndExpect(
+    runAndExpect(
       code,
       'if (true) {\n'
       '  print("do something");\n'
@@ -34,7 +34,7 @@ void main() {
     );
   });
 
-  test('with else if', () async {
+  test('with else if', () {
     var code = JavaCodeConfig(
       CodeIf.of(true, [
         'print("do something");'
@@ -46,7 +46,7 @@ void main() {
       ]),
     );
 
-    await runAndExpect(
+    runAndExpect(
       code,
       'if (true) {\n'
       '  print("do something");;\n'

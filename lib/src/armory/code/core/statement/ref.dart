@@ -15,25 +15,35 @@ class CodeRef extends CodeConfigProxyNode<CodeRef> {
 
   CodeRef._(this.child);
 
+  // FIXME
   factory CodeRef.ofField(CodeField field) => CodeRef.ofFieldName(field.name);
 
+  // FIXME
   factory CodeRef.ofFieldName(CodeFieldName field) => CodeRef._(field);
 
+  // FIXME
   factory CodeRef.ofVar(CodeVar varz) => CodeRef.ofVarName(varz.name);
 
+  // FIXME
   factory CodeRef.ofVarName(CodeVarName varName) => CodeRef._(varName);
 
+  // FIXME
   factory CodeRef.ofProperty(CodeProperty property) =>
       CodeRef.ofPropertyName(property.name);
 
+  // FIXME
   factory CodeRef.ofPropertyName(CodePropertyName propertyName) =>
       CodeRef._(propertyName);
 
+  // FIXME
   factory CodeRef.ofClass(CodeClass clazz) => CodeRef.ofClassName(clazz.name);
 
+  // FIXME
   factory CodeRef.ofClassName(CodeClassName clazzName) => CodeRef._(clazzName);
 
+  // FIXME
   factory CodeRef.ofThis() => CodeRef._(Text.of('this'));
 
+  // FIXME
   factory CodeRef.ofSuper() => CodeRef._(Text.of('super'));
 }

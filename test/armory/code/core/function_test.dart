@@ -40,7 +40,7 @@ void main() {
       runAndExpect(code, 'String hello();\n');
     });
 
-    test('with annotation', () async {
+    test('with annotation', ()  {
       var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
@@ -50,7 +50,7 @@ void main() {
           ],
         ),
       );
-      await runAndExpect(
+       runAndExpect(
         code,
         '@Repository()\n'
         '@Repository(1, false)\n'
@@ -58,7 +58,7 @@ void main() {
       );
     });
 
-    test('with access', () async {
+    test('with access', ()  {
       var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
@@ -67,14 +67,14 @@ void main() {
           static: true,
         ),
       );
-      await runAndExpect(
+       runAndExpect(
         code,
         '@override\n'
         'private static hello();\n',
       );
     });
 
-    test('with generic', () async {
+    test('with generic', ()  {
       var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
@@ -84,7 +84,7 @@ void main() {
           },
         ),
       );
-      await runAndExpect(
+       runAndExpect(
         code,
         'hello<T>(T name);\n',
       );
@@ -100,7 +100,7 @@ void main() {
       runAndExpect(code, 'hello() throws InvalidArgumentException;\n');
     });
 
-    test('with all', () async {
+    test('with all', ()  {
       var code = JavaCodeConfig(
         CodeFunction.of(
           'hello',
@@ -117,7 +117,7 @@ void main() {
           throws: ['invalid argument exception'],
         ),
       );
-      await runAndExpect(
+       runAndExpect(
         code,
         '@Repository()\n'
         '@Repository(1, false)\n'

@@ -5,12 +5,12 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('simple', () async {
+  test('simple', ()  {
     var code = JavaCodeConfig(
       CodeReturn.of(true),
     );
 
-    await runAndExpect(
+     runAndExpect(
       code,
       'return true',
     );

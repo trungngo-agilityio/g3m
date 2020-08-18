@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('simple', () async {
+  test('simple', () {
     var code = JavaCodeConfig(
       CodeFor.of(
         init: CodeVar.of('i', type: 'int'),
@@ -15,7 +15,7 @@ void main() {
       ),
     );
 
-    await runAndExpect(
+    runAndExpect(
       code,
       'for (int i; i<10; i++) {\n'
       '  print("Hello World!");\n'

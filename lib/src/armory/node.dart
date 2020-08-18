@@ -20,12 +20,12 @@ List<T> _parseNodeList<T>(dynamic value, _NodeParseFunc next,
 
   List<T> res;
 
-  if (value is T) {
+  if (value is List<T>) {
+// return as-is
+    res = value;
+  } else if (value is T) {
     // return as a single item list
     res = [value];
-  } else if (value is List<T>) {
-    // return as-is
-    res = value;
   } else if (value is List) {
     // Try to map the list as custom function.
     var hasError = false;

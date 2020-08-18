@@ -50,7 +50,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements NamedNode {
   // The field data type. This is required.
   final CodeType type;
 
-  final CodeStatementList init;
+  final CodeStatement init;
 
   final CodeComment comment;
 
@@ -93,7 +93,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements NamedNode {
       modifier: modifier,
       type:
           CodeType._parse(type, error: () => '$type is not a valid data type.'),
-      init: CodeStatementList.of(init, closed: true),
+      init: CodeStatement.of(init),
       comment: CodeComment.of(comment),
     );
   }

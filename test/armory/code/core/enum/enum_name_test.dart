@@ -5,48 +5,46 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  void run(Node node, String expected)  {
-    var code = JavaCodeConfig(node);
-     runAndExpect(code, expected);
-  }
-
   test('null', () {
     run(
-      CodeAnnotationName.of(null),
+      CodeEnumName.of(null),
       '',
     );
   });
 
   test('empty', () {
     run(
-      CodeAnnotationName.of(''),
+      CodeEnumName.of(''),
       '',
     );
   });
 
   test('string', () {
     run(
-      CodeAnnotationName.of('hello'),
-      'Hello',
+      CodeEnumName.of('hello world'),
+      'HelloWorld',
     );
   });
 
   test('node', () {
     run(
-      CodeAnnotationName.of(Text.of('hello')),
-      'Hello',
+      CodeEnumName.of(Text.of('hello world')),
+      'HelloWorld',
     );
   });
 
   test('name of another name', () {
+    // Runs with dart config
     var argName = CodeArgName.of('hello world');
     run(argName, 'helloWorld');
     run(
-      CodeAnnotationName.of(
-        // node that the arg name is camel case
-        argName,
-      ),
+      CodeEnumName.of(argName),
       'HelloWorld',
     );
   });
+}
+
+void run(Node node, String expected) {
+  var code = JavaCodeConfig(node);
+  runAndExpect(code, expected);
 }

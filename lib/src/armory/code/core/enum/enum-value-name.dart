@@ -16,14 +16,29 @@ class CodeEnumValueNameConfig extends CodeConfigNode<CodeEnumValueName> {
       CodeEnumValueNameConfig.of(StringFuncs.constant, child);
 }
 
+/// Defines a name for [CodeEnumValue] element.
+///
 class CodeEnumValueName extends CodeConfigProxyNode<CodeEnumValueName>
     implements NamedNode {
   @override
   final Node name;
 
-  CodeEnumValueName(this.name);
+  CodeEnumValueName._(this.name);
 
-  factory CodeEnumValueName.of(String text) {
-    return text == null ? null : CodeEnumValueName(Text.of(text));
+  static CodeEnumValueName _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    // Try to parse the input as the enum name itself.
+    return _parseNode<CodeEnumValueName>(value, (v) {
+      // Try to parse the input as the name expression.
+      final name = NamedNode.nameOf(v);
+
+      // Don't accept null
+      if (name == null) return null;
+      return CodeEnumValueName._(name);
+    }, error: error);
   }
+
+  factory CodeEnumValueName.of(dynamic value) =>
+      CodeEnumValueName._parse(value, error: () {
+        throw '$value is not a valid enum value name';
+      });
 }

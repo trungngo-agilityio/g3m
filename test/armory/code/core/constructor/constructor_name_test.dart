@@ -5,9 +5,9 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  void run(Node node, String expected) async {
+  void run(Node node, String expected)  {
     var code = DartCodeConfig(node);
-    await runAndExpect(code, expected);
+     runAndExpect(code, expected);
   }
 
   test('null', () {

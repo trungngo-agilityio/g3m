@@ -18,23 +18,51 @@ class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue>
     implements NamedNode {
   @override
   final CodeEnumValueName name;
-  final OldCodeExpr init;
+
+  final CodeExpr init;
+
   final CodeComment comment;
 
-  CodeEnumValue({
+  CodeEnumValue._({
     this.name,
     this.init,
     this.comment,
   });
 
-  factory CodeEnumValue.of(
-    String name, {
-    dynamic init,
-    String comment,
-  }) =>
-      CodeEnumValue(
-        name: CodeEnumValueName.of(name),
-        init: init != null ? OldCodeExpr.of(init) : null,
-        comment: comment != null ? CodeComment.of(comment) : null,
+  static CodeEnumValue _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    // Try to parse the input as the enum name itself.
+    return _parseNode<CodeEnumValue>(value, (v) {
+      // Converts the value to a list.
+      final list = _parseNodeList<dynamic>(v, (v) => v);
+      if (list?.isNotEmpty != true) return null;
+
+      // Try to parse the input as the name expression.
+      final name = CodeEnumValueName._parse(list[0]);
+      // Don't accept null
+      if (name == null) return null;
+
+      final init =
+          list.length > 1 ? CodeExpr._parse(list[1], error: error) : null;
+      final comment =
+          list.length > 2 ? CodeComment._parse(list[2], error: error) : null;
+
+      return CodeEnumValue._(
+        name: name,
+        init: init,
+        comment: comment,
       );
+    }, error: error);
+  }
+
+  factory CodeEnumValue.of(
+    dynamic name, {
+    dynamic init,
+    dynamic comment,
+  }) {
+    return CodeEnumValue._(
+      name: CodeEnumValueName.of(name),
+      init: CodeExpr.of(init),
+      comment: CodeComment.of(comment),
+    );
+  }
 }

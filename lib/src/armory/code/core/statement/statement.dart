@@ -23,7 +23,7 @@ class CodeStatement extends CodeConfigProxyNode<CodeStatement> {
 
   CodeStatement._(this.child);
 
-  factory CodeStatement._parse(
+  static CodeStatement _parse(
     dynamic value, {
     bool closed,
     _NodeParseErrorFunc error,

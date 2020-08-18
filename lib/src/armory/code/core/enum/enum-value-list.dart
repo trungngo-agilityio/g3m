@@ -11,7 +11,6 @@ class CodeEnumValueListConfig extends CodeConfigNode<CodeEnumValueList> {
         if (children == null || children.isEmpty) {
           return null;
         }
-
         return Join.of(',\n', children);
       }, child);
 }
@@ -21,6 +20,17 @@ class CodeEnumValueList extends CodeConfigProxyNode<CodeEnumValueList> {
 
   CodeEnumValueList._(this.args);
 
-  factory CodeEnumValueList.of(List<CodeEnumValue> values) =>
-      values?.isNotEmpty == true ? CodeEnumValueList._(values) : null;
+  static CodeEnumValueList _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeEnumValueList>(value, (v) {
+      final list = _parseNodeList<CodeEnumValue>(v, CodeEnumValue._parse);
+      if (list != null) return CodeEnumValueList._(list);
+      return null;
+    }, error: error);
+  }
+
+  factory CodeEnumValueList.of(dynamic values) {
+    return CodeEnumValueList._parse(values, error: () {
+      throw '$values is not a valid enum value list';
+    });
+  }
 }

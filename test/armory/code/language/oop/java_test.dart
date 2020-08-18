@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('all', () async {
+  test('all', ()  {
     var root = JavaCode.of(
       body: Text.of('// You can put anything in this body.'),
       comment: CodeComment.of('Demo file level comment'),
@@ -42,7 +42,7 @@ void main() {
         clazz(),
       ],
     );
-    await runAndExpect(
+     runAndExpect(
       root,
       '// Demo file level comment\n'
       'package myPersonalVehicle;\n'

@@ -32,7 +32,7 @@ void main() {
         );
       });
 
-      test('with init', () async {
+      test('with init', ()  {
         var code = JavaCodeConfig(
           CodeProperty.of(
             name: 'first name',
@@ -41,7 +41,7 @@ void main() {
             static: true,
           ),
         );
-        await runDart(
+         runDart(
           code,
           '\n'
           'private static String firstName;\n',

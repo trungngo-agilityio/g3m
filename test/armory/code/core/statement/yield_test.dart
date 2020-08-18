@@ -5,25 +5,32 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('simple', () async {
+  test('simple', () {
     var code = DartCodeConfig(
       CodeYield.of(Text.of('a')),
     );
 
-    await runAndExpect(
+    run(
       code,
       'yield a',
     );
   });
 
-  test('async', () async {
+  test('async', () {
     var code = DartCodeConfig(
       CodeYield.of(Text.of('a'), async: true),
     );
 
-    await runAndExpect(
+    run(
       code,
       'yield* a',
     );
   });
+}
+
+void run(Node code, String expected) {
+  runAndExpect(
+    DartCodeConfig(code),
+    expected,
+  );
 }
