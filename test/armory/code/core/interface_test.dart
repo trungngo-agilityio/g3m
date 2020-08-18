@@ -6,14 +6,14 @@ import '../../utils.dart';
 
 void main() {
   group('comment', () {
-    void run(Node Function() build, String expected)  {
+    void run(Node Function() build, String expected) {
       var code = JavaCodeConfig(build());
-       runAndExpect(code, expected);
+      runAndExpect(code, expected);
     }
 
     test('empty', () {
       run(
-        () => CodeInterface.of('person'),
+        () => CodeInterface.of(name: 'person'),
         '\n'
         'interface Person {\n'
         '\n'
@@ -24,8 +24,8 @@ void main() {
     test('with code access', () {
       run(
         () => CodeInterface.of(
-          'person',
-          private: true,
+          name: 'person',
+          isPrivate: true,
         ),
         '\n'
         'private interface Person {\n'
@@ -37,7 +37,7 @@ void main() {
     test('with comment', () {
       run(
         () => CodeInterface.of(
-          'person',
+          name: 'person',
           comment: 'hello world',
         ),
         '\n'
@@ -53,7 +53,7 @@ void main() {
     test('with field', () {
       run(
         () => CodeInterface.of(
-          'person',
+          name: 'person',
           fields: [
             makeField('first name'),
           ],
@@ -68,7 +68,7 @@ void main() {
     test('with field list', () {
       run(
         () => CodeInterface.of(
-          'person',
+          name: 'person',
           fields: [
             makeField('first name'),
             makeField('last name'),
@@ -83,11 +83,11 @@ void main() {
       );
     });
 
-    test('with function list', ()  {
-       run(
+    test('with function list', () {
+      run(
         () {
           return CodeInterface.of(
-            'person',
+            name: 'person',
             functions: [
               function('hello world 1'),
               function('hello world 2'),
@@ -129,9 +129,9 @@ void main() {
           ];
 
           return CodeInterface.of(
-            'person',
-            public: true,
-            abstract: true,
+            name: 'person',
+            isPublic: true,
+            isAbstract: true,
             generic: generic,
             extend: [extend],
             fields: fields,

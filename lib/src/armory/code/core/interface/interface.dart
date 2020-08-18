@@ -65,38 +65,40 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
     this.body,
   }) : assert(name != null);
 
-  factory CodeInterface.of(
-    String name, {
-    String comment,
-    bool private,
-    bool public,
-    bool protected,
-    bool internal,
-    bool abstract,
-    bool static,
-    List<CodeGenericParam> generic,
-    List<CodeType> extend,
-    List<CodeField> fields,
-    List<CodeFunction> functions,
+  factory CodeInterface.of({
+    @required dynamic name,
+    dynamic comment,
+    bool isPrivate,
+    bool isPublic,
+    bool isProtected,
+    bool isInternal,
+    bool isAbstract,
+    bool isStatic,
+    dynamic generic,
+    dynamic extend,
+    dynamic fields,
+    dynamic functions,
     Node body,
   }) =>
       CodeInterface(
         name: CodeTypeName.of(name),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
         modifier: CodeModifier(
-          isPrivate: private,
-          isPublic: public,
-          isProtected: protected,
-          isInternal: internal,
-          isAbstract: abstract,
-          isStatic: static,
+          isPrivate: isPrivate,
+          isPublic: isPublic,
+          isProtected: isProtected,
+          isInternal: isInternal,
+          isAbstract: isAbstract,
+          isStatic: isStatic,
         ),
         generic: CodeGenericParamList.of(generic),
         extend: CodeTypeList.of(extend),
         body: CodeBlock.of(
           Container([
-            CodeFieldList.of(fields),
-            CodeFunctionList.of(functions),
+            CodeStatement.of(Container([
+              CodeFieldList.of(fields),
+              CodeFunctionList.of(functions),
+            ])),
             body,
           ]),
         ),

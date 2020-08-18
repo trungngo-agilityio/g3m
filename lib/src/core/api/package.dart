@@ -17,7 +17,8 @@ class Package extends Expr<Package> {
 
    set dependencies(Dependency value) {
     _dependencies = value;
-    assert(value != null, 'value is required')for (var i in eval()) {
+    assert(value != null, 'value is required');
+    for (var i in eval()) {
       i._dependencies = value;
     }
   }
@@ -30,7 +31,8 @@ class Package extends Expr<Package> {
 
    set subDep(Dependency value) {
     _subDep = value;
-    assert(value != null, 'value is required')for (var i in eval()) {
+    assert(value != null, 'value is required');
+    for (var i in eval()) {
       i._subDep = value;
     }
   }
@@ -43,7 +45,8 @@ class Package extends Expr<Package> {
 
    set authors(Author value) {
     _authors = value;
-    assert(value != null, 'value is required')for (var i in eval()) {
+    assert(value != null, 'value is required');
+    for (var i in eval()) {
       i._authors = value;
     }
   }

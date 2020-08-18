@@ -53,8 +53,8 @@ void main() {
         CodeConstructor.of(
           requiredArgs: ['car'],
           init: [
-            CodeFunctionCall.of('assert', args: [false]),
-            CodeFunctionCall.of('assert', args: [true]),
+            CodeFunctionCall.of(name:'assert', args: [false]),
+            CodeFunctionCall.of(name:'assert', args: [true]),
           ],
         ),
         '\n'
@@ -72,11 +72,11 @@ void main() {
       CodeConstructor.of(
         requiredArgs: ['car'],
         init: [
-          CodeFunctionCall.of('assert', args: [false]),
+          CodeFunctionCall.of(name:'assert', args: [false]),
           'assert(car != null)'
         ],
         body: [
-          CodeFunctionCall.of('print', args: ['hello world']),
+          CodeFunctionCall.of(name:'print', args: ['hello world']),
         ],
       ),
       '\n'

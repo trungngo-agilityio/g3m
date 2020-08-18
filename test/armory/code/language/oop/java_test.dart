@@ -111,9 +111,9 @@ void main() {
 
 CodeInterface interfaze() {
   return CodeInterface.of(
-    'person',
-    public: true,
-    abstract: true,
+    name: 'person',
+    isPublic: true,
+    isAbstract: true,
     generic: [
       genericParam(),
     ],

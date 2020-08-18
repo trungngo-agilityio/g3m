@@ -33,7 +33,6 @@ class CodeArgName extends CodeConfigProxyNode<CodeArgName>
   /// True indicates this field name is private.
   final bool isPrivate;
 
-
   CodeArgName._({
     @required this.name,
     @required this.isPrivate,

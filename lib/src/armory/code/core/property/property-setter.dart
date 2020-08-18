@@ -40,13 +40,15 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
       ]);
 
       if (setter.body == null) {
-        return CodeStatement.of(def);
+        return CodeExpr.open(def);
       } else {
-        return Container([
-          def,
-          Text.space(),
-          setter.body,
-        ]);
+        return CodeExpr.closed(
+          Container([
+            def,
+            Text.space(),
+            setter.body,
+          ]),
+        );
       }
     }, child);
   }
@@ -81,27 +83,24 @@ class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
 
   factory CodePropertySetter._parse(dynamic value) {
     return _parseNode<CodePropertySetter>(value, (v) {
-      final children = _parseNodeList<Node>(value, (v) {
-        return CodeExpr.of(v);
-      });
-
+      final statements = CodeStatementList._parse(v);
       return CodePropertySetter._(
-        body: CodeBlock.of(Container(children)),
+        body: CodeBlock.of(statements),
       );
     });
   }
 
   factory CodePropertySetter.of({
-    String name,
-    String type,
-    String comment,
-    List<CodeAnnotation> annotations,
-    List<dynamic> body,
+    dynamic name,
+    dynamic type,
+    dynamic comment,
+    dynamic annotations,
+    dynamic body,
   }) =>
       CodePropertySetter._(
         name: CodePropertyName.of(name),
-        type: CodeType.simple(type),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        type: CodeType.of(name: type),
+        comment: CodeComment.of(comment),
         annotations: CodeAnnotationList.of(annotations),
         body: CodeBlock.of(CodeStatementList.of(body)),
       );

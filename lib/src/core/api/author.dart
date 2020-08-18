@@ -1,4 +1,4 @@
-part of g3m.core.dep
+part of g3m.core.dep;
 
 
 class Author extends Expr<Author> {
@@ -17,7 +17,8 @@ class Author extends Expr<Author> {
 
    set author(Dependency value) {
     _author = value;
-    assert(value != null, 'value is required')for (var i in eval()) {
+    assert(value != null, 'value is required');
+    for (var i in eval()) {
       i._author = value;
     }
   }

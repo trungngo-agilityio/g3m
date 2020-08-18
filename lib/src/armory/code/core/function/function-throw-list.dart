@@ -33,7 +33,7 @@ class CodeFunctionThrowList extends CodeConfigProxyNode<CodeFunctionThrowList> {
       {_NodeParseErrorFunc error}) {
     return _parseNode<CodeFunctionThrowList>(value, (v) {
       final list =
-      _parseNodeList<CodeFunctionThrow>(v, CodeFunctionThrow._parse);
+          _parseNodeList<CodeFunctionThrow>(v, CodeFunctionThrow._parse);
       if (list != null) return CodeFunctionThrowList._(list);
       return null;
     }, error: error);

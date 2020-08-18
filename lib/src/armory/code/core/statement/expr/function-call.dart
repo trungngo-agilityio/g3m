@@ -23,7 +23,7 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
   final CodeFunctionName name;
   final CodeComment comment;
   final CodeGenericParamList generic;
-  final List<OldCodeExpr> args;
+  final List<CodeExpr> args;
 
   CodeFunctionCall({
     @required this.name,
@@ -32,17 +32,16 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
     this.args,
   });
 
-  factory CodeFunctionCall.of(
-    String name, {
-    String comment,
-    List<String> generic,
-    List<dynamic> args,
-    Node body,
+  factory CodeFunctionCall.of({
+    @required dynamic name,
+    dynamic comment,
+    dynamic generic,
+    dynamic args,
   }) =>
       CodeFunctionCall(
         name: CodeFunctionName.of(name: name),
-        comment: comment != null ? CodeComment.of(comment) : null,
-        generic: generic != null ? CodeGenericParamList.of(generic) : null,
-        args: args?.map((e) => OldCodeExpr.of(e))?.toList(),
+        comment: CodeComment.of(comment),
+        generic: CodeGenericParamList.of(generic),
+        args: CodeExpr.listOf(args),
       );
 }

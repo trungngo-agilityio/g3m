@@ -78,7 +78,7 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
   final CodeType type;
 
   /// The property initializer
-  final OldCodeExpr init;
+  final CodeExpr init;
 
   /// Get getter function for the property
   final CodePropertyGetter getter;
@@ -101,38 +101,38 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
   });
 
   factory CodeProperty.of({
-    dynamic name,
-    List<CodeAnnotation> annotations,
-    bool override,
-    bool private,
-    bool public,
-    bool protected,
-    bool internal,
-    bool abstract,
-    bool static,
+    @required dynamic name,
+    dynamic annotations,
+    bool isOverride,
+    bool isPrivate,
+    bool isPublic,
+    bool isProtected,
+    bool isInternal,
+    bool isAbstract,
+    bool isStatic,
     bool isFinal,
-    String type,
+    dynamic type,
     dynamic getter,
     dynamic setter,
     dynamic init,
-    String comment,
+    dynamic comment,
   }) =>
       CodeProperty(
         name: CodePropertyName.of(name),
         annotations: CodeAnnotationList.of(annotations),
         modifier: CodeModifier(
-          override: override,
-          isPrivate: private,
-          isPublic: public,
-          isProtected: protected,
-          isInternal: internal,
-          isStatic: static,
+          override: isOverride,
+          isPrivate: isPrivate,
+          isPublic: isPublic,
+          isProtected: isProtected,
+          isInternal: isInternal,
+          isStatic: isStatic,
           isFinal: isFinal,
         ),
         type: CodeType.simple(type),
-        init: init != null ? OldCodeExpr.of(init) : null,
+        init: CodeExpr.of(init),
         getter: CodePropertyGetter._parse(getter),
         setter: CodePropertySetter._parse(setter),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
       );
 }

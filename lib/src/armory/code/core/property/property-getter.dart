@@ -88,24 +88,23 @@ class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter>
   factory CodePropertyGetter._parse(dynamic value) {
     return _parseNode<CodePropertyGetter>(value, (v) {
       final statements = CodeStatementList._parse(v);
-      Node body = statements ?? v;
       return CodePropertyGetter._(
-        body: CodeBlock.of(body),
+        body: CodeBlock.of(statements),
       );
     });
   }
 
   factory CodePropertyGetter.of({
-    String name,
-    String type,
-    String comment,
-    List<CodeAnnotation> annotations,
-    List<dynamic> body,
+    dynamic name,
+    dynamic type,
+    dynamic comment,
+    dynamic annotations,
+    dynamic body,
   }) =>
       CodePropertyGetter._(
         name: CodePropertyName.of(name),
         type: CodeType.simple(type),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
         annotations: CodeAnnotationList.of(annotations),
         body: CodeBlock.of(CodeStatementList.of(body)),
       );

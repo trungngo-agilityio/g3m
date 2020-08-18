@@ -37,8 +37,8 @@ void main() {
           CodeProperty.of(
             name: 'first name',
             type: 'string',
-            private: true,
-            static: true,
+            isPrivate: true,
+            isStatic: true,
           ),
         );
          runDart(
@@ -110,7 +110,7 @@ void main() {
         final code = CodeProperty.of(
           name: 'first name',
           type: 'string',
-          private: true,
+          isPrivate: true,
           getter: CodePropertyGetter.of(),
         );
         runDart(
@@ -138,7 +138,7 @@ void main() {
       final code = CodeProperty.of(
         name: 'first name',
         type: 'string',
-        private: true,
+        isPrivate: true,
         setter: CodePropertySetter.of(),
       );
       runDart(
