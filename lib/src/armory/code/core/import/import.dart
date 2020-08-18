@@ -29,7 +29,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
         aliasNode = Container([' ', asKeyword, ' ', import.alias]);
       }
 
-      return CodeStatement.of(
+      return CodeExpr.open(
         Container([
           importKeyword,
           packageNode,
@@ -48,7 +48,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
         if (import.types != null && import.types.isNotEmpty) {
           return Container(import.types);
         } else {
-          return CodeStatement.of(
+          return CodeExpr.open(
             Container([
               importKeyword,
               ' ',
@@ -73,27 +73,30 @@ class CodeImport extends CodeConfigProxyNode<CodeImport> {
   /// The optional file path of where to find the package.
   final String path;
 
-  CodeImport({
+  CodeImport._({
     this.package,
     this.alias,
     this.types,
     this.path,
   });
 
-  factory CodeImport.of(
-    String package, {
-    String alias,
-    List<CodeImportType> types,
-    String path,
-  }) =>
-      CodeImport(
-        package: CodePackageName.of(package),
-        alias: alias != null ? CodePackageName.of(alias) : null,
-        path: path,
-        types: types,
-      );
+  /// Try parse a dynamic value to an argument object.
+  static CodeImport _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeImport>(value, null, error: error);
+  }
 
-  /// Import all types from the specified [path].
-  ///
-  factory CodeImport.allFromPath(String path) => CodeImport(path: path);
+  factory CodeImport.of({
+    dynamic package,
+    dynamic alias,
+    List<CodeImportType> types,
+    // FIXME dynamic?
+    String path,
+  }) {
+    return CodeImport._(
+      package: CodePackageName.of(package),
+      alias: CodePackageName.of(alias),
+      path: path,
+      types: types,
+    );
+  }
 }

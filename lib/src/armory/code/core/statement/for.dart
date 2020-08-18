@@ -28,13 +28,13 @@ class CodeForConfig extends CodeConfigNode<CodeFor> {
 }
 
 class CodeFor extends CodeConfigProxyNode<CodeFor> {
-  final OldCodeExpr init;
-  final OldCodeExpr condition;
-  final OldCodeExpr step;
+  final CodeExpr init;
+  final CodeExpr condition;
+  final CodeExpr step;
   final CodeStatementList body;
   final CodeComment comment;
 
-  CodeFor({
+  CodeFor._({
     this.init,
     this.condition,
     this.step,
@@ -46,14 +46,14 @@ class CodeFor extends CodeConfigProxyNode<CodeFor> {
     @required dynamic init,
     @required dynamic condition,
     @required dynamic step,
-    List<dynamic> body,
-    String comment,
+    @required dynamic body,
+    dynamic comment,
   }) =>
-      CodeFor(
-        init: OldCodeExpr.of(init),
-        condition: OldCodeExpr.of(condition),
-        step: OldCodeExpr.of(step),
+      CodeFor._(
+        init: CodeExpr.of(init),
+        condition: CodeExpr.of(condition),
+        step: CodeExpr.of(step),
         body: CodeStatementList.of(body),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
       );
 }

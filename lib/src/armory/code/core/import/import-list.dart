@@ -24,6 +24,17 @@ class CodeImportList extends CodeConfigProxyNode<CodeImportList> {
 
   CodeImportList._(this.imports);
 
-  factory CodeImportList.of(List<CodeImport> imports) =>
-      imports?.isNotEmpty == true ? CodeImportList._(imports) : null;
+  static CodeImportList _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeImportList>(value, (v) {
+      final list = _parseNodeList<CodeImport>(v, CodeImport._parse);
+      if (list != null) return CodeImportList._(list);
+      return null;
+    }, error: error);
+  }
+
+  factory CodeImportList.of(dynamic values) {
+    return CodeImportList._parse(values, error: () {
+      throw '$values is not a valid field list';
+    });
+  }
 }

@@ -58,22 +58,26 @@ class DartCode extends SingleChildNode {
   DartCode(Node source) : super(DartCodeConfig(source));
 
   factory DartCode.of({
-    CodePackage package,
-    CodeComment comment,
-    List<CodeEnum> enums,
-    List<CodeImport> imports,
-    List<CodeFunction> functions,
-    List<CodeClass> classes,
-    Node body,
+    dynamic package,
+    dynamic comment,
+    dynamic enums,
+    dynamic imports,
+    dynamic functions,
+    dynamic classes,
+    dynamic body,
   }) {
-    var source = Container([
-      comment,
-      package,
-      CodeImportList.of(imports),
-      CodeEnumList.of(enums),
-      CodeFunctionList.of(functions),
-      CodeClassList.of(classes),
-      body,
+    final source = Container([
+      CodeStatement.of(
+        Container([
+          comment,
+          package,
+          CodeImportList.of(imports),
+          CodeEnumList.of(enums),
+          CodeFunctionList.of(functions),
+          CodeClassList.of(classes),
+        ]),
+      ),
+      CodeStatementList.of(body),
     ]);
 
     // Node that java code expect the file name to be class name.

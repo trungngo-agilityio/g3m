@@ -1,4 +1,5 @@
-part of g3m.core.dep
+part of g3m.core.dep;
+
 
 
 class Dependency extends Expr<Dependency> {

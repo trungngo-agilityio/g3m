@@ -38,6 +38,7 @@ class Scope implements Node {
         var fieldRef = CodeRef.ofField(field);
 
         var iVar = CodeVar.of('i', isFinal: true);
+        var iVarRef = CodeRef.ofVar(iVar);
 
         return Container([
           field,
@@ -51,16 +52,14 @@ class Scope implements Node {
                 name: 'assert',
                 args: [Text.of('value != null'), 'value is required'],
               ),
-              CodeForEach(
-                item: OldCodeExpr.of(iVar),
-                collection: OldCodeExpr.of(CodeFunctionCall.of(name: 'eval')),
-                body: CodeStatementList.of([
-                  Container([
-                    CodeRef.ofVar(iVar),
-                    '.',
-                    fieldRef,
-                    ' = value;\n',
-                  ]),
+              CodeForEach.of(
+                item: iVar,
+                collection: CodeFunctionCall.of(name: 'eval'),
+                body: Container([
+                  iVarRef,
+                  '.',
+                  fieldRef,
+                  ' = value;\n',
                 ]),
               ),
             ],

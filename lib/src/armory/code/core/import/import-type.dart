@@ -10,7 +10,7 @@ class CodeImportTypeConfig extends CodeConfigNode<CodeImportType> {
   }) =>
       CodeImportTypeConfig((context, import) {
         final package = context.dependOnAncestorNodeOfExactType<CodeImport>();
-        return CodeStatement.of(
+        return CodeExpr.open(
           Container([
             importKeyword,
             ' ',
@@ -26,15 +26,36 @@ class CodeImportType extends CodeConfigProxyNode<CodeImportType> {
   final CodeTypeName type;
   final CodeTypeName alias;
 
-  CodeImportType({@required this.type, this.alias});
+  CodeImportType._({@required this.type, this.alias});
 
-  factory CodeImportType.of(
-    String type, {
-    String alias,
+  /// Try parse a dynamic value to an argument object.
+  static CodeImportType _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeImportType>(value, (v) {
+      final list = _toDynamicNodeList(v);
+
+      if (list?.isNotEmpty != true || list.length > 2) {
+        return null;
+      }
+
+      final type = CodeTypeName._parse(list[0]);
+      if (type == null) return null;
+
+      final alias =
+          list.length > 1 ? CodeTypeName._parse(list[1], error: error) : null;
+
+      return CodeImportType._(
+        type: type,
+        alias: alias,
+      );
+    }, error: error);
+  }
+
+  factory CodeImportType.of({
+    @required dynamic type,
+    dynamic alias,
   }) =>
-      CodeImportType(
+      CodeImportType._(
         type: CodeTypeName.of(type),
-        alias:
-            alias != null && alias.isNotEmpty ? CodeTypeName.of(alias) : null,
+        alias: CodeTypeName.of(alias),
       );
 }

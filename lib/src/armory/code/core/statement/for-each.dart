@@ -33,12 +33,12 @@ class CodeForEachConfig extends CodeConfigNode<CodeForEach> {
 
 class CodeForEach extends CodeConfigProxyNode<CodeForEach>
     implements _CodeStatementLike, OldCodeExpr {
-  final OldCodeExpr item;
-  final OldCodeExpr collection;
+  final CodeExpr item;
+  final CodeExpr collection;
   final CodeStatementList body;
   final CodeComment comment;
 
-  CodeForEach({
+  CodeForEach._({
     this.item,
     this.collection,
     this.body,
@@ -48,13 +48,13 @@ class CodeForEach extends CodeConfigProxyNode<CodeForEach>
   factory CodeForEach.of({
     @required dynamic item,
     @required dynamic collection,
-    @required List<dynamic> body,
+    @required dynamic body,
     String comment,
   }) =>
-      CodeForEach(
-        item: OldCodeExpr.of(item),
-        collection: OldCodeExpr.of(collection),
+      CodeForEach._(
+        item: CodeExpr.of(item),
+        collection: CodeExpr.of(collection),
         body: CodeStatementList.of(body),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
       );
 }

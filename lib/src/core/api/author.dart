@@ -1,6 +1,7 @@
 part of g3m.core.dep;
 
 
+
 class Author extends Expr<Author> {
   @override
   final AuthorScope scope;

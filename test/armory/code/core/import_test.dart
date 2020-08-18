@@ -8,35 +8,35 @@ import '../../utils.dart';
 void main() {
   group('java', () {
     final single = CodeImport.of(
-      'human',
+      package: 'human',
     );
 
     final multi = CodeImport.of(
-      'human',
+      package: 'human',
       types: [
-        CodeImportType.of('vehicle'),
-        CodeImportType.of('person'),
+        CodeImportType.of(type: 'vehicle'),
+        CodeImportType.of(type: 'person'),
       ],
     );
 
     group('single import', () {
-      test('no type', ()  {
+      test('no type', () {
         var code = JavaCodeConfig(
           single,
         );
 
-         runAndExpect(
+        runAndExpect(
           code,
-          'import human.*;\n',
+          'import human.*',
         );
       });
 
-      test('multiple types', ()  {
+      test('multiple types', () {
         var code = JavaCodeConfig(
-          multi,
+          CodeStatement.of(multi),
         );
 
-         runAndExpect(
+        runAndExpect(
           code,
           'import human.Vehicle;\n'
           'import human.Person;\n',
@@ -45,12 +45,14 @@ void main() {
     });
 
     group('import list', () {
-      test('all', ()  {
+      test('all', () {
         var code = JavaCodeConfig(
-          CodeImportList.of([single, multi]),
+          CodeStatement.of(
+            CodeImportList.of([single, multi]),
+          ),
         );
 
-         runAndExpect(
+        runAndExpect(
           code,
           '\n'
           '\n'
@@ -65,7 +67,7 @@ void main() {
   group('dart', () {
     test('import path', () {
       var code = DartCodeConfig(
-        CodeImport.allFromPath('hello_world.dart'),
+        CodeImport.of(path: 'hello_world.dart'),
       );
 
       runAndExpect(code, 'import \'hello_world.dart\';\n');

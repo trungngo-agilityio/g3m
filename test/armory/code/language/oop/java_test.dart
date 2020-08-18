@@ -11,11 +11,11 @@ void main() {
       comment: CodeComment.of('Demo file level comment'),
       package: CodePackage.of('my personal vehicle'),
       imports: [
-        CodeImport.of('io'),
-        CodeImport.of('path', alias: 'ioPath'),
-        CodeImport.of('math', types: [
-          CodeImportType.of('vector'),
-          CodeImportType.of('human matrix'),
+        CodeImport.of(package: 'io'),
+        CodeImport.of(package: 'path', alias: 'ioPath'),
+        CodeImport.of(package: 'math', types: [
+          CodeImportType.of(type: 'vector'),
+          CodeImportType.of(type: 'human matrix'),
         ]),
       ],
       enums: [

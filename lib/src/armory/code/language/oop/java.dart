@@ -57,26 +57,28 @@ class JavaCode extends SingleChildNode {
   JavaCode(Node source) : super(JavaCodeConfig(source));
 
   factory JavaCode.of({
-    CodePackage package,
-    CodeComment comment,
-    List<CodeImport> imports,
-    List<CodeEnum> enums,
-    List<CodeFunction> functions,
-    List<CodeInterface> interfaces,
-    List<CodeClass> classes,
-    Node body,
+    dynamic package,
+    dynamic comment,
+    dynamic imports,
+    dynamic enums,
+    dynamic functions,
+    dynamic interfaces,
+    dynamic classes,
+    dynamic body,
   }) {
-    var source = Container([
-      comment,
-      package,
-      CodeImportList.of(imports),
-      CodeEnumList.of(enums),
-      CodeFunctionList.of(functions),
-      CodeInterfaceList.of(interfaces),
-      CodeClassList.of(classes),
-      body,
+    final source = Container([
+      CodeStatement.of(
+        Container([
+          comment,
+          package,
+          CodeImportList.of(imports),
+          CodeEnumList.of(enums),
+          CodeFunctionList.of(functions),
+          CodeClassList.of(classes),
+        ]),
+      ),
+      CodeStatementList.of(body),
     ]);
-
     // Node that java code expect the file name to be class name.
     return JavaCode(source);
   }

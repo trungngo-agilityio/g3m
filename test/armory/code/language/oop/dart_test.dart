@@ -11,9 +11,9 @@ void main() {
       comment: CodeComment.of('Demo file level comment'),
       package: CodePackage.of('my personal vehicle'),
       imports: [
-        CodeImport.of('io'),
-        CodeImport.of('path', alias: 'ioPath'),
-        CodeImport.of('math'),
+        CodeImport.of(package: 'io'),
+        CodeImport.of(package: 'path', alias: 'ioPath'),
+        CodeImport.of(package: 'math'),
       ],
       enums: [
         CodeEnum.of(
@@ -118,9 +118,12 @@ CodeClass clazz() {
 }
 
 CodeFunction function() {
-  return CodeFunction.of(name: 'drive',
+  return CodeFunction.of(
+      name: 'drive',
       generic: ['T'],
-      requiredArgs: [['vehicle', 'car']],
+      requiredArgs: [
+        ['vehicle', 'car']
+      ],
       isInternal: true,
       comment: 'just a demo function',
       returns: ['void'],

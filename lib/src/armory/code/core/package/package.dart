@@ -35,8 +35,9 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
         pathNode = Pad.right(pathSeparator, pathNode);
       }
 
-      return CodeStatement.of(
+      return CodeExpr.open(
         Container([
+          '\n',
           packageOrPartOfNode,
           pathNode,
           nameNode,
@@ -60,23 +61,27 @@ class CodePackage extends CodeConfigProxyNode<CodePackage>
   /// as "part of" syntax.
   final bool isPart;
 
-  CodePackage({@required this.name, this.isPart, this.path})
-      : assert(name != null);
+  CodePackage._({
+    @required this.name,
+    this.isPart,
+    this.path,
+  }) : assert(name != null);
 
   factory CodePackage.of(
-    String name, {
-    List<String> path,
+    dynamic name, {
+    List<dynamic> path,
   }) =>
-      CodePackage(
+      CodePackage._(
           name: CodePackageName.of(name),
           isPart: false,
           path: CodePackageName.listOf(path));
 
+  // FIXME
   factory CodePackage.partOf(
-    String name, {
-    List<String> path,
+    dynamic name, {
+    List<dynamic> path,
   }) =>
-      CodePackage(
+      CodePackage._(
           name: CodePackageName.of(name),
           isPart: true,
           path: CodePackageName.listOf(path));

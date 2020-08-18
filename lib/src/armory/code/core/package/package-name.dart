@@ -28,13 +28,25 @@ class CodePackageName extends CodeConfigProxyNode<CodePackageName>
   @override
   final Node name;
 
-  CodePackageName(this.name);
+  CodePackageName._(this.name);
 
-  factory CodePackageName.of(String text) {
-    return text == null ? null : CodePackageName(Text.of(text));
+  static CodePackageName _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodePackageName>(value, (v) {
+      // Try to parse the value as the expression name.
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
+      return CodePackageName._(name);
+    }, error: error);
   }
 
-  static List<CodePackageName> listOf(List<String> texts) {
+  factory CodePackageName.of(dynamic value) {
+    return CodePackageName._parse(value, error: () {
+      throw '${value} is not a valid package name.';
+    });
+  }
+
+  // FIXME should parse
+  static List<CodePackageName> listOf(List<dynamic> texts) {
     if (texts?.isNotEmpty != true) return null;
     return texts.map((e) => CodePackageName.of(e)).toList();
   }
