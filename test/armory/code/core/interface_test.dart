@@ -113,7 +113,7 @@ void main() {
       run(
         () {
           final generic = [
-            CodeGenericParam.of('t'),
+            CodeGenericParam.of(name: 't'),
           ];
 
           final extend = CodeType.genericSingle('car', 't');

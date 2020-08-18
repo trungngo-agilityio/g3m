@@ -121,7 +121,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction>
         isInternal: isInternal,
         static: isStatic,
       ),
-      generic: CodeGenericParamList.list(generic),
+      generic: CodeGenericParamList.of(generic),
       args: CodeArgList.of(
         required: requiredArgs,
         optional: optionalArgs,

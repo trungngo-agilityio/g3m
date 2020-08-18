@@ -24,13 +24,18 @@ class CodeGenericParamList extends CodeConfigProxyNode<CodeGenericParamList> {
 
   CodeGenericParamList._(this.params);
 
-  factory CodeGenericParamList.single(String type) =>
-      CodeGenericParamList._([CodeGenericParam.of(type)]);
+  static CodeGenericParamList _parse(dynamic value,
+      {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeGenericParamList>(value, (v) {
+      final list = _parseNodeList<CodeGenericParam>(v, CodeGenericParam._parse);
+      if (list != null) return CodeGenericParamList._(list);
+      return null;
+    }, error: error);
+  }
 
-  factory CodeGenericParamList.list(List<String> types) =>
-      CodeGenericParamList._(
-          types?.map((type) => CodeGenericParam.of(type))?.toList());
-
-  factory CodeGenericParamList.of(List<CodeGenericParam> params) =>
-      params?.isNotEmpty == true ? CodeGenericParamList._(params) : null;
+  factory CodeGenericParamList.of(dynamic values) {
+    return CodeGenericParamList._parse(values, error: () {
+      throw '$values is not a valid generic param list';
+    });
+  }
 }

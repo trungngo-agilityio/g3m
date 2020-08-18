@@ -42,7 +42,7 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
       CodeFunctionCall(
         name: CodeFunctionName.of(name: name),
         comment: comment != null ? CodeComment.of(comment) : null,
-        generic: generic != null ? CodeGenericParamList.list(generic) : null,
+        generic: generic != null ? CodeGenericParamList.of(generic) : null,
         args: args?.map((e) => OldCodeExpr.of(e))?.toList(),
       );
 }

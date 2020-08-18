@@ -136,14 +136,14 @@ CodeInterface interfaze() {
   );
 }
 
-CodeGenericParam genericParam() => CodeGenericParam.of('T');
+CodeGenericParam genericParam() => CodeGenericParam.of(name: 'T');
 
 CodeClass clazz() {
   return CodeClass.of(
     'person',
     public: true,
     abstract: true,
-    generic: [CodeGenericParam.of('T')],
+    generic: [CodeGenericParam.of(name: 'T')],
     extend: null,
     implements: null,
     fields: [

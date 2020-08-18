@@ -110,14 +110,14 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   factory CodeType.genericSingle(String name, String param) => CodeType.of(
         name: CodeTypeName.of(name),
         generic: CodeGenericParamList.of(
-          [CodeGenericParam.of(param)],
+          [CodeGenericParam.of(name: param)],
         ),
       );
 
   factory CodeType.genericList(String name, List<String> params) => CodeType.of(
         name: CodeTypeName.of(name),
         generic: CodeGenericParamList.of(
-            params?.map((e) => CodeGenericParam.of(e))?.toList()),
+            params?.map((e) => CodeGenericParam.of(name: e))?.toList()),
       );
 
   factory CodeType.array(String name) => CodeType.of(
@@ -127,7 +127,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
 
   factory CodeType.genericSingleArray(String name, String param) => CodeType.of(
         name: CodeTypeName.of(name),
-        generic: CodeGenericParamList.of([CodeGenericParam.of(param)]),
+        generic: CodeGenericParamList.of([CodeGenericParam.of(name: param)]),
         array: true,
       );
 
@@ -135,7 +135,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
       CodeType.of(
         name: CodeTypeName.of(name),
         generic: CodeGenericParamList.of(
-            params?.map((e) => CodeGenericParam.of(e))?.toList()),
+            params?.map((e) => CodeGenericParam.of(name: e))?.toList()),
         array: true,
       );
 }
