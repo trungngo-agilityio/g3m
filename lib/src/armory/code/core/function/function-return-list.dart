@@ -21,12 +21,21 @@ class CodeFunctionReturnList
     extends CodeConfigProxyNode<CodeFunctionReturnList> {
   final List<CodeFunctionReturn> types;
 
-  CodeFunctionReturnList(this.types);
+  CodeFunctionReturnList._(this.types);
 
-  factory CodeFunctionReturnList.single(String type) =>
-      CodeFunctionReturnList([CodeFunctionReturn.simple(type)]);
+  static CodeFunctionReturnList _parse(dynamic value,
+      {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeFunctionReturnList>(value, (v) {
+      final list =
+          _parseNodeList<CodeFunctionReturn>(v, CodeFunctionReturn._parse);
+      if (list != null) return CodeFunctionReturnList._(list);
+      return null;
+    }, error: error);
+  }
 
-  factory CodeFunctionReturnList.list(List<String> types) =>
-      CodeFunctionReturnList(
-          types?.map((type) => CodeFunctionReturn.simple(type))?.toList());
+  factory CodeFunctionReturnList.of(dynamic values) {
+    return CodeFunctionReturnList._parse(values, error: () {
+      throw '$values is not a valid function return list';
+    });
+  }
 }

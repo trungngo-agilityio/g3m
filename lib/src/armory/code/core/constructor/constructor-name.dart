@@ -20,9 +20,9 @@ class CodeConstructorNameConfig extends CodeConfigNode<CodeConstructorName> {
 
         Node res = TextTransform(name.name, StringFuncs.camel);
 
-        if (modifier?.private == true ||
-            modifier?.protected == true ||
-            modifier?.internal == true) {
+        if (modifier?.isPrivate == true ||
+            modifier?.isProtected == true ||
+            modifier?.isInternal == true) {
           // Add '_' prefix for non public field.
           res = Pad.left('_', res);
         }
@@ -32,22 +32,25 @@ class CodeConstructorNameConfig extends CodeConfigNode<CodeConstructorName> {
 }
 
 class CodeConstructorName extends CodeConfigProxyNode<CodeConstructorName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 
   CodeConstructorName._(this.name);
 
-  static CodeConstructorName of(dynamic value) {
-    // Try to parse the input as the constructor name itself.
+  static CodeConstructorName _parse(dynamic value,
+      {_NodeParseErrorFunc error}) {
     return _parseNode<CodeConstructorName>(value, (v) {
-      // Try to parse the input as the constructor name expression.
-      final name = NamedNode.nameOf(v);
-
-      // Accepts the name, even null value.
+      // Try to parse the value as the expression name.
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
       return CodeConstructorName._(name);
-    }, error: () {
-      throw '$value is not a valid constructor';
+    }, error: error);
+  }
+
+  factory CodeConstructorName.of(dynamic value) {
+    return CodeConstructorName._parse(value, error: () {
+      throw '${value} is not a valid constructor name.';
     });
   }
 }

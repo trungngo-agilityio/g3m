@@ -27,12 +27,21 @@ class CodeFunctionThrowListConfig
 class CodeFunctionThrowList extends CodeConfigProxyNode<CodeFunctionThrowList> {
   final List<CodeFunctionThrow> types;
 
-  CodeFunctionThrowList(this.types);
+  CodeFunctionThrowList._(this.types);
 
-  factory CodeFunctionThrowList.single(String type) =>
-      CodeFunctionThrowList([CodeFunctionThrow.simple(type)]);
+  static CodeFunctionThrowList _parse(dynamic value,
+      {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeFunctionThrowList>(value, (v) {
+      final list =
+      _parseNodeList<CodeFunctionThrow>(v, CodeFunctionThrow._parse);
+      if (list != null) return CodeFunctionThrowList._(list);
+      return null;
+    }, error: error);
+  }
 
-  factory CodeFunctionThrowList.list(List<String> types) =>
-      CodeFunctionThrowList(
-          types?.map((type) => CodeFunctionThrow.simple(type))?.toList());
+  factory CodeFunctionThrowList.of(dynamic values) {
+    return CodeFunctionThrowList._parse(values, error: () {
+      throw '$values is not a valid function throw list';
+    });
+  }
 }

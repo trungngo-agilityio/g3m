@@ -20,14 +20,17 @@ class CodeFieldList extends CodeConfigProxyNode<CodeFieldList> {
 
   CodeFieldList._(this.fields);
 
-  factory CodeFieldList.of(List<CodeField> fields) =>
-      fields?.isNotEmpty == true ? CodeFieldList._(fields) : null;
+  static CodeFieldList _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeFieldList>(value, (v) {
+      final list = _parseNodeList<CodeField>(v, CodeField._parse);
+      if (list != null) return CodeFieldList._(list);
+      return null;
+    }, error: error);
+  }
 
-  factory CodeFieldList.ofNameType(String name, String type) =>
-      CodeFieldList._([CodeField.of(name: name, type: type)]);
-
-  factory CodeFieldList.ofNameTypeMap(Map<String, String> types) =>
-      CodeFieldList._(types?.entries
-          ?.map((e) => CodeField.of(name: e.key, type: e.value))
-          ?.toList());
+  factory CodeFieldList.of(dynamic values) {
+    return CodeFieldList._parse(values, error: () {
+      throw '$values is not a valid field list';
+    });
+  }
 }

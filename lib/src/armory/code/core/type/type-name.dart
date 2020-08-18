@@ -47,22 +47,24 @@ class CodeTypeNameConfig extends CodeConfigNode<CodeTypeName> {
 }
 
 class CodeTypeName extends CodeConfigProxyNode<CodeTypeName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 
-  CodeTypeName._(this.name);
+  CodeTypeName._(this.name) : assert(name != null);
 
   static CodeTypeName _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<Node>(value, (v) {
-      if (v is String) return CodeTypeName._(Text.of(v));
-      return null;
+    return _parseNode<CodeTypeName>(value, (v) {
+      // Try to parse the value as the expression name.
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
+      return CodeTypeName._(name);
     }, error: error);
   }
 
   factory CodeTypeName.of(dynamic value) {
-    return _parse(value, error: () {
-      throw 'cannot parse $value as a type name';
+    return CodeTypeName._parse(value, error: () {
+      throw '${value} is not a valid type name.';
     });
   }
 }

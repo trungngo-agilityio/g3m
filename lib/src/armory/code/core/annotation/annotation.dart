@@ -23,7 +23,7 @@ class CodeAnnotationConfig extends CodeConfigNode<CodeAnnotation> {
 }
 
 class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation>
-    implements NamedNode {
+    implements _NamedNode {
   /// The annotation name.
   @override
   final CodeAnnotationName name;
@@ -41,6 +41,29 @@ class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation>
     this.generic,
     this.args,
   }) : assert(name != null, 'annotation name is required');
+
+  /// Try parse a dynamic value to an argument object.
+  static CodeAnnotation _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeAnnotation>(value, (v) {
+      final list = _toDynamicNodeList(v);
+
+      if (list?.isNotEmpty != true || list.length > 3) {
+        return null;
+      }
+
+      // Try to parse the input as the name expression.
+      final name = CodeAnnotationName._parse(list[0], error: error);
+
+      final args = list.length > 2
+          ? CodeExpr._parseList(list.sublist(0), error: error)
+          : null;
+
+      return CodeAnnotation._(
+        name: name,
+        args: args,
+      );
+    }, error: error);
+  }
 
   factory CodeAnnotation.of(
     dynamic name, {

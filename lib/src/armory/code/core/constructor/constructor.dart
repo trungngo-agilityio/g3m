@@ -65,7 +65,7 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
 }
 
 class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
-    implements NamedNode {
+    implements _NamedNode {
   /// The constructor name. This is often optional.
   @override
   final CodeConstructorName name;
@@ -97,7 +97,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
   /// Creates a constructor method.
   /// - [name] is a dynamic field that accepts:
   ///   - a [String] name
-  ///   - any object that implements [NamedNode]. This field will have the
+  ///   - any object that implements [_NamedNode]. This field will have the
   ///     the same name with the other object.
   ///   - any object. In this case, the whole object will be converted
   ///     to string.
@@ -132,10 +132,10 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
       name: CodeConstructorName.of(name),
       modifier: CodeModifier(
         factory: factory,
-        private: private,
-        public: public,
-        protected: protected,
-        internal: internal,
+        isPrivate: private,
+        isPublic: public,
+        isProtected: protected,
+        isInternal: internal,
       ),
       args: CodeArgList.of(
         required: requiredArgs,

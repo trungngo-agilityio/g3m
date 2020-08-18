@@ -15,15 +15,17 @@ class CodeAnnotationList extends CodeConfigProxyNode<CodeAnnotationList> {
 
   CodeAnnotationList._(this.annotations);
 
-  factory CodeAnnotationList.of(dynamic value) {
-    // Try to parse the input as a single list object.
+  static CodeAnnotationList _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeAnnotationList>(value, (v) {
-      // Parse as a list of objects.
-      var list =
-          _parseNodeList<CodeAnnotation>(value, (v) => CodeAnnotation.of(v));
+      final list = _parseNodeList<CodeAnnotation>(v, CodeAnnotation._parse);
+      if (list != null) return CodeAnnotationList._(list);
+      return null;
+    }, error: error);
+  }
 
-      if (list == null) return null;
-      return CodeAnnotationList._(list);
+  factory CodeAnnotationList.of(dynamic values) {
+    return CodeAnnotationList._parse(values, error: () {
+      throw '$values is not a valid annotation value list';
     });
   }
 }

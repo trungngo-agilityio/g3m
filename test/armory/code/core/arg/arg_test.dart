@@ -3,7 +3,7 @@ import 'package:g3m/g3armory_dart.dart';
 import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   group('java ', () {
@@ -26,35 +26,11 @@ void main() {
     group('function arg list', () {
       test('single', () {
         var code = JavaCodeConfig(
-          CodeArgList.ofNameType('my car', 'car'),
+          CodeArgList.of(required: [
+            ['my car', 'car'],
+          ]),
         );
         runAndExpect(code, 'Car myCar');
-      });
-
-      test('list - empty', () {
-        var code = JavaCodeConfig(
-          CodeArgList.ofNameTypeMap({}),
-        );
-        runAndExpect(code, '');
-      });
-
-      test('list - one', () {
-        var code = JavaCodeConfig(
-          CodeArgList.ofNameTypeMap({
-            'my car': 'car',
-          }),
-        );
-        runAndExpect(code, 'Car myCar');
-      });
-
-      test('list - more than one', () {
-        var code = JavaCodeConfig(
-          CodeArgList.ofNameTypeMap({
-            'my car': 'car',
-            'my vehicle': 'vehicle',
-          }),
-        );
-        runAndExpect(code, 'Car myCar, Vehicle myVehicle');
       });
     });
   });
@@ -63,7 +39,7 @@ void main() {
     test('with this', () {
       runDart(
         CodeConstructor.of(
-          requiredArgs: {'car': null},
+          requiredArgs: ['car'],
         ),
         '\n'
         'class Hello {\n'
@@ -75,7 +51,7 @@ void main() {
     test('with init', () {
       runDart(
         CodeConstructor.of(
-          requiredArgs: {'car': null},
+          requiredArgs: ['car'],
           init: [
             CodeFunctionCall.of('assert', args: [false]),
             CodeFunctionCall.of('assert', args: [true]),
@@ -94,7 +70,7 @@ void main() {
   test('with body', () {
     runDart(
       CodeConstructor.of(
-        requiredArgs: {'car': null},
+        requiredArgs: ['car'],
         init: [
           CodeFunctionCall.of('assert', args: [false]),
           'assert(car != null)'

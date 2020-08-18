@@ -12,7 +12,7 @@ void main() {
 
     runAndExpect(
       code,
-      'break\n',
+      'break',
     );
   });
 }

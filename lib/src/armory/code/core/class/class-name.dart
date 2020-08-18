@@ -18,9 +18,9 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
 
         Node res = TextTransform(name.name, StringFuncs.pascal);
 
-        if (modifier?.private == true ||
-            modifier?.protected == true ||
-            modifier?.internal == true) {
+        if (modifier?.isPrivate == true ||
+            modifier?.isProtected == true ||
+            modifier?.isInternal == true) {
           // Add '_' prefix for non public clazz.
           res = Pad.left('_', res);
         }
@@ -30,20 +30,24 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
 }
 
 class CodeClassName extends CodeConfigProxyNode<CodeClassName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 
   CodeClassName._(this.name);
 
-  factory CodeClassName.of(dynamic value) {
+  static CodeClassName _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeClassName>(value, (v) {
       // Try to parse the value as the expression name.
-      final name = NamedNode.nameOf(v);
-      assert(name != null, 'class name must not be null');
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
       return CodeClassName._(name);
-    }, error: () {
-      throw '${value} is not a valid argument.';
+    }, error: error);
+  }
+
+  factory CodeClassName.of(dynamic value) {
+    return CodeClassName._parse(value, error: () {
+      throw '${value} is not a valid class name.';
     });
   }
 }

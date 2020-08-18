@@ -5,40 +5,33 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('null', () {
-    run(
-      CodeEnumValueName.of(null),
-      '',
-    );
-  });
-
   test('empty', () {
     run(
-      CodeEnumValueName.of(''),
+      CodeEnumValueName.of(name: ''),
       '',
     );
   });
 
   test('string', () {
     run(
-      CodeEnumValueName.of('hello world'),
+      CodeEnumValueName.of(name: 'hello world'),
       'HELLO_WORLD',
     );
   });
 
   test('node', () {
     run(
-      CodeEnumValueName.of(Text.of('hello world')),
+      CodeEnumValueName.of(name: Text.of('hello world')),
       'HELLO_WORLD',
     );
   });
 
   test('name of another name', () {
     // Runs with dart config
-    var argName = CodeArgName.of('hello world');
+    var argName = CodeArgName.of(name: 'hello world');
     run(argName, 'helloWorld');
     run(
-      CodeEnumValueName.of(argName),
+      CodeEnumValueName.of(name: argName),
       'HELLO_WORLD',
     );
   });

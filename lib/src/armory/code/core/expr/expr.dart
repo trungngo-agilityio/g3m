@@ -95,10 +95,22 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
     return CodeExpr._parse(value, terminated: closed);
   }
 
-  static List<CodeExpr> listOf(dynamic value, {bool terminated}) {
-    return _parseNodeList<CodeExpr>(
-            value, (v) => CodeExpr.of(v, closed: terminated))
-        ?.where((e) => e != null)
-        ?.toList();
+  static List<CodeExpr> _parseList(
+    dynamic value, {
+    bool closed,
+    _NodeParseErrorFunc error,
+  }) {
+    final list =
+        _parseNodeList<CodeExpr>(value, (v) => CodeExpr.of(v, closed: closed))
+            ?.where((e) => e != null)
+            ?.toList();
+
+    return list?.isNotEmpty != true ? null : list;
+  }
+
+  static List<CodeExpr> listOf(dynamic value, {bool closed}) {
+    return _parseList(value, closed: closed, error: () {
+      throw '$value is an invalid expression list';
+    });
   }
 }

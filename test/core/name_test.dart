@@ -26,7 +26,7 @@ void main() {
     assertEq('world', s.remove('hello'));
   });
 
-  test('string functions', () {
+  test('string function', () {
     var s = Name('hello') & 'world';
 
     assertEq('HELLO WORLD', s.upper());

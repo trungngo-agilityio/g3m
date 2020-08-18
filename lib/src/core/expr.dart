@@ -60,7 +60,7 @@ abstract class Expr<T extends Expr<T>> {
 
   @override
   bool operator ==(other) {
-    return name.toString() == (other.name.toString() ?? '');
+    return name.toString() == (other.type.toString() ?? '');
   }
 
   // ---------------------------------------------------------------------------

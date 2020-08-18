@@ -70,15 +70,4 @@ class CodeArgList extends CodeConfigProxyNode<CodeArgList> {
       named: _parseNodeList(named, CodeArg._parse),
     );
   }
-
-  // FIXME remove this
-  factory CodeArgList.ofNameType(String name, String type) =>
-      CodeArgList.of(required: [CodeArg.of(name: name, type: type)]);
-
-  // FIXME remove this
-  factory CodeArgList.ofNameTypeMap(Map<String, String> types) =>
-      CodeArgList.of(
-          required: types?.entries
-              ?.map((e) => CodeArg.of(name: e.key, type: e.value))
-              ?.toList());
 }

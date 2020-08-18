@@ -4,29 +4,29 @@ import 'package:test/test.dart';
 import '../../utils.dart';
 
 void main() {
-  void run(Node node, String expected)  {
+  void run(Node node, String expected) {
     var code = CodeModifierConfig.forJavaLike(node);
-     runAndExpect(code, expected);
+    runAndExpect(code, expected);
   }
 
   test('override', () {
-    run(CodeModifier(override: true), '@override\n');
+    run(CodeModifier(override: true), '');
   });
 
   test('private', () {
-    run(CodeModifier(private: true), 'private ');
+    run(CodeModifier(isPrivate: true), 'private ');
   });
 
   test('public', () {
-    run(CodeModifier(public: true), 'public ');
+    run(CodeModifier(isPublic: true), 'public ');
   });
 
   test('protected', () {
-    run(CodeModifier(protected: true), 'protected ');
+    run(CodeModifier(isProtected: true), 'protected ');
   });
 
   test('internal', () {
-    run(CodeModifier(internal: true), 'internal ');
+    run(CodeModifier(isInternal: true), 'internal ');
   });
 
   test('abstract', () {
@@ -36,17 +36,16 @@ void main() {
   test('static', () {
     run(CodeModifier(static: true), 'static ');
   });
-  test('all', ()  {
-     run(
+  test('all', () {
+    run(
       CodeModifier(
           override: true,
-          private: true,
-          public: true,
-          protected: true,
-          internal: true,
+          isPrivate: true,
+          isPublic: true,
+          isProtected: true,
+          isInternal: true,
           abstract: true,
           static: true),
-      '@override\n'
       'private public protected internal abstract static ',
     );
   });

@@ -5,17 +5,22 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       : super(buildFunc, child);
 
   factory CodeArgConfig.forDartLike(Node child) {
-    return CodeArgConfig._internal(child, acceptThisSyntax: true);
+    return CodeArgConfig._internal(
+      child,
+      typeFirst: true,
+      acceptThisSyntax: true,
+    );
   }
 
   factory CodeArgConfig.forJavaLike(Node child) {
-    return CodeArgConfig._internal(child);
+    return CodeArgConfig._internal(child, typeFirst: true);
   }
 
   factory CodeArgConfig._internal(
     Node child, {
-    bool typeFirst = true,
+    @required bool typeFirst,
     String separator = ' ',
+    String finalPrefix = 'final ',
     bool acceptThisSyntax = false,
   }) {
     return CodeArgConfig((context, arg) {
@@ -29,7 +34,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       Node typeAndName;
 
       if (type != null && name != null) {
-        typeAndName = typeFirst
+        typeAndName = typeFirst == true
             ? Container([type, separator, name])
             : Container([name, separator, type]);
       } else if (name != null) {
@@ -43,17 +48,22 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
         typeAndName = type;
       }
 
+      Node modifier;
+      if (arg.isFinal == true && finalPrefix != null) {
+        modifier = Text.of(finalPrefix);
+      }
+
       Node init = arg.init;
       if (init != null) {
         init = Container([' = ', arg.init]);
       }
 
-      return Container([typeAndName, init]);
+      return Container([modifier, typeAndName, init]);
     }, child);
   }
 }
 
-class CodeArg extends CodeConfigProxyNode<CodeArg> implements NamedNode {
+class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
   /// The argument name.
   @override
   final CodeArgName name;
@@ -64,45 +74,68 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements NamedNode {
   final CodeType type;
 
   /// The argument initializer
-  final OldCodeExpr init;
+  final CodeExpr init;
 
-  CodeArg._({this.name, this.type, this.init});
+  /// True indicates this field name is private.
+  final bool isPrivate;
+
+  final bool isFinal;
+
+  CodeArg._({
+    @required this.name,
+    @required this.type,
+    @required this.init,
+    @required this.isPrivate,
+    @required this.isFinal,
+  });
 
   /// Try parse a dynamic value to an argument object.
   static CodeArg _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode(value, (v) {
-      if (v is List && v.isNotEmpty && v.length < 4) {
-        var hasError = false;
-        // Parse the argument as an array of name, type, init.
-        var res = CodeArg.of(
-          name: CodeArgName.of(v[0]),
-          type: v.length < 2
-              ? null
-              : CodeType._parse(v[1], error: () {
-                  hasError = true;
-                }),
-          init: v.length < 3 ? null : OldCodeExpr.of(v[2]),
-        );
+    return _parseNode<CodeArg>(value, (v) {
+      final list = _toDynamicNodeList(v);
 
-        if (hasError) return null;
-        return res;
-      } else if (v is MapEntry) {
-        return CodeArg.of(name: v.key, type: v.value);
-      } else {
-        return CodeArg.of(name: CodeArgName.of(value), type: null);
+      if (list?.isNotEmpty != true || list.length > 3) {
+        return null;
       }
+
+      // Try to parse the input as the name expression.
+      final name = CodeArgName._parse(list[0]);
+      // Don't accept null
+      if (name == null) return null;
+
+      final type =
+          list.length > 1 ? CodeType._parse(list[1], error: error) : null;
+
+      final init =
+          list.length > 2 ? CodeExpr._parse(list[2], error: error) : null;
+
+      return CodeArg._(
+        name: name,
+        type: type,
+        init: init,
+        isPrivate: false,
+        isFinal: false,
+      );
     }, error: error);
   }
 
   factory CodeArg.of({
     @required dynamic name,
     @required dynamic type,
+    bool isPrivate,
+    bool isFinal,
     dynamic init,
-  }) =>
-      CodeArg._(
-          name: CodeArgName.of(name),
-          type: CodeType._parse(type, error: () {
-            throw '$type is not a valid data type';
-          }),
-          init: init != null ? OldCodeExpr.of(init) : null);
+  }) {
+    return CodeArg._(
+      name: CodeArgName.of(
+        name: name,
+        isPrivate: isPrivate,
+      ),
+      type:
+          CodeType._parse(type, error: () => '$type is not a valid data type.'),
+      init: CodeExpr.of(init),
+      isPrivate: isPrivate,
+      isFinal: isFinal,
+    );
+  }
 }

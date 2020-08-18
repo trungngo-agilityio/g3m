@@ -2,7 +2,7 @@ import 'package:g3m/g3armory.dart';
 import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   test('simple', () {
@@ -46,11 +46,11 @@ void main() {
     runAndExpect(
       code,
       '\n'
-      'String firstName = "john";\n',
+      'String firstName = "john"',
     );
   });
 
-  test('with init', ()  {
+  test('with init', () {
     var code = JavaCodeConfig(
       CodeField.of(
         name: 'first name',
@@ -59,10 +59,10 @@ void main() {
         static: true,
       ),
     );
-     runAndExpect(
+    runAndExpect(
       code,
       '\n'
-      'private static String firstName;\n',
+      'private static String firstName',
     );
   });
 
@@ -78,7 +78,7 @@ void main() {
       code,
       '\n'
       '// hello world\n'
-      'String firstName;\n',
+      'String firstName',
     );
   });
 }

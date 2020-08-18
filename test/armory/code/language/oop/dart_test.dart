@@ -17,19 +17,19 @@ void main() {
       ],
       enums: [
         CodeEnum.of(
-          'color',
+          name: 'color',
           values: [
-            CodeEnumValue.of('blue'),
-            CodeEnumValue.of('dark green'),
+            'blue',
+            'dark green',
           ],
         ),
       ],
       functions: [
-        CodeFunction.of('hello', override: true, args: {
-          'first name': 'string',
-        }, body: [
-          Text.of('var name = "John";\n'
-              'print(name);\n'),
+        CodeFunction.of(name: 'hello', isOverride: true, requiredArgs: [
+          ['first name', 'string'],
+        ], body: [
+          'var name = "John";\n'
+              'print(name)\n',
         ]),
       ],
       classes: [
@@ -118,10 +118,10 @@ CodeClass clazz() {
 }
 
 CodeFunction function() {
-  return CodeFunction.of('drive',
+  return CodeFunction.of(name: 'drive',
       generic: ['T'],
-      args: {'vehicle': 'car'},
-      internal: true,
+      requiredArgs: [['vehicle', 'car']],
+      isInternal: true,
       comment: 'just a demo function',
       returns: ['void'],
       throws: ['accident exception', 'bad driver exception'],

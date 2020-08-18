@@ -11,7 +11,7 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
 }
 
 class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final CodeType name;
 

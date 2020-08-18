@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('all', ()  {
+  test('all', () {
     var root = JavaCode.of(
       body: Text.of('// You can put anything in this body.'),
       comment: CodeComment.of('Demo file level comment'),
@@ -20,17 +20,14 @@ void main() {
       ],
       enums: [
         CodeEnum.of(
-          'color',
-          values: [
-            CodeEnumValue.of('blue'),
-            CodeEnumValue.of('dark green'),
-          ],
+          name: 'color',
+          values: ['blue', 'dark green'],
         ),
       ],
       functions: [
-        CodeFunction.of('hello', args: {
-          'first name': 'string',
-        }, body: [
+        CodeFunction.of(name: 'hello', requiredArgs: [
+          ['first name', 'string'],
+        ], body: [
           Text.of('var name = "John";\n'
               'print(name);\n'),
         ]),
@@ -42,7 +39,7 @@ void main() {
         clazz(),
       ],
     );
-     runAndExpect(
+    runAndExpect(
       root,
       '// Demo file level comment\n'
       'package myPersonalVehicle;\n'
@@ -172,9 +169,10 @@ CodeClass clazz() {
 }
 
 CodeFunction function() {
-  return CodeFunction.of('drive',
+  return CodeFunction.of(
+      name: 'drive',
       generic: ['T'],
-      args: {'vehicle': 'car'},
+      requiredArgs: ['vehicle', 'car'],
       comment: 'just a demo function',
       returns: ['void'],
       throws: ['accident exception', 'bad driver exception'],

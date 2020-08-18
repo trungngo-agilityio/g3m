@@ -36,7 +36,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
 }
 
 class CodeInterface extends CodeConfigProxyNode<CodeInterface>
-    implements NamedNode {
+    implements _NamedNode {
   /// The class name.
   @override
   final CodeTypeName name;
@@ -84,10 +84,10 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
         name: CodeTypeName.of(name),
         comment: comment != null ? CodeComment.of(comment) : null,
         modifier: CodeModifier(
-          private: private,
-          public: public,
-          protected: protected,
-          internal: internal,
+          isPrivate: private,
+          isPublic: public,
+          isProtected: protected,
+          isInternal: internal,
           abstract: abstract,
           static: static,
         ),

@@ -27,19 +27,19 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
           keywords.add(factoryKeyword);
         }
 
-        if (access.private == true && privateKeyword != null) {
+        if (access.isPrivate == true && privateKeyword != null) {
           keywords.add(privateKeyword);
         }
 
-        if (access.public == true && publicKeyword != null) {
+        if (access.isPublic == true && publicKeyword != null) {
           keywords.add(publicKeyword);
         }
 
-        if (access.protected == true && protectedKeyword != null) {
+        if (access.isProtected == true && protectedKeyword != null) {
           keywords.add(protectedKeyword);
         }
 
-        if (access.internal == true && internalKeyword != null) {
+        if (access.isInternal == true && internalKeyword != null) {
           keywords.add(internalKeyword);
         }
 
@@ -64,10 +64,10 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
 class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
   final bool override;
   final bool factory;
-  final bool private;
-  final bool public;
-  final bool protected;
-  final bool internal;
+  final bool isPrivate;
+  final bool isPublic;
+  final bool isProtected;
+  final bool isInternal;
 
   final bool abstract;
   final bool static;
@@ -76,10 +76,10 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
   CodeModifier({
     this.override,
     this.factory,
-    this.private,
-    this.public,
-    this.protected,
-    this.internal,
+    this.isPrivate,
+    this.isPublic,
+    this.isProtected,
+    this.isInternal,
     this.abstract,
     this.static,
     this.isFinal,

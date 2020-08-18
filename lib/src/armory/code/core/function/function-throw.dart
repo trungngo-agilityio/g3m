@@ -10,15 +10,37 @@ class CodeFunctionThrowConfig extends CodeConfigNode<CodeFunctionThrow> {
 
   factory CodeFunctionThrowConfig.forJavaLike(Node child) =>
       CodeFunctionThrowConfig((context, funcThrow) {
-        return funcThrow.name;
+        return funcThrow.type;
       }, child);
 }
 
 class CodeFunctionThrow extends CodeConfigProxyNode<CodeFunctionThrow> {
-  final CodeType name;
+  final CodeType type;
 
-  CodeFunctionThrow(this.name);
+  CodeFunctionThrow._({this.type});
 
-  factory CodeFunctionThrow.simple(String name) =>
-      CodeFunctionThrow(CodeType.simple(name));
+  /// Try parse a dynamic value to an argument object.
+  static CodeFunctionThrow _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeFunctionThrow>(value, (v) {
+      final list = _toDynamicNodeList(v);
+
+      if (list?.isNotEmpty != true || list.length > 1) {
+        return null;
+      }
+
+      // Try to parse the input as the name expression.
+      final type = CodeType._parse(list[0], error: error);
+
+      return CodeFunctionThrow._(type: type);
+    }, error: error);
+  }
+
+  factory CodeFunctionThrow.of({
+    @required dynamic type,
+  }) {
+    return CodeFunctionThrow._(
+        type: CodeType._parse(type, error: () {
+      throw '$type is an invalid function throw type';
+    }));
+  }
 }

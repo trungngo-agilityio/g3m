@@ -165,11 +165,11 @@ CodeField makeField(String name) => CodeField.of(
     );
 
 CodeFunction function(String name) => CodeFunction.of(
-      name,
+      name: name,
       returns: ['string'],
-      args: {
-        'name': 'String',
-        'other': 'Person',
-      },
+      requiredArgs: [
+        ['name', 'String'],
+        ['other', 'Person'],
+      ],
       comment: 'test $name',
     );

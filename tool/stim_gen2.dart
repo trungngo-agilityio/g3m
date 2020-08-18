@@ -109,7 +109,7 @@ class Scope implements Node {
     })?.toList();
 
     Node makeFields = Join.newLineSeparated(fields?.entries?.map((e) {
-      final fieldName = CodeFieldName.of(e.key);
+      final fieldName = CodeFieldName.of(name: e.key);
       return Container([
         CodeCascade.of(fieldName),
         ' = ',
@@ -119,7 +119,7 @@ class Scope implements Node {
     })?.toList());
 
     Node copyFields = Join.newLineSeparated(fields?.entries?.map((e) {
-      final fieldName = CodeFieldName.of(e.key);
+      final fieldName = CodeFieldName.of(name: e.key);
       return Container([
         CodeCascade.of(fieldName),
         ' = ',
@@ -128,8 +128,8 @@ class Scope implements Node {
     })?.toList());
 
     final makeFunction = CodeFunction.of(
-      'make',
-      override: true,
+      name: 'make',
+      isOverride: true,
       returns: [
         name,
       ],
@@ -148,9 +148,9 @@ class Scope implements Node {
     );
 
     final callFunction = CodeFunction.of(
-      'call',
+      name: 'call',
       returns: [name],
-      args: fields,
+      requiredArgs: fields?.entries?.map((e) => [e.key, e.value])?.toList(),
       body: [
         CodeReturn.of(Container(
           [

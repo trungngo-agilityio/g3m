@@ -5,40 +5,67 @@ class CodeEnumValueNameConfig extends CodeConfigNode<CodeEnumValueName> {
       NodeBuildFunc<CodeEnumValueName> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeEnumValueNameConfig.of(StringFunc func, Node child) =>
-      CodeEnumValueNameConfig(
-          (context, name) => TextTransform(name.name, func), child);
+  factory CodeEnumValueNameConfig.forJavaLike(Node child) =>
+      CodeEnumValueNameConfig._internal(child);
 
   factory CodeEnumValueNameConfig.forDartLike(Node child) =>
-      CodeEnumValueNameConfig.of(StringFuncs.camel, child);
+      CodeEnumValueNameConfig._internal(
+        child,
+        func: StringFuncs.camel,
+        privatePrefix: '_',
+      );
 
-  factory CodeEnumValueNameConfig.forJavaLike(Node child) =>
-      CodeEnumValueNameConfig.of(StringFuncs.constant, child);
+  factory CodeEnumValueNameConfig._internal(
+    Node child, {
+    StringFunc func,
+    String privatePrefix = '',
+  }) {
+    func ??= StringFuncs.constant;
+    return CodeEnumValueNameConfig((_, arg) {
+      return Container([
+        arg.isPrivate == true ? privatePrefix : null,
+        TextTransform(arg.name, func),
+      ]);
+    }, child);
+  }
 }
 
 /// Defines a name for [CodeEnumValue] element.
 ///
 class CodeEnumValueName extends CodeConfigProxyNode<CodeEnumValueName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 
-  CodeEnumValueName._(this.name);
+  /// True indicates this field name is private.
+  final bool isPrivate;
+
+  CodeEnumValueName._({
+    @required this.name,
+    @required this.isPrivate,
+  }) : assert(name != null);
 
   static CodeEnumValueName _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    // Try to parse the input as the enum name itself.
     return _parseNode<CodeEnumValueName>(value, (v) {
-      // Try to parse the input as the name expression.
-      final name = NamedNode.nameOf(v);
-
-      // Don't accept null
+      // Try to parse the value as the expression name.
+      final name = _parseNameNode(v, error: error);
       if (name == null) return null;
-      return CodeEnumValueName._(name);
+      return CodeEnumValueName._(
+        name: name,
+        isPrivate: null,
+      );
     }, error: error);
   }
 
-  factory CodeEnumValueName.of(dynamic value) =>
-      CodeEnumValueName._parse(value, error: () {
-        throw '$value is not a valid enum value name';
-      });
+  factory CodeEnumValueName.of({
+    @required dynamic name,
+    bool isPrivate,
+  }) {
+    return CodeEnumValueName._(
+      name: _parseNameNode(name, error: () {
+        throw '$name is an invalid enum value name';
+      }),
+      isPrivate: isPrivate,
+    );
+  }
 }

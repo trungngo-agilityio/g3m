@@ -60,7 +60,7 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
 }
 
 class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter>
-    implements NamedNode {
+    implements _NamedNode {
   /// The property name.
   @override
   final CodePropertyName name;

@@ -14,6 +14,11 @@ T _parseNode<T>(dynamic value, _NodeParseFunc<T> next,
   return null;
 }
 
+List<dynamic> _toDynamicNodeList<T>(dynamic value) {
+  // This code should not failed.
+  return _parseNodeList(value, (v) => v);
+}
+
 List<T> _parseNodeList<T>(dynamic value, _NodeParseFunc next,
     {_NodeParseErrorFunc error}) {
   if (value == null) return null;
@@ -58,4 +63,22 @@ List<T> _parseNodeList<T>(dynamic value, _NodeParseFunc next,
   }
 
   return res;
+}
+
+/// FIXME: Make it a _parseNameOf
+Node _parseNameNode(dynamic value, {_NodeParseErrorFunc error}) {
+  Node name;
+
+  if (value != null) {
+    if (value is _NamedNode) {
+// Recursively try to parse the name of the child.
+      name = _parseNameNode(value.name);
+    } else if (value is Node) {
+      name = value;
+    } else {
+      name = Text.of(value);
+    }
+  }
+  if (name == null && error != null) error();
+  return name;
 }

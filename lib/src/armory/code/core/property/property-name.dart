@@ -15,9 +15,9 @@ class CodePropertyNameConfig extends CodeConfigNode<CodePropertyName> {
 
         Node res = TextTransform(name.name, StringFuncs.camel);
 
-        if (modifier?.private == true ||
-            modifier?.protected == true ||
-            modifier?.internal == true) {
+        if (modifier?.isPrivate == true ||
+            modifier?.isProtected == true ||
+            modifier?.isInternal == true) {
           // Add '_' prefix for non public property.
           res = Pad.left('_', res);
         }
@@ -30,7 +30,7 @@ class CodePropertyNameConfig extends CodeConfigNode<CodePropertyName> {
 }
 
 class CodePropertyName extends CodeConfigProxyNode<CodePropertyName>
-    implements NamedNode {
+    implements _NamedNode {
   final Node name;
 
   CodePropertyName._(this.name);

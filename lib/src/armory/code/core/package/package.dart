@@ -47,7 +47,7 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
 }
 
 class CodePackage extends CodeConfigProxyNode<CodePackage>
-    implements NamedNode {
+    implements _NamedNode {
   /// The name of the package
   @override
   final CodePackageName name;

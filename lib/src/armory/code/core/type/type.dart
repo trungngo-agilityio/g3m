@@ -67,7 +67,7 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
 ///
 /// Important: [CodeTypeConfig] is a required ancestor for this node.
 ///
-class CodeType extends CodeConfigProxyNode<CodeType> implements NamedNode {
+class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   /// The data type name.
   @override
   final CodeTypeName name;

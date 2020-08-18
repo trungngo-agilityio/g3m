@@ -63,7 +63,7 @@ class CodePropertyConfig extends CodeConfigNode<CodeProperty> {
 }
 
 class CodeProperty extends CodeConfigProxyNode<CodeProperty>
-    implements NamedNode {
+    implements _NamedNode {
   /// The property name.
   @override
   final CodePropertyName name;
@@ -122,10 +122,10 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
         annotations: CodeAnnotationList.of(annotations),
         modifier: CodeModifier(
           override: override,
-          private: private,
-          public: public,
-          protected: protected,
-          internal: internal,
+          isPrivate: private,
+          isPublic: public,
+          isProtected: protected,
+          isInternal: internal,
           static: static,
           isFinal: isFinal,
         ),

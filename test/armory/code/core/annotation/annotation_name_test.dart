@@ -5,9 +5,9 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  void run(Node node, String expected)  {
+  void run(Node node, String expected) {
     var code = JavaCodeConfig(node);
-     runAndExpect(code, expected);
+    runAndExpect(code, expected);
   }
 
   test('null', () {
@@ -39,7 +39,7 @@ void main() {
   });
 
   test('name of another name', () {
-    var argName = CodeArgName.of('hello world');
+    var argName = CodeArgName.of(name: 'hello world');
     run(argName, 'helloWorld');
     run(
       CodeAnnotationName.of(

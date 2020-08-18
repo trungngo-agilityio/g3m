@@ -43,7 +43,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
       }, child);
 }
 
-class CodeClass extends CodeConfigProxyNode<CodeClass> implements NamedNode {
+class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
   /// The class name.
   @override
   final CodeClassName name;
@@ -97,10 +97,10 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements NamedNode {
         name: CodeClassName.of(name),
         generic: CodeGenericParamList.of(generic),
         modifier: CodeModifier(
-          private: private,
-          public: public,
-          protected: protected,
-          internal: internal,
+          isPrivate: private,
+          isPublic: public,
+          isProtected: protected,
+          isInternal: internal,
           abstract: abstract,
           static: static,
         ),

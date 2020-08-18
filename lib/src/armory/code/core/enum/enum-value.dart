@@ -15,7 +15,7 @@ class CodeEnumValueConfig extends CodeConfigNode<CodeEnumValue> {
 }
 
 class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final CodeEnumValueName name;
 
@@ -32,8 +32,7 @@ class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue>
   static CodeEnumValue _parse(dynamic value, {_NodeParseErrorFunc error}) {
     // Try to parse the input as the enum name itself.
     return _parseNode<CodeEnumValue>(value, (v) {
-      // Converts the value to a list.
-      final list = _parseNodeList<dynamic>(v, (v) => v);
+      final list = _toDynamicNodeList(value);
       if (list?.isNotEmpty != true) return null;
 
       // Try to parse the input as the name expression.
@@ -43,6 +42,7 @@ class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue>
 
       final init =
           list.length > 1 ? CodeExpr._parse(list[1], error: error) : null;
+
       final comment =
           list.length > 2 ? CodeComment._parse(list[2], error: error) : null;
 
@@ -54,13 +54,17 @@ class CodeEnumValue extends CodeConfigProxyNode<CodeEnumValue>
     }, error: error);
   }
 
-  factory CodeEnumValue.of(
-    dynamic name, {
+  factory CodeEnumValue.of({
+    @required dynamic name,
     dynamic init,
     dynamic comment,
+    bool isPrivate,
   }) {
     return CodeEnumValue._(
-      name: CodeEnumValueName.of(name),
+      name: CodeEnumValueName.of(
+        name: name,
+        isPrivate: isPrivate,
+      ),
       init: CodeExpr.of(init),
       comment: CodeComment.of(comment),
     );

@@ -1,6 +1,6 @@
 part of g3.armory;
 
-class CodeFile implements Node, NamedNode {
+class CodeFile implements Node, _NamedNode {
   /// The file name without extension.
   @override
   final String name;

@@ -15,21 +15,24 @@ class CodeAnnotationNameConfig extends CodeConfigNode<CodeAnnotationName> {
 }
 
 class CodeAnnotationName extends CodeConfigProxyNode<CodeAnnotationName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 
   CodeAnnotationName._(this.name);
 
-  factory CodeAnnotationName.of(dynamic value) {
-    // Try to parse the input value as the exactly first.
+  static CodeAnnotationName _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeAnnotationName>(value, (v) {
       // Try to parse the value as the expression name.
-      final name = NamedNode.nameOf(v);
-      assert(name != null, 'annotation must not be null');
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
       return CodeAnnotationName._(name);
-    }, error: () {
-      throw '${value} is not a valid code annotation.';
+    }, error: error);
+  }
+
+  factory CodeAnnotationName.of(dynamic value) {
+    return CodeAnnotationName._parse(value, error: () {
+      throw '${value} is not a valid annotation name.';
     });
   }
 }

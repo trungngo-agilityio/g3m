@@ -13,9 +13,9 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
         final modifier = name.modifier;
         Node res = TextTransform(name.name, StringFuncs.camel);
 
-        if (modifier?.private == true ||
-            modifier?.protected == true ||
-            modifier?.internal == true) {
+        if (modifier?.isPrivate == true ||
+            modifier?.isProtected == true ||
+            modifier?.isInternal == true) {
           // Add '_' prefix for non public field.
           res = Pad.left('_', res);
         }
@@ -28,19 +28,55 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
 }
 
 class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 
   final CodeModifier modifier;
 
-  CodeFieldName._(this.name, {this.modifier});
+  CodeFieldName._({
+    @required this.name,
+    @required this.modifier,
+  }) : assert(name != null);
 
-  factory CodeFieldName.of(
-    dynamic name, {
-    CodeModifier modifier,
-  }) {
-    if (name == null) return null;
-    return CodeFieldName._(Text.of(name), modifier: modifier);
+  static CodeFieldName _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    // Try to parse the input as the enum name itself.
+    return _parseNode<CodeFieldName>(value, (v) {
+      // Try to parse the input as the name expression.
+      final name = _parseNameNode(v, error: error);
+
+      // Don't accept null
+      if (name == null) return null;
+      return CodeFieldName._(
+        name: name,
+        modifier: null,
+      );
+    }, error: error);
   }
+
+  factory CodeFieldName.of({
+    @required dynamic name,
+    bool override,
+    bool isPrivate,
+    bool isPublic,
+    bool isProtected,
+    bool isInternal,
+    bool isAbstract,
+    bool isStatic,
+    bool isFinal,
+  }) =>
+      CodeFieldName._(
+        name: _parseNameNode(name, error: () {
+          throw '$name is an invalid field name';
+        }),
+        modifier: CodeModifier(
+          override: override,
+          isPrivate: isPrivate,
+          isPublic: isPublic,
+          isProtected: isProtected,
+          isInternal: isInternal,
+          static: isStatic,
+          isFinal: isFinal,
+        ),
+      );
 }

@@ -2,13 +2,13 @@ import 'package:g3m/g3armory.dart';
 import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   group('no body', () {
     test('name only', () {
       var code = JavaCodeConfig(
-        CodeFunction.of('hello'),
+        CodeFunction.of(name: 'hello'),
       );
       runAndExpect(
         code,
@@ -20,108 +20,124 @@ void main() {
     test('with args', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
-          args: {
-            'name': 'String',
-            'another': 'Person',
-          },
+          name: 'hello',
+          requiredArgs: [
+            ['name', 'String'],
+            ['another', 'Person'],
+          ],
         ),
       );
-      runAndExpect(code, 'hello(String name, Person another);\n');
+      runAndExpect(
+        code,
+        '\n'
+        'hello(String name, Person another)',
+      );
     });
 
     test('with return', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
+          name: 'hello',
           returns: ['string'],
         ),
       );
-      runAndExpect(code, 'String hello();\n');
+      runAndExpect(
+        code,
+        '\n'
+        'String hello()',
+      );
     });
 
-    test('with annotation', ()  {
+    test('with annotation', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
+          name: 'hello',
           annotations: [
             CodeAnnotation.of('repository'),
             CodeAnnotation.of('repository', args: [1, false]),
           ],
         ),
       );
-       runAndExpect(
+      runAndExpect(
         code,
+        '\n'
         '@Repository()\n'
         '@Repository(1, false)\n'
-        'hello();\n',
+        'hello()',
       );
     });
 
-    test('with access', ()  {
+    test('with access', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
-          override: true,
-          private: true,
-          static: true,
+          name: 'hello',
+          isOverride: true,
+          isPrivate: true,
+          isStatic: true,
         ),
       );
-       runAndExpect(
+      runAndExpect(
         code,
+        '\n'
         '@override\n'
-        'private static hello();\n',
+        'private static hello()',
       );
     });
 
-    test('with generic', ()  {
+    test('with generic', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
+          name: 'hello',
           generic: ['T'],
-          args: {
-            'name': 'T',
-          },
+          requiredArgs: [
+            ['name', 'T'],
+          ],
         ),
       );
-       runAndExpect(
+      runAndExpect(
         code,
-        'hello<T>(T name);\n',
+        '\n'
+        'hello<T>(T name)',
       );
     });
 
     test('with throw', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
+          name: 'hello',
           throws: ['invalid argument exception'],
         ),
       );
-      runAndExpect(code, 'hello() throws InvalidArgumentException;\n');
+      runAndExpect(
+        code,
+        '\n'
+        'hello() throws InvalidArgumentException',
+      );
     });
 
-    test('with all', ()  {
+    test('with all', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
+          name: 'hello',
           returns: ['string'],
           annotations: [
             CodeAnnotation.of('repository'),
             CodeAnnotation.of('repository', args: [1, false]),
           ],
           generic: ['t'],
-          args: {
-            'name': 'string',
-            'another': 't',
+          requiredArgs: {
+            ['name', 'string'],
+            ['another', 't'],
           },
           throws: ['invalid argument exception'],
         ),
       );
-       runAndExpect(
+      runAndExpect(
         code,
+        '\n'
         '@Repository()\n'
         '@Repository(1, false)\n'
-        'String hello<T>(String name, T another) throws InvalidArgumentException;\n',
+        'String hello<T>({[name,String],[another,T]}) throws InvalidArgumentException',
       );
     });
   });
@@ -130,15 +146,18 @@ void main() {
     test('name only', () {
       var code = JavaCodeConfig(
         CodeFunction.of(
-          'hello',
-          body: ['// some sample comment', 'callAFunction()'],
+          name: 'hello',
+          body: [
+            '// some sample comment\n',
+            'callAFunction();\n',
+          ],
         ),
       );
       runAndExpect(
         code,
         '\n'
         'hello() {\n'
-        '  // some sample comment;\n'
+        '  // some sample comment\n'
         '  callAFunction();\n'
         '}',
       );

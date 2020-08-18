@@ -104,9 +104,9 @@ ProtoLib clone() => super.clone()
     var fieldMap = Container(fields.keys
         .map((e) => Container([
               '\n.._',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
               ' = _',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
             ]))
         .toList());
 
@@ -147,15 +147,15 @@ ProtoLibScope({{constructorArgs}});
     var constructorArgs = Join.commaSeparated(fields.keys
         .map((e) => Container([
               'this.',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
             ]))
         .toList());
     var fieldMap = Container(fields.keys
         .map((e) => Container([
               '\n.._',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
               ' = _',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
               '.none'
             ]))
         .toList());
@@ -163,9 +163,9 @@ ProtoLibScope({{constructorArgs}});
     var addFields = Container(fields.keys
         .map((e) => Container([
               '\n.._',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
               ' = _',
-              CodeFieldName.of(e),
+              CodeFieldName.of(name: e),
               '.none'
             ]))
         .toList());
@@ -178,7 +178,8 @@ ProtoLibScope({{constructorArgs}});
         'scopes': scopes,
         'fieldMap': Indent(fieldMap, level: 2),
         'addFields': Indent(addFields, level: 3),
-        'fieldList': CodeArgList.ofNameTypeMap(fields),
+        // FIXME: This should be a array instead of map
+        'fieldList': CodeArgList.of(required: fields),
       },
     );
   }

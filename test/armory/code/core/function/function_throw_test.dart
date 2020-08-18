@@ -2,13 +2,13 @@ import 'package:g3m/g3armory.dart';
 import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   group('function throw', () {
     test('simple', () {
       var code = JavaCodeConfig(
-        CodeFunctionThrow.simple('my car'),
+        CodeFunctionThrow.of(type: 'my car'),
       );
       runAndExpect(code, 'MyCar');
     });
@@ -17,30 +17,30 @@ void main() {
   group('function throw list', () {
     test('single', () {
       var code = JavaCodeConfig(
-        CodeFunctionThrowList.single('my car'),
+        CodeFunctionThrowList.of('my car'),
       );
-      runAndExpect(code, 'MyCar');
+      runAndExpect(code, ' throws MyCar');
     });
 
     test('list - empty', () {
       var code = JavaCodeConfig(
-        CodeFunctionThrowList.list([]),
+        CodeFunctionThrowList.of([]),
       );
       runAndExpect(code, '');
     });
 
     test('list - one', () {
       var code = JavaCodeConfig(
-        CodeFunctionThrowList.list(['my car']),
+        CodeFunctionThrowList.of(['my car']),
       );
-      runAndExpect(code, 'MyCar');
+      runAndExpect(code, ' throws MyCar');
     });
 
     test('list - more than one', () {
       var code = JavaCodeConfig(
-        CodeFunctionThrowList.list(['my car', 'my vehicle']),
+        CodeFunctionThrowList.of(['my car', 'my vehicle']),
       );
-      runAndExpect(code, 'MyCar, MyVehicle');
+      runAndExpect(code, ' throws MyCar, MyVehicle');
     });
   });
 }

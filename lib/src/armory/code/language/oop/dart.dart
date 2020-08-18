@@ -172,7 +172,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           fieldConfig: (_, child) => CodeFieldConfig.forDartLike(child),
 
           // Arg configs
-          argNameConfig: null,
+          argNameConfig: (_, child) => CodeArgNameConfig.forDartLike(child),
           argListConfig: (_, child) => CodeArgListConfig.forDartLike(child),
           argConfig: (_, child) => CodeArgConfig.forDartLike(child),
 
@@ -194,7 +194,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
               CodeEnumValueNameConfig.forDartLike(child),
           enumValueListConfig: null,
           enumValueConfig: null,
-          enumNameConfig: null,
+          enumNameConfig: (_, child) => CodeEnumNameConfig.forDartLike(child),
           enumListConfig: null,
           enumConfig: null,
 

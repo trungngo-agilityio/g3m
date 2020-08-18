@@ -3,13 +3,13 @@ import 'package:g3m/g3armory_dart.dart';
 import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   group('function return', () {
     test('simple', () {
       var code = JavaCodeConfig(
-        CodeFunctionReturn.simple('my car'),
+        CodeFunctionReturn.of(type: 'my car'),
       );
       runAndExpect(code, 'MyCar');
     });
@@ -18,28 +18,28 @@ void main() {
   group('function return list', () {
     test('single', () {
       var code = JavaCodeConfig(
-        CodeFunctionReturnList.single('my car'),
+        CodeFunctionReturnList.of('my car'),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('list - empty', () {
       var code = JavaCodeConfig(
-        CodeFunctionReturnList.list([]),
+        CodeFunctionReturnList.of([]),
       );
       runAndExpect(code, '');
     });
 
     test('list - one', () {
       var code = JavaCodeConfig(
-        CodeFunctionReturnList.list(['my car']),
+        CodeFunctionReturnList.of(['my car']),
       );
       runAndExpect(code, 'MyCar');
     });
 
     test('list - more than one', () {
       var code = JavaCodeConfig(
-        CodeFunctionReturnList.list(['my car', 'my vehicle']),
+        CodeFunctionReturnList.of(['my car', 'my vehicle']),
       );
       runAndExpect(code, 'MyCar, MyVehicle');
     });
@@ -48,21 +48,21 @@ void main() {
   group('stream & async', () {
     test('async', () {
       var code = DartCodeConfig(
-        CodeFunctionReturn.simple('my car', async: true),
+        CodeFunctionReturn.of(type: 'my car', isAsync: true),
       );
       runAndExpect(code, 'MyCar async');
     });
 
     test('stream', () {
       var code = DartCodeConfig(
-        CodeFunctionReturn.simple('my car', stream: true),
+        CodeFunctionReturn.of(type: 'my car', isStream: true),
       );
       runAndExpect(code, 'MyCar sync*');
     });
 
     test('async stream', () {
       var code = DartCodeConfig(
-        CodeFunctionReturn.simple('my car', async: true, stream: true),
+        CodeFunctionReturn.of(type: 'my car', isAsync: true, isStream: true),
       );
       runAndExpect(code, 'MyCar async*');
     });

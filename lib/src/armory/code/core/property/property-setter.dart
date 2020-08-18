@@ -53,7 +53,7 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
 }
 
 class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
-    implements NamedNode {
+    implements _NamedNode {
   /// The property name. This is optional in the case it is used
   /// outside of a property.
   @override

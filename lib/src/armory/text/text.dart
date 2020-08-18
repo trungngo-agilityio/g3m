@@ -1,12 +1,13 @@
 part of g3.armory;
 
-/// The simple node that writes the specified [text] to the
+/// The simple node that writes the specified [name] to the
 /// ancestor's output sink.
 ///
 class Text extends NoChildNode implements Renderer {
-  final String text;
+  @override
+  final String name;
 
-  Text._(String text) : text = text?.toString();
+  Text._(String text) : name = text?.toString();
 
   factory Text.of(dynamic value) {
     return _parseNode<Text>(value, (v) => Text._(v?.toString()));
@@ -16,9 +17,9 @@ class Text extends NoChildNode implements Renderer {
 
   @override
   void render(RenderContext context) {
-    if (text == null) return;
+    if (name == null) return;
     // Writes out the text as is.
-    context.out.write(text);
+    context.out.write(name);
   }
 }
 

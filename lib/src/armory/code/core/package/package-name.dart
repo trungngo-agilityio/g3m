@@ -24,7 +24,7 @@ class CodePackageNameConfig extends CodeConfigNode<CodePackageName> {
 }
 
 class CodePackageName extends CodeConfigProxyNode<CodePackageName>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final Node name;
 

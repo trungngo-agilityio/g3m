@@ -5,17 +5,15 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
       : super(buildFunc, child);
 
   factory CodeFunctionConfig.forDartLike(Node child) =>
-      CodeFunctionConfig._internal(child, overrideAsAnnotation: true);
+      CodeFunctionConfig._internal(child);
 
   factory CodeFunctionConfig.forJavaLike(Node child) =>
-      CodeFunctionConfig._internal(
-        child,
-      );
+      CodeFunctionConfig._internal(child);
 
   factory CodeFunctionConfig._internal(
     Node child, {
     String throwKeyword = 'throws',
-    bool overrideAsAnnotation,
+    bool overrideAsAnnotation = true,
   }) =>
       CodeFunctionConfig((context, func) {
         final def = Container([
@@ -58,7 +56,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
 }
 
 class CodeFunction extends CodeConfigProxyNode<CodeFunction>
-    implements NamedNode {
+    implements _NamedNode {
   @override
   final CodeFunctionName name;
   final CodeComment comment;
@@ -82,41 +80,56 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction>
     this.body,
   });
 
-  factory CodeFunction.of(
-    String name, {
-    String comment,
-    List<CodeAnnotation> annotations,
-    bool override,
-    bool private,
-    bool public,
-    bool protected,
-    bool internal,
-    bool abstract,
-    bool static,
-    List<String> generic,
-    Map<String, String> args,
-    bool async,
-    bool stream,
-    List<String> returns,
-    List<String> throws,
-    List<dynamic> body,
-  }) =>
-      CodeFunction(
-        name: CodeFunctionName.of(name),
-        comment: comment != null ? CodeComment.of(comment) : null,
-        annotations: CodeAnnotationList.of(annotations),
-        modifier: CodeModifier(
-          override: override,
-          private: private,
-          public: public,
-          protected: protected,
-          internal: internal,
-          static: static,
-        ),
-        generic: generic != null ? CodeGenericParamList.list(generic) : null,
-        args: args != null ? CodeArgList.ofNameTypeMap(args) : null,
-        returns: returns != null ? CodeFunctionReturnList.list(returns) : null,
-        throws: throws != null ? CodeFunctionThrowList.list(throws) : null,
-        body: CodeBlock.of(CodeStatementList.of(body)),
-      );
+  factory CodeFunction.of({
+    @required dynamic name,
+    dynamic comment,
+    dynamic annotations,
+    bool isOverride,
+    bool isPrivate,
+    bool isPublic,
+    bool isProtected,
+    bool isInternal,
+    bool isAbstract,
+    bool isStatic,
+    dynamic generic,
+    dynamic requiredArgs,
+    dynamic optionalArgs,
+    dynamic namedArgs,
+    bool isAsync,
+    bool isStream,
+    dynamic returns,
+    dynamic throws,
+    dynamic body,
+  }) {
+    return CodeFunction(
+      name: CodeFunctionName.of(
+        name: name,
+        isOverride: isOverride,
+        isPrivate: isPrivate,
+        isPublic: isPublic,
+        isProtected: isProtected,
+        isInternal: isInternal,
+        isStatic: isStatic,
+      ),
+      comment: CodeComment.of(comment),
+      annotations: CodeAnnotationList.of(annotations),
+      modifier: CodeModifier(
+        override: isOverride,
+        isPrivate: isPrivate,
+        isPublic: isPublic,
+        isProtected: isProtected,
+        isInternal: isInternal,
+        static: isStatic,
+      ),
+      generic: CodeGenericParamList.list(generic),
+      args: CodeArgList.of(
+        required: requiredArgs,
+        optional: optionalArgs,
+        named: namedArgs,
+      ),
+      returns: CodeFunctionReturnList.of(returns),
+      throws: CodeFunctionThrowList.of(throws),
+      body: CodeBlock.of(CodeStatementList.of(body)),
+    );
+  }
 }
