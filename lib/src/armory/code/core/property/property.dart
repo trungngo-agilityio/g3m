@@ -129,7 +129,9 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
           isStatic: isStatic,
           isFinal: isFinal,
         ),
-        type: CodeType.simple(type),
+        type: CodeType._parse(type, error: () {
+          throw '$type is not a valid type.';
+        }),
         init: CodeExpr.of(init),
         getter: CodePropertyGetter._parse(getter),
         setter: CodePropertySetter._parse(setter),

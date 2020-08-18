@@ -127,7 +127,7 @@ class _Context implements BuildContext, RenderContext {
 class Program {
   final Node root;
 
-  bool _yesToAll;
+  bool _yesToAll = true;
 
   Program._(this.root);
 

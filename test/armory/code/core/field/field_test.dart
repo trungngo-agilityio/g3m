@@ -55,8 +55,8 @@ void main() {
       CodeField.of(
         name: 'first name',
         type: 'string',
-        private: true,
-        static: true,
+        isPrivate: true,
+        isStatic: true,
       ),
     );
     runAndExpect(

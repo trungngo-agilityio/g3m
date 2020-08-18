@@ -10,7 +10,7 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
 
   factory CodePackageConfig.forDartLike(Node child) =>
       // Java don't allow part of keyword.
-      CodePackageConfig.of(child);
+      CodePackageConfig.of(child, packageKeyword: 'library ');
 
   factory CodePackageConfig.of(
     Node child, {

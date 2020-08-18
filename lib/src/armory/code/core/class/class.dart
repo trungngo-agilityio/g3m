@@ -89,6 +89,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
     dynamic implements,
     dynamic constructors,
     dynamic fields,
+    dynamic properties,
     dynamic functions,
     dynamic comment,
     dynamic body,
@@ -112,6 +113,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
               Container([
                 CodeFieldList.of(fields),
                 CodeConstructorList.of(constructors),
+                CodePropertyList.of(properties),
                 CodeFunctionList.of(functions),
               ]),
             ),

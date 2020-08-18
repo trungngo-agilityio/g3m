@@ -137,8 +137,8 @@ CodeField field() {
   return CodeField.of(
     name: 'first name',
     type: 'string',
-    override: true,
-    private: true,
+    isOverride: true,
+    isPrivate: true,
     comment: 'The human first name.',
   );
 }
