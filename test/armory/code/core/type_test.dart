@@ -8,7 +8,7 @@ void main() {
   group('data type', () {
     test('simple', () {
       var code = JavaCodeConfig(
-        CodeType.simple('my car'),
+        CodeType.of(name: 'my car'),
       );
       runAndExpect(code, 'MyCar');
     });

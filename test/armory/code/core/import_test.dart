@@ -70,7 +70,7 @@ void main() {
         CodeImport.of(path: 'hello_world.dart'),
       );
 
-      runAndExpect(code, 'import \'hello_world.dart\';\n');
+      runAndExpect(code, 'import \'hello_world.dart\'');
     });
   });
 }

@@ -5,16 +5,16 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('simple', ()  {
+  test('simple', () {
     var code = JavaCodeConfig(
       CodeForEach.of(
         item: CodeVar.of('i', type: 'int'),
         collection: Text.of('entries'),
-        body: ['print("Hello World!")'],
+        body: ['print("Hello World!");'],
       ),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       'for (int i: entries) {\n'
       '  print("Hello World!");\n'

@@ -93,12 +93,16 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
 
   factory CodeType.of({
     dynamic name,
-    CodeGenericParamList generic,
+    dynamic generic,
     bool array,
   }) {
+    if (name == null && generic == null && array == null) {
+      return null;
+    }
+
     return CodeType._(
       name: CodeTypeName.of(name),
-      generic: generic,
+      generic: CodeGenericParamList.of(generic),
       array: array,
     );
   }

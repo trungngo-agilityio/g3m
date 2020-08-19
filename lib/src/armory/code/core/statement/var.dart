@@ -52,7 +52,7 @@ class CodeVar extends CodeConfigProxyNode<CodeVar> {
           {String type, String comment, bool isFinal, dynamic init}) =>
       CodeVar(
         name: CodeVarName.of(name),
-        type: CodeType.simple(type),
+        type: CodeType.of(name: type),
         init: init,
         comment: comment != null ? CodeComment.of(comment) : null,
       );

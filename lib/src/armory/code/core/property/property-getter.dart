@@ -20,11 +20,10 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
   }) {
     return CodePropertyGetterConfig((context, getter) {
       // Gets out the parent property
-      final property = context.findAncestorNodeOfExactType<CodeProperty>();
-      final modifier = property?.modifier;
-
-      final name = getter.name ?? property?.name;
-      final type = getter.type ?? property?.type;
+      final property = context.dependOnAncestorNodeOfExactType<CodeProperty>();
+      final modifier = property.modifier;
+      final name = property.name;
+      final type = property.type;
 
       final def = Container([
         '\n',
@@ -34,7 +33,7 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
         // In the case of dart language, override is an annotation.
         // For csharp, it is an modifier.
         overrideAsAnnotation == true && modifier?.override == true
-            ? '@override'
+            ? '@override\n'
             : null,
 
         modifier,
@@ -59,15 +58,7 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
   }
 }
 
-class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter>
-    implements _NamedNode {
-  /// The property name.
-  @override
-  final CodePropertyName name;
-
-  /// The property data type.
-  final CodeType type;
-
+class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter> {
   /// The comment for this getter.
   final CodeComment comment;
 
@@ -78,32 +69,29 @@ class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter>
   final CodeBlock body;
 
   CodePropertyGetter._({
-    this.name,
-    this.type,
     this.comment,
     this.annotations,
-    this.body,
-  });
+    @required this.body,
+  }) : assert(body != null, 'property body is required');
 
-  factory CodePropertyGetter._parse(dynamic value) {
+  factory CodePropertyGetter._parse(
+    dynamic value, {
+    _NodeParseErrorFunc error,
+  }) {
     return _parseNode<CodePropertyGetter>(value, (v) {
       final statements = CodeStatementList._parse(v);
       return CodePropertyGetter._(
         body: CodeBlock.of(statements),
       );
-    });
+    }, error: error);
   }
 
   factory CodePropertyGetter.of({
-    dynamic name,
-    dynamic type,
-    dynamic comment,
+    @required dynamic body,
     dynamic annotations,
-    dynamic body,
+    dynamic comment,
   }) =>
       CodePropertyGetter._(
-        name: CodePropertyName.of(name),
-        type: CodeType.simple(type),
         comment: CodeComment.of(comment),
         annotations: CodeAnnotationList.of(annotations),
         body: CodeBlock.of(CodeStatementList.of(body)),

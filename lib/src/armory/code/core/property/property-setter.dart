@@ -18,11 +18,10 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
   }) {
     return CodePropertySetterConfig((context, setter) {
       // Gets out the parent property
-      final property = context.findAncestorNodeOfExactType<CodeProperty>();
-      final modifier = property?.modifier;
-
-      final name = setter.name ?? property?.name;
-      final type = setter.type ?? property?.type;
+      final property = context.dependOnAncestorNodeOfExactType<CodeProperty>();
+      final modifier = property.modifier;
+      final name = property.name;
+      final type = property.type;
 
       final def = Container([
         '\n',
@@ -32,10 +31,10 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
         // In the case of dart language, override is an annotation.
         // For csharp, it is an modifier.
         overrideAsAnnotation == true && modifier?.override == true
-            ? '@override'
+            ? '@override\n'
             : null,
 
-        modifier, ' ', setKeyword, name,
+        modifier, setKeyword, name,
         '(', type, ' value', ')',
       ]);
 
@@ -54,16 +53,7 @@ class CodePropertySetterConfig extends CodeConfigNode<CodePropertySetter> {
   }
 }
 
-class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
-    implements _NamedNode {
-  /// The property name. This is optional in the case it is used
-  /// outside of a property.
-  @override
-  final CodePropertyName name;
-
-  /// The property data type.
-  final CodeType type;
-
+class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter> {
   /// The property setter comment.
   final CodeComment comment;
 
@@ -74,34 +64,36 @@ class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter>
   final CodeBlock body;
 
   CodePropertySetter._({
-    this.name,
-    this.type,
     this.comment,
     this.annotations,
-    this.body,
-  });
+    @required this.body,
+  }) : assert(body != null, 'property body is required.');
 
-  factory CodePropertySetter._parse(dynamic value) {
+  factory CodePropertySetter._parse(
+    dynamic value, {
+    _NodeParseErrorFunc error,
+  }) {
     return _parseNode<CodePropertySetter>(value, (v) {
       final statements = CodeStatementList._parse(v);
       return CodePropertySetter._(
         body: CodeBlock.of(statements),
       );
-    });
+    }, error: error);
   }
 
   factory CodePropertySetter.of({
-    dynamic name,
-    dynamic type,
-    dynamic comment,
+    @required dynamic body,
     dynamic annotations,
-    dynamic body,
-  }) =>
-      CodePropertySetter._(
-        name: CodePropertyName.of(name),
-        type: CodeType.of(name: type),
-        comment: CodeComment.of(comment),
-        annotations: CodeAnnotationList.of(annotations),
-        body: CodeBlock.of(CodeStatementList.of(body)),
-      );
+    dynamic comment,
+  }) {
+    if (comment == null && annotations == null && body == null) {
+      return null;
+    }
+
+    return CodePropertySetter._(
+      comment: CodeComment.of(comment),
+      annotations: CodeAnnotationList.of(annotations),
+      body: CodeBlock.of(CodeStatementList.of(body)),
+    );
+  }
 }

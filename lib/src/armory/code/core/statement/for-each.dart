@@ -39,22 +39,25 @@ class CodeForEach extends CodeConfigProxyNode<CodeForEach>
   final CodeComment comment;
 
   CodeForEach._({
-    this.item,
-    this.collection,
-    this.body,
+    @required this.item,
+    @required this.collection,
+    @required this.body,
     this.comment,
-  });
+  })  : assert(item != null, 'for each item is required.'),
+        assert(collection != null, 'for each collection is required.'),
+        assert(body != null, 'for each body is required.');
 
   factory CodeForEach.of({
     @required dynamic item,
     @required dynamic collection,
     @required dynamic body,
     String comment,
-  }) =>
-      CodeForEach._(
-        item: CodeExpr.of(item),
-        collection: CodeExpr.of(collection),
-        body: CodeStatementList.of(body),
-        comment: CodeComment.of(comment),
-      );
+  }) {
+    return CodeForEach._(
+      item: CodeExpr.of(item),
+      collection: CodeExpr.of(collection),
+      body: CodeStatementList.of(body),
+      comment: CodeComment.of(comment),
+    );
+  }
 }

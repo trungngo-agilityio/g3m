@@ -11,7 +11,7 @@ void main() {
         init: CodeVar.of('i', type: 'int'),
         condition: Text.of('i<10'),
         step: Text.of('i++'),
-        body: ['print("Hello World!")'],
+        body: ['print("Hello World!");'],
       ),
     );
 

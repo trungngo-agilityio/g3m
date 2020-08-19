@@ -5,33 +5,35 @@ import 'package:test/test.dart';
 import '../../utils.dart';
 
 void main() {
-  void run(Node node, String expected)  {
+  void run(Node node, String expected) {
     var code = JavaCode(node);
-     runAndExpect(code, expected);
+    runAndExpect(code, expected);
   }
 
   test('simple text', () {
     run(
       CodeExpr.of('hello world'),
-      'hello world;\n',
+      '"hello world"',
     );
   });
 
   test('node', () {
     run(
       CodeExpr.of(Text.of('hello world')),
-      'hello world;\n',
+      'hello world',
     );
   });
 
   test('container, with sub expr', () {
     run(
       CodeExpr.of(Container([
-        CodeExpr.of('hello'),
+        CodeExpr.of(1),
+        ' ',
+        CodeExpr.of(true),
         ' ',
         CodeExpr.of('world'),
       ])),
-      'hello world;\n',
+      '1 true "world"',
     );
   });
 }

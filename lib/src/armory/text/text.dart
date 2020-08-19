@@ -4,7 +4,6 @@ part of g3.armory;
 /// ancestor's output sink.
 ///
 class Text extends NoChildNode implements Renderer {
-  @override
   final String name;
 
   Text._(String text) : name = text?.toString();

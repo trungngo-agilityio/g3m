@@ -30,6 +30,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         classFunc: StringFuncs.code.commentTripleSplash,
         interfaceFunc: StringFuncs.code.commentTripleSplash,
         fieldFunc: StringFuncs.code.commentTripleSplash,
+        propertyFunc: StringFuncs.code.commentTripleSplash,
         constructorFunc: StringFuncs.code.commentTripleSplash,
         functionFunc: StringFuncs.code.commentTripleSplash,
         otherFunc: StringFuncs.code.commentDoubleSplash,
@@ -42,6 +43,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         classFunc: StringFuncs.code.commentJavaDoc,
         interfaceFunc: StringFuncs.code.commentJavaDoc,
         fieldFunc: StringFuncs.code.commentDoubleSplash,
+        propertyFunc: StringFuncs.code.commentDoubleSplash,
         constructorFunc: StringFuncs.code.commentJavaDoc,
         functionFunc: StringFuncs.code.commentJavaDoc,
         otherFunc: StringFuncs.code.commentDoubleSplash,
@@ -53,6 +55,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
     @required StringFunc classFunc,
     @required StringFunc interfaceFunc,
     @required StringFunc fieldFunc,
+    @required StringFunc propertyFunc,
     @required StringFunc constructorFunc,
     @required StringFunc functionFunc,
     @required StringFunc otherFunc,
@@ -65,6 +68,9 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
                 e is CodeClass ||
                 e is CodeInterface ||
                 e is CodeField ||
+                e is CodeProperty ||
+                e is CodePropertyGetter ||
+                e is CodePropertySetter ||
                 e is CodeConstructor ||
                 e is CodeFunction,
             orElse: () => null);
@@ -80,6 +86,10 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
             func = interfaceFunc;
           } else if (container is CodeField) {
             func = fieldFunc;
+          } else if (container is CodeProperty ||
+              container is CodePropertySetter ||
+              container is CodePropertyGetter) {
+            func = propertyFunc;
           } else if (container is CodeConstructor) {
             func = constructorFunc;
           } else if (container is CodeFunction) {

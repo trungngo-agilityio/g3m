@@ -5,34 +5,34 @@ import 'package:test/test.dart';
 import '../../../../utils.dart';
 
 void main() {
-  test('no args', ()  {
+  test('no args', () {
     var code = JavaCodeConfig(
-      CodeFunctionCall.of(name:'hello world'),
+      CodeFunctionCall.of(name: 'hello world'),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       'helloWorld()',
     );
   });
 
-  test('one arg', ()  {
+  test('one arg', () {
     var code = JavaCodeConfig(
       CodeFunctionCall.of(name: 'hello world', args: ['john doe']),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       'helloWorld("john doe")',
     );
   });
 
-  test('more than one', ()  {
+  test('more than one', () {
     var code = JavaCodeConfig(
-      CodeFunctionCall.of(name:'hello world', args: ['john doe', true, 1]),
+      CodeFunctionCall.of(name: 'hello world', args: ['john doe', true, 1]),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       'helloWorld("john doe", true, 1)',
     );

@@ -42,7 +42,7 @@ void main() {
     runAndExpect(
       root,
       '// Demo file level comment\n'
-      'package myPersonalVehicle;\n'
+      'package my_personal_vehicle;\n'
       '\n'
       '\n'
       'import io.*;\n'
@@ -59,26 +59,8 @@ void main() {
       '\n'
       'hello(String firstName) {\n'
       '  var name = "John";\n'
-      '  print(name);;\n'
+      '  print(name);\n'
       '}\n'
-      '\n'
-      '\n'
-      'public abstract interface Person<T> extends Human {\n'
-      '  // The human first name.\n'
-      '  String firstName;\n'
-      '\n'
-      '\n'
-      '  /**\n'
-      '   * just a demo function\n'
-      '   */\n'
-      '  void drive<T>(Car vehicle) throws AccidentException, BadDriverException {\n'
-      '    // Just any text;\n'
-      '  }\n'
-      '  // just a free text class body \n'
-      '  // with Mustache template support.\n'
-      '  hello(John Doe);\n'
-      '}\n'
-      '\n'
       '\n'
       '\n'
       'public abstract class Person<T> {\n'
@@ -89,7 +71,7 @@ void main() {
       '  /**\n'
       '   * a demo constructor\n'
       '   */\n'
-      '  Person(String name) {\n'
+      '  Person(mapEntry(name:String)) {\n'
       '    // Any free text can be here\n'
       '  }\n'
       '\n'
@@ -97,8 +79,8 @@ void main() {
       '  /**\n'
       '   * just a demo function\n'
       '   */\n'
-      '  void drive<T>(Car vehicle) throws AccidentException, BadDriverException {\n'
-      '    // Just any text;\n'
+      '  void drive<T>(vehicle, car) throws AccidentException, BadDriverException {\n'
+      '    // Just any text\n'
       '  }\n'
       '  // just a free text class body \n'
       '  // with Mustache template support.\n'
@@ -118,7 +100,7 @@ CodeInterface interfaze() {
       genericParam(),
     ],
     extend: [
-      CodeType.simple('human'),
+      CodeType.of(name: 'human'),
     ],
     fields: [
       field(),

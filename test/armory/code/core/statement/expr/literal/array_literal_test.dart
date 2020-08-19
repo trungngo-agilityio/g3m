@@ -5,34 +5,34 @@ import 'package:test/test.dart';
 import '../../../../../utils.dart';
 
 void main() {
-  test('null', ()  {
+  test('null', () {
     var code = JavaCodeConfig(
       CodeArrayLiteral.of(null),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       'null',
     );
   });
 
-  test('empty array', ()  {
+  test('empty array', () {
     var code = JavaCodeConfig(
       CodeArrayLiteral.of([]),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       '[]',
     );
   });
 
-  test('non empty array', ()  {
+  test('non empty array', () {
     var code = JavaCodeConfig(
       CodeArrayLiteral.of([false, null, 'A']),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       '[\n'
       '  false,\n'

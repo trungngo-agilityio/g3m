@@ -17,46 +17,16 @@ class CodePropertyConfig extends CodeConfigNode<CodeProperty> {
   }) =>
       CodePropertyConfig((context, property) {
         // The data field representing the property.
-        Node field;
-
         // Property getter
         Node getter = property.getter;
-        if (getter != null) {
-          // Adds an extra new line before the getter definition
-          getter = Pad.left('\n', getter);
-        }
 
         // Property setter
         Node setter = property.setter;
-        if (setter != null) {
-          // Adds an extra new line before the setter definition
-          setter = Pad.left('\n', setter);
-        }
 
-        if (getter == null &&
-            setter == null &&
-            generateFieldIfNoSetterAndGetter) {
-          field = Container([
-            property.comment,
-            property.modifier,
-            property.annotations,
-            // In the case of dart language, override is an annotation.
-            // For csharp, it is an modifier.
-            overrideAsAnnotation == true && property.modifier?.override == true
-                ? '@override'
-                : null,
-            property.type,
-            ' ',
-            property.name,
-            property.init != null ? Container([' = ', property.init]) : null,
-          ]);
-
-          // Adds an extra new line before the field definition
-          field = CodeStatement.of(Pad.left('\n', field));
-        }
         return Container([
-          field,
           getter,
+          // Adds a new line to separate getter and setter.
+          getter != null && setter != null ? '\n' : null,
           setter,
         ]);
       }, child);
@@ -77,9 +47,6 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
   /// The data type of the property
   final CodeType type;
 
-  /// The property initializer
-  final CodeExpr init;
-
   /// Get getter function for the property
   final CodePropertyGetter getter;
 
@@ -90,15 +57,19 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
   final CodeComment comment;
 
   CodeProperty({
-    this.name,
+    @required this.name,
     this.annotations,
     this.modifier,
-    this.type,
-    this.init,
+    @required this.type,
     this.getter,
     this.setter,
     this.comment,
-  });
+  }) {
+    assert(name != null, 'property name is required');
+    assert(type != null, 'property type is required');
+    assert(getter != null || setter != null,
+        'either setter or getter must be specified for property.');
+  }
 
   factory CodeProperty.of({
     @required dynamic name,
@@ -109,32 +80,32 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
     bool isProtected,
     bool isInternal,
     bool isAbstract,
-    bool isStatic,
-    bool isFinal,
     dynamic type,
     dynamic getter,
     dynamic setter,
-    dynamic init,
     dynamic comment,
-  }) =>
-      CodeProperty(
-        name: CodePropertyName.of(name),
-        annotations: CodeAnnotationList.of(annotations),
-        modifier: CodeModifier(
-          override: isOverride,
-          isPrivate: isPrivate,
-          isPublic: isPublic,
-          isProtected: isProtected,
-          isInternal: isInternal,
-          isStatic: isStatic,
-          isFinal: isFinal,
-        ),
-        type: CodeType._parse(type, error: () {
-          throw '$type is not a valid type.';
-        }),
-        init: CodeExpr.of(init),
-        getter: CodePropertyGetter._parse(getter),
-        setter: CodePropertySetter._parse(setter),
-        comment: CodeComment.of(comment),
-      );
+  }) {
+    return CodeProperty(
+      name: CodePropertyName.of(name),
+      annotations: CodeAnnotationList.of(annotations),
+      modifier: CodeModifier(
+        override: isOverride,
+        isPrivate: isPrivate,
+        isPublic: isPublic,
+        isProtected: isProtected,
+        isInternal: isInternal,
+        isAbstract: isAbstract,
+      ),
+      type: CodeType._parse(type, error: () {
+        throw '$type is not a valid type.';
+      }),
+      getter: CodePropertyGetter._parse(getter, error: () {
+        throw 'Invalid $getter found.';
+      }),
+      setter: CodePropertySetter._parse(setter, error: () {
+        throw 'Invalid $setter found.';
+      }),
+      comment: CodeComment.of(comment),
+    );
+  }
 }

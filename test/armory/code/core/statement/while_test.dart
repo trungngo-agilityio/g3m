@@ -5,12 +5,12 @@ import 'package:test/test.dart';
 import '../../../utils.dart';
 
 void main() {
-  test('simple', ()  {
+  test('simple', () {
     var code = JavaCodeConfig(
-      CodeWhile.of(true, ['print("Hello World!")']),
+      CodeWhile.of(condition: true, body: ['print("Hello World!");']),
     );
 
-     runAndExpect(
+    runAndExpect(
         code,
         'while (true) {\n'
         '  print("Hello World!");\n'

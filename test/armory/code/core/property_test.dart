@@ -1,151 +1,87 @@
 import 'package:g3m/g3armory.dart';
 import 'package:g3m/g3armory_dart.dart';
-import 'package:g3m/g3armory_java.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
 
 void main() {
   group('dart', () {
-    group('property', () {
-      test('simple', () {
-        final code = propertySimple();
-        runDart(
-          code,
-          '\n'
-          'String firstName;\n',
-        );
-      });
-
-      test('with init', () {
-        var code = JavaCodeConfig(
-          CodeProperty.of(
-            name: 'first name',
-            type: 'string',
-            init: CodeStringLiteral.of('john'),
-          ),
-        );
-        runDart(
-          code,
-          '\n'
-          'String firstName = "john";\n',
-        );
-      });
-
-      test('with init', ()  {
-        var code = JavaCodeConfig(
-          CodeProperty.of(
-            name: 'first name',
-            type: 'string',
-            isPrivate: true,
-            isStatic: true,
-          ),
-        );
-         runDart(
-          code,
-          '\n'
-          'private static String firstName;\n',
-        );
-      });
-
-      test('with comment', () {
-        final code = propertyWithComment();
-        runDart(
-          code,
-          '\n'
-          '// hello world\n'
-          'String firstName;\n',
-        );
-      });
-
-      test('with body', () {
-        final code = CodePropertyGetter.of(
-          name: 'first name',
-          type: 'string',
-          body: [
-            CodeReturn.of(Text.of('_firstName')),
-          ],
-        );
-        runDart(
-          code,
-          '\n'
-          'String get firstName {\n'
-          '  return _firstName;\n'
-          '}',
-        );
-      });
-    });
-
-    group('property list', () {
-      test('with comment', () {
-        final code = CodePropertyList.of([
-          propertyWithComment(name: 'first name'),
-          propertyWithComment(name: 'last name'),
-        ]);
-        runDart(
-          code,
-          '\n'
-          '// hello world\n'
-          'String firstName;\n'
-          '\n'
-          '// hello world\n'
-          'String lastName;\n',
-        );
-      });
-    });
-
-    group('getter', () {
-      test('name type only', () {
-        final code = CodePropertyGetter.of(
-          name: 'first name',
-          type: 'string',
-        );
-        runDart(
-          code,
-          'String get firstName;\n',
-        );
-      });
-
-      test('in a property', () {
-        final code = CodeProperty.of(
-          name: 'first name',
-          type: 'string',
-          isPrivate: true,
-          getter: CodePropertyGetter.of(),
-        );
-        runDart(
-          code,
-          '\n'
-          'String get _firstName;\n',
-        );
-      });
-    });
-  });
-
-  group('setter', () {
-    test('name type only', () {
-      final code = CodePropertySetter.of(
-        name: 'first name',
-        type: 'string',
-      );
-      runDart(
-        code,
-        'set firstName(String value);\n',
-      );
-    });
-
-    test('in a property', () {
-      final code = CodeProperty.of(
+    test('simple', () {
+      var code = CodeProperty.of(
         name: 'first name',
         type: 'string',
         isPrivate: true,
-        setter: CodePropertySetter.of(),
+        isOverride: true,
+        getter: CodePropertyGetter.of(
+          body: CodeReturn.of(true),
+        ),
       );
       runDart(
         code,
         '\n'
-        'set _firstName(String value);\n',
+        '@override\n'
+        'String get _firstName {\n'
+        '  return true;\n'
+        '}',
       );
+    });
+
+    test('with comment', () {
+      final code = propertyWithComment();
+      runDart(
+        code,
+        '\n'
+        'String get firstName {\n'
+        '  return true;\n'
+        '}\n'
+        '\n'
+        'set firstName(String value) {\n'
+        '  hello();\n'
+        '}',
+      );
+    });
+
+    test('with body', () {
+      final code = CodeProperty.of(
+        name: 'first name',
+        type: 'string',
+        getter: CodePropertyGetter.of(
+          body: CodeReturn.of(Text.of('_firstName')),
+        ),
+      );
+      runDart(
+        code,
+        '\n'
+        'String get firstName {\n'
+        '  return _firstName;\n'
+        '}',
+      );
+    });
+  });
+
+  group('property list', () {
+    test('with comment', () {
+      final code = CodePropertyList.of([
+        propertyWithComment(name: 'first name'),
+        propertyWithComment(name: 'last name'),
+      ]);
+      runDart(
+          code,
+          '\n'
+          'String get firstName {\n'
+          '  return true;\n'
+          '}\n'
+          '\n'
+          'set firstName(String value) {\n'
+          '  hello();\n'
+          '}\n'
+          'String get lastName {\n'
+          '  return true;\n'
+          '}\n'
+          '\n'
+          'set lastName(String value) {\n'
+          '  hello();\n'
+          '}');
     });
   });
 }
@@ -166,5 +102,7 @@ Node propertyWithComment({String name = 'first name'}) {
     name: name,
     type: 'string',
     comment: 'hello world',
+    getter: CodeReturn.of(true),
+    setter: CodeFunctionCall.of(name: 'hello'),
   );
 }

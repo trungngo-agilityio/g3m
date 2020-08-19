@@ -4,7 +4,7 @@ class Join implements Node {
   final Node separator;
   final List<Node> children;
 
-  Join(this.separator, this.children);
+  Join._(this.separator, this.children);
 
   factory Join.newLineSeparated(List<Node> children) => Join.of('\n', children);
 
@@ -15,7 +15,9 @@ class Join implements Node {
   factory Join.spaceSeparated(List<Node> children) => Join.of(' ', children);
 
   factory Join.of(String separator, List<Node> children) =>
-      children?.isNotEmpty == true ? Join(Text.of(separator), children) : null;
+      children?.isNotEmpty == true
+          ? Join._(Text.of(separator), children)
+          : null;
 
   @override
   Node build(BuildContext context) {

@@ -22,24 +22,27 @@ class CodeWhileConfig extends CodeConfigNode<CodeWhile> {
 }
 
 class CodeWhile extends CodeConfigProxyNode<CodeWhile> {
-  final OldCodeExpr condition;
+  final CodeExpr condition;
+
   final CodeStatementList body;
+
   final CodeComment comment;
 
-  CodeWhile({
-    this.condition,
-    this.body,
+  CodeWhile._({
+    @required this.condition,
+    @required this.body,
     this.comment,
-  });
+  })  : assert(condition != null, "while condition is required"),
+        assert(body != null, 'while body is required');
 
-  factory CodeWhile.of(
+  factory CodeWhile.of({
     dynamic condition,
-    List<dynamic> body, {
-    String comment,
+    dynamic body,
+    dynamic comment,
   }) =>
-      CodeWhile(
-        condition: OldCodeExpr.of(condition),
+      CodeWhile._(
+        condition: CodeExpr.of(condition),
         body: CodeStatementList.of(body),
-        comment: comment != null ? CodeComment.of(comment) : null,
+        comment: CodeComment.of(comment),
       );
 }

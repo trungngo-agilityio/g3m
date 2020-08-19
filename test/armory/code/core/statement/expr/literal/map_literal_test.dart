@@ -27,7 +27,7 @@ void main() {
     );
   });
 
-  test('non empty array', ()  {
+  test('non empty array', () {
     var code = JavaCodeConfig(
       CodeMapLiteral.of({
         'bool': true,
@@ -36,7 +36,7 @@ void main() {
       }),
     );
 
-     runAndExpect(
+    runAndExpect(
       code,
       '{\n'
       '  "bool": true,\n'

@@ -135,10 +135,16 @@ void main() {
         CodeEnum.of(
           name: 'hello',
           isPrivate: true,
-          values: [],
+          values: [
+            'first name',
+          ],
         ),
       ),
-      'enum _Hello {}',
+      '\n'
+      'enum _Hello {\n'
+      '  firstName\n'
+      '}\n'
+      '',
     );
   });
 }

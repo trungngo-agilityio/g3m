@@ -11,21 +11,21 @@ void main() {
       var code = JavaCodeConfig(
         CodePackage.of('my car'),
       );
-      runAndExpect(code, 'package my_car;\n');
+      runAndExpect(code, '\npackage my_car');
     });
 
     test('with path', () {
       var code = JavaCodeConfig(
         CodePackage.of('my car', path: ['g3']),
       );
-      runAndExpect(code, 'package g3.my_car;\n');
+      runAndExpect(code, '\npackage g3.my_car');
     });
 
     test('part of', () {
       var code = DartCodeConfig(
         CodePackage.partOf('my car'),
       );
-      runAndExpect(code, 'part of my_car;\n');
+      runAndExpect(code, '\npart of my_car');
     });
   });
 }

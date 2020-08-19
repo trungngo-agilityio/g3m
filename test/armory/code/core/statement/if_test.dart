@@ -7,55 +7,61 @@ import '../../../utils.dart';
 void main() {
   test('simple', () {
     var code = JavaCodeConfig(
-      CodeIf.of(true, ['print("Hello World!")']),
+      CodeIf.of(
+        condition: true,
+        then: CodeFunctionCall.of(name: 'hello'),
+      ),
     );
 
     runAndExpect(
       code,
       'if (true) {\n'
-      '  print("Hello World!");\n'
+      '  hello();\n'
       '}',
     );
   });
 
   test('with else', () {
     var code = JavaCodeConfig(
-      CodeIf.of(true, ['print("do something")'],
-          elseBlock: ['print("do something else")']),
+      CodeIf.of(
+        condition: true,
+        then: CodeReturn.of(true),
+        orElse: CodeReturn.of(false),
+      ),
     );
 
     runAndExpect(
       code,
       'if (true) {\n'
-      '  print("do something");\n'
+      '  return true;\n'
       '} else {\n'
-      '  print("do something else");\n'
+      '  return false;\n'
       '}',
     );
   });
 
   test('with else if', () {
     var code = JavaCodeConfig(
-      CodeIf.of(true, [
+      CodeIf.of(condition: true, then: [
         'print("do something");'
-      ], elseIfBlocks: [
-        CodeElseIf.of(false, ['print("do something")']),
-        CodeElseIf.of(false, ['print("do something")']),
-      ], elseBlock: [
-        'print("do something else")'
+      ], elseIfs: [
+        CodeElseIf.of(condition: false, then: CodeReturn.of('hello')),
+        CodeElseIf.of(condition: false, then: CodeReturn.of('world')),
+      ], orElse: [
+        CodeFunctionCall.of(name: 'helloWorld'),
       ]),
     );
 
     runAndExpect(
       code,
       'if (true) {\n'
-      '  print("do something");;\n'
-      '} else if (false) {\n'
       '  print("do something");\n'
       '} else if (false) {\n'
-      '  print("do something");\n'
+      '  return "hello";\n'
+      '} else if (false) {\n'
+      '  return "world";\n'
       '} else {\n'
-      '  print("do something else");\n'
+      '  helloWorld();\n'
       '}',
     );
   });

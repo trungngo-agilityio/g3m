@@ -8,57 +8,73 @@ class CodeIfConfig extends CodeConfigNode<CodeIf> {
     Node child, {
     String ifKeyword = 'if',
     String elseKeyword = 'else',
-    String openBlock = '{',
-    String closeBlock = '{',
-  }) =>
-      CodeIfConfig((context, expr) {
-        return Container([
-          expr.comment,
-          ifKeyword,
-          ' (',
-          expr.condition,
-          ') ',
-          CodeBlock.of(expr.thenBlock),
-          Container(expr.elseIfBlocks),
-          expr.elseBlock != null
-              ? Container([
-                  ' ',
-                  elseKeyword,
-                  ' ',
-                  CodeBlock.of(expr.elseBlock),
-                ])
-              : null,
-        ]);
-      }, child);
+  }) {
+    return CodeIfConfig((context, expr) {
+      return Container([
+        expr.comment,
+        ifKeyword,
+        ' (',
+        expr.condition,
+        ') ',
+        CodeBlock.of(expr.then),
+        Container(expr.elseIfs),
+        expr.orElse != null
+            ? Container([
+                ' ',
+                elseKeyword,
+                ' ',
+                CodeBlock.of(expr.orElse),
+              ])
+            : null,
+      ]);
+    }, child);
+  }
 }
 
 class CodeIf extends CodeConfigProxyNode<CodeIf> {
-  final OldCodeExpr condition;
-  final CodeStatementList thenBlock;
-  final List<CodeElseIf> elseIfBlocks;
-  final CodeStatementList elseBlock;
+  final CodeExpr condition;
+
+  final CodeStatementList then;
+
+  final List<CodeElseIf> elseIfs;
+
+  final CodeStatementList orElse;
+
   final CodeComment comment;
 
   CodeIf({
-    this.condition,
-    this.thenBlock,
-    this.elseIfBlocks,
-    this.elseBlock,
+    @required this.condition,
+    @required this.then,
+    this.elseIfs,
+    this.orElse,
     this.comment,
-  });
+  })  : assert(
+            condition != null, 'condition is required for else if statement.'),
+        assert(then != null, 'then block is required for else if statement.');
 
-  factory CodeIf.of(
-    dynamic condition,
-    List<dynamic> thenBlock, {
-    List<CodeElseIf> elseIfBlocks,
-    List<dynamic> elseBlock,
-    String comment,
-  }) =>
-      CodeIf(
-        condition: OldCodeExpr.of(condition),
-        thenBlock: CodeStatementList.of(thenBlock),
-        elseIfBlocks: elseIfBlocks,
-        elseBlock: CodeStatementList.of(elseBlock),
-        comment: comment != null ? CodeComment.of(comment) : null,
-      );
+  factory CodeIf.of({
+    @required dynamic condition,
+    @required dynamic then,
+    dynamic elseIfs,
+    dynamic orElse,
+    dynamic comment,
+  }) {
+    if (condition == null &&
+        then == null &&
+        elseIfs == null &&
+        orElse == null &&
+        comment == null) {
+      return null;
+    }
+
+    return CodeIf(
+      condition: CodeExpr.of(condition),
+      then: CodeStatementList.of(then),
+      elseIfs: CodeElseIf._parseList(elseIfs, error: () {
+        throw 'invalid else if block found.';
+      }),
+      orElse: CodeStatementList.of(orElse),
+      comment: comment != null ? CodeComment.of(comment) : null,
+    );
+  }
 }
