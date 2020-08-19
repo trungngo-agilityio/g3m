@@ -18,8 +18,7 @@ class CodeStringLiteralConfig extends CodeConfigNode<CodeStringLiteral> {
       }, child);
 }
 
-class CodeStringLiteral extends CodeConfigProxyNode<CodeStringLiteral>
-    implements OldCodeExpr {
+class CodeStringLiteral extends CodeConfigProxyNode<CodeStringLiteral> {
   final Node value;
 
   CodeStringLiteral._(this.value);

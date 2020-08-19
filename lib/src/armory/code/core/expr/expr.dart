@@ -66,12 +66,20 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
   factory CodeExpr.closed(Node child) =>
       child == null ? null : CodeExpr._(child, true);
 
-  factory CodeExpr._parse(dynamic value,
-      {bool terminated, _NodeParseErrorFunc error}) {
+  factory CodeExpr._parse(
+    dynamic value, {
+    bool closed,
+    bool acceptNull,
+    _NodeParseErrorFunc error,
+  }) {
+    if (value == null && acceptNull == true) {
+      return CodeExpr._(CodeNullLiteral(), closed);
+    }
+
     return _parseNode(value, (v) {
       Node child;
       if (v is Node) {
-        return CodeExpr._(v, terminated);
+        return CodeExpr._(v, closed);
       } else if (v == null) {
         child = CodeNullLiteral();
       } else if (value is bool) {
@@ -87,30 +95,50 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
       } else {
         child = Text.of(v);
       }
-      return CodeExpr._(child, terminated);
+      return CodeExpr._(child, closed);
     }, error: error);
   }
 
-  factory CodeExpr.of(dynamic value, {bool closed}) {
-    return CodeExpr._parse(value, terminated: closed);
+  factory CodeExpr.of(dynamic value, {bool closed, bool acceptNull}) {
+    return CodeExpr._parse(value, closed: closed, acceptNull: acceptNull);
   }
 
   static List<CodeExpr> _parseList(
     dynamic value, {
     bool closed,
+    bool acceptNull,
     _NodeParseErrorFunc error,
   }) {
-    final list =
-        _parseNodeList<CodeExpr>(value, (v) => CodeExpr.of(v, closed: closed))
-            ?.where((e) => e != null)
-            ?.toList();
+    var list = _parseNodeList<CodeExpr>(
+      value,
+      (v) {
+        return CodeExpr._parse(
+          v,
+          closed: closed,
+          acceptNull: acceptNull,
+          error: error,
+        );
+      },
+      error: error,
+      acceptNull: acceptNull,
+    );
 
-    return list?.isNotEmpty != true ? null : list;
+    if (list != null && acceptNull != true) {
+      list = list.where((e) => e != null)?.toList();
+      if (list.isEmpty) list = null;
+    }
+
+    return list;
   }
 
-  static List<CodeExpr> listOf(dynamic value, {bool closed}) {
-    return _parseList(value, closed: closed, error: () {
-      throw '$value is an invalid expression list';
-    });
+  static List<CodeExpr> listOf(dynamic value, {bool closed, bool acceptNull}) {
+    return _parseList(
+      value,
+      closed: closed,
+      acceptNull: acceptNull,
+      error: () {
+        throw '$value is an invalid expression list';
+      },
+    );
   }
 }

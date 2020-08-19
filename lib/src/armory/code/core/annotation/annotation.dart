@@ -73,7 +73,7 @@ class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation>
     return CodeAnnotation._(
       name: CodeAnnotationName.of(name),
       comment: comment != null ? CodeComment.of(comment) : null,
-      args: CodeExpr.listOf(args),
+      args: CodeExpr.listOf(args, acceptNull: true),
     );
   }
 }

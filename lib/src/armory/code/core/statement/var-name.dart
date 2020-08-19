@@ -6,19 +6,31 @@ class CodeVarNameConfig extends CodeConfigNode<CodeVarName> {
 
   factory CodeVarNameConfig.of(StringFunc func, Node child) =>
       CodeVarNameConfig(
-          (context, name) => TextTransform(name.content, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeVarNameConfig.forJavaLike(Node child) =>
       CodeVarNameConfig.of(StringFuncs.camel, child);
 }
 
 class CodeVarName extends CodeConfigProxyNode<CodeVarName>
-    implements OldCodeExpr {
-  final Node content;
+    implements _NamedNode {
+  @override
+  final Node name;
 
-  CodeVarName(this.content);
+  CodeVarName._(this.name);
 
-  factory CodeVarName.of(String text) {
-    return text == null ? null : CodeVarName(Text.of(text));
+  static CodeVarName _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeVarName>(value, (v) {
+      // Try to parse the value as the expression name.
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
+      return CodeVarName._(name);
+    }, error: error);
+  }
+
+  factory CodeVarName.of(dynamic value) {
+    return CodeVarName._parse(value, error: () {
+      throw '${value} is not a valid var name.';
+    });
   }
 }

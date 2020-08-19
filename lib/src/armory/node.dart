@@ -19,14 +19,18 @@ List<dynamic> _toDynamicNodeList<T>(dynamic value) {
   return _parseNodeList(value, (v) => v);
 }
 
-List<T> _parseNodeList<T>(dynamic value, _NodeParseFunc next,
-    {_NodeParseErrorFunc error}) {
+List<T> _parseNodeList<T>(
+  dynamic value,
+  _NodeParseFunc next, {
+  _NodeParseErrorFunc error,
+  bool acceptNull,
+}) {
   if (value == null) return null;
 
   List<T> res;
 
   if (value is List<T>) {
-// return as-is
+    // return as-is
     res = value;
   } else if (value is T) {
     // return as a single item list
@@ -58,7 +62,7 @@ List<T> _parseNodeList<T>(dynamic value, _NodeParseFunc next,
   // Removes out all null value.
   if (res == null) {
     if (error != null) error();
-  } else {
+  } else if (acceptNull != true) {
     res = res.where((e) => e != null)?.toList();
   }
 
@@ -79,6 +83,7 @@ Node _parseNameNode(dynamic value, {_NodeParseErrorFunc error}) {
       name = Text.of(value);
     }
   }
+
   if (name == null && error != null) error();
   return name;
 }

@@ -37,23 +37,28 @@ class CodeVar extends CodeConfigProxyNode<CodeVar> {
   final CodeVarName name;
   final CodeType type;
   final bool isFinal;
-  final OldCodeExpr init;
+  final CodeExpr init;
   final CodeComment comment;
 
-  CodeVar({
-    this.name,
+  CodeVar._({
+    @required this.name,
     this.type,
     this.isFinal,
     this.init,
     this.comment,
-  });
+  }) : assert(name != null, 'var name is required.');
 
-  factory CodeVar.of(String name,
-          {String type, String comment, bool isFinal, dynamic init}) =>
-      CodeVar(
+  factory CodeVar.of({
+    @required dynamic name,
+    dynamic type,
+    dynamic comment,
+    bool isFinal,
+    dynamic init,
+  }) =>
+      CodeVar._(
         name: CodeVarName.of(name),
         type: CodeType.of(name: type),
-        init: init,
-        comment: comment != null ? CodeComment.of(comment) : null,
+        init: CodeExpr.of(init),
+        comment: CodeComment.of(comment),
       );
 }

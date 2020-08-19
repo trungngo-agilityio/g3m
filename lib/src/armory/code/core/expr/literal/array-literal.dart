@@ -14,14 +14,16 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
     bool indent = true,
   }) =>
       CodeArrayLiteralConfig((context, literal) {
-        if (literal.values == null) return CodeNullLiteral();
-        if (literal.values.isEmpty) {
+        var values = literal.values;
+        if (values == null) {
+          return CodeNullLiteral();
+        } else if (values.isNotEmpty != true) {
           return Text.of(emptyArray);
         }
 
         var body = Join.of(
             separator,
-            literal.values
+            values
                 ?.map(
                   (e) => Pad.left(prefix, e),
                 )
@@ -29,9 +31,7 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
 
         return Container([
           openBracket,
-          literal.values.isNotEmpty
-              ? indent == true ? Indent(body) : body
-              : null,
+          values.isNotEmpty ? indent == true ? Indent(body) : body : null,
           closeBracket,
         ]);
       }, child);
@@ -47,13 +47,22 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
       );
 }
 
-class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral>
-    implements OldCodeExpr {
-  final List<OldCodeExpr> values;
+class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral> {
+  final List<CodeExpr> values;
 
   CodeArrayLiteral._(this.values);
 
-  factory CodeArrayLiteral.of(List<dynamic> values) {
-    return CodeArrayLiteral._(values?.map((e) => OldCodeExpr.of(e))?.toList());
+  factory CodeArrayLiteral.of(List<dynamic> value) {
+    List<CodeExpr> values;
+
+    if (value == null) {
+      values = null;
+    } else if (value?.isNotEmpty == true) {
+      values = value.map((e) => CodeExpr.of(e, acceptNull: true)).toList();
+    } else {
+      values = [];
+    }
+
+    return CodeArrayLiteral._(values);
   }
 }

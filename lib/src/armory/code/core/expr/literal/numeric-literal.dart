@@ -12,11 +12,10 @@ class CodeNumericLiteralConfig extends CodeConfigNode<CodeNumericLiteral> {
       }, child);
 }
 
-class CodeNumericLiteral extends CodeConfigProxyNode<CodeNumericLiteral>
-    implements OldCodeExpr {
-  final dynamic value;
+class CodeNumericLiteral extends CodeConfigProxyNode<CodeNumericLiteral> {
+  final num value;
 
   CodeNumericLiteral._(this.value);
 
-  factory CodeNumericLiteral.of(dynamic value) => CodeNumericLiteral._(value);
+  factory CodeNumericLiteral.of(num value) => CodeNumericLiteral._(value);
 }

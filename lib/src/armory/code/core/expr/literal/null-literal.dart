@@ -13,5 +13,4 @@ class CodeNullLiteralConfig extends CodeConfigNode<CodeNullLiteral> {
       }, child);
 }
 
-class CodeNullLiteral extends CodeConfigProxyNode<CodeNullLiteral>
-    implements OldCodeExpr {}
+class CodeNullLiteral extends CodeConfigProxyNode<CodeNullLiteral> {}

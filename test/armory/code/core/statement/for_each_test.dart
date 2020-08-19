@@ -8,7 +8,7 @@ void main() {
   test('simple', () {
     var code = JavaCodeConfig(
       CodeForEach.of(
-        item: CodeVar.of('i', type: 'int'),
+        item: CodeVar.of(name:'i', type: 'int'),
         collection: Text.of('entries'),
         body: ['print("Hello World!");'],
       ),

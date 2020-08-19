@@ -31,8 +31,7 @@ class CodeForEachConfig extends CodeConfigNode<CodeForEach> {
   }
 }
 
-class CodeForEach extends CodeConfigProxyNode<CodeForEach>
-    implements _CodeStatementLike, OldCodeExpr {
+class CodeForEach extends CodeConfigProxyNode<CodeForEach> {
   final CodeExpr item;
   final CodeExpr collection;
   final CodeStatementList body;

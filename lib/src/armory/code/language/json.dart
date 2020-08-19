@@ -54,9 +54,11 @@ class JsonCode extends ExactlyOneNode<JsonCode> {
         CodeCharLiteralConfig.forJavaLike(
           CodeStringLiteralConfig.forJavaLike(
             CodeNumericLiteralConfig.forJavaLike(
-              CodeArrayLiteralConfig.forJavaLike(
-                CodeMapLiteralConfig.forJavaLike(
-                  child,
+              CodeExprConfig.forJavaLike(
+                CodeArrayLiteralConfig.forJavaLike(
+                  CodeMapLiteralConfig.forJavaLike(
+                    child,
+                  ),
                 ),
               ),
             ),

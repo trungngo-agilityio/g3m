@@ -22,12 +22,6 @@ part 'src/armory/code/core/arg/arg_name.dart';
 
 part 'src/armory/code/core/block.dart';
 
-part 'src/armory/code/core/constructor/constructor-list.dart';
-
-part 'src/armory/code/core/constructor/constructor-name.dart';
-
-part 'src/armory/code/core/constructor/constructor.dart';
-
 part 'src/armory/code/core/class/class-list.dart';
 
 part 'src/armory/code/core/class/class-name.dart';
@@ -37,6 +31,12 @@ part 'src/armory/code/core/class/class.dart';
 part 'src/armory/code/core/comment.dart';
 
 part 'src/armory/code/core/config.dart';
+
+part 'src/armory/code/core/constructor/constructor-list.dart';
+
+part 'src/armory/code/core/constructor/constructor-name.dart';
+
+part 'src/armory/code/core/constructor/constructor.dart';
 
 part 'src/armory/code/core/enum/enum-list.dart';
 
@@ -50,7 +50,31 @@ part 'src/armory/code/core/enum/enum-value.dart';
 
 part 'src/armory/code/core/enum/enum.dart';
 
+part 'src/armory/code/core/expr/await.dart';
+
+part 'src/armory/code/core/expr/cascade.dart';
+
 part 'src/armory/code/core/expr/expr.dart';
+
+part 'src/armory/code/core/expr/function-call.dart';
+
+part 'src/armory/code/core/expr/literal/array-literal.dart';
+
+part 'src/armory/code/core/expr/literal/boolean-literal.dart';
+
+part 'src/armory/code/core/expr/literal/char-literal.dart';
+
+part 'src/armory/code/core/expr/literal/list-literal.dart';
+
+part 'src/armory/code/core/expr/literal/map-literal.dart';
+
+part 'src/armory/code/core/expr/literal/null-literal.dart';
+
+part 'src/armory/code/core/expr/literal/numeric-literal.dart';
+
+part 'src/armory/code/core/expr/literal/string-literal.dart';
+
+part 'src/armory/code/core/expr/spread.dart';
 
 part 'src/armory/code/core/field/field-list.dart';
 
@@ -115,32 +139,6 @@ part 'src/armory/code/core/statement/case.dart';
 part 'src/armory/code/core/statement/continue.dart';
 
 part 'src/armory/code/core/statement/else-if.dart';
-
-part 'src/armory/code/core/statement/expr.dart';
-
-part 'src/armory/code/core/statement/expr/await.dart';
-
-part 'src/armory/code/core/statement/expr/cascade.dart';
-
-part 'src/armory/code/core/statement/expr/function-call.dart';
-
-part 'src/armory/code/core/statement/expr/literal/array-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/boolean-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/char-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/list-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/map-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/null-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/numeric-literal.dart';
-
-part 'src/armory/code/core/statement/expr/literal/string-literal.dart';
-
-part 'src/armory/code/core/statement/expr/spread.dart';
 
 part 'src/armory/code/core/statement/for-each.dart';
 

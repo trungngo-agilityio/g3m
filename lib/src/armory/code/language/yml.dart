@@ -54,9 +54,11 @@ class YmlCode extends ExactlyOneNode<YmlCode> {
         CodeCharLiteralConfig.forJavaLike(
           CodeStringLiteralConfig.forJavaLike(
             CodeNumericLiteralConfig.forJavaLike(
-              CodeArrayLiteralConfig.forYmlLike(
-                CodeMapLiteralConfig.forYmlLike(
-                  child,
+              CodeExprConfig.forJavaLike(
+                CodeArrayLiteralConfig.forYmlLike(
+                  CodeMapLiteralConfig.forYmlLike(
+                    child,
+                  ),
                 ),
               ),
             ),

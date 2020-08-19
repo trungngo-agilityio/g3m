@@ -6,44 +6,32 @@ class CodeRefConfig extends CodeConfigNode<CodeRef> {
 
   factory CodeRefConfig.forJavaLike(Node child) =>
       CodeRefConfig((context, expr) {
-        return expr.child;
+        return expr.name;
       }, child);
 }
 
-class CodeRef extends CodeConfigProxyNode<CodeRef> {
-  final Node child;
+class CodeRef extends CodeConfigProxyNode<CodeRef> implements _NamedNode {
+  @override
+  final Node name;
 
-  CodeRef._(this.child);
+  CodeRef._(this.name) : assert(name != null);
 
-  // FIXME
-  factory CodeRef.ofField(CodeField field) => CodeRef.ofFieldName(field.name);
+  static CodeRef _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeRef>(value, (v) {
+      // Try to parse the value as the expression name.
+      final name = _parseNameNode(v, error: error);
+      if (name == null) return null;
+      return CodeRef._(name);
+    }, error: error);
+  }
 
-  // FIXME
-  factory CodeRef.ofFieldName(CodeFieldName field) => CodeRef._(field);
+  factory CodeRef.of(dynamic value) {
+    return CodeRef._parse(value, error: () {
+      throw '${value} is not a valid name.';
+    });
+  }
 
-  // FIXME
-  factory CodeRef.ofVar(CodeVar varz) => CodeRef.ofVarName(varz.name);
-
-  // FIXME
-  factory CodeRef.ofVarName(CodeVarName varName) => CodeRef._(varName);
-
-  // FIXME
-  factory CodeRef.ofProperty(CodeProperty property) =>
-      CodeRef.ofPropertyName(property.name);
-
-  // FIXME
-  factory CodeRef.ofPropertyName(CodePropertyName propertyName) =>
-      CodeRef._(propertyName);
-
-  // FIXME
-  factory CodeRef.ofClass(CodeClass clazz) => CodeRef.ofClassName(clazz.name);
-
-  // FIXME
-  factory CodeRef.ofClassName(CodeClassName clazzName) => CodeRef._(clazzName);
-
-  // FIXME
   factory CodeRef.ofThis() => CodeRef._(Text.of('this'));
 
-  // FIXME
   factory CodeRef.ofSuper() => CodeRef._(Text.of('super'));
 }

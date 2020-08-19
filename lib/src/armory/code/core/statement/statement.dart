@@ -1,8 +1,5 @@
 part of g3.armory;
 
-// FIXME remove this
-abstract class _CodeStatementLike {}
-
 class CodeStatementConfig extends CodeConfigNode<CodeStatement> {
   CodeStatementConfig(NodeBuildFunc<CodeStatement> buildFunc, Node child)
       : super(buildFunc, child);

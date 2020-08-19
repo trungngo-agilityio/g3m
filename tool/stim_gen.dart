@@ -66,7 +66,7 @@ void _generateModels(Model models) {
     ),
   );
 
-  program = _buildGrpcTypeMapping(program);
+  program = _buildGRpcTypeMapping(program);
   Program.execute(program);
 }
 
@@ -124,7 +124,7 @@ class WorldCode implements Node {
   }
 }
 
-Node _buildGrpcTypeMapping(Node child) {
+Node _buildGRpcTypeMapping(Node child) {
   final t = w.type;
   return CodeTypeNameMapperConfig(child, {
     t.uint32.name.toString(): 'int',
@@ -197,10 +197,10 @@ class ExprDefinitionCode implements Node {
 
         var field =
             CodeField.of(name: fieldName, type: fieldType, isPrivate: true);
-        var fieldRef = CodeRef.ofField(field);
+        var fieldRef = CodeRef.of(field);
 
-        var iVar = CodeVar.of('i', isFinal: true);
-        var iVarRef = CodeRef.ofVar(iVar);
+        var iVar = CodeVar.of(name: 'i', isFinal: true);
+        var iVarRef = CodeRef.of(iVar);
 
         return Container([
           field,
@@ -312,7 +312,6 @@ class ExprDefinitionCode implements Node {
       )),
     );
 
-    var requiredArgs = exprFields.map((e) => e.name)?.toList();
     return CodeClass.of(
       name: scopeClassName,
       extend: CodeType.genericSingle('scope', name),

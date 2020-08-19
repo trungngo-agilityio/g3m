@@ -60,19 +60,18 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
       }, child);
 }
 
-class CodeMapLiteral extends CodeConfigProxyNode<CodeMapLiteral>
-    implements OldCodeExpr {
-  final Map<String, OldCodeExpr> values;
+class CodeMapLiteral extends CodeConfigProxyNode<CodeMapLiteral> {
+  final Map<String, CodeExpr> values;
 
   CodeMapLiteral._(this.values);
 
   factory CodeMapLiteral.of(Map<String, dynamic> values) {
     if (values == null) return CodeMapLiteral._(null);
 
-    final res = <String, OldCodeExpr>{};
+    final res = <String, CodeExpr>{};
 
     for (final e in values.entries) {
-      res[e.key] = OldCodeExpr.of(e.value);
+      res[e.key] = CodeExpr.of(e.value, acceptNull: true);
     }
 
     return CodeMapLiteral._(res);

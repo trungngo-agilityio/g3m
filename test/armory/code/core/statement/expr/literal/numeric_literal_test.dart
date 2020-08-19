@@ -18,7 +18,7 @@ void main() {
 
   test('from a string', () {
     var code = JavaCodeConfig(
-      CodeNumericLiteral.of('1'),
+      CodeNumericLiteral.of(1),
     );
 
     runAndExpect(
