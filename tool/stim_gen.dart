@@ -202,6 +202,7 @@ class ExprDefinitionCode implements Node {
         var iVar = CodeVar.of(name: 'i', isFinal: true);
         var iVarRef = CodeRef.of(iVar);
 
+        var valueRef = Text.of('value');
         return Container([
           field,
           CodeProperty.of(
@@ -209,21 +210,31 @@ class ExprDefinitionCode implements Node {
             type: fieldType,
             getter: CodeReturn.of(fieldRef),
             setter: [
-              Container([fieldRef, ' = value;\n']),
+              // _author = value;
+              CodeAssignExpr.of(fieldRef, valueRef),
+
               isNativeType(e.type)
                   ? null
+
+                  // assert(value != null, 'value is required')
                   : CodeFunctionCall.of(
                       name: 'assert',
-                      args: [Text.of('value != null'), 'value is required'],
+                      args: [
+                        CodeNotEqualExpr.of(valueRef, CodeNullLiteral()),
+                        'value is required'
+                      ],
                     ),
+
+              // for (var i in eval()) {
               CodeForEach.of(
                 item: iVar,
                 collection: CodeFunctionCall.of(name: 'eval'),
                 body: Container([
-                  iVarRef,
-                  '.',
-                  fieldRef,
-                  ' = value;\n',
+                  // i._author = value;
+                  CodeAssignExpr.of(
+                    CodeAccessExpr.of(iVarRef, fieldRef),
+                    valueRef,
+                  ),
                 ]),
               ),
             ],
@@ -236,25 +247,32 @@ class ExprDefinitionCode implements Node {
     final className = CodeClassName.of(name);
     final scopeField = CodeFieldName.of(name: className);
 
+    // class Package extends Expr<Package>
     return CodeClass.of(
-      name: className,
-      extend: CodeType.genericSingle('expr', name),
-      constructors: CodeConstructor.of(
-        requiredArgs: worldField,
-        init: CodeFunctionCall.of(name: 'super', args: [
-          Container(['world.', scopeField]),
-        ]),
-      ),
-      fields: worldField,
-      body: exprFields,
-    );
+        name: className,
+        extend: CodeType.genericSingle('expr', name),
+
+        // Package(this.world):
+        //    super(world.package);
+        constructors: CodeConstructor.of(
+          requiredArgs: worldField,
+          init: CodeFunctionCall.of(name: 'super', args: [
+            Container(['world.', scopeField]),
+          ]),
+        ),
+        fields: worldField,
+        body: [
+          ...exprFields,
+          CodeCustom(
+            CodeComment.of('implement custom code here'),
+          ),
+        ]);
   }
 
   CodeField _makeWorldField() {
     return CodeField.of(
       name: 'world',
       isFinal: true,
-//      isPrivate: true,
       type: 'tool world',
     );
   }

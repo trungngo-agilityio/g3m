@@ -44,11 +44,13 @@ class JavaCodeFile implements Node {
 
   @override
   Node build(BuildContext context) {
-    return CodeFile(
-      name: name,
-      extension: extension,
-      syntax: syntax,
-      source: JavaCodeConfig(source),
+    return JavaCodeConfig(
+      CodeFile(
+        name: name,
+        extension: extension,
+        syntax: syntax,
+        source: source,
+      ),
     );
   }
 }
@@ -95,6 +97,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           codeAccessConfig: null,
 
           commentConfig: null,
+          customConfig: null,
 
           // Package configs
           packageNameConfig: null,

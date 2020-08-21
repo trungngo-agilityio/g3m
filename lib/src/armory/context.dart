@@ -26,6 +26,8 @@ abstract class BuildContext {
   String file;
 
   bool yesToAll;
+
+  void abort();
 }
 
 abstract class RenderContext {

@@ -18,8 +18,19 @@ class CodeRef extends CodeConfigProxyNode<CodeRef> implements _NamedNode {
 
   static CodeRef _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeRef>(value, (v) {
-      // Try to parse the value as the expression name.
-      final name = _parseNameNode(v, error: error);
+      Node name;
+      if (v is CodeField ||
+          v is CodeVar ||
+          v is CodeProperty ||
+          v is CodeConstructor ||
+          v is CodeFunction) {
+        // refers the name field (but not the internal name)
+        // so that the value is case sensitive.
+        name = v.name;
+      } else {
+        // Try to parse the value as the expression name.
+        name = _parseNameNode(v, error: error);
+      }
       if (name == null) return null;
       return CodeRef._(name);
     }, error: error);

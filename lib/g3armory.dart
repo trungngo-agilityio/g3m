@@ -51,6 +51,7 @@ part 'src/armory/code/core/enum/enum-value.dart';
 part 'src/armory/code/core/enum/enum.dart';
 
 part 'src/armory/code/core/expr/await.dart';
+part 'src/armory/code/core/custom.dart';
 
 part 'src/armory/code/core/expr/cascade.dart';
 
@@ -194,6 +195,8 @@ part 'src/armory/output/file.dart';
 
 part 'src/armory/output/output-redirect.dart';
 
+part 'src/armory/output/partial_file.dart';
+
 part 'src/armory/program.dart';
 
 part 'src/armory/project.dart';
@@ -220,10 +223,15 @@ part 'src/armory/text/join.dart';
 
 part 'src/armory/text/pad.dart';
 
+part 'src/armory/text/read_file.dart';
+
 part 'src/armory/text/text.dart';
 
 part 'src/armory/text/text_replace.dart';
+part 'src/armory/text/text_blend.dart';
 
 part 'src/armory/text/text_transform.dart';
+
+part 'src/armory/text/text_merge.dart';
 
 part 'src/armory/text/trim.dart';

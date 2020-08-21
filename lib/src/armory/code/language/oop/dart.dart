@@ -45,11 +45,13 @@ class DartCodeFile implements Node {
 
   @override
   Node build(BuildContext context) {
-    return CodeFile(
-      name: name,
-      extension: extension,
-      syntax: syntax,
-      source: DartCodeConfig(source),
+    return DartCodeConfig(
+      CodeFile(
+        name: name,
+        extension: extension,
+        syntax: syntax,
+        source: source,
+      ),
     );
   }
 }
@@ -103,6 +105,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           ),
 
           commentConfig: (_, child) => CodeCommentConfig.forDartLike(child),
+          customConfig: null,
 
           // Package configs
           packageNameConfig: (_, child) =>
