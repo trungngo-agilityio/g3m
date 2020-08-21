@@ -222,6 +222,8 @@ part 'src/armory/text/pad.dart';
 
 part 'src/armory/text/text.dart';
 
+part 'src/armory/text/text_replace.dart';
+
 part 'src/armory/text/text_transform.dart';
 
 part 'src/armory/text/trim.dart';
