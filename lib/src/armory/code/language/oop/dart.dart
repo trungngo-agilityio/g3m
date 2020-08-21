@@ -117,6 +117,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           // Type configs
 
           typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig(child, {
+            'dynamic': 'dynamic',
             'void': 'void',
             'null': 'null',
             'byte': 'byte',
@@ -149,6 +150,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Statement configs
           exprConfig: null,
+          exprListConfig: null,
           statementListConfig: null,
           statementConfig: null,
           breakConfig: null,

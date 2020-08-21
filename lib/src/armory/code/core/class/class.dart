@@ -105,7 +105,9 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
           isAbstract: isAbstract,
           isStatic: isStatic,
         ),
-        extend: extend,
+        extend: CodeType._parse(extend, error: () {
+          throw 'invalid $extend type found.';
+        }),
         implements: CodeTypeList.of(implements),
         body: CodeBlock.of(
           Container([

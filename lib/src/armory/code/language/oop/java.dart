@@ -139,6 +139,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
 
           // Statement configs
           exprConfig: null,
+          exprListConfig: null,
           statementListConfig: null,
           statementConfig: null,
           breakConfig: null,

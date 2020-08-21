@@ -56,6 +56,8 @@ part 'src/armory/code/core/expr/cascade.dart';
 
 part 'src/armory/code/core/expr/expr.dart';
 
+part 'src/armory/code/core/expr/expr_list.dart';
+
 part 'src/armory/code/core/expr/function-call.dart';
 
 part 'src/armory/code/core/expr/literal/array-literal.dart';
