@@ -1,11 +1,11 @@
-part of g3.armory.yml;
+part of g3.armory.yaml;
 
 /// Defines a dart code fine.
 /// This help to enforce the dart syntax and [DatCode] will
 /// be automatically added in the node tree.
 ///
 class YmlCodeFile implements Node {
-  static const String syntax = 'yml';
+  static const String syntax = 'yaml';
   static const String extension = 'yml';
 
   /// The file name without extension.

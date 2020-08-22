@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:g3m/g3armory.dart';
-import 'package:g3m/g3armory_yml.dart';
+import 'package:g3m/g3armory_yaml.dart';
 import 'package:test/test.dart';
 
 import '../../utils.dart';
