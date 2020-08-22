@@ -1,8 +1,8 @@
-part of g3m.tool.generated;
+part of g3m.stimpack.pacman;
 
 
 
-class ToolWorld {
+class PacmanWorld {
   AuthorScope _author;
 
   PackageScope _package;
@@ -10,7 +10,7 @@ class ToolWorld {
   DependencyScope _dependency;
 
 
-  ToolWorld() {
+  PacmanWorld() {
     _author = AuthorScope(this);
     _package = PackageScope(this);
     _dependency = DependencyScope(this);

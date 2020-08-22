@@ -4,17 +4,62 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
   CodeModifierConfig(NodeBuildFunc<CodeModifier> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeModifierConfig.forJavaLike(
+  factory CodeModifierConfig.forJavaLike(Node child) {
+    return CodeModifierConfig._internal(
+      child,
+      overrideKeyword: null,
+      factoryKeyword: null,
+      privateKeyword: 'private ',
+      publicKeyword: 'public ',
+      protectedKeyword: 'protected ',
+      internalKeyword: null,
+      abstractKeyword: 'abstract ',
+      staticKeyword: 'static ',
+      finalKeyword: null,
+    );
+  }
+
+  factory CodeModifierConfig.forDartLike(Node child) {
+    return CodeModifierConfig._internal(
+      child,
+      overrideKeyword: null,
+      factoryKeyword: 'factory ',
+      privateKeyword: null,
+      publicKeyword: null,
+      protectedKeyword: null,
+      internalKeyword: null,
+      abstractKeyword: 'abstract ',
+      staticKeyword: 'static ',
+      finalKeyword: 'final ',
+    );
+  }
+
+  factory CodeModifierConfig.forTypescriptLike(Node child) {
+    return CodeModifierConfig._internal(
+      child,
+      overrideKeyword: null,
+      factoryKeyword: null,
+      privateKeyword: null,
+      publicKeyword: 'export ',
+      protectedKeyword: null,
+      internalKeyword: null,
+      abstractKeyword: 'abstract ',
+      staticKeyword: 'static ',
+      finalKeyword: 'const ',
+    );
+  }
+
+  factory CodeModifierConfig._internal(
     Node child, {
-    String overrideKeyword,
-    String factoryKeyword,
-    String privateKeyword = 'private ',
-    String publicKeyword = 'public ',
-    String protectedKeyword = 'protected ',
-    String internalKeyword = 'internal ',
-    String abstractKeyword = 'abstract ',
-    String staticKeyword = 'static ',
-    String finalKeyword = 'final ',
+    @required String overrideKeyword,
+    @required String factoryKeyword,
+    @required String privateKeyword,
+    @required String publicKeyword,
+    @required String protectedKeyword,
+    @required String internalKeyword,
+    @required String abstractKeyword,
+    @required String staticKeyword,
+    @required String finalKeyword,
   }) =>
       CodeModifierConfig((context, access) {
         final keywords = <String>[];

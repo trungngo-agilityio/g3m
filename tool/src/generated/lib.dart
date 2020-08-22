@@ -1,4 +1,4 @@
-library g3m.tool.generated;
+library g3m.stimpack.pacman;
 import 'package:g3m/g3m.dart';
 
 part 'world.dart';

@@ -40,6 +40,42 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
     }, child);
   }
 
+  factory CodeImportConfig.forTypescriptLike(Node child) {
+    return CodeImportConfig((context, import) {
+      final types = import.types;
+
+      var quoteNode = StringFuncs.singleQuotes(import.path);
+      if (types?.isNotEmpty == true) {
+        List<Node> typeNodes = types
+            .map((e) => Container([
+                  e.type,
+                  e.alias != null ? Container([' as ', e.alias]) : null,
+                  ' ',
+                ]))
+            .toList();
+
+        /// Example: import { ZipCodeValidator as ZCV } from "./ZipCodeValidator";
+        return CodeExpr.open(
+          Container([
+            'import { ',
+            Join.commaSeparated(typeNodes),
+            '} from ',
+            quoteNode,
+          ]),
+        );
+      } else {
+        return CodeExpr.open(
+          Container([
+            'import * ',
+            import.alias != null ? Container(['as ', import.alias]) : null,
+            'from ',
+            quoteNode,
+          ]),
+        );
+      }
+    }, child);
+  }
+
   factory CodeImportConfig.forJavaLike(
     Node child, {
     String importKeyword = 'import',

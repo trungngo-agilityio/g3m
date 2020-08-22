@@ -38,9 +38,9 @@ class StringFuncs {
 
   static final StringFunc sentence =
       (s) => s != null && s.isNotEmpty ? ReCase(s).sentenceCase : s;
-  static final StringFunc quote = (s) =>
+  static final StringFunc singleQuotes = (s) =>
       s != null && s.isNotEmpty ? '\'${s.replaceAll('\'', '\\\'')}\'' : s;
-  static final StringFunc doubleQuote =
+  static final StringFunc doubleQuotes =
       (s) => s != null && s.isNotEmpty ? '"${s.replaceAll('"', '\\"')}"' : s;
 
   /// Lazy init the code func.

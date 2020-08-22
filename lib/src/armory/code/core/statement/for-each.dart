@@ -5,7 +5,7 @@ class CodeForEachConfig extends CodeConfigNode<CodeForEach> {
       : super(buildFunc, child);
 
   factory CodeForEachConfig.forDartLike(Node child) {
-    return CodeForEachConfig.forJavaLike(child, inKeyword: 'in ');
+    return CodeForEachConfig.forJavaLike(child, inKeyword: ' in ');
   }
 
   factory CodeForEachConfig.forJavaLike(

@@ -15,19 +15,52 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
         ]);
       }, child);
 
+  factory CodeVarConfig.forJavascriptLike(
+    Node child,
+  ) =>
+      CodeVarConfig._internal(
+        child,
+        varKeyword: 'let ',
+        finalKeyword: 'const ',
+        typeNameSeparator: ': ',
+        typeFirst: false,
+      );
+
   factory CodeVarConfig.forDartLike(
+    Node child,
+  ) =>
+      CodeVarConfig._internal(
+        child,
+        varKeyword: 'var ',
+        finalKeyword: 'final ',
+        typeNameSeparator: ' ',
+        typeFirst: true,
+      );
+
+  factory CodeVarConfig._internal(
     Node child, {
-    String varKeyword = 'var',
-    String finalKeyword = 'final',
+    @required String varKeyword,
+    @required String finalKeyword,
+    @required String typeNameSeparator,
+    @required bool typeFirst,
   }) =>
       CodeVarConfig((context, expr) {
+        Node s1 = expr.name;
+        Node s2 = expr.type;
+
+        if (typeFirst == true) {
+          // swap
+          var tmp = s1;
+          s1 = s2;
+          s2 = tmp;
+        }
+
         return Container([
           expr.comment,
           expr.isFinal == true ? finalKeyword : varKeyword,
-          ' ',
-          expr.name,
-          ' ',
-          expr.type,
+          s1,
+          typeNameSeparator,
+          s2,
           expr.init != null ? Container([' = ', expr.init]) : null,
         ]);
       }, child);

@@ -1,9 +1,9 @@
-part of g3m.tool.generated;
+part of g3m.stimpack.pacman;
 
 
 
 class Dependency extends Expr<Dependency> {
-  final ToolWorld world;
+  final PacmanWorld world;
 
   Dependency(this.world):
       super(world.dependency);
@@ -16,7 +16,7 @@ class Dependency extends Expr<Dependency> {
 
   set version(int value) {
     _version = value;
-    for (var i in eval()) {
+    for (var  i in eval()) {
       i._version = value;
     }
   }
@@ -28,7 +28,7 @@ class Dependency extends Expr<Dependency> {
 
   set desc(String value) {
     _desc = value;
-    for (var i in eval()) {
+    for (var  i in eval()) {
       i._desc = value;
     }
   }
@@ -40,7 +40,7 @@ class Dependency extends Expr<Dependency> {
 
 
 class DependencyScope extends Scope<Dependency> {
-  final ToolWorld world;
+  final PacmanWorld world;
 
   DependencyScope(this.world);
 

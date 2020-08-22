@@ -12,6 +12,16 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
     );
   }
 
+  factory CodeArgConfig.forTypescriptLike(Node child) {
+    return CodeArgConfig._internal(
+      child,
+      typeFirst: false,
+      separator: ': ',
+      finalPrefix: 'const ',
+      acceptThisSyntax: true,
+    );
+  }
+
   factory CodeArgConfig.forJavaLike(Node child) {
     return CodeArgConfig._internal(child, typeFirst: true);
   }

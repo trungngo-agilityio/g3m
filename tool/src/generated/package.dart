@@ -1,9 +1,9 @@
-part of g3m.tool.generated;
+part of g3m.stimpack.pacman;
 
 
 
 class Package extends Expr<Package> {
-  final ToolWorld world;
+  final PacmanWorld world;
 
   Package(this.world):
       super(world.package);
@@ -16,7 +16,7 @@ class Package extends Expr<Package> {
 
   set desc(String value) {
     _desc = value;
-    for (var i in eval()) {
+    for (var  i in eval()) {
       i._desc = value;
     }
   }
@@ -28,7 +28,7 @@ class Package extends Expr<Package> {
 
   set version(int value) {
     _version = value;
-    for (var i in eval()) {
+    for (var  i in eval()) {
       i._version = value;
     }
   }
@@ -40,7 +40,7 @@ class Package extends Expr<Package> {
 
   set package(String value) {
     _package = value;
-    for (var i in eval()) {
+    for (var  i in eval()) {
       i._package = value;
     }
   }
@@ -53,7 +53,7 @@ class Package extends Expr<Package> {
   set author(Author value) {
     _author = value;
     assert(value != null, 'value is required');
-    for (var i in eval()) {
+    for (var  i in eval()) {
       i._author = value;
     }
   }
@@ -65,7 +65,7 @@ class Package extends Expr<Package> {
 
 
 class PackageScope extends Scope<Package> {
-  final ToolWorld world;
+  final PacmanWorld world;
 
   PackageScope(this.world);
 

@@ -11,6 +11,9 @@ class CodePackageNameConfig extends CodeConfigNode<CodePackageName> {
   factory CodePackageNameConfig.forJavaLike(Node child) =>
       CodePackageNameConfig.of(child);
 
+  factory CodePackageNameConfig.noSupport(Node child) => CodePackageNameConfig(
+      (context, expr) => throw ('package syntax is not available.'), child);
+
   factory CodePackageNameConfig.of(
     Node child, {
     StringFunc nameFunc,

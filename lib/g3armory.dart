@@ -51,6 +51,7 @@ part 'src/armory/code/core/enum/enum-value.dart';
 part 'src/armory/code/core/enum/enum.dart';
 
 part 'src/armory/code/core/expr/await.dart';
+
 part 'src/armory/code/core/custom.dart';
 
 part 'src/armory/code/core/expr/cascade.dart';
@@ -228,6 +229,7 @@ part 'src/armory/text/read_file.dart';
 part 'src/armory/text/text.dart';
 
 part 'src/armory/text/text_replace.dart';
+
 part 'src/armory/text/text_blend.dart';
 
 part 'src/armory/text/text_transform.dart';

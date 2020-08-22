@@ -1,12 +1,12 @@
-part of g3.armory.dart;
+part of g3.armory.typescript;
 
-/// Defines a dart code fine.
-/// This help to enforce the dart syntax and [DartCodeConfig] will
+/// Defines a typescript code fine.
+/// This help to enforce the typescript syntax and [TypescriptCodeConfig] will
 /// be automatically added in the node tree.
 ///
-class DartCodeFile implements Node {
-  static const String syntax = 'dart';
-  static const String extension = 'dart';
+class TypescriptCodeFile implements Node {
+  static const String syntax = 'typescript';
+  static const String extension = 'ts';
 
   /// The file name without extension.
   final String name;
@@ -14,12 +14,12 @@ class DartCodeFile implements Node {
   /// The file content.
   final Node source;
 
-  DartCodeFile._(
+  TypescriptCodeFile._(
     this.name, {
     this.source,
   });
 
-  factory DartCodeFile.of(
+  factory TypescriptCodeFile.of(
     String name, {
     CodePackage package,
     CodeComment comment,
@@ -30,9 +30,9 @@ class DartCodeFile implements Node {
     Node body,
   }) {
     // Node that java code expect the file name to be class name.
-    return DartCodeFile._(
+    return TypescriptCodeFile._(
       name,
-      source: DartCode.of(
+      source: TypescriptCode.of(
           package: package,
           comment: comment,
           imports: imports,
@@ -45,7 +45,7 @@ class DartCodeFile implements Node {
 
   @override
   Node build(BuildContext context) {
-    return DartCodeConfig(
+    return TypescriptCodeConfig(
       CodeFile(
         name: name,
         extension: extension,
@@ -56,10 +56,10 @@ class DartCodeFile implements Node {
   }
 }
 
-class DartCode extends SingleChildNode {
-  DartCode(Node source) : super(DartCodeConfig(source));
+class TypescriptCode extends SingleChildNode {
+  TypescriptCode(Node source) : super(TypescriptCodeConfig(source));
 
-  factory DartCode.of({
+  factory TypescriptCode.of({
     dynamic package,
     dynamic comment,
     dynamic enums,
@@ -83,46 +83,44 @@ class DartCode extends SingleChildNode {
     ]);
 
     // Node that java code expect the file name to be class name.
-    return DartCode(source);
+    return TypescriptCode(source);
   }
 }
 
 /// Defines global configuration for java code generation.
 ///
-class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
-  DartCodeConfig(Node child)
+class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
+  TypescriptCodeConfig(Node child)
       : super(
           child,
           indentConfig: null,
           blockConfig: null,
-          codeAccessConfig: (_, child) => CodeModifierConfig.forDartLike(child),
+          codeAccessConfig: (_, child) =>
+              CodeModifierConfig.forTypescriptLike(child),
 
-          commentConfig: (_, child) => CodeCommentConfig.forDartLike(child),
+          commentConfig: null,
           customConfig: null,
 
           // Package configs
-          packageNameConfig: (_, child) =>
-              CodePackageNameConfig.forDartLike(child),
-          packageConfig: (_, child) => CodePackageConfig.forDartLike(child),
+          packageNameConfig: null,
+          packageConfig: (_, child) => CodePackageConfig.noSupport(child),
 
           // Import Configs
-          importConfig: (_, child) => CodeImportConfig.forDartLike(child),
+          importConfig: (_, child) => CodeImportConfig.forTypescriptLike(child),
           importListConfig: null,
           importTypeConfig: null,
 
           // Type configs
 
           typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig(child, {
-            'dynamic': 'dynamic',
+            'unknown': 'unknown',
+            'any': 'any',
             'void': 'void',
             'null': 'null',
-            'byte': 'byte',
-            'short': 'short',
-            'int': 'int',
-            'long': 'long',
-            'float': 'float',
-            'double': 'double',
-            'bool': 'bool',
+            'string': 'string',
+            'number': 'number',
+            'bigint': 'bigint',
+            'boolean': 'boolean',
           }),
           typeNameConfig: null,
           typeConfig: null,
@@ -137,12 +135,12 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
           mapLiteralConfig: null,
-          cascadeConfig: (_, child) => CodeCascadeConfig.forDartLike(child),
+          cascadeConfig: (_, child) => CodeCascadeConfig.noSupport(child),
           spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
           awaitConfig: null,
           yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
           refConfig: null,
-          varConfig: (_, child) => CodeVarConfig.forDartLike(child),
+          varConfig: (_, child) => CodeVarConfig.forJavascriptLike(child),
 
           // Statement configs
           exprConfig: null,
@@ -169,14 +167,14 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           genericParamListConfig: null,
 
           // Field configs
-          fieldNameConfig: (_, child) => CodeFieldNameConfig.forDartLike(child),
+          fieldNameConfig: null,
           fieldListConfig: null,
-          fieldConfig: (_, child) => CodeFieldConfig.forDartLike(child),
+          fieldConfig: (_, child) => CodeFieldConfig.forTypescriptLike(child),
 
           // Arg configs
-          argNameConfig: (_, child) => CodeArgNameConfig.forDartLike(child),
-          argListConfig: (_, child) => CodeArgListConfig.forDartLike(child),
-          argConfig: (_, child) => CodeArgConfig.forDartLike(child),
+          argNameConfig: null,
+          argListConfig: null,
+          argConfig: (_, child) => CodeArgConfig.forTypescriptLike(child),
 
           // Function configs
           functionThrowListConfig: (_, child) =>
@@ -184,19 +182,19 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           functionThrowConfig: (_, child) =>
               CodeFunctionThrowConfig.ignored(child),
           functionReturnConfig: (_, child) =>
-              CodeFunctionReturnConfig.forDartLike(child),
+              CodeFunctionReturnConfig.forJavaLike(child),
           functionReturnListConfig: null,
           functionNameConfig: (_, child) =>
-              CodeFunctionNameConfig.forDartLike(child),
+              CodeFunctionNameConfig.forJavaLike(child),
           functionListConfig: null,
-          functionConfig: (_, child) => CodeFunctionConfig.forDartLike(child),
+          functionConfig: null,
 
           // Enum configs,
           enumValueNameConfig: (_, child) =>
-              CodeEnumValueNameConfig.forDartLike(child),
+              CodeEnumValueNameConfig.forTypescriptLike(child),
           enumValueListConfig: null,
           enumValueConfig: null,
-          enumNameConfig: (_, child) => CodeEnumNameConfig.forDartLike(child),
+          enumNameConfig: null,
           enumListConfig: null,
           enumConfig: null,
 
@@ -212,17 +210,14 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Interface configs
           interfaceListConfig: null,
-          interfaceConfig: (_, child) => CodeInterfaceConfig.forJavaLike(child,
-              interfaceKeyword: 'class '),
+          interfaceConfig: null,
 
           // Class configs
-          classNameConfig: (_, child) => CodeClassNameConfig.forDartLike(child),
+          classNameConfig: null,
           classListConfig: null,
           classConfig: null,
-          classConstructorNameConfig: (_, child) =>
-              CodeConstructorNameConfig.forDartLike(child),
+          classConstructorNameConfig: null,
           classConstructorListConfig: null,
-          classConstructorConfig: (_, child) =>
-              CodeConstructorConfig.forDartLike(child),
+          classConstructorConfig: null,
         );
 }

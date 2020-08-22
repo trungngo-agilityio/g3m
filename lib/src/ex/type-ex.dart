@@ -57,22 +57,25 @@ mixin GrpcDataTypeMixin {
   /// May contain any arbitrary sequence of bytes no longer than 232.
   DataType bytes;
 
+  DataType primitiveTypes;
+
   void buildDataTypeScope(DataTypeScope type) {
-    double = type('double');
-    float = type('float');
-    int32 = type('int32');
-    int64 = type('int64');
-    uint32 = type('uint32');
-    uint64 = type('uint64');
-    sint32 = type('sint32');
-    sint64 = type('sint64');
-    fixed32 = type('fixed32');
-    fixed64 = type('fixed64');
-    sfixed32 = type('sfixed32');
-    sfixed64 = type('sfixed64');
-    bool = type('bool');
-    string = type('string');
-    bytes = type('bytes');
+    primitiveTypes = type.none;
+    primitiveTypes += double = type('double');
+    primitiveTypes += float = type('float');
+    primitiveTypes += int32 = type('int32');
+    primitiveTypes += int64 = type('int64');
+    primitiveTypes += uint32 = type('uint32');
+    primitiveTypes += uint64 = type('uint64');
+    primitiveTypes += sint32 = type('sint32');
+    primitiveTypes += sint64 = type('sint64');
+    primitiveTypes += fixed32 = type('fixed32');
+    primitiveTypes += fixed64 = type('fixed64');
+    primitiveTypes += sfixed32 = type('sfixed32');
+    primitiveTypes += sfixed64 = type('sfixed64');
+    primitiveTypes += bool = type('bool');
+    primitiveTypes += string = type('string');
+    primitiveTypes += bytes = type('bytes');
   }
 }
 

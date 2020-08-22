@@ -8,6 +8,12 @@ class CodeEnumValueNameConfig extends CodeConfigNode<CodeEnumValueName> {
   factory CodeEnumValueNameConfig.forJavaLike(Node child) =>
       CodeEnumValueNameConfig._internal(child);
 
+  factory CodeEnumValueNameConfig.forTypescriptLike(Node child) =>
+      CodeEnumValueNameConfig._internal(
+        child,
+        func: StringFuncs.pascal,
+      );
+
   factory CodeEnumValueNameConfig.forDartLike(Node child) =>
       CodeEnumValueNameConfig._internal(
         child,

@@ -12,6 +12,9 @@ class CodePackageConfig extends CodeConfigNode<CodePackage> {
       // Java don't allow part of keyword.
       CodePackageConfig.of(child, packageKeyword: 'library ');
 
+  factory CodePackageConfig.noSupport(Node child) => CodePackageConfig(
+      (context, expr) => throw ('package syntax is not available.'), child);
+
   factory CodePackageConfig.of(
     Node child, {
     String packageKeyword = 'package ',

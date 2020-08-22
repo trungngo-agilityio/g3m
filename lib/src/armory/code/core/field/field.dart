@@ -4,17 +4,42 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
   CodeFieldConfig(NodeBuildFunc<CodeField> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeFieldConfig.forDartLike(Node child) =>
-      CodeFieldConfig._internal(child, overrideAsAnnotation: true);
+  factory CodeFieldConfig.forDartLike(Node child) => CodeFieldConfig._internal(
+        child,
+        typeFirst: true,
+        typeNameSeparator: ' ',
+        overrideAsAnnotation: true,
+      );
 
-  factory CodeFieldConfig.forJavaLike(Node child) =>
-      CodeFieldConfig._internal(child);
+  factory CodeFieldConfig.forJavaLike(Node child) => CodeFieldConfig._internal(
+        child,
+        typeFirst: true,
+        typeNameSeparator: ' ',
+      );
+
+  factory CodeFieldConfig.forTypescriptLike(Node child) =>
+      CodeFieldConfig._internal(
+        child,
+        typeFirst: false,
+        typeNameSeparator: ': ',
+      );
 
   factory CodeFieldConfig._internal(
     Node child, {
+    @required bool typeFirst,
+    @required String typeNameSeparator,
     bool overrideAsAnnotation,
   }) =>
       CodeFieldConfig((context, field) {
+        Node s1 = field.name;
+        Node s2 = field.type;
+
+        if (typeFirst == true) {
+          var tmp = s1;
+          s1 = s2;
+          s2 = tmp;
+        }
+
         return Container([
           '\n',
           CodeExpr.open(
@@ -27,9 +52,9 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
                   ? '@override\n'
                   : null,
               field.modifier,
-              field.type,
-              ' ',
-              field.name,
+              s1,
+              typeNameSeparator,
+              s2,
               field.init != null ? Container([' = ', field.init]) : null,
             ]),
           )

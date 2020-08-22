@@ -1,7 +1,7 @@
 import 'lib.dart';
 
 void main() {
-  final w = ToolWorld();
+  final w = PacmanWorld();
 
   final a1 = w.author(firstName: 'trung', lastName: 'ngo', middleName: 'abc');
   final a2 = w.author(firstName: 'trung ngo', lastName: 'ngo2');

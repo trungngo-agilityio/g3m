@@ -7,6 +7,45 @@ class CodeTypeNameMapperConfig extends SingleChildNode {
       : assert(map != null),
         super(child);
 
+  factory CodeTypeNameMapperConfig.forGRpcTypeToDartLike(
+    Node child, {
+    String double = 'double',
+    String float = 'float',
+    String int32 = 'int',
+    String int64 = 'int',
+    String uint32 = 'int',
+    String uint64 = 'double',
+    String sint32 = 'int',
+    String sint64 = 'double',
+    String fixed32 = 'int',
+    String fixed64 = 'double',
+    String sfixed32 = 'int',
+    String sfixed64 = 'double',
+    String bool = 'bool',
+    String string = 'String',
+    String bytes = 'bytes',
+  }) {
+    final data = <String, String>{
+      'double': double,
+      'float': float,
+      'int32': int32,
+      'int64': int64,
+      'uint32': uint32,
+      'uint64': uint64,
+      'sint32': sint32,
+      'sint64': sint64,
+      'fixed32': fixed32,
+      'fixed64': fixed64,
+      'sfixed32': sfixed32,
+      'sfixed64': sfixed64,
+      'bool': bool,
+      'string': string,
+      'bytes': bytes,
+    };
+
+    return CodeTypeNameMapperConfig(child, data);
+  }
+
   @override
   Node build(BuildContext context) {
     final parent =
