@@ -26,7 +26,7 @@ void main() {
   });
 
   test('internal', () {
-    run(CodeModifier(isInternal: true), 'internal ');
+    run(CodeModifier(isInternal: true), '');
   });
 
   test('abstract', () {
@@ -46,7 +46,7 @@ void main() {
           isInternal: true,
           isAbstract: true,
           isStatic: true),
-      'private public protected internal abstract static ',
+      'private public protected abstract static ',
     );
   });
 }

@@ -199,34 +199,34 @@ class Name {
         return l.toLowerCase();
 
       case _NameOp.camel:
-        return ReCase(l).camelCase;
+        return ReCase.forCode(l).camelCase;
 
       case _NameOp.pascal:
-        return ReCase(l).pascalCase;
+        return ReCase.forCode(l).pascalCase;
 
       case _NameOp.snake:
-        return ReCase(l).snakeCase;
+        return ReCase.forCode(l).snakeCase;
 
       case _NameOp.dot:
-        return ReCase(l).dotCase;
+        return ReCase.forCode(l).dotCase;
 
       case _NameOp.path:
-        return ReCase(l).pathCase;
+        return ReCase.forCode(l).pathCase;
 
       case _NameOp.param:
-        return ReCase(l).paramCase;
+        return ReCase.forCode(l).paramCase;
 
       case _NameOp.header:
-        return ReCase(l).headerCase;
+        return ReCase.forCode(l).headerCase;
 
       case _NameOp.title:
-        return ReCase(l).titleCase;
+        return ReCase.forCode(l).titleCase;
 
       case _NameOp.constant:
-        return ReCase(l).constantCase;
+        return ReCase.forCode(l).constantCase;
 
       case _NameOp.sentence:
-        return ReCase(l).sentenceCase;
+        return ReCase.forCode(l).sentenceCase;
 
       default:
         if (text != null) {

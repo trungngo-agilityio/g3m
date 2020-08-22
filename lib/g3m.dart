@@ -2,7 +2,7 @@ library g3m.core;
 
 import 'dart:math' as math;
 
-import 'package:recase/recase.dart';
+import 'package:g3m/g3util.dart';
 
 part 'src/core/constraint.dart';
 part 'src/core/db/engine.dart';

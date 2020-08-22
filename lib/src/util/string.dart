@@ -18,26 +18,26 @@ class StringFuncs {
   static final StringFunc lower =
       (s) => s != null && s.isNotEmpty ? s.toLowerCase() : s;
   static final StringFunc camel =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).camelCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).camelCase : s;
   static final StringFunc pascal =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).pascalCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).pascalCase : s;
   static final StringFunc snake =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).snakeCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).snakeCase : s;
   static final StringFunc dot =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).dotCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).dotCase : s;
   static final StringFunc path =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).pathCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).pathCase : s;
   static final StringFunc param =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).paramCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).paramCase : s;
   static final StringFunc header =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).headerCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).headerCase : s;
   static final StringFunc title =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).titleCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).titleCase : s;
   static final StringFunc constant =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).constantCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).constantCase : s;
 
   static final StringFunc sentence =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).sentenceCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).sentenceCase : s;
   static final StringFunc singleQuotes = (s) =>
       s != null && s.isNotEmpty ? '\'${s.replaceAll('\'', '\\\'')}\'' : s;
   static final StringFunc doubleQuotes =

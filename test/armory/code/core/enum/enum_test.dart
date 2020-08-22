@@ -22,7 +22,7 @@ void main() {
           isPrivate: true,
         ),
         '\n'
-        'private enum Person {}\n',
+        'private enum _Person {}\n',
       );
     });
 
@@ -83,7 +83,7 @@ void main() {
           ],
         ),
         '\n'
-        'private enum Person {\n'
+        'private enum _Person {\n'
         '  FIRST_NAME,\n'
         '  LAST_NAME\n'
         '}\n',
@@ -117,7 +117,7 @@ void main() {
           ],
         ),
         '\n'
-        'private enum Person {\n'
+        'private enum _Person {\n'
         '  FIRST_NAME,\n'
         '  LAST_NAME = "john doe",\n'
         '  /**\n'

@@ -33,10 +33,12 @@ class StimpackDialect implements Node {
 
   @override
   Node build(BuildContext context) {
-    return Container([
-      StimpackWorldFile(),
-      StimpackLibFile(),
-      ...models.map((e) => StimpackExprFile(e)).toList(),
-    ]);
+    return StimpackCodeConfig(
+      Container([
+        StimpackWorldFile(),
+        StimpackLibFile(),
+        ...models.map((e) => StimpackExprFile(e)).toList(),
+      ]),
+    );
   }
 }

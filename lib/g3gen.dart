@@ -7,7 +7,7 @@ import 'package:g3m/g3m.dart';
 import 'package:g3m/src/gen/code/language.dart';
 import 'package:mustache/mustache.dart';
 import 'package:path/path.dart' as ioPath;
-import 'package:recase/recase.dart';
+import 'package:g3m/g3util.dart';
 
 part 'src/gen/code/block.dart';
 part 'src/gen/code/clazz.dart';

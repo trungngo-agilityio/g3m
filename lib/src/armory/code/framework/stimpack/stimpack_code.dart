@@ -1,7 +1,5 @@
 part of g3.armory.stimpack;
 
-/// Defines global configuration for java code generation.
-///
 class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   ModelScope modelScope;
   FieldScopeEx fieldScope;

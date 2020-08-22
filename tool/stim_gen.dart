@@ -42,9 +42,9 @@ void _generateDialect({
   Node program = SingleChildNode(
     Directory.relative(
       'tool/src/generated',
-      StimpackCodeConfig(Container([
+      Container([
         StimpackDialect(name: name, models: models),
-      ])),
+      ]),
     ),
   );
 

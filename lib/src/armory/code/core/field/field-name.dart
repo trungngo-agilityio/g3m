@@ -17,7 +17,7 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
             modifier?.isProtected == true ||
             modifier?.isInternal == true) {
           // Add '_' prefix for non public field.
-          res = Pad.left('_', res);
+          res = Pad.left('_', res, onlyIfMissing: true);
         }
 
         return res;

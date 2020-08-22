@@ -67,7 +67,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
         return CodeExpr.open(
           Container([
             'import * ',
-            import.alias != null ? Container(['as ', import.alias]) : null,
+            import.alias != null ? Container(['as ', import.alias, ' ']) : null,
             'from ',
             quoteNode,
           ]),

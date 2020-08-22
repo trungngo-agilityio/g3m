@@ -37,7 +37,50 @@ void main() {
     );
     runAndExpect(
       root,
-      '',
+      '// Demo file level comment\n'
+      '\n'
+      '\n'
+      'import * from \'io\';\n'
+      'import * as io_path from \'path\';\n'
+      'import { Vector as MyVector , HumanMatrix } from \'math\';\n'
+      '\n'
+      '\n'
+      'enum Color {\n'
+      '  Blue,\n'
+      '  DarkGreen\n'
+      '}\n'
+      '\n'
+      '\n'
+      'hello(firstName: string) {\n'
+      '  var name = "John";\n'
+      '  print(name);\n'
+      '}\n'
+      '\n'
+      '\n'
+      'export abstract class Person<T> {\n'
+      '  // The human first name.\n'
+      '  firstName: string;\n'
+      '\n'
+      '\n'
+      '  /**\n'
+      '   * a demo constructor\n'
+      '   */\n'
+      '  Person(name: string) {\n'
+      '    // Any free text can be here\n'
+      '  }\n'
+      '\n'
+      '\n'
+      '  /**\n'
+      '   * just a demo function\n'
+      '   */\n'
+      '  void drive<T>(vehicle, car) {\n'
+      '    // Just any text\n'
+      '  }\n'
+      '  // just a free text class body \n'
+      '  // with Mustache template support.\n'
+      '  hello(John Doe);\n'
+      '}\n'
+      '// You can put anything in this body.',
     );
   });
 }
@@ -85,7 +128,9 @@ CodeClass clazz() {
     constructors: [
       CodeConstructor.of(
           comment: 'a demo constructor',
-          requiredArgs: [['name', 'string']],
+          requiredArgs: [
+            ['name', 'string']
+          ],
           body: Container(['// Any free text can be here'])),
     ],
     functions: [

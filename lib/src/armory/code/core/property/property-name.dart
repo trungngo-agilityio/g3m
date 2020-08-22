@@ -19,7 +19,7 @@ class CodePropertyNameConfig extends CodeConfigNode<CodePropertyName> {
             modifier?.isProtected == true ||
             modifier?.isInternal == true) {
           // Add '_' prefix for non public property.
-          res = Pad.left('_', res);
+          res = Pad.left('_', res, onlyIfMissing: true);
         }
 
         return res;

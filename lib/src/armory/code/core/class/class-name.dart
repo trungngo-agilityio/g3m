@@ -22,7 +22,7 @@ class CodeClassNameConfig extends CodeConfigNode<CodeClassName> {
             modifier?.isProtected == true ||
             modifier?.isInternal == true) {
           // Add '_' prefix for non public clazz.
-          res = Pad.left('_', res);
+          res = Pad.left('_', res, onlyIfMissing: true);
         }
 
         return res;

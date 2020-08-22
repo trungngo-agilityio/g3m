@@ -20,10 +20,12 @@ class CodeEnumNameConfig extends CodeConfigNode<CodeEnumName> {
   }) {
     func ??= StringFuncs.pascal;
     return CodeEnumNameConfig((_, arg) {
-      return Container([
-        arg.isPrivate == true ? privatePrefix : null,
-        TextTransform(arg.name, func),
-      ]);
+      Node name = TextTransform(arg.name, func);
+      if (arg.isPrivate == true) {
+        name = Pad.left('_', name, onlyIfMissing: true);
+      }
+
+      return name;
     }, child);
   }
 }
