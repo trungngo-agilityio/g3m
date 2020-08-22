@@ -10,7 +10,7 @@ void main() {
   }
 
   test('override', () {
-    run(CodeModifier(override: true), '');
+    run(CodeModifier(isOverride: true), '');
   });
 
   test('private', () {
@@ -39,7 +39,7 @@ void main() {
   test('all', () {
     run(
       CodeModifier(
-          override: true,
+          isOverride: true,
           isPrivate: true,
           isPublic: true,
           isProtected: true,

@@ -89,7 +89,7 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
       name: CodePropertyName.of(name),
       annotations: CodeAnnotationList.of(annotations),
       modifier: CodeModifier(
-        override: isOverride,
+        isOverride: isOverride,
         isPrivate: isPrivate,
         isPublic: isPublic,
         isProtected: isProtected,

@@ -262,22 +262,18 @@ void main() {
       '"a"?."b"',
     );
   });
+
   test('CodeListAccessExpr', () {
     run(
       CodeListAccessExpr.of('a', 'b'),
       '"a"["b"]',
     );
   });
-  test('CodeFunctionCallExpr', () {
+
+  test('CodeArrowExpr', () {
     run(
-      CodeFunctionCallExpr.of('a'),
-      '"a"()',
-    );
-  });
-  test('CodeGroupExpr', () {
-    run(
-      CodeGroupExpr.of('a'),
-      '("a")',
+      CodeArrowExpr.of('a'),
+      ' => "a"',
     );
   });
 }

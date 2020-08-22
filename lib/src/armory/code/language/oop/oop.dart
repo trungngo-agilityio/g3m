@@ -92,6 +92,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeFunctionNameConfig> functionNameConfig;
   CodeConfigBuildFunc<CodeFunctionListConfig> functionListConfig;
   CodeConfigBuildFunc<CodeFunctionConfig> functionConfig;
+  CodeConfigBuildFunc<CodeLambdaConfig> lambdaConfig;
 
   // Enum configs
   CodeConfigBuildFunc<CodeEnumValueNameConfig> enumValueNameConfig;
@@ -201,6 +202,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.functionNameConfig,
     @required this.functionListConfig,
     @required this.functionConfig,
+    @required this.lambdaConfig,
     @required this.enumValueNameConfig,
     @required this.enumValueListConfig,
     @required this.enumValueConfig,
@@ -329,6 +331,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     functionListConfig ??=
         (_, child) => CodeFunctionListConfig.forJavaLike(child);
     functionConfig ??= (_, child) => CodeFunctionConfig.forJavaLike(child);
+    lambdaConfig ??= (_, child) => CodeLambdaConfig.forJavaLike(child);
 
     // Enum configs
     enumValueNameConfig ??=
@@ -451,6 +454,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       functionNameConfig,
       functionListConfig,
       functionConfig,
+      lambdaConfig,
 
       // Enum configs
       enumValueNameConfig,

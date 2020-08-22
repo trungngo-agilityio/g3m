@@ -124,12 +124,14 @@ CodeClass clazz() {
     implements: null,
     fields: [
       field(),
+      CodeField.of(name: 'age', type: 'number', isOptional: true),
     ],
     constructors: [
       CodeConstructor.of(
           comment: 'a demo constructor',
           requiredArgs: [
-            ['name', 'string']
+            ['name', 'string'],
+            CodeArg.of(name: 'age', type: 'number', isOptional: true),
           ],
           body: Container(['// Any free text can be here'])),
     ],

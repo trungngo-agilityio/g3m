@@ -38,6 +38,8 @@ part 'src/armory/code/core/constructor/constructor-name.dart';
 
 part 'src/armory/code/core/constructor/constructor.dart';
 
+part 'src/armory/code/core/custom.dart';
+
 part 'src/armory/code/core/enum/enum-list.dart';
 
 part 'src/armory/code/core/enum/enum-name.dart';
@@ -52,8 +54,6 @@ part 'src/armory/code/core/enum/enum.dart';
 
 part 'src/armory/code/core/expr/await.dart';
 
-part 'src/armory/code/core/custom.dart';
-
 part 'src/armory/code/core/expr/cascade.dart';
 
 part 'src/armory/code/core/expr/expr.dart';
@@ -61,6 +61,8 @@ part 'src/armory/code/core/expr/expr.dart';
 part 'src/armory/code/core/expr/expr_list.dart';
 
 part 'src/armory/code/core/expr/function-call.dart';
+
+part 'src/armory/code/core/expr/group_expr.dart';
 
 part 'src/armory/code/core/expr/literal/array-literal.dart';
 
@@ -115,6 +117,8 @@ part 'src/armory/code/core/import/import.dart';
 part 'src/armory/code/core/interface/interface-list.dart';
 
 part 'src/armory/code/core/interface/interface.dart';
+
+part 'src/armory/code/core/lambda/lambda.dart';
 
 part 'src/armory/code/core/modifier.dart';
 
@@ -228,12 +232,12 @@ part 'src/armory/text/read_file.dart';
 
 part 'src/armory/text/text.dart';
 
-part 'src/armory/text/text_replace.dart';
-
 part 'src/armory/text/text_blend.dart';
 
-part 'src/armory/text/text_transform.dart';
-
 part 'src/armory/text/text_merge.dart';
+
+part 'src/armory/text/text_replace.dart';
+
+part 'src/armory/text/text_transform.dart';
 
 part 'src/armory/text/trim.dart';

@@ -19,6 +19,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       separator: ': ',
       finalPrefix: 'const ',
       acceptThisSyntax: true,
+      optionalSuffix: '?',
     );
   }
 
@@ -32,6 +33,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
     String separator = ' ',
     String finalPrefix = 'final ',
     bool acceptThisSyntax = false,
+    String optionalSuffix,
   }) {
     return CodeArgConfig((context, arg) {
       final container = context.ancestors.firstWhere(
@@ -41,6 +43,9 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       Node type = arg.type;
       Node name = arg.name;
 
+      if (arg.isOptional == true && optionalSuffix?.isNotEmpty == true) {
+        name = Pad.right(optionalSuffix, name, onlyIfMissing: true);
+      }
       Node typeAndName;
 
       if (type != null && name != null) {
@@ -59,6 +64,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       }
 
       Node modifier;
+
       if (arg.isFinal == true && finalPrefix != null) {
         modifier = Text.of(finalPrefix);
       }
@@ -91,12 +97,15 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
 
   final bool isFinal;
 
+  final bool isOptional;
+
   CodeArg._({
     @required this.name,
     @required this.type,
     @required this.init,
     @required this.isPrivate,
     @required this.isFinal,
+    @required this.isOptional,
   });
 
   /// Try parse a dynamic value to an argument object.
@@ -125,6 +134,7 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
         init: init,
         isPrivate: false,
         isFinal: false,
+        isOptional: null,
       );
     }, error: error);
   }
@@ -134,6 +144,7 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
     @required dynamic type,
     bool isPrivate,
     bool isFinal,
+    bool isOptional,
     dynamic init,
   }) {
     return CodeArg._(
@@ -146,6 +157,7 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
       init: CodeExpr.of(init),
       isPrivate: isPrivate,
       isFinal: isFinal,
+      isOptional: isOptional,
     );
   }
 }

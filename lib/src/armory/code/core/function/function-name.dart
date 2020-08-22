@@ -63,7 +63,7 @@ class CodeFunctionName extends CodeConfigProxyNode<CodeFunctionName>
         throw '$name is an invalid function name';
       }),
       modifier: CodeModifier(
-        override: isOverride,
+        isOverride: isOverride,
         isPrivate: isPrivate,
         isPublic: isPublic,
         isProtected: isProtected,

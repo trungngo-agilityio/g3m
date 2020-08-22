@@ -56,7 +56,7 @@ class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
 
   factory CodeFieldName.of({
     @required dynamic name,
-    bool override,
+    bool isOverride,
     bool isPrivate,
     bool isPublic,
     bool isProtected,
@@ -70,7 +70,7 @@ class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
           throw '$name is an invalid field name';
         }),
         modifier: CodeModifier(
-          override: override,
+          isOverride: isOverride,
           isPrivate: isPrivate,
           isPublic: isPublic,
           isProtected: isProtected,

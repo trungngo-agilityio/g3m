@@ -182,6 +182,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           functionNameConfig: null,
           functionListConfig: null,
           functionConfig: null,
+          lambdaConfig: null,
 
           // Enum configs,
           enumValueNameConfig: null,

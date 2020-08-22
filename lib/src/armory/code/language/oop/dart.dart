@@ -190,6 +190,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
               CodeFunctionNameConfig.forDartLike(child),
           functionListConfig: null,
           functionConfig: (_, child) => CodeFunctionConfig.forDartLike(child),
+          lambdaConfig: null,
 
           // Enum configs,
           enumValueNameConfig: (_, child) =>

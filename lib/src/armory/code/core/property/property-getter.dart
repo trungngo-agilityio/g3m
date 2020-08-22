@@ -32,7 +32,7 @@ class CodePropertyGetterConfig extends CodeConfigNode<CodePropertyGetter> {
 
         // In the case of dart language, override is an annotation.
         // For csharp, it is an modifier.
-        overrideAsAnnotation == true && modifier?.override == true
+        overrideAsAnnotation == true && modifier?.isOverride == true
             ? '@override\n'
             : null,
 

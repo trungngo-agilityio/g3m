@@ -78,8 +78,7 @@ class CodeOps {
   static const CodeOp cascadeOp = CodeOp.opExpr('..');
   static const CodeOp conditionalAccessOp = CodeOp.exprOpExpr('?.');
   static const CodeOp listAccessOp = CodeOp.exprOpExpr('[]');
-  static const CodeOp functionCallOp = CodeOp.opExpr('*()');
-  static const CodeOp groupOp = CodeOp.opExpr('(*)');
+  static const CodeOp arrowOp = CodeOp.opExpr(' => ');
 }
 
 class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
@@ -97,15 +96,9 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
 
         switch (op.style) {
           case CodeOpStyle.opExpr:
-            if (op == CodeOps.functionCallOp) {
-              child = Container([e1, '()']);
-            } else if (op == CodeOps.groupOp) {
-              child = Container(['(', e1, ')']);
-            } else {
-              child = Container([name, e1]);
-            }
-
+            child = Container([name, e1]);
             break;
+
           case CodeOpStyle.exprOpExpr:
             if (op == CodeOps.listAccessOp) {
               child = Container([e1, '[', e2, ']']);
@@ -641,6 +634,16 @@ class CodeConditionalAccessExpr extends SingleChildNode {
         ));
 }
 
+class CodeArrowExpr extends SingleChildNode {
+  CodeArrowExpr.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.arrowOp,
+            expr1: e1,
+          ),
+        ));
+}
+
 class CodeListAccessExpr extends SingleChildNode {
   CodeListAccessExpr.of(dynamic e1, dynamic e2)
       : super(CodeExpr.open(
@@ -648,26 +651,6 @@ class CodeListAccessExpr extends SingleChildNode {
             op: CodeOps.listAccessOp,
             expr1: e1,
             expr2: e2,
-          ),
-        ));
-}
-
-class CodeFunctionCallExpr extends SingleChildNode {
-  CodeFunctionCallExpr.of(dynamic e1)
-      : super(CodeExpr.open(
-          CodeExprList.of(
-            op: CodeOps.functionCallOp,
-            expr1: e1,
-          ),
-        ));
-}
-
-class CodeGroupExpr extends SingleChildNode {
-  CodeGroupExpr.of(dynamic e1)
-      : super(CodeExpr.open(
-          CodeExprList.of(
-            op: CodeOps.groupOp,
-            expr1: e1,
           ),
         ));
 }

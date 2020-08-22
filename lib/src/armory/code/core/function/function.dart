@@ -23,7 +23,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
 
           // In the case of dart language, override is an annotation.
           // For csharp, it is an modifier.
-          overrideAsAnnotation == true && func.modifier?.override == true
+          overrideAsAnnotation == true && func.modifier?.isOverride == true
               ? '@override\n'
               : null,
           func.returns != null
@@ -114,7 +114,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction>
       comment: CodeComment.of(comment),
       annotations: CodeAnnotationList.of(annotations),
       modifier: CodeModifier(
-        override: isOverride,
+        isOverride: isOverride,
         isPrivate: isPrivate,
         isPublic: isPublic,
         isProtected: isProtected,

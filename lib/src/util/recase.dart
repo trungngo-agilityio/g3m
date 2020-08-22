@@ -119,10 +119,13 @@ class ReCase {
   String _getCamelCase({String separator = ''}) {
     if (_words == null) return null;
 
-    var words = _words.map(_upperCaseFirstLetter).toList();
-    words[0] = words[0].toLowerCase();
+    var s = '';
+    if (_words.isNotEmpty) {
+      var words = _words.map(_upperCaseFirstLetter).toList();
+      words[0] = words[0].toLowerCase();
 
-    var s = words.join(separator);
+      s = words.join(separator);
+    }
     return separator == '' ? _startSymbol + s + _endSymbol : s;
   }
 
@@ -144,6 +147,8 @@ class ReCase {
 
   String _getSentenceCase({String separator = ' '}) {
     if (_words == null) return null;
+    if (_words.isEmpty) return '';
+
     var words = _words.map((word) => word.toLowerCase()).toList();
     words[0] = _upperCaseFirstLetter(words[0]);
 

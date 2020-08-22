@@ -188,6 +188,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
               CodeFunctionNameConfig.forJavaLike(child),
           functionListConfig: null,
           functionConfig: null,
+          lambdaConfig: null,
 
           // Enum configs,
           enumValueNameConfig: (_, child) =>

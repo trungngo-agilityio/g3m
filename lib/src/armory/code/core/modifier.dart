@@ -16,6 +16,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
       abstractKeyword: 'abstract ',
       staticKeyword: 'static ',
       finalKeyword: null,
+      optionalKeyword: null,
     );
   }
 
@@ -31,6 +32,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
       abstractKeyword: 'abstract ',
       staticKeyword: 'static ',
       finalKeyword: 'final ',
+      optionalKeyword: null,
     );
   }
 
@@ -60,15 +62,16 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
     @required String abstractKeyword,
     @required String staticKeyword,
     @required String finalKeyword,
+    @required String optionalKeyword,
   }) =>
       CodeModifierConfig((context, access) {
         final keywords = <String>[];
 
-        if (access.override == true && overrideKeyword != null) {
+        if (access.isOverride == true && overrideKeyword != null) {
           keywords.add(overrideKeyword);
         }
 
-        if (access.factory == true && factoryKeyword != null) {
+        if (access.isFactory == true && factoryKeyword != null) {
           keywords.add(factoryKeyword);
         }
 
@@ -100,6 +103,10 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
           keywords.add(finalKeyword);
         }
 
+        if (access.isOptional == true && optionalKeyword != null) {
+          keywords.add(optionalKeyword);
+        }
+
         if (keywords.isEmpty) return null;
 
         return Container(keywords);
@@ -107,8 +114,8 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
 }
 
 class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
-  final bool override;
-  final bool factory;
+  final bool isOverride;
+  final bool isFactory;
   final bool isPrivate;
   final bool isPublic;
   final bool isProtected;
@@ -118,9 +125,11 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
   final bool isStatic;
   final bool isFinal;
 
+  final bool isOptional;
+
   CodeModifier({
-    this.override,
-    this.factory,
+    this.isOverride,
+    this.isFactory,
     this.isPrivate,
     this.isPublic,
     this.isProtected,
@@ -128,5 +137,6 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
     this.isAbstract,
     this.isStatic,
     this.isFinal,
+    this.isOptional,
   });
 }

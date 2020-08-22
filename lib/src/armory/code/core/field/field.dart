@@ -22,17 +22,25 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
         child,
         typeFirst: false,
         typeNameSeparator: ': ',
+        optionalSuffix: '?',
       );
 
   factory CodeFieldConfig._internal(
     Node child, {
     @required bool typeFirst,
     @required String typeNameSeparator,
+    String optionalSuffix,
     bool overrideAsAnnotation,
   }) =>
       CodeFieldConfig((context, field) {
+        final modifier = field.modifier;
+
         Node s1 = field.name;
         Node s2 = field.type;
+
+        if (modifier.isOptional == true && optionalSuffix?.isNotEmpty == true) {
+          s1 = Pad.right(optionalSuffix, s1, onlyIfMissing: true);
+        }
 
         if (typeFirst == true) {
           var tmp = s1;
@@ -48,10 +56,10 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
               field.annotations,
               // In the case of dart language, override is an annotation.
               // For csharp, it is an modifier.
-              overrideAsAnnotation == true && field.modifier?.override == true
+              overrideAsAnnotation == true && modifier?.isOverride == true
                   ? '@override\n'
                   : null,
-              field.modifier,
+              modifier,
               s1,
               typeNameSeparator,
               s2,
@@ -127,6 +135,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
     bool isAbstract,
     bool isStatic,
     bool isFinal,
+    bool isOptional,
     dynamic type,
     dynamic init,
     dynamic comment,
@@ -134,7 +143,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
     return CodeField._(
       name: CodeFieldName.of(
         name: name,
-        override: isOverride,
+        isOverride: isOverride,
         isPrivate: isPrivate,
         isPublic: isPublic,
         isProtected: isProtected,
@@ -146,13 +155,14 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
         throw '$annotations is not a valid annotation list';
       }),
       modifier: CodeModifier(
-        override: isOverride,
+        isOverride: isOverride,
         isPrivate: isPrivate,
         isPublic: isPublic,
         isProtected: isProtected,
         isInternal: isInternal,
         isStatic: isStatic,
         isFinal: isFinal,
+        isOptional: isOptional,
       ),
       type:
           CodeType._parse(type, error: () => '$type is not a valid data type.'),

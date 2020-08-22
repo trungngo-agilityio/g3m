@@ -131,7 +131,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
     return CodeConstructor._(
       name: CodeConstructorName.of(name),
       modifier: CodeModifier(
-        factory: factory,
+        isFactory: factory,
         isPrivate: private,
         isPublic: public,
         isProtected: protected,
