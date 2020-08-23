@@ -1,5 +1,8 @@
 part of g3.armory;
 
+/// Then internal data structure used by [PartialText]
+/// for the parsing of code blocks.
+///
 class _PartialTextBlock {
   int startPos;
   int endPos;
@@ -9,24 +12,121 @@ class _PartialTextBlock {
   String content;
 }
 
+/// This error handler is called in the case that [PartialText]
+/// node face an issue that a code block's end marker could not be found.
+///
+/// - [isOldContent] means the error is found in the given
+/// old content.
+/// - [lineNo] is the text line number that the error is found
+/// in the input content.
+/// - [line] is the full line of text found at [lineNo].
+///
+/// Returns:
+/// - true means the error is accepted and the new content is invalid.
+/// Keeps the old content instead and no need human confirmation.
+/// - false means the error is not accepted and the new content is valid.
+/// Keep merging and no need human confirmation.
+/// - null means let's the human decide.
+///
 typedef PartialTextNotEndedBlockErrorFunc = bool Function(
     bool isOldContent, int lineNo, String line);
 
+/// This error handler is called in the case that [PartialText]
+/// node face an issue that there is a code block in either
+/// old or new content has duplicated name.
+///
+/// - [isOldContent] means the error is found in the given
+/// old content.
+/// - [lineNo] is the text line number that the error is found
+/// in the input content.
+/// - [line] is the full line of text found at [lineNo].
+///
+/// Returns:
+/// - true means the error is accepted and the new content is invalid.
+/// Keeps the old content instead and no need human confirmation.
+/// - false means the error is not accepted and the new content is valid.
+/// Keep merging and no need human confirmation.
+/// - null means let's the human decide.
+///
 typedef PartialTextDuplicatedNameBlockErrorFunc = bool Function(
     bool isOldContent, int lineNo, String line);
 
+/// This error handler is called in the case that [PartialText]
+/// node face an issue that there is a code block in the old content
+/// that could not be found in the new content.
+///
+/// - [startLineNo] is the start text line number that the error is found
+/// in the old content.
+/// - [endLineNo] is the text line number that the error is found
+/// in the old content.
+/// - [startLine] is the full text line at the start marker.
+/// - [endLine] is the full text line at the end marker.
+///
+/// Returns:
+/// - true means the error is accepted and the new content is invalid.
+/// Keeps the old content instead and no need human confirmation.
+/// - false means the error is not accepted and the new content is valid.
+/// Keep merging and no need human confirmation.
+/// - null means let's the human decide.
+///
 typedef PartialTextOldBlockMissingErrorFunc = bool Function(
-    int startLineNo, int endLineNo, String content);
+    int startLineNo, int endLineNo, String startLine, String endLine);
 
+/// This component help to merge an old text content with a new one via
+/// the use of text markers. This is super helpful in code generation
+/// in which the generator still allow custom code to be written while
+/// regenerating the files.
+///
+/// Algorithm:
+///   - The [startMarker] and [endMarker] help to mark a code block
+///   that need to be preserve. Those markers should stand on their
+///   own text lines. From the end of a [startMarker] to the end of
+///   its line is consider to be the block name. During the re-generation
+///   of the whole file (or text block), the engine will looks
+///   for code blocks in the old content and preserve it. For any
+///   named code block found in the new content, the engine shall
+///   replace it with the code block found in the old content if
+///   that exists.
+/// Exceptions:
+///   - If there is a line in either old or new content that have
+///   a [startMarker] but the [endMarker] could not be found,
+///   the [onNotEndedBlockError] error fires.
+///   - If there is a code block in either old or new content
+///   has duplicated name then [onDuplicatedNameBlockError] error fires.
+///   - If there is a code block in the old content could not be
+///   found in the new content, [onMissingOldBlockError] fires.
+///   - If the caller of this node fail to address the above issues,
+///   the code generation process shall stop.
+///
 class PartialText implements Node {
+  /// The start marker that help figuring out the code blocks that need
+  /// to be preserved.
   final String startMarker;
+
+  /// The end marker that helps figuring out the code blocks that need
+  /// to be preserved.
   final String endMarker;
 
+  /// The old content. Texts surrounded by the markers will be preserved
+  /// after the merged.
   final Node oldContent;
+
+  /// The new content. Texts surrounded by the markers will be replaced
+  /// by the old content if that exists.
   final Node newContent;
 
+  /// human readable name for the content. This is useful when display
+  /// any error to human.
+  final String contentName;
+
+  /// True indicates options shall be presented to user to figure
+  /// out what need to be done on error.
+  final bool confirmationNeededOnError;
+
   final PartialTextNotEndedBlockErrorFunc onNotEndedBlockError;
+
   final PartialTextDuplicatedNameBlockErrorFunc onDuplicatedNameBlockError;
+
   final PartialTextOldBlockMissingErrorFunc onMissingOldBlockError;
 
   PartialText({
@@ -37,6 +137,8 @@ class PartialText implements Node {
     @required this.onNotEndedBlockError,
     @required this.onDuplicatedNameBlockError,
     @required this.onMissingOldBlockError,
+    this.contentName,
+    this.confirmationNeededOnError,
   })  : assert(startMarker != null, 'start marker pattern is required'),
         assert(endMarker != null, 'end marker pattern is required');
 
@@ -57,51 +159,65 @@ class PartialText implements Node {
     final oldContent = contents[0];
     final newContent = contents[1];
 
-    // reportNotEndedError handling function
-    final reportNotEndedError = onNotEndedBlockError ??
-        (isOldContent, lineNo, line) {
-          return true;
-        };
+    // Default error handling strategies for all error is
+    // to just report it and quit.
 
-    final reportDuplicatedNameBlockError = onDuplicatedNameBlockError ??
-        (isOldContent, lineNo, line) {
-          return true;
-        };
+    final reportNotEnded = onNotEndedBlockError ?? _handleNotEndedBlockError;
 
-    final reportMissingOldBlock = onMissingOldBlockError ??
-        (startLineNo, endLineNo, content) {
-          return true;
-        };
+    final reportDuplicatedNameBlock =
+        onDuplicatedNameBlockError ?? _handleDuplicatedNameBlockError;
+
+    final reportMissingOldBlock =
+        onMissingOldBlockError ?? _handleMissingOldBlockError;
 
     final buf = StringBuffer();
 
     // Parsing the old content and extract partial blocks out.
     var stop = false;
-    final oldBlocks =
-        _extractMarkerPositions(oldContent, onNotEndedError: (lineNo, line) {
-      stop = reportNotEndedError(true, lineNo, line);
-      return stop;
-    }, onDuplicatedNameError: (lineNo, line) {
-      stop = reportDuplicatedNameBlockError(true, lineNo, line);
-      return stop;
-    });
+    final oldBlocks = _extractMarkerPositions(
+      oldContent,
+      onNotEndedError: (int lineNo, String line) {
+        stop = reportNotEnded(true, lineNo, line);
 
-    if (stop || oldBlocks?.isNotEmpty != true) {
+        if (stop == null && confirmationNeededOnError == true) {
+          stop = checkAbort(context);
+        }
+        return stop;
+      },
+      onDuplicatedNameError: (int lineNo, String line) {
+        stop = reportDuplicatedNameBlock(true, lineNo, line);
+        if (stop == null && confirmationNeededOnError == true) {
+          stop = checkAbort(context);
+        }
+        return stop;
+      },
+    );
+
+    if (stop != false) {
       // just return the old content.
-      return newContent;
+      return oldContent;
     }
 
     // Parsing the new content and extract partial blocks out.
-    final newBlocks =
-        _extractMarkerPositions(newContent, onNotEndedError: (lineNo, line) {
-      stop = reportNotEndedError(false, lineNo, line);
-      return stop;
-    }, onDuplicatedNameError: (lineNo, line) {
-      stop = reportDuplicatedNameBlockError(false, lineNo, line);
-      return stop;
-    });
+    final newBlocks = _extractMarkerPositions(
+      newContent,
+      onNotEndedError: (int lineNo, String line) {
+        stop = reportNotEnded(false, lineNo, line);
+        if (stop == null && confirmationNeededOnError == true) {
+          stop = checkAbort(context);
+        }
+        return stop;
+      },
+      onDuplicatedNameError: (int lineNo, String line) {
+        stop = reportDuplicatedNameBlock(false, lineNo, line);
+        if (stop == null && confirmationNeededOnError == true) {
+          stop = checkAbort(context);
+        }
+        return stop;
+      },
+    );
 
-    if (stop) {
+    if (stop != false) {
       // just return the old content.
       return oldContent;
     }
@@ -147,8 +263,15 @@ class PartialText implements Node {
     // Checks if any old text blocks could not be found in the new one.
     for (final i in oldBlocks.values) {
       if (i.content != null) {
-        if (reportMissingOldBlock(i.startLineNo, i.endLineNo, i.content)) {
-          // Just ignore the merge result and return the old content
+        final startLine = _getLineAtPos(i.startPos, oldContent);
+        final endLine = _getLineAtPos(i.endPos, oldContent);
+        stop = reportMissingOldBlock(
+            i.startLineNo, i.endLineNo, startLine, endLine);
+        // Just ignore the merge result and return the old content
+        if (stop == null && confirmationNeededOnError == true) {
+          stop = checkAbort(context);
+        }
+        if (stop != false) {
           return oldContent;
         }
       }
@@ -206,6 +329,7 @@ class PartialText implements Node {
       k = content.indexOf(endMarker, k + 1);
 
       if (k < 0) {
+        final errorLine = _getLineAtPos(block.startPos, content);
         // reach the end of the content.
         // the end marker will not be found. report error.
         // Figure out the line number of the start marker.
@@ -213,7 +337,13 @@ class PartialText implements Node {
         // then the error is accepted and the parsing should be stopped.
         // Otherwise, if the caller return false, the parsing should stop
         // and the unfinished block just be ignored.
-        if (onNotEndedError(block.startLineNo, line)) return null;
+        var stop = onNotEndedError(block.startLineNo, errorLine);
+        if (stop != false) {
+          return null;
+        } else {
+          // ignore this marker and continue parsing
+          continue;
+        }
       }
 
       // a new block recognized.
@@ -227,13 +357,33 @@ class PartialText implements Node {
 
       // Adds the recognized block to the final result.
       if (blocks.containsKey(block.name)) {
+        final errorLine = _getLineAtPos(block.startPos, content);
         // ignore this block
-        onDuplicatedNameError(block.startLineNo, line);
+        var stop = onDuplicatedNameError(block.startLineNo, errorLine);
+        if (stop != false) {
+          return null;
+        }
+
+        // do ignore the current block
       } else {
         blocks[block.name] = block;
       }
       k = block.endPos;
     }
+  }
+
+  String _getLineAtPos(int pos, String content) {
+    var start = content.lastIndexOf('\n', pos);
+    if (start < 0) {
+      start = 0;
+    } else {
+      start++;
+    }
+
+    var end = content.indexOf('\n', pos + 1);
+    if (end < 0) end = content.length;
+
+    return content.substring(start, end);
   }
 
   /// Givens a position in a text content.
@@ -242,8 +392,8 @@ class PartialText implements Node {
     var lineNo = 0;
     var k = 0;
 
-    // Keeps look for the new line character until hitting
-    // a position that is bigger than the input.
+// Keeps look for the new line character until hitting
+// a position that is bigger than the input.
     do {
       lineNo++;
       k = content.indexOf('\n', k + 1);
@@ -251,21 +401,57 @@ class PartialText implements Node {
     return lineNo;
   }
 
-  void checkAbort(BuildContext context, String path) {
-    final relativePath = ioPath.relative(path);
+  String _getContentName(bool isOldContent) {
+    var s = isOldContent ? 'old ' : 'new ';
+    return s + (contentName?.isNotEmpty == true ? contentName : 'content');
+  }
 
+  bool _handleNotEndedBlockError(bool isOldContent, int lineNo, String line) {
+    final s = _getContentName(isOldContent);
+    print(
+      'Partial text failed. In the $s content, found a block that is not ended.'
+      '  [$lineNo]: $line\n',
+    );
+    return null;
+  }
+
+  bool _handleDuplicatedNameBlockError(
+      bool isOldContent, int lineNo, String line) {
+    final s = _getContentName(isOldContent);
+    print(
+      'Partial text failed. In the $s content, found a block with duplicated '
+      'code name. \n'
+      '  [$lineNo]: $line\n',
+    );
+    return null;
+  }
+
+  bool _handleMissingOldBlockError(
+      int startLineNo, int endLineNo, String startLine, String endLine) {
+    final s = _getContentName(true);
+    print(
+      'Partial text failed. In the $s, found a block that does not '
+      'exist in the new content.\n'
+      '  [$startLineNo]: $startLine\n'
+      '  ...\n'
+      '  [$endLineNo]: $endLine\n',
+    );
+    return null;
+  }
+
+  bool checkAbort(BuildContext context) {
+    final abort = 'Abort';
+    final skip = 'Skip generating this file and i will fix the issue later.';
+
+    final overwrite = 'Overwrite, ignore the issue.';
     // The content has been modified. Need to prompt.
-    final abort = 'Yes. abort';
-    final skip =
-        'No, skip generating this file and i will fix the issue later.';
     final options = {
-      'y': abort,
-      'n': skip,
+      'a': abort,
+      's': skip,
+      'o': overwrite,
     };
 
-    final message =
-        '$relativePath file has invalid custom code marker without an end.'
-        ' Do you want to abort?';
+    final message = 'Choose?';
 
     // Prompt user to see what they want to do with the file.
     final choice = prompts.choose(
@@ -278,9 +464,17 @@ class PartialText implements Node {
     if (choice == abort) {
       // Abort rendering.
       context.abort();
-    } else {
+      return true;
+    } else if (choice == skip) {
+      final s = _getContentName(false);
       // Skips the file.
-      print('$relativePath has been skipped.');
+      print('The $s has been skipped.');
+      return true;
+    } else {
+      final s = _getContentName(false);
+      // Skips the file.
+      print('Issue ignored. The $s need to be checked manual later.');
+      return false;
     }
   }
 }

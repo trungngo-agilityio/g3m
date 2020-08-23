@@ -181,7 +181,7 @@ void main() {
           endMarker: end,
           oldContent: Text.of(i),
           newContent: Text.of('new content'),
-          onMissingOldBlockError: (startLineNo, endLineNo, content) {
+          onMissingOldBlockError: (startLineNo, endLineNo, startLine, endLine) {
             reported = true;
             return true;
           },
@@ -196,7 +196,7 @@ void main() {
 }
 
 bool failOnMissingOldBlockError(
-    int startLineNo, int endLineNo, String content) {
+    int startLineNo, int endLineNo, String startLine, String endLine) {
   fail('should not get here');
 }
 

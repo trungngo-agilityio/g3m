@@ -57,8 +57,8 @@ class Author extends Expr<Author> {
     }
   }
   // region custom code of author
-  /// implement custom code here
-  // endregion custom code of author
+/// implement custom code here
+// endregion custom code of author
 }
 
 
@@ -82,5 +82,5 @@ class AuthorScope extends Scope<Author> {
   }
   // region custom code of author scope
   /// implement custom code here
-  // endregion custom code of author scope
+// endregion custom code of author scope
 }

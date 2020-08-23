@@ -15,8 +15,8 @@ void main() {
       CodePlaceHolder.of(name: 'abc'),
       '\n'
       '// region custom code of abc\n'
-      '\n'
-      '// endregion custom code of abc\n',
+      '// endregion custom code of abc\n'
+      '',
     );
   });
 

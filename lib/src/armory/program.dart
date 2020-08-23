@@ -106,11 +106,10 @@ class _Context implements BuildContext, RenderContext {
     _out = value;
   }
 
-  bool _aborted;
-
   @override
-  void abort() {
-    _aborted = true;
+  void abort([int code = 1]) {
+    print('the program has been aborted!');
+    io.exit(code);
   }
 
   @override

@@ -31,11 +31,16 @@ class CodeFile implements Node, _NamedNode {
       return CodeSyntax(syntax, File(fileName, source));
     }
 
+    var path = ioPath.join(context.dir, fileName);
+    final relativePath = ioPath.relative(path);
+
     return CodeSyntax(
       syntax,
       File(
         fileName,
         PartialText(
+          contentName: '"$relativePath"',
+          confirmationNeededOnError: true,
           startMarker: placeHolderConfig.startMarker,
           endMarker: placeHolderConfig.endMarker,
           oldContent: ReadFile(fileName),
