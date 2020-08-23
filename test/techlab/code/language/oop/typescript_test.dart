@@ -31,6 +31,21 @@ void main() {
               'print(name);\n'),
         ]),
       ],
+      interfaces: [
+        CodeInterface.of(
+          name: 'car',
+          isPrivate: true,
+          extend: 'vehicle',
+          fields: [
+            ['name', 'string'],
+            CodeField.of(
+              name: 'last name',
+              type: 'string',
+              isOptional: true,
+            ),
+          ],
+        ),
+      ],
       classes: [
         clazz(),
       ],
@@ -55,6 +70,14 @@ void main() {
       '  var name = "John";\n'
       '  print(name);\n'
       '}\n'
+      '\n'
+      '\n'
+      'interface Car extends Vehicle {\n'
+      '  name: string;\n'
+      '\n'
+      '  lastName?: string;\n'
+      '}\n'
+      '\n'
       '\n'
       '\n'
       'export abstract class Person<T> {\n'

@@ -1,28 +1,24 @@
 part of g3m.stimpack.pacman;
 
+class PacmanWorld with PacmanWorldEx {
 
-
-class PacmanWorld {
+}
+mixin PacmanWorldEx {
   AuthorScope _author;
 
   PackageScope _package;
 
   DependencyScope _dependency;
 
-
-  PacmanWorld() {
-    _author = AuthorScope(this);
-    _package = PackageScope(this);
-    _dependency = DependencyScope(this);
-  }
-
   AuthorScope get author {
-    return _author;
+    return _author ??= AuthorScope(this);
   }
+
   PackageScope get package {
-    return _package;
+    return _package ?? PackageScope(this);
   }
+
   DependencyScope get dependency {
-    return _dependency;
+    return _dependency ??= DependencyScope(this);
   }
 }

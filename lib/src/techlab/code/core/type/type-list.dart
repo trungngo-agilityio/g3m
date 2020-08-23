@@ -6,7 +6,7 @@ class CodeTypeListConfig extends CodeConfigNode<CodeTypeList> {
 
   factory CodeTypeListConfig.forJavaLike(Node child) =>
       CodeTypeListConfig((context, param) {
-        final children = param.functions;
+        final children = param.types;
         if (children == null || children.isEmpty) {
           return null;
         }
@@ -16,10 +16,21 @@ class CodeTypeListConfig extends CodeConfigNode<CodeTypeList> {
 }
 
 class CodeTypeList extends CodeConfigProxyNode<CodeTypeList> {
-  final List<CodeType> functions;
+  final List<CodeType> types;
 
-  CodeTypeList._(this.functions);
+  CodeTypeList._(this.types);
 
-  factory CodeTypeList.of(List<CodeType> functions) =>
-      functions?.isNotEmpty == true ? CodeTypeList._(functions) : null;
+  static CodeTypeList _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeTypeList>(value, (v) {
+      final list = _parseNodeList<CodeType>(v, CodeType._parse);
+      if (list != null) return CodeTypeList._(list);
+      return null;
+    }, error: error);
+  }
+
+  factory CodeTypeList.of(dynamic values) {
+    return CodeTypeList._parse(values, error: () {
+      throw '$values is not a valid type list';
+    });
+  }
 }

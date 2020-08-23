@@ -38,7 +38,8 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
         Node s1 = field.name;
         Node s2 = field.type;
 
-        if (modifier.isOptional == true && optionalSuffix?.isNotEmpty == true) {
+        if (modifier?.isOptional == true &&
+            optionalSuffix?.isNotEmpty == true) {
           s1 = Pad.right(optionalSuffix, s1, onlyIfMissing: true);
         }
 

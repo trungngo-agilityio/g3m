@@ -26,6 +26,7 @@ class TypescriptCodeFile implements Node {
     List<CodeImport> imports,
     List<CodeEnum> enums,
     List<CodeFunction> functions,
+    List<CodeInterface> interfaces,
     List<CodeClass> classes,
     Node body,
   }) {
@@ -38,6 +39,7 @@ class TypescriptCodeFile implements Node {
           imports: imports,
           enums: enums,
           functions: functions,
+          interfaces: interfaces,
           classes: classes,
           body: body),
     );
@@ -57,7 +59,7 @@ class TypescriptCodeFile implements Node {
 }
 
 class TypescriptCode extends SingleChildNode {
-  TypescriptCode(Node source) : super(TypescriptCodeConfig(source));
+  TypescriptCode._(Node source) : super(TypescriptCodeConfig(source));
 
   factory TypescriptCode.of({
     dynamic package,
@@ -65,6 +67,7 @@ class TypescriptCode extends SingleChildNode {
     dynamic enums,
     dynamic imports,
     dynamic functions,
+    dynamic interfaces,
     dynamic classes,
     dynamic body,
   }) {
@@ -76,6 +79,7 @@ class TypescriptCode extends SingleChildNode {
           CodeImportList.of(imports),
           CodeEnumList.of(enums),
           CodeFunctionList.of(functions),
+          CodeInterfaceList.of(interfaces),
           CodeClassList.of(classes),
         ]),
       ),
@@ -83,7 +87,7 @@ class TypescriptCode extends SingleChildNode {
     ]);
 
     // Node that java code expect the file name to be class name.
-    return TypescriptCode(source);
+    return TypescriptCode._(source);
   }
 }
 
