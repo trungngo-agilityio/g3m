@@ -12,22 +12,22 @@ void main() {
 
   test('no child', () {
     run(
-      CodeCustom(null),
+      CodePlaceHolder.of(name: 'abc'),
       '\n'
-      '// region custom code\n'
+      '// region custom code of abc\n'
       '\n'
-      '// endregion custom code',
+      '// endregion custom code of abc\n',
     );
   });
 
   test('with child', () {
     run(
-      CodeCustom(CodeComment.of('hello world')),
+      CodePlaceHolder.of(name: 'abc', body: CodeComment.of('hello world')),
       '\n'
-      '// region custom code\n'
+      '// region custom code of abc\n'
       '// hello world\n'
-      '\n'
-      '// endregion custom code',
+      '// endregion custom code of abc\n'
+      '',
     );
   });
 }

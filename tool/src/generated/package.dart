@@ -57,10 +57,9 @@ class Package extends Expr<Package> {
       i._author = value;
     }
   }
-  // region custom code
+  // region custom code of package
   /// implement custom code here
-
-  // endregion custom code
+  // endregion custom code of package
 }
 
 
@@ -83,4 +82,7 @@ class PackageScope extends Scope<Package> {
         ..package = package
         ..author = author;
   }
+  // region custom code of package scope
+  /// implement custom code here
+  // endregion custom code of package scope
 }

@@ -97,7 +97,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           codeAccessConfig: null,
 
           commentConfig: null,
-          customConfig: null,
+          placeHolderConfig: null,
 
           // Package configs
           packageNameConfig: null,

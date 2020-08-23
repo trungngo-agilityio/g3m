@@ -110,8 +110,9 @@ class StimpackExprFile implements Node {
         fields: worldField,
         body: [
           ...exprFields,
-          CodeCustom(
-            CodeComment.of('implement custom code here'),
+          CodePlaceHolder.of(
+            name: className,
+            comment: 'implement custom code here',
           ),
         ]);
   }
@@ -174,8 +175,9 @@ class StimpackExprFile implements Node {
       )),
     );
 
+    final scopeClassName = _dialect.codeScopeClassName(_name);
     return CodeClass.of(
-      name: _dialect.codeScopeClassName(_name),
+      name: scopeClassName,
       extend: CodeType.genericSingle('scope', _name),
       constructors: CodeConstructor.of(requiredArgs: worldField),
       fields: worldField,
@@ -183,6 +185,10 @@ class StimpackExprFile implements Node {
         makeFunction,
         callFunction,
       ],
+      body: CodePlaceHolder.of(
+        name: scopeClassName,
+        comment: 'implement custom code here',
+      ),
     );
   }
 }

@@ -38,8 +38,6 @@ part 'src/armory/code/core/constructor/constructor-name.dart';
 
 part 'src/armory/code/core/constructor/constructor.dart';
 
-part 'src/armory/code/core/custom.dart';
-
 part 'src/armory/code/core/enum/enum-list.dart';
 
 part 'src/armory/code/core/enum/enum-name.dart';
@@ -127,6 +125,8 @@ part 'src/armory/code/core/mustache.dart';
 part 'src/armory/code/core/package/package-name.dart';
 
 part 'src/armory/code/core/package/package.dart';
+
+part 'src/armory/code/core/place_holder.dart';
 
 part 'src/armory/code/core/property/property-getter.dart';
 
@@ -235,6 +235,8 @@ part 'src/armory/text/text.dart';
 part 'src/armory/text/text_blend.dart';
 
 part 'src/armory/text/text_merge.dart';
+
+part 'src/armory/text/text_partial.dart';
 
 part 'src/armory/text/text_replace.dart';
 

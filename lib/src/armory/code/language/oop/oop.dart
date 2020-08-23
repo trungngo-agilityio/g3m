@@ -16,7 +16,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeBlockConfig> blockConfig;
   CodeConfigBuildFunc<CodeModifierConfig> codeAccessConfig;
   CodeConfigBuildFunc<CodeCommentConfig> commentConfig;
-  CodeConfigBuildFunc<CodeCustomConfig> customConfig;
+  CodeConfigBuildFunc<CodePlaceHolderConfig> placeHolderConfig;
 
   // Package configs
   CodeConfigBuildFunc<CodePackageNameConfig> packageNameConfig;
@@ -127,7 +127,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.blockConfig,
     @required this.codeAccessConfig,
     @required this.commentConfig,
-    @required this.customConfig,
+    @required this.placeHolderConfig,
 
     // Package configs
     @required this.packageNameConfig,
@@ -236,7 +236,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     codeAccessConfig ??= (_, child) => CodeModifierConfig.forJavaLike(child);
 
     commentConfig ??= (_, child) => CodeCommentConfig.forJavaLike(child);
-    customConfig ??= (_, child) => CodeCustomConfig.forJavaLike(child);
+    placeHolderConfig ??= (_, child) => CodePlaceHolderConfig.forJavaLike(child);
 
     // Package configs
     packageNameConfig ??=
@@ -379,7 +379,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       codeAccessConfig,
 
       commentConfig,
-      customConfig,
+      placeHolderConfig,
 
       // Package configs
       packageNameConfig,

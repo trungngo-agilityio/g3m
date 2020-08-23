@@ -32,10 +32,10 @@ class Dependency extends Expr<Dependency> {
       i._desc = value;
     }
   }
-  // region custom code
+  // region custom code of dependency
   /// implement custom code here
-
-  // endregion custom code
+  void worldAbc() {}
+  // endregion custom code of dependency
 }
 
 
@@ -55,4 +55,7 @@ class DependencyScope extends Scope<Dependency> {
         ..version = version
         ..desc = desc;
   }
+  // region custom code of dependency scope
+  void hello() {}
+  // endregion custom code of dependency scope
 }

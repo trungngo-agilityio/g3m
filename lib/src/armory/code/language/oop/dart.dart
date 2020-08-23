@@ -98,7 +98,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           codeAccessConfig: (_, child) => CodeModifierConfig.forDartLike(child),
 
           commentConfig: (_, child) => CodeCommentConfig.forDartLike(child),
-          customConfig: null,
+          placeHolderConfig: null,
 
           // Package configs
           packageNameConfig: (_, child) =>

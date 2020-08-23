@@ -56,11 +56,9 @@ class Author extends Expr<Author> {
       i._email = value;
     }
   }
-  // region custom code
-// implement custom code here
-// ok will implement some thing.
-
-// endregion custom code
+  // region custom code of author
+  /// implement custom code here
+  // endregion custom code of author
 }
 
 
@@ -82,4 +80,7 @@ class AuthorScope extends Scope<Author> {
         ..lastName = lastName
         ..email = email;
   }
+  // region custom code of author scope
+  /// implement custom code here
+  // endregion custom code of author scope
 }

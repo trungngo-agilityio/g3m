@@ -99,7 +99,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
               CodeModifierConfig.forTypescriptLike(child),
 
           commentConfig: null,
-          customConfig: null,
+          placeHolderConfig: null,
 
           // Package configs
           packageNameConfig: null,
