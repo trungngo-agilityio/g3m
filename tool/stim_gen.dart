@@ -1,5 +1,5 @@
-import 'package:g3m/g3armory.dart';
-import 'package:g3m/g3armory_stimpack.dart';
+import 'package:g3m/g3techlab_core.dart';
+import 'package:g3m/g3techlab_stimpack.dart';
 import 'package:g3m/g3m.dart';
 import 'package:g3m/g3mex.dart';
 

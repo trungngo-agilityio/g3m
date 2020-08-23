@@ -1,5 +1,5 @@
-import 'package:g3m/g3armory.dart';
-import 'package:g3m/g3armory_dart.dart';
+import 'package:g3m/g3techlab_core.dart';
+import 'package:g3m/g3techlab_dart.dart';
 import 'package:g3m/g3util.dart';
 
 void main() {
