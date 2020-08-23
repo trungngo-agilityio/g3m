@@ -4,13 +4,27 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
   CodeConstructorConfig(NodeBuildFunc<CodeConstructor> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeConstructorConfig.forTypescriptLike(Node child) =>
+      CodeConstructorConfig._internal(
+        child,
+        appendConstructorName: false,
+        appendClassName: false,
+        constructorKeyword: 'constructor',
+      );
+
   factory CodeConstructorConfig.forDartLike(Node child) =>
-      CodeConstructorConfig._internal(child,
-          appendConstructorName: true, appendClassName: true);
+      CodeConstructorConfig._internal(
+        child,
+        appendConstructorName: true,
+        appendClassName: true,
+      );
 
   factory CodeConstructorConfig.forJavaLike(Node child) =>
-      CodeConstructorConfig._internal(child,
-          appendConstructorName: false, appendClassName: true);
+      CodeConstructorConfig._internal(
+        child,
+        appendConstructorName: false,
+        appendClassName: true,
+      );
 
   factory CodeConstructorConfig._internal(
     Node child, {

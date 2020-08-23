@@ -219,6 +219,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           classConfig: null,
           classConstructorNameConfig: null,
           classConstructorListConfig: null,
-          classConstructorConfig: null,
+          classConstructorConfig: (_, child) =>
+              CodeConstructorConfig.forTypescriptLike(child),
         );
 }

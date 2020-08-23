@@ -48,6 +48,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
       abstractKeyword: 'abstract ',
       staticKeyword: 'static ',
       finalKeyword: 'const ',
+      optionalKeyword: null,
     );
   }
 
