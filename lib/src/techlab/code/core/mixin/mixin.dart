@@ -1,60 +1,52 @@
 part of g3.techlab;
 
-class CodeClassConfig extends CodeConfigNode<CodeClass> {
-  CodeClassConfig(NodeBuildFunc<CodeClass> buildFunc, Node child)
+class CodeMixinConfig extends CodeConfigNode<CodeMixin> {
+  CodeMixinConfig(NodeBuildFunc<CodeMixin> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeClassConfig.forJavaLike(
+  factory CodeMixinConfig.forDartLike(
     Node child, {
-    String classKeyword = 'class ',
-    String extendsKeyword = 'extends ',
+    String mixinKeyword = 'mixin ',
+    String onKeyword = 'on ',
     String implementsKeyword = 'implements ',
-    String withKeyword = 'with ',
   }) =>
-      CodeClassConfig((context, clazz) {
+      CodeMixinConfig((context, mixin) {
         return Container([
           '\n',
-          clazz.comment,
+          mixin.comment,
           Trim.leftRight(
             Container([
-              clazz.modifier,
-              classKeyword,
-              clazz.name,
-              clazz.generic,
+              mixin.modifier,
+              mixinKeyword,
+              mixin.name,
+              mixin.generic,
               ' ',
-              clazz.extend != null
+              mixin.extend != null
                   ? Container([
-                      extendsKeyword,
-                      clazz.extend,
+                      onKeyword,
+                      mixin.extend,
                     ])
                   : null,
-              clazz.implements != null
+              ' ',
+              mixin.implements != null
                   ? Container([
-                      ' ',
                       implementsKeyword,
-                      clazz.implements,
-                    ])
-                  : null,
-              clazz.mixins != null
-                  ? Container([
-                      ' ',
-                      withKeyword,
-                      clazz.mixins,
+                      mixin.implements,
                     ])
                   : null,
             ]),
           ),
           ' ',
-          clazz.body,
+          mixin.body,
           '\n',
         ]);
       }, child);
 }
 
-class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
+class CodeMixin extends CodeConfigProxyNode<CodeMixin> implements _NamedNode {
   /// The class name.
   @override
-  final CodeClassName name;
+  final CodeMixinName name;
 
   /// Defines public, private, protected, etc.
   final CodeModifier modifier;
@@ -67,26 +59,24 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
 
   /// The list of data types that this class implements.
   final CodeTypeList implements;
-  final CodeTypeList mixins;
 
-  /// Class-level code comment.
+  /// Mixin-level code comment.
   final CodeComment comment;
 
   /// The class body.
   final CodeBlock body;
 
-  CodeClass({
+  CodeMixin({
     @required this.name,
     this.modifier,
     this.generic,
     this.extend,
     this.implements,
-    this.mixins,
     this.comment,
     this.body,
   }) : assert(name != null);
 
-  factory CodeClass.of({
+  factory CodeMixin.of({
     @required dynamic name,
     bool isPrivate,
     bool isPublic,
@@ -95,18 +85,16 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
     bool isAbstract,
     bool isStatic,
     dynamic generic,
-    dynamic extend,
+    dynamic on,
     dynamic implements,
-    dynamic mixins,
-    dynamic constructors,
     dynamic fields,
     dynamic properties,
     dynamic functions,
     dynamic comment,
     dynamic body,
   }) =>
-      CodeClass(
-        name: CodeClassName.of(name),
+      CodeMixin(
+        name: CodeMixinName.of(name),
         generic: CodeGenericParamList.of(generic),
         modifier: CodeModifier(
           isPrivate: isPrivate,
@@ -116,17 +104,15 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
           isAbstract: isAbstract,
           isStatic: isStatic,
         ),
-        extend: CodeType._parse(extend, error: () {
-          throw 'invalid $extend type found.';
+        extend: CodeType._parse(on, error: () {
+          throw 'invalid $on type found.';
         }),
         implements: CodeTypeList.of(implements),
-        mixins: CodeTypeList.of(mixins),
         body: CodeBlock.of(
           Container([
             CodeStatement.of(
               Container([
                 CodeFieldList.of(fields),
-                CodeConstructorList.of(constructors),
                 CodePropertyList.of(properties),
                 CodeFunctionList.of(functions),
               ]),

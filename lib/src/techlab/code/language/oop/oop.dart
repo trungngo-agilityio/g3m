@@ -120,6 +120,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeConstructorNameConfig> classConstructorNameConfig;
   CodeConfigBuildFunc<CodeConstructorListConfig> classConstructorListConfig;
   CodeConfigBuildFunc<CodeConstructorConfig> classConstructorConfig;
+  CodeConfigBuildFunc<CodeMixinNameConfig> mixinNameConfig;
+  CodeConfigBuildFunc<CodeMixinListConfig> mixinListConfig;
+  CodeConfigBuildFunc<CodeMixinConfig> mixinConfig;
 
   OopCodeConfig(
     Node child, {
@@ -230,13 +233,17 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.classConstructorNameConfig,
     @required this.classConstructorListConfig,
     @required this.classConstructorConfig,
+    @required this.mixinNameConfig,
+    @required this.mixinListConfig,
+    @required this.mixinConfig,
   }) : super(child) {
     indentConfig = (_, child) => IndentConfig.useSpace2(child);
     blockConfig ??= (_, child) => CodeBlockConfig.curlyBracketSameLine(child);
     codeAccessConfig ??= (_, child) => CodeModifierConfig.forJavaLike(child);
 
     commentConfig ??= (_, child) => CodeCommentConfig.forJavaLike(child);
-    placeHolderConfig ??= (_, child) => CodePlaceHolderConfig.forJavaLike(child);
+    placeHolderConfig ??=
+        (_, child) => CodePlaceHolderConfig.forJavaLike(child);
 
     // Package configs
     packageNameConfig ??=
@@ -483,6 +490,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       classConstructorNameConfig,
       classConstructorListConfig,
       classConstructorConfig,
+      mixinNameConfig,
+      mixinListConfig,
+      mixinConfig,
     ];
 
     for (final i in configs.reversed) {

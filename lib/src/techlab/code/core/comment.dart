@@ -28,6 +28,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         child,
         enumFunc: StringFuncs.code.commentTripleSplash,
         classFunc: StringFuncs.code.commentTripleSplash,
+        mixinFunc: StringFuncs.code.commentTripleSplash,
         interfaceFunc: StringFuncs.code.commentTripleSplash,
         fieldFunc: StringFuncs.code.commentTripleSplash,
         propertyFunc: StringFuncs.code.commentTripleSplash,
@@ -41,6 +42,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         child,
         enumFunc: StringFuncs.code.commentJavaDoc,
         classFunc: StringFuncs.code.commentJavaDoc,
+        mixinFunc: null,
         interfaceFunc: StringFuncs.code.commentJavaDoc,
         fieldFunc: StringFuncs.code.commentDoubleSplash,
         propertyFunc: StringFuncs.code.commentDoubleSplash,
@@ -53,6 +55,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
     Node child, {
     @required StringFunc enumFunc,
     @required StringFunc classFunc,
+    @required StringFunc mixinFunc,
     @required StringFunc interfaceFunc,
     @required StringFunc fieldFunc,
     @required StringFunc propertyFunc,
@@ -65,6 +68,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         final container = context.ancestors.firstWhere(
             (e) =>
                 e is CodeEnum ||
+                e is CodeMixin ||
                 e is CodeClass ||
                 e is CodeInterface ||
                 e is CodeField ||
@@ -80,6 +84,8 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
           // Determines the comment style for the given container.
           if (container is CodeEnum) {
             func = enumFunc;
+          } else if (container is CodeMixin) {
+            func = mixinFunc;
           } else if (container is CodeClass) {
             func = classFunc;
           } else if (container is CodeInterface) {

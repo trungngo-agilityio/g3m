@@ -60,7 +60,7 @@ void main() {
       '}\n'
       '\n'
       '\n'
-      'abstract class _Person<T> {\n'
+      'abstract class _Person<T> extends Human implements Male, Female with Robot {\n'
       '  /// The human first name.\n'
       '  @override\n'
       '  String _firstName;\n'
@@ -93,8 +93,9 @@ CodeClass clazz() {
     isPrivate: true,
     isAbstract: true,
     generic: [CodeGenericParam.of(name: 'T')],
-    extend: null,
-    implements: null,
+    extend: 'human',
+    implements: ['male', 'female'],
+    mixins: 'robot',
     fields: [
       field(),
     ],

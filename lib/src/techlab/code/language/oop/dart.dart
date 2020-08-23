@@ -66,6 +66,7 @@ class DartCode extends SingleChildNode {
     dynamic imports,
     dynamic functions,
     dynamic classes,
+    dynamic mixins,
     dynamic body,
   }) {
     final source = Container([
@@ -77,6 +78,7 @@ class DartCode extends SingleChildNode {
           CodeEnumList.of(enums),
           CodeFunctionList.of(functions),
           CodeClassList.of(classes),
+          CodeMixinList.of(mixins),
         ]),
       ),
       CodeStatementList.of(body),
@@ -225,5 +227,9 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           classConstructorListConfig: null,
           classConstructorConfig: (_, child) =>
               CodeConstructorConfig.forDartLike(child),
+
+          mixinNameConfig: (_, child) => CodeMixinNameConfig.forDartLike(child),
+          mixinListConfig: (_, child) => CodeMixinListConfig.forDartLike(child),
+          mixinConfig: (_, child) => CodeMixinConfig.forDartLike(child),
         );
 }

@@ -211,5 +211,8 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           classConstructorNameConfig: null,
           classConstructorListConfig: null,
           classConstructorConfig: null,
+          mixinNameConfig: null,
+          mixinListConfig: null,
+          mixinConfig: null,
         );
 }

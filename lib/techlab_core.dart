@@ -118,6 +118,12 @@ part 'src/techlab/code/core/interface/interface.dart';
 
 part 'src/techlab/code/core/lambda/lambda.dart';
 
+part 'src/techlab/code/core/mixin/mixin-list.dart';
+
+part 'src/techlab/code/core/mixin/mixin-name.dart';
+
+part 'src/techlab/code/core/mixin/mixin.dart';
+
 part 'src/techlab/code/core/modifier.dart';
 
 part 'src/techlab/code/core/mustache.dart';

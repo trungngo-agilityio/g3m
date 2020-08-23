@@ -24,6 +24,17 @@ class CodeClassList extends CodeConfigProxyNode<CodeClassList> {
 
   CodeClassList._(this.classes);
 
-  factory CodeClassList.of(List<CodeClass> classes) =>
-      classes?.isNotEmpty == true ? CodeClassList._(classes) : null;
+  static CodeClassList _parse(dynamic value, {_NodeParseErrorFunc error}) {
+    return _parseNode<CodeClassList>(value, (v) {
+      final list = _parseNodeList<CodeClass>(v, null);
+      if (list != null) return CodeClassList._(list);
+      return null;
+    }, error: error);
+  }
+
+  factory CodeClassList.of(dynamic values) {
+    return CodeClassList._parse(values, error: () {
+      throw '$values is not a valid class list';
+    });
+  }
 }
