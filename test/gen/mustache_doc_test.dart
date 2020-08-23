@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:g3m/g3gen.dart';
+import 'package:g3m/gen.dart';
 import 'package:test/test.dart';
 
 class Data {

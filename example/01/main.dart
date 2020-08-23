@@ -1,4 +1,4 @@
-import 'package:g3m/g3gen.dart';
+import 'package:g3m/gen.dart';
 
 class _Example01WriteProjectItem implements WritableProjectItem {
   @override

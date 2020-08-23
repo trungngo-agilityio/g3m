@@ -20,7 +20,7 @@ class StimpackLibFile implements Node {
       'lib',
       package: _dialect.codePackage(),
       body: Mustache.template('''
-import 'package:g3m/g3m.dart';
+import 'package:g3m/g3.stimpack';
 
 part 'world.dart';
 {{{content}}}

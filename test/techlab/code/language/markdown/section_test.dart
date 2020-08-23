@@ -1,5 +1,5 @@
-import 'package:g3m/g3techlab_core.dart';
-import 'package:g3m/g3techlab_markdown.dart';
+import 'package:g3m/techlab_core.dart';
+import 'package:g3m/techlab_markdown.dart';
 import 'package:quiver/iterables.dart';
 import 'package:test/test.dart';
 

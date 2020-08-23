@@ -1,4 +1,4 @@
-import 'package:g3m/g3util.dart';
+import 'package:g3m/util.dart';
 import 'package:test/test.dart';
 
 void assertEq(String expected, String s) {

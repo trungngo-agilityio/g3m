@@ -1,4 +1,4 @@
-part of g3gen;
+part of g3.gen;
 
 abstract class ProjectItem {
   /// The project item name.

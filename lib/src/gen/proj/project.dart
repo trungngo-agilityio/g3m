@@ -1,4 +1,4 @@
-part of g3gen;
+part of g3.gen;
 
 /// Defines a project structure.
 ///

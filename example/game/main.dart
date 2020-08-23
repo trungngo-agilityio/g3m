@@ -1,4 +1,4 @@
-import 'package:g3m/g3gen.dart';
+import 'package:g3m/gen.dart';
 
 import 'src/program.dart';
 

@@ -1,5 +1,5 @@
-import 'package:g3m/g3m.dart';
-import 'package:g3m/g3mex.dart';
+import 'package:g3m/stimpack.dart';
+import 'package:g3m/stimpack_ex.dart';
 
 class GameWorld extends WorldEx {
   GameFieldScope _field;

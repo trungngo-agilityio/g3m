@@ -1,4 +1,4 @@
-part of g3gen;
+part of g3.gen;
 
 /// Defines sub file in the project.
 class ProjectFile extends ProjectItem {

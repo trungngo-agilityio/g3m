@@ -1,4 +1,4 @@
-import 'package:g3m/g3m.dart';
+import 'package:g3m/stimpack.dart';
 import 'package:test/test.dart';
 
 void main() {

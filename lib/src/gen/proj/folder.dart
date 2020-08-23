@@ -1,4 +1,4 @@
-part of g3gen;
+part of g3.gen;
 
 /// Defines a folder that include many sub [ProjectFile].
 ///

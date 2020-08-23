@@ -1,6 +1,6 @@
-import 'package:g3m/g3gen.dart';
-import 'package:g3m/g3m.dart';
-import 'package:g3m/g3mex.dart';
+import 'package:g3m/gen.dart';
+import 'package:g3m/stimpack.dart';
+import 'package:g3m/stimpack_ex.dart';
 import 'package:quiver/iterables.dart';
 
 import 'doc/readme.dart';
@@ -10,9 +10,6 @@ import 'names.dart';
 
 class GameProgram implements Program {
   final GameWorld world = GameWorld();
-
-  CodeDoc rpcCodeDoc;
-  CodeDoc protoMessageCodeDoc;
 
   @override
   void load() {
@@ -28,9 +25,6 @@ class GameProgram implements Program {
   @override
   void build(ProjectFolder folder) {
     _buildCommonFiles(folder);
-    _buildModelCode(folder.newFolder('models'));
-    _buildProtoCode(folder.newFolder('proto'));
-
     var docFolder = folder.newFolder('doc');
     _buildTableMarkDownDoc(docFolder);
     _buildStoryMarkdownDoc(docFolder);
@@ -236,89 +230,6 @@ class GameProgram implements Program {
   // -------------------------------------------------------------------------
   void _buildCommonFiles(ProjectFolder folder) {
     folder.newFile('README.md', ReadmeDoc());
-  }
-
-  void _buildModelCode(ProjectFolder folder) {
-    final configs = [
-      CodeConfig.forDart(),
-      CodeConfig.forTypescript(),
-      CodeConfig.forCSharp(),
-      CodeConfig.forJava(),
-      CodeConfig.forKotlin(),
-      CodeConfig.forPython(),
-      CodeConfig.forGo(),
-    ];
-
-    for (final cfg in configs) {
-      final dt = world.dbTable;
-      final fileExt = cfg.language.fileExt;
-      final codeFolder = folder.newFolder(fileExt);
-
-      for (var i in dt.all.eval()) {
-        final doc = CodeDoc(cfg);
-
-        final name = i.name.snake().toString() + '.' + fileExt;
-        codeFolder.newFile(name.toString(), doc);
-
-        doc.package = 'g3model';
-
-        var clz = doc.clazz(i.name);
-        for (var j in i.fields.eval()) {
-          clz.field(j.name, j.type.name);
-        }
-      }
-    }
-  }
-
-  void _buildProtoCode(ProjectFolder folder) {
-    final msg = world.protoMessage,
-        m = world.protoRpcMethod,
-        rpc = world.protoRpc;
-
-    final protoRpcMap = <Actor, ProtoRpc>{};
-
-    for (final i in world.story.all.eval()) {
-      // Gets or create a new rpc object.
-      final actorRpc = protoRpcMap[i.actor] ??= rpc(i.actor.name & 'rpc');
-
-      // Creates the request proto message.
-      final request = msg.ofFields(i.name & 'request', i.request);
-
-      // Creates the response proto message.
-      final response = msg.ofFields(i.name & 'response', i.response);
-
-      // Adds a new method to the rpc
-      actorRpc.methods +=
-          m(i.name - i.actor.name, request: request, response: response);
-    }
-
-    final gRpcCfg = CodeConfig.forProto3();
-    final oldWritePackage = gRpcCfg.writePackage;
-
-    gRpcCfg.writePackage = (w, doc) {
-      w.statement('syntax = \'proto3\'');
-      oldWritePackage(w, doc);
-      w.writeln();
-      w.statement('option csharp_namespace = "G3.Platform.PlayerSdk"');
-    };
-
-    // Makes a proto file for all grpc services
-    rpcCodeDoc = CodeDoc(gRpcCfg)..package = 'g3playersdk';
-
-    rpcCodeDoc.comment.write((w) {
-      w + 'This is just a sample comment';
-    });
-    folder.newFile('grpc.proto', rpcCodeDoc);
-
-    protoMessageCodeDoc = CodeDoc(gRpcCfg)..package = 'g3playersdk';
-    folder.newFile('message.proto', protoMessageCodeDoc);
-
-    for (final i in msg.all.eval()) {
-      final clz = protoMessageCodeDoc.clazz(i.name);
-      for (var j in i.fields.eval()) {
-        clz.field(j.name, j.type.name, index: j.position);
-      }
-    }
   }
 
   void _buildStoryMarkdownDoc(ProjectFolder out) {

@@ -1,6 +1,6 @@
 import 'dart:io' as io;
 
-import 'package:g3m/g3techlab_core.dart';
+import 'package:g3m/techlab_core.dart';
 import 'package:test/test.dart';
 
 import '../utils.dart';

@@ -1,4 +1,4 @@
-part of g3gen;
+part of g3.gen;
 
 class MustacheDoc implements WritableProjectItem {
   /// The internal compiled template.

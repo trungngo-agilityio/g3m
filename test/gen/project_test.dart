@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:g3m/g3gen.dart';
+import 'package:g3m/gen.dart';
 import 'package:test/test.dart';
 
 class FakeItem implements WritableProjectItem {
@@ -46,7 +46,7 @@ class MyProgram implements Program {
 void main() {
   test('project - step by step', () async {
     var program = MyProgram();
-    var out = '/tmp/g3gen-test';
+    var out = '/tmp/g3-test';
     var outDir = Directory(out);
     if (outDir.existsSync()) {
       outDir.deleteSync(recursive: true);
@@ -76,7 +76,7 @@ void main() {
 
   test('project - all', () async {
     var program = MyProgram();
-    var out = '/tmp/g3gen-test';
+    var out = '/tmp/g3-test';
     var p = Project.open(program, out);
 
     await p.deploy();
