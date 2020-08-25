@@ -1,12 +1,9 @@
 part of g3m.stimpack.meta;
 
-
-
 class MetaRelationType extends Expr<MetaRelationType> {
   final MetaWorld world;
 
-  MetaRelationType(this.world):
-      super(world.metaRelationType);
+  MetaRelationType(this.world) : super(world.metaRelationType);
 
   String _desc;
 
@@ -16,24 +13,21 @@ class MetaRelationType extends Expr<MetaRelationType> {
 
   set desc(String value) {
     _desc = value;
-    for (var  i in eval()) {
+    for (var i in eval()) {
       i._desc = value;
     }
   }
-  // region custom code of meta relation type
+// region custom code of meta relation type
   /// implement custom code here
-  // endregion custom code of meta relation type
+// endregion custom code of meta relation type
 }
-
 
 class MetaRelationTypeScope extends Scope<MetaRelationType> {
   final MetaWorld world;
 
-
   MetaRelationTypeScope(this.world) {
     init(MetaRelationType(world));
   }
-
 
   @override
   MetaRelationType make() {
@@ -46,10 +40,9 @@ class MetaRelationTypeScope extends Scope<MetaRelationType> {
   }
 
   MetaRelationType call(String name, {String desc}) {
-    return add(name)
-        ..desc = desc;
+    return add(name)..desc = desc;
   }
-  // region custom code of meta relation type scope
+// region custom code of meta relation type scope
   /// implement custom code here
-  // endregion custom code of meta relation type scope
+// endregion custom code of meta relation type scope
 }

@@ -13,7 +13,6 @@ abstract class StimSymbolOpImpl<
     S extends StimSymbolSet<T, S>,
     FT extends StimSymbol<FT, FS>,
     FS extends StimSymbolSet<FT, FS>> implements StimSymbolOp<T, S, FT, FS> {
-
   final StimSymbolSet _symbols;
   final StimScopeImpl<FT, FS> _scope;
 

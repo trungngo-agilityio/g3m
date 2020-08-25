@@ -23,7 +23,6 @@ abstract class Scope<T extends Expr<T>> {
       ..name = Name('none')
       .._items = {};
     _none = _all = value;
-
   }
 
   T _none;

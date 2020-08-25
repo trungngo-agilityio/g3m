@@ -1,8 +1,8 @@
 import 'package:g3m/stimpack_base.dart';
-import 'package:g3m/stimpack_model.dart';
+import 'package:g3m/stimpack_meta.dart';
 
 void main() {
-  final meta = stimpack.model.meta;
+  final meta = stimpack.meta.meta;
   print('pack: ${meta.name}');
 
   for (final i in meta.types) {

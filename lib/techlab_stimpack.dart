@@ -1,9 +1,9 @@
 library g3.techlab.stimpack;
 
-import 'package:g3m/techlab_core.dart';
-import 'package:g3m/techlab_dart.dart';
 import 'package:g3m/stimpack.dart';
 import 'package:g3m/stimpack_ex.dart';
+import 'package:g3m/techlab_core.dart';
+import 'package:g3m/techlab_dart.dart';
 import 'package:meta/meta.dart';
 
 part 'src/techlab/code/framework/stimpack/stimpack_code.dart';

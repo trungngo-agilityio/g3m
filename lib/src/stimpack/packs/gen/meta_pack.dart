@@ -1,12 +1,9 @@
 part of g3m.stimpack.meta;
 
-
-
 class MetaPack extends Expr<MetaPack> {
   final MetaWorld world;
 
-  MetaPack(this.world):
-      super(world.metaPack);
+  MetaPack(this.world) : super(world.metaPack);
 
   MetaTerm _terms;
 
@@ -17,42 +14,36 @@ class MetaPack extends Expr<MetaPack> {
   set terms(MetaTerm value) {
     _terms = value;
     assert(value != null, 'value is required');
-    for (var  i in eval()) {
+    for (var i in eval()) {
       i._terms = value;
     }
   }
-  // region custom code of meta pack
+// region custom code of meta pack
   /// implement custom code here
-  // endregion custom code of meta pack
+// endregion custom code of meta pack
 }
-
 
 class MetaPackScope extends Scope<MetaPack> {
   final MetaWorld world;
-
 
   MetaPackScope(this.world) {
     init(MetaPack(world));
   }
 
-
   @override
   MetaPack make() {
-    return MetaPack(world)
-        ..terms = world.metaTerm.none;
+    return MetaPack(world)..terms = world.metaTerm.none;
   }
 
   @override
   void clear(MetaPack expr) {
-    expr
-        ..terms = world.metaTerm.none;
+    expr..terms = world.metaTerm.none;
   }
 
   MetaPack call(String name, {MetaTerm terms}) {
-    return add(name)
-        ..terms = terms;
+    return add(name)..terms = terms;
   }
-  // region custom code of meta pack scope
+// region custom code of meta pack scope
   /// implement custom code here
-  // endregion custom code of meta pack scope
+// endregion custom code of meta pack scope
 }
