@@ -1,8 +1,8 @@
-import 'package:g3m/stimpack_base.dart';
+import 'package:g3m/src/stimpack/meta/techlab/lib.dart';
 import 'package:g3m/stimpack_meta.dart';
+import 'package:g3m/techlab_core.dart';
 
-void main() {
-  final meta = stimpack.meta.meta;
+void stimpackGen(StimMetaPack meta, String dir) {
   print('pack: ${meta.name}');
 
   for (final i in meta.types) {
@@ -12,4 +12,13 @@ void main() {
       print('     - ${j.name}, kind: ${j.kind.name}, type: ${j.type.name}');
     }
   }
+
+  Node program = SingleChildNode(
+    Directory.relative(
+      dir,
+      StimpackCodeConfig(StimGenMeta(meta)),
+    ),
+  );
+
+  Program.execute(program);
 }
