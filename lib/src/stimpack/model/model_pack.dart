@@ -9,20 +9,30 @@ extension StimBasePackExtension on Stimpack {
 }
 
 abstract class _StimModelPack {
-  _StimType get meta;
+  StimPack get meta;
+
+  _StimValueScope get value;
 
   _StimFieldScope get field;
 
   _StimTypeScope get type;
+
+  _StimPackScope get pack;
 }
 
 class _StimModelPackImpl implements _StimModelPack {
-  _StimType _meta;
+  StimPack _meta;
+
+  _StimValueScopeImpl _value;
   _StimTypeScopeImpl _type;
   _StimFieldScopeImpl _field;
+  _StimPackScopeImpl _pack;
 
   @override
-  _StimType get meta => _meta;
+  StimPack get meta => _meta;
+
+  @override
+  _StimValueScope get value => _value;
 
   @override
   _StimFieldScope get field => _field;
@@ -30,36 +40,38 @@ class _StimModelPackImpl implements _StimModelPack {
   @override
   _StimTypeScope get type => _type;
 
+  @override
+  _StimPackScope get pack => _pack;
+
   _StimModelPackImpl() {
     // Notes that need to do 2 phase init to avoid cyclic dependency.
+    _value = _StimValueScopeImpl._(this);
     _type = _StimTypeScopeImpl._(this);
     _field = _StimFieldScopeImpl._(this);
+    _pack = _StimPackScopeImpl._(this);
 
+    _value.init();
     _type.init();
     _field.init();
+    _pack.init();
 
     _buildMeta();
   }
 
   void _buildMeta() {
-    _meta = _type.of('meta');
-
+    final valueMeta = _type.of('value');
     final fieldMeta = _type.of('field');
-    final fieldSetMeta = _type.of('fields');
     final typeMeta = _type.of('type');
-    final typeSetMeta = _type.of('types');
+    final packMeta = _type.of('pack');
 
-    final typeField = _field.of('type', type: typeMeta);
-    final typeSetField = _field.of('types', type: typeSetMeta);
-    final fieldSetField = _field.of('fields', type: fieldSetMeta);
+    final listKind = _value.of('list');
 
-    // a field must have a type
-    fieldMeta.fields += typeField;
+    fieldMeta.fields +=
+        _field.of('kind', type: valueMeta) + _field.of('type', type: typeMeta);
+    typeMeta.fields += _field.of('fields', kind: listKind, type: fieldMeta);
+    packMeta.fields += _field.of('types', kind: listKind, type: typeMeta);
 
-    // a type must have many fields
-    typeMeta.fields += fieldSetField;
-
-    // a meta type must have two field
-    _meta.fields += typeSetField;
+    _meta =
+        _pack.of('model', types: valueMeta + typeMeta + fieldMeta + packMeta);
   }
 }
