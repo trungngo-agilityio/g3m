@@ -13,16 +13,19 @@ abstract class StimSymbolOpImpl<
     S extends StimSymbolSet<T, S>,
     FT extends StimSymbol<FT, FS>,
     FS extends StimSymbolSet<FT, FS>> implements StimSymbolOp<T, S, FT, FS> {
-  final StimSymbolSet symbols;
-  final StimScopeImpl<FT, FS> scope;
 
-  StimSymbolOpImpl(this.symbols, StimScope<FT, FS> scope)
-      : scope = scope as StimScopeImpl<FT, FS>;
+  final StimSymbolSet _symbols;
+  final StimScopeImpl<FT, FS> _scope;
+
+  StimSymbolOpImpl(this._symbols, StimScope<FT, FS> scope)
+      : assert(_symbols != null),
+        assert(scope != null),
+        _scope = scope as StimScopeImpl<FT, FS>;
 
   void _execute(String op, StimSymbolOpFunc<T, FT> func, value) {
     if (value == null) return;
     if (value is FT) {
-      for (final i in symbols) {
+      for (final i in _symbols) {
         func(i, value);
       }
     } else if (value is FS) {
@@ -34,7 +37,7 @@ abstract class StimSymbolOpImpl<
         item = list.first;
       }
 
-      for (final i in symbols) {
+      for (final i in _symbols) {
         func(i, item);
       }
     } else {

@@ -6,7 +6,7 @@ class StimSymbol<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>> {
 
   final StimScopeImpl<T, S> _scope;
 
-  StimSymbol(this._scope);
+  StimSymbol(this._scope) : assert(_scope != null);
 
   T clone() {
     return _scope.createAndClear(name);

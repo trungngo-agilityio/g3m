@@ -21,7 +21,9 @@ abstract class StimSymbolSetOpImpl<
   final StimScopeImpl<FT, FS> scope;
 
   StimSymbolSetOpImpl(this.symbols, StimScope<FT, FS> scope)
-      : scope = scope as StimScopeImpl<FT, FS>;
+      : assert(symbols != null),
+        assert(scope != null),
+        scope = scope as StimScopeImpl<FT, FS>;
 
   void _execute(String op, StimSymbolOpFunc<T, FS> func, value) {
     if (value == null) return;

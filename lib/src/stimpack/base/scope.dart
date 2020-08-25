@@ -17,12 +17,11 @@ abstract class StimScopeImpl<T extends StimSymbol<T, S>,
   @override
   S get noneSet => _noneSet;
 
-  StimScopeImpl() {
-    _none = create();
-    _noneSet = createSet([]);
-  }
+  StimScopeImpl();
 
   void init() {
+    _none = create();
+    _noneSet = createSet([]);
     clear(_none);
   }
 

@@ -9,7 +9,9 @@ class _StimField extends StimSymbol<_StimField, _StimFieldSet> {
 
   @override
   _StimField clone() {
-    return super.clone()..type = type;
+    return super.clone()
+      ..type = type.clone()
+      ..types = types.clone();
   }
 }
 
@@ -43,20 +45,21 @@ class _StimFieldTypeSetOp extends StimSymbolSetOpImpl<_StimField, _StimFieldSet,
 }
 
 class _StimFieldSet extends StimSymbolSet<_StimField, _StimFieldSet> {
-  _StimFieldSet._(_StimFieldScopeImpl scope, List<_StimField> items)
-      : super(scope, items) {}
+  final _StimBasePackImpl _pack;
+
+  _StimFieldSet._(this._pack, List<_StimField> items)
+      : super(_pack._field, items);
 
   _StimFieldTypeOp _type;
 
-  _StimFieldTypeOp get type =>
-      _type ??= _StimFieldTypeOp(this, stimpack.model.type);
+  _StimFieldTypeOp get type => _type ??= _StimFieldTypeOp(this, _pack.type);
 
   set type(_StimFieldTypeOp value) => _type = value;
 
   _StimFieldTypeSetOp _types;
 
   _StimFieldTypeSetOp get types =>
-      _types ??= _StimFieldTypeSetOp(this, stimpack.model.type);
+      _types ??= _StimFieldTypeSetOp(this, _pack.type);
 
   set types(_StimFieldTypeSetOp value) => _types = value;
 }
@@ -67,13 +70,13 @@ abstract class _StimFieldScope extends StimScope<_StimField, _StimFieldSet> {
 
 class _StimFieldScopeImpl extends StimScopeImpl<_StimField, _StimFieldSet>
     implements _StimFieldScope {
-  _StimBasePackImpl pack;
+  final _StimBasePackImpl _pack;
 
-  _StimFieldScopeImpl._(this.pack) : super();
+  _StimFieldScopeImpl._(this._pack) : super();
 
   @override
   void clear(_StimField symbol) {
-    final scope = pack.type;
+    final scope = _pack.type;
     symbol
       ..type = scope.none
       ..types = scope.noneSet;
@@ -84,7 +87,7 @@ class _StimFieldScopeImpl extends StimScopeImpl<_StimField, _StimFieldSet>
 
   @override
   _StimField of(dynamic name, {dynamic type, dynamic types}) {
-    final scope = pack.type;
+    final scope = _pack.type;
     return createAndClear(name)
       ..type = type ?? scope.none
       ..types = types ?? scope.noneSet;
@@ -92,6 +95,6 @@ class _StimFieldScopeImpl extends StimScopeImpl<_StimField, _StimFieldSet>
 
   @override
   _StimFieldSet createSet(List<_StimField> items) {
-    return _StimFieldSet._(this, items);
+    return _StimFieldSet._(_pack, items);
   }
 }

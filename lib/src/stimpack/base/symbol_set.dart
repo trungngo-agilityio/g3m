@@ -10,6 +10,10 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
       : assert(_scope != null),
         assert(_items != null);
 
+  S clone() {
+    return _scope.createSet(List<T>.of(_items));
+  }
+
   set add(dynamic another) {}
 
   set set(dynamic another) {}
