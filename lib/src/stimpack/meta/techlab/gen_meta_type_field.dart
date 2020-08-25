@@ -18,7 +18,7 @@ class StimGenMetaTypeField implements Node {
 
   Node _buildBody() {
     return Container([
-      CodePackage.partOf(pack.name, path: ['g3', 'stimpack']),
+      'part of g3.stimpack.${pack.name.camel()}.generated;\n',
       field.kind == stimpack.meta.kind.list
           ? _buildListField()
           : _buildSingleField(),

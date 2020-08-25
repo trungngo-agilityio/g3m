@@ -16,7 +16,7 @@ class StimGenMetaType implements Node {
 
   Node _buildBody() {
     final template = '''
-part of g3.stimpack.{{ packNameCamel }};
+part of g3.stimpack.{{ packNameCamel }}.generated;
 
 class Stim{{ packNamePascal }}{{ typeNamePascal }} extends StimSymbol<Stim{{ packNamePascal }}{{ typeNamePascal }}, Stim{{ packNamePascal }}{{ typeNamePascal }}Set> {
 {{ fieldListDef }}

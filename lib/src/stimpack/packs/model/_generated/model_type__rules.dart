@@ -1,4 +1,4 @@
-part of g3.stimpack.model;
+part of g3.stimpack.model.generated;
 
 class _StimModelType_RuleSetOp extends StimSymbolSetOpImpl<StimModelType,
     StimModelTypeSet, StimModelRule, StimModelRuleSet> {

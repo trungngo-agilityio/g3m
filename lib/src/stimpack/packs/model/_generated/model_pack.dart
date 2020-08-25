@@ -1,4 +1,4 @@
-library g3.stimpack.model;
+library g3.stimpack.model.generated;
 
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';

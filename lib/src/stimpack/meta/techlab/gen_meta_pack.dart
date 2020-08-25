@@ -15,7 +15,7 @@ class StimGenMetaPack implements Node {
 
   Node _buildBody(StimpackCodeConfig config) {
     final template = ''' 
-library g3.stimpack.{{ packNameCamel }};
+library g3.stimpack.{{ packNameCamel }}.generated;
 
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
