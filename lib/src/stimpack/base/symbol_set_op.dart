@@ -52,7 +52,13 @@ abstract class StimSymbolSetOpImpl<
     return this;
   }
 
+  /// Gives a symbol in a set, sub class must implement this function
+  /// to define how to set a [child] symbol's related field with the specified
+  /// [values] symbol set.
   void onSet(T child, FS values);
 
+  /// Gives a symbol in a set, sub class must implement this function
+  /// to define how to add a [child] symbol's related field with the specified
+  /// [values] symbol set.
   void onAdd(T child, FS values);
 }

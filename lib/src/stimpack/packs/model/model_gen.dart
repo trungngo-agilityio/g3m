@@ -2,6 +2,25 @@ import 'package:g3m/src/stimpack/meta/meta_gen.dart';
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 
+/// Generates the "model" language pack.
+/// The generated code is a complete library 'g3.stimpack.model.generated'
+///
+/// Pack:
+/// - Model has many types
+/// - Type has many fields, and many rules
+/// - Fields has a type, and many rules.
+///
+/// Example:
+/// - rules: required, unique, no negative
+/// - type: string, double
+/// - fields:
+///     - name, type: string, rules: required, unique
+///     - description, type: string
+///     - cost: type: double, rules: no negative
+/// - models:
+///     - product,  fields: name, description, cost
+///     - category, fields: name, description
+///
 void main() {
   final m = stimpack.meta, t = m.type, f = m.field, p = m.pack, k = m.kind;
 

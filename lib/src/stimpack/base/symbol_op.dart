@@ -1,5 +1,21 @@
 part of g3.stimpack.base;
 
+/// Defines an operation perform on a field of a symbol set.
+/// It is quite hard to understand this magic class, please consider
+/// the following example:
+///   - we are using the "model" package to model the database models.
+///   - There are a lot of models that have many common fields like
+///     name, desc, version, createdAt, updatedAt, ... and we need
+///     a quick way to add all those fields into all models.
+///   - Here is the code for it
+///     all = product + category + productBrand + manufacturer
+///     all.fields.set(name + desc + version + createdAt + updatedAt).
+///
+/// This class provide a base class on how "fields.add" work. Custom
+/// package shall need to extends and provide custom implementation
+/// of some functions like [onSet], [onAdd], etc to define how things
+/// should work.
+///
 abstract class StimSymbolOp<
     T extends StimSymbol<T, S>,
     S extends StimSymbolSet<T, S>,

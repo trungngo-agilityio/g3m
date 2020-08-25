@@ -1,7 +1,15 @@
 part of g3.stimpack.base;
 
+/// A symbol set is a set of symbols. Please read the comment on [StimSymbol]
+/// to understand on it is possible to perform some math operations
+/// on symbol or set to quickly model the software world.
+///
+/// It is important to note that symbol set implements [Iterable] interface,
+/// so it is possible to perform like "for (final i in aSymbolSet)".
+///
 class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
     implements Iterable<T> {
+  /// The scope that this symbol set make from.
   final StimScopeImpl<T, S> _scope;
 
   final List<T> _items;
@@ -10,6 +18,7 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
       : assert(_scope != null),
         assert(_items != null);
 
+  /// Clones the set to make a new one.
   S clone() {
     return _scope.createSet(List<T>.of(_items));
   }
@@ -20,14 +29,19 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
 
   set remove(dynamic another) {}
 
+  /// Adds symbols or sets to make new symbol set.
+  ///
   S operator +(dynamic another) {
     if (another == null || another == _scope.none) return this;
 
     final items = List<T>.from(_items);
+
     if (another is S) {
+      // the another is a set.
       items.addAll(another._items);
       return _scope.createSet(items);
     } else if (another is T) {
+      // the another is a symbol.
       items.add(another);
       return _scope.createSet(items);
     }

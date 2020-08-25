@@ -3,12 +3,19 @@ part of g3.stimpack.meta;
 _StimMetaPackImpl _stimMetaPack;
 
 extension StimBasePackExtension on Stimpack {
+  /// Provides 'stimpack.meta' access to a only instance
+  /// of the 'meta' package.
   _StimMetaPack get meta {
     return _stimMetaPack ??= _StimMetaPackImpl();
   }
 }
 
 abstract class _StimMetaPack {
+  /// A meta defines the package language structure in which
+  /// all symbols and their relationships are defined. All other
+  /// stimpack packages should also have this field. Given a meta data
+  /// of a language pack, it is possible for users to copy it
+  /// add more symbols to it and generate their own packs.
   StimMetaPack get meta;
 
   _StimMetaKindScope get kind;
@@ -58,6 +65,16 @@ class _StimMetaPackImpl implements _StimMetaPack {
     _buildMeta();
   }
 
+  /// This uses its own language to define itself. Given the meta
+  /// objects produced by this function, it is possible to regenerate
+  /// all other code for the meta language package.
+  ///
+  /// There are 4 symbols in this pack.
+  /// - A package has many types
+  /// - A types has many fields
+  /// - A field has a type and a kind. The kind can be either just null or
+  ///   a list.
+  ///
   void _buildMeta() {
     final kindMeta = _type.of('kind');
     final fieldMeta = _type.of('field');
