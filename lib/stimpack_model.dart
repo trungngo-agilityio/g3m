@@ -4,6 +4,12 @@ import 'package:g3m/stimpack_base.dart';
 
 part 'src/stimpack/model/model_field.dart';
 
+part 'src/stimpack/model/model_field_type.dart';
+
+part 'src/stimpack/model/model_meta.dart';
+
 part 'src/stimpack/model/model_pack.dart';
 
 part 'src/stimpack/model/model_type.dart';
+
+part 'src/stimpack/model/model_type_field.dart';

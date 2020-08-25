@@ -8,8 +8,10 @@ void main() {
   final intType = t.of('int');
   final stringType = t.of('string');
   final boolType = t.of('bool');
-  final ageField = f.of('age', type: intType);
-  final nameField = f.of('age', type: stringType);
+  final ageField = f.of('age', type: intType).clone();
+  final nameField = f.of('age', type: stringType, types: intType).clone();
+  print(nameField.types);
+  print(nameField.type);
 
   final all = intType + stringType;
   for (var i in all) {
@@ -23,6 +25,8 @@ void main() {
     ..type ^= intType
     ..types += boolType
     ..types ^= (stringType + intType);
+
+  final person = t.of('person')..fields += ageField;
 
   print('int = $intType');
   print('age = $ageField, ${ageField.types}');

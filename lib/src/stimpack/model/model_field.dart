@@ -15,71 +15,41 @@ class _StimField extends StimSymbol<_StimField, _StimFieldSet> {
   }
 }
 
-class _StimFieldTypeOp extends StimSymbolOpImpl<_StimField, _StimFieldSet,
-    _StimType, _StimTypeSet> {
-  _StimFieldTypeOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<_StimType, _StimTypeSet> scope)
-      : super(symbols, scope);
-
-  @override
-  void onSet(_StimField child, _StimType value) {
-    child.type = value;
-  }
-}
-
-class _StimFieldTypeSetOp extends StimSymbolSetOpImpl<_StimField, _StimFieldSet,
-    _StimType, _StimTypeSet> {
-  _StimFieldTypeSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<_StimType, _StimTypeSet> scope)
-      : super(symbols, scope);
-
-  @override
-  void onAdd(_StimField child, _StimTypeSet items) {
-    child.types = child.types == null ? items : child.types += items;
-  }
-
-  @override
-  void onSet(_StimField child, _StimTypeSet items) {
-    child.types = items;
-  }
-}
-
 class _StimFieldSet extends StimSymbolSet<_StimField, _StimFieldSet> {
-  final _StimBasePackImpl _pack;
+  final _StimModelPackImpl _pack;
 
   _StimFieldSet._(this._pack, List<_StimField> items)
       : super(_pack._field, items);
 
-  _StimFieldTypeOp _type;
+  _StimField_TypeOp _type;
 
-  _StimFieldTypeOp get type => _type ??= _StimFieldTypeOp(this, _pack.type);
+  _StimField_TypeOp get type => _type ??= _StimField_TypeOp(this, _pack.type);
 
-  set type(_StimFieldTypeOp value) => _type = value;
+  set type(_StimField_TypeOp value) => _type = value;
 
-  _StimFieldTypeSetOp _types;
+  _StimField_TypeSetOp _types;
 
-  _StimFieldTypeSetOp get types =>
-      _types ??= _StimFieldTypeSetOp(this, _pack.type);
+  _StimField_TypeSetOp get types =>
+      _types ??= _StimField_TypeSetOp(this, _pack.type);
 
-  set types(_StimFieldTypeSetOp value) => _types = value;
+  set types(_StimField_TypeSetOp value) => _types = value;
 }
 
 abstract class _StimFieldScope extends StimScope<_StimField, _StimFieldSet> {
-  _StimField of(dynamic name, {_StimType type});
+  _StimField of(dynamic name, {dynamic type, dynamic types});
 }
 
 class _StimFieldScopeImpl extends StimScopeImpl<_StimField, _StimFieldSet>
     implements _StimFieldScope {
-  final _StimBasePackImpl _pack;
+  final _StimModelPackImpl _pack;
 
   _StimFieldScopeImpl._(this._pack) : super();
 
   @override
   void clear(_StimField symbol) {
-    final scope = _pack.type;
     symbol
-      ..type = scope.none
-      ..types = scope.noneSet;
+      ..type = _pack.type.none
+      ..types = _pack.type.noneSet;
   }
 
   @override
@@ -87,10 +57,9 @@ class _StimFieldScopeImpl extends StimScopeImpl<_StimField, _StimFieldSet>
 
   @override
   _StimField of(dynamic name, {dynamic type, dynamic types}) {
-    final scope = _pack.type;
     return createAndClear(name)
-      ..type = type ?? scope.none
-      ..types = types ?? scope.noneSet;
+      ..type = type ?? _pack.type.none
+      ..types += types;
   }
 
   @override
