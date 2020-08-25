@@ -18,12 +18,26 @@ abstract class Scope<T extends Expr<T>> {
     return _none;
   }
 
+  void init(T value) {
+    value
+      ..name = Name('none')
+      .._items = {};
+    _none = _all = value;
+
+  }
+
   T _none;
 
   Scope();
 
-  _lazy() {
-    if (_all != null) return;
+  bool _isClear = false;
+
+  void _lazy() {
+    if (_isClear == true) return;
+    _isClear = true;
+    clear(none);
+
+    if (_none != null) return;
     _all = _none = make()
       ..name = Name('none')
       .._items = {};
@@ -32,6 +46,8 @@ abstract class Scope<T extends Expr<T>> {
   /// Any concrete implementation must implement this method
   /// to create new object.
   T make();
+
+  void clear(T item) {}
 
   int _counter = 0;
 

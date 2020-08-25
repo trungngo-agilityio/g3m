@@ -15,9 +15,14 @@ class StimpackWorldFile implements Node {
       classes: [
         CodeClass.of(
           name: _dialect.codeWorldClassName(),
+//          extend: 'WorldEx',
           fields: _makeFields(),
           properties: _makeProperties(),
           constructors: _makeDefaultConstructor(),
+          body: CodePlaceHolder.of(
+            name: 'world',
+            comment: 'write anything here',
+          ),
         ),
       ],
     );
@@ -35,9 +40,11 @@ class StimpackWorldFile implements Node {
 
   List<CodeProperty> _makeProperties() {
     return _dialect.models.map((e) {
+      final scopeClassName = _dialect.codeScopeClassName(e.name.toString());
+
       return CodeProperty.of(
         name: e.name,
-        type: e.name + ' scope',
+        type: scopeClassName,
         getter: 'return _${e.name.camel()};',
       );
     }).toList();

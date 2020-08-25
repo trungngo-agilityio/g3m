@@ -12,7 +12,7 @@ class StimpackLibFile implements Node {
     final content = Container(
       _dialect.models.map((e) {
         // Generates a part of statement.
-        return Text.of("part '${e.name}.dart';\n");
+        return Text.of("part '${e.name.snake().toString()}.dart';\n");
       }).toList(),
     );
 
@@ -20,7 +20,8 @@ class StimpackLibFile implements Node {
       'lib',
       package: _dialect.codePackage(),
       body: Mustache.template('''
-import 'package:g3m/g3.stimpack';
+import 'package:g3m/stimpack.dart';
+import 'package:g3m/stimpack_ex.dart';
 
 part 'world.dart';
 {{{content}}}

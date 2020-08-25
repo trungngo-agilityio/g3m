@@ -17,3 +17,6 @@ Related documents:
 
 * [path](https://pub.dev/packages/path)
     * A comprehensive, cross-platform path manipulation library for Dart.
+
+* [infection2](https://pub.dev/packages/inflection2)    
+    * In grammar, inflection or inflexion is the modification of a word to express different grammatical categories such as tense, mood, voice, aspect, person, number, gender and case.

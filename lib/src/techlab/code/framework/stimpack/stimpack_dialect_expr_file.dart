@@ -130,10 +130,11 @@ class StimpackExprFile implements Node {
 
     Node makeFields = Join.newLineSeparated(_exprFields.map((e) {
       final fieldName = CodeFieldName.of(name: e.name);
+      final typeName = CodeFieldName.of(name: e.type.name);
       return Container([
         CodeCascade.of(fieldName),
         ' = world.',
-        fieldName,
+        typeName,
         '.none',
       ]);
     })?.toList());
@@ -147,13 +148,30 @@ class StimpackExprFile implements Node {
       ]);
     })?.toList());
 
+    var exprClassName = _dialect.codeExprClassName(_name);
+    final clearFunction = CodeFunction.of(
+      name: 'clear',
+      requiredArgs: [
+        [
+          'expr',
+          exprClassName,
+        ]
+      ],
+      isOverride: true,
+      returns: 'void',
+      body: CodeExpr.of(Container([
+        'expr\n',
+        Indent(makeFields, level: 2),
+      ])),
+    );
+
     final makeFunction = CodeFunction.of(
       name: 'make',
       isOverride: true,
       returns: _name,
       body: CodeReturn.of(Container(
         [
-          _dialect.codeExprClassName(_name),
+          exprClassName,
           '(',
           worldField.name,
           ')\n',
@@ -166,10 +184,13 @@ class StimpackExprFile implements Node {
     final callFunction = CodeFunction.of(
       name: 'call',
       returns: _name,
+      requiredArgs: [
+        ['name', 'string']
+      ],
       namedArgs: typedArgs,
       body: CodeReturn.of(Container(
         [
-          'add(null)\n',
+          'add(name)\n',
           Indent(copyFields, level: 2),
         ],
       )),
@@ -179,10 +200,19 @@ class StimpackExprFile implements Node {
     return CodeClass.of(
       name: scopeClassName,
       extend: CodeType.genericSingle('scope', _name),
-      constructors: CodeConstructor.of(requiredArgs: worldField),
+      constructors: CodeConstructor.of(requiredArgs: worldField, body: [
+        Container([
+          'init(',
+          exprClassName,
+          '(',
+          worldField.name,
+          '));\n',
+        ]),
+      ]),
       fields: worldField,
       functions: [
         makeFunction,
+        clearFunction,
         callFunction,
       ],
       body: CodePlaceHolder.of(
