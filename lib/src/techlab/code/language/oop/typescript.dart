@@ -161,6 +161,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           forEachConfig: (_, child) => CodeForEachConfig.forDartLike(child),
           whileConfig: null,
           functionCallConfig: null,
+          constructorCallConfig: null,
 
           annotationNameConfig: null,
           annotationListConfig: null,
@@ -225,5 +226,8 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           classConstructorListConfig: null,
           classConstructorConfig: (_, child) =>
               CodeConstructorConfig.forTypescriptLike(child),
+          mixinNameConfig: null,
+          mixinListConfig: null,
+          mixinConfig: null,
         );
 }

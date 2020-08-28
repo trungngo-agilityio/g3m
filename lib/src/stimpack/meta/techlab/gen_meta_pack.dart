@@ -68,11 +68,14 @@ class {{ packImplClass }} implements {{ packClass }} {
   void init() {
 {{{ packImplClassInitFunctionFieldSet }}}
     _buildMeta();
+    _buildValues();
   }
 
   void _buildMeta() {
 {{{ buildMetaFunction }}}
   }
+  
+{{{ buildValuesFunction }}}
 }
     ''';
 
@@ -93,6 +96,7 @@ class {{ packImplClass }} implements {{ packClass }} {
           'packImplClassInitFunctionFieldSet':
               _packImplClassInitFunctionFieldSet(config),
           'buildMetaFunction': _buildMetaFunction(config),
+          'buildValuesFunction': _buildValuesFunction(config),
         },
         pack: pack);
   }
@@ -237,6 +241,27 @@ class {{ packImplClass }} implements {{ packClass }} {
     ]));
 
     return Indent(Container(nodes), level: 2);
+  }
+
+  Node _buildValuesFunction(StimpackCodeConfig config) {
+    final function = CodeFunction.of(
+      name: '_buildValues',
+      returns: 'void',
+      comment: 'This function shall be call during the init process.',
+      body: CodeComment.of(
+        'build all preset values here',
+      ),
+    );
+
+    final holder = CodePlaceHolder.of(
+      name: pack.name >> ' stimpack',
+      body: Container([
+        function,
+        '\n\n',
+      ]),
+    );
+
+    return Indent(holder);
   }
 
   Node _packClassFields(StimpackCodeConfig config) {

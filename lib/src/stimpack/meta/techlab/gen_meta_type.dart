@@ -11,10 +11,10 @@ class StimGenMetaType implements Node {
     final config =
         context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
     final fileName = config.typeFileNameOf(pack, type);
-    return DartCodeFile.of(fileName, body: _buildBody());
+    return DartCodeFile.of(fileName, body: _buildBody(config));
   }
 
-  Node _buildBody() {
+  Node _buildBody(StimpackCodeConfig config) {
     final template = '''
 part of g3.stimpack.{{ packName.camel }}.generated;
 
@@ -53,6 +53,8 @@ abstract class {{ typeScopeClass }}
 '''
         // Symbols preset
         '''
+{{{ typePresetClasses }}}
+        
 class {{ typeSymbolsClass }} {
   final {{ typeScopeImplClass }} _scope;
   /// All symbols
@@ -115,7 +117,8 @@ class {{ typeScopeImplClass }}
         'fieldListClear': _buildFieldListClear(),
         'fieldListInit': _buildFieldListInit(),
         'setFieldListDef': _buildSetFieldListDef(),
-        'symbolClassFields': _symbolClassFields(),
+        'typePresetClasses': _typePresetClasses(config),
+        'symbolClassFields': _symbolClassFields(config),
         'symbolClassFieldsInit': _symbolClassFieldsInit(),
         'ofFunctionArgs': _buildOfFunctionArgs(),
       },
@@ -191,6 +194,62 @@ class {{ typeScopeImplClass }}
         ';';
   }
 
+  Node _typePresetClasses(StimpackCodeConfig config) {
+    final presets = type.presets
+        // gets out the preset does not have empty name.
+        .whereHasName()
+        // converts the preset to a class with its fields are the
+        // preset values.
+        .map((preset) {
+      final name = config.presetClassNameOf(pack, type, preset);
+      final fieldType = config.typeClassNameOf(pack, type);
+
+      var fields = preset.values
+          .map((e) => CodeField.of(
+                name: e.name.camel(),
+                type: fieldType,
+              ))
+          .toList();
+
+      // Generates an all field that will be the combine of all other values.
+      fields.add(
+        CodeField.of(
+          name: 'all',
+          type: config.typeSetClassNameOf(pack, type),
+        ),
+      );
+
+      final scopeArg = CodeArg.of(
+        name: 'scope',
+        type: config.typeScopeClassNameOf(pack, type),
+      );
+
+      final fieldInits = preset.values.whereHasName().map(
+            (value) => CodeAssignExpr.of(
+              value.name.camel(),
+              CodeAccessExpr.of(
+                scopeArg.name,
+                CodeFunctionCall.of(
+                    name: 'of', args: CodeStringLiteral.of(value.name)),
+              ),
+            ),
+          );
+
+      final constructor = CodeConstructor.of(
+        requiredArgs: scopeArg,
+        body: fieldInits.toList(),
+      );
+
+      return CodeClass.of(
+        name: name,
+        fields: fields,
+        constructors: constructor,
+      );
+    }).toList();
+
+    return Container(presets);
+  }
+
   Node _buildSetFieldListDef() {
     final nodes = <Node>[];
     for (final i in type.fields) {
@@ -237,11 +296,9 @@ class {{ typeScopeImplClass }}
     final children = <Node>[];
     for (final i in type.presets) {
       if (i.name.toString().isNotEmpty == true) {
-        print('here name not null');
         // This preset has name.
 
       } else {
-        print('here');
         // This preset do not have name.
         // render it as the symbols level.
         children.add(_symbolClassFieldsPresetInit(i));
@@ -260,20 +317,42 @@ class {{ typeScopeImplClass }}
     return Text.of(children.join('\n'));
   }
 
-  Node _symbolClassFields() {
-    final children = <Node>[];
-    for (final i in type.presets) {
-      if (i.name.toString().isNotEmpty == true) {
-        // This preset has name.
+  Node _symbolClassFields(StimpackCodeConfig config) {
+    final presetFields = type.presets.whereHasName().map((preset) {
+      final fieldType = config.presetClassNameOf(pack, type, preset);
 
-      } else {
-        // This preset do not have name.
-        // render it as the symbols level.
-        children.add(_presetClassFields(i));
-      }
-    }
+      // Generates a field that hold the preset class
+      final field = CodeField.of(
+        isPrivate: true,
+        name: preset.name.camel(),
+        type: fieldType,
+      );
 
-    return Container(children);
+      // Generates a getter that lazy init and return the preset class
+      final property = CodeProperty.of(
+        name: preset.name.camel(),
+        type: fieldType,
+        getter: CodeReturn.of(
+          CodeAssignIfNullExpr.of(
+            field.name,
+            CodeConstructorCall.of(
+                className: fieldType, args: CodeRef.of('_scope')),
+          ),
+        ),
+      );
+
+      return Container([field, property]);
+    });
+
+    final valueFields =
+        type.presets.whereNoName().map((e) => _presetClassFields(e));
+
+    return Indent(Container([
+      '\n',
+      Container(presetFields),
+      '\n',
+      Container(valueFields),
+    ]));
   }
 
   Node _presetClassFields(StimMetaPreset preset) {

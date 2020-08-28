@@ -1,6 +1,5 @@
-import 'package:g3m/src/stimpack/meta/techlab/lib.dart';
-import 'package:g3m/stimpack_meta.dart';
-import 'package:g3m/techlab_core.dart';
+part of g3.stimpack.meta;
+
 
 void stimpackGen(StimMetaPack meta, String dir) {
   print('pack: ${meta.name}');

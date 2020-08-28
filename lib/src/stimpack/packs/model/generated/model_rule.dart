@@ -32,16 +32,20 @@ abstract class StimModelRuleScope
   StimModelRule of(dynamic name);
 }
 
+
+        
 class StimModelRuleSymbols {
   final _StimModelRuleScopeImpl _scope;
   /// All symbols
   StimModelRuleSet all;
-
+  StimModelRule required;
+    StimModelRule unique;
   
   StimModelRuleSymbols(this._scope) {
     final _s = stimpack.model.rule;
     all = _s.noneSet;
-
+    all += required = _scope.of('required');
+    all += unique = _scope.of('unique');
   }
 }
 

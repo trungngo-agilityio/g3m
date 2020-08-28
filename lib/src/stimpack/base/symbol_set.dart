@@ -29,6 +29,21 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
 
   set remove(dynamic another) {}
 
+  // region syntax sugar for symbol set collection
+
+  Iterable<T> whereNoName() {
+    return where((element) {
+      var empty = element.name?.isEmpty;
+      return empty == true || empty == null;
+    });
+  }
+
+  Iterable<T> whereHasName() {
+    return where((element) => element.name?.isNotEmpty == true);
+  }
+
+  // endregion
+
   /// Adds symbols or sets to make new symbol set.
   ///
   S operator +(dynamic another) {

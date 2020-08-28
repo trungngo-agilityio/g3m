@@ -59,6 +59,7 @@ part 'src/techlab/code/core/expr/expr.dart';
 part 'src/techlab/code/core/expr/expr_list.dart';
 
 part 'src/techlab/code/core/expr/function-call.dart';
+part 'src/techlab/code/core/expr/constructor-call.dart';
 
 part 'src/techlab/code/core/expr/group_expr.dart';
 

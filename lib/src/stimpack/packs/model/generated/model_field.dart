@@ -50,11 +50,31 @@ abstract class StimModelFieldScope
   StimModelField of(dynamic name, {dynamic type, dynamic rules});
 }
 
+
+class StimModelFieldGrpcPreset {
+  StimModelField firstName;
+
+  StimModelField lastName;
+
+  StimModelFieldSet all;
+
+
+  StimModelFieldGrpcPreset(StimModelFieldScope scope) {
+    firstName = scope.of('first name');
+    lastName = scope.of('last name');
+  }
+}
+
+        
 class StimModelFieldSymbols {
   final _StimModelFieldScopeImpl _scope;
   /// All symbols
   StimModelFieldSet all;
+  StimModelFieldGrpcPreset _grpc;
 
+  StimModelFieldGrpcPreset get grpc {
+    return _grpc ??= StimModelFieldGrpcPreset(_scope);
+  }
   
   StimModelFieldSymbols(this._scope) {
     final _s = stimpack.model.field;

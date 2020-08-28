@@ -241,6 +241,14 @@ class Name {
   bool operator ==(other) {
     return text == other.toString();
   }
+
+  bool get isEmpty {
+    return toString().isEmpty;
+  }
+
+  bool get isNotEmpty {
+    return toString().isNotEmpty;
+  }
 }
 
 /// Provides syntactic sugar for a string

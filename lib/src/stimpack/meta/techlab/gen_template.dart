@@ -55,6 +55,12 @@ class StimGenMetaTemplate implements Node {
       ].join(', ');
     }
 
+    if (type != null && preset != null) {
+      values['typePresetClass'] =
+          (_stim >> pack.name >> type.name >> 'x' >> preset.name >> 'preset')
+              .pascal();
+    }
+
     values.addAll(templateValues ?? {});
     return Mustache.template(template, values: values);
   }

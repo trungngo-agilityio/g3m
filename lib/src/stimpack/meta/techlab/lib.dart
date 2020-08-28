@@ -4,6 +4,7 @@ import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 import 'package:g3m/techlab_core.dart';
 import 'package:g3m/techlab_dart.dart';
+import 'package:g3m/util.dart';
 import 'package:meta/meta.dart';
 
 part 'gen_meta.dart';

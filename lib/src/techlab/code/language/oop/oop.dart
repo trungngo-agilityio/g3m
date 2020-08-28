@@ -64,6 +64,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeForEachConfig> forEachConfig;
   CodeConfigBuildFunc<CodeWhileConfig> whileConfig;
   CodeConfigBuildFunc<CodeFunctionCallConfig> functionCallConfig;
+  CodeConfigBuildFunc<CodeConstructorCallConfig> constructorCallConfig;
 
   // annotation configs
   CodeConfigBuildFunc<CodeAnnotationNameConfig> annotationNameConfig;
@@ -177,6 +178,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.forEachConfig,
     @required this.whileConfig,
     @required this.functionCallConfig,
+    @required this.constructorCallConfig,
 
     // Annotation configs
     @required this.annotationNameConfig,
@@ -300,6 +302,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     whileConfig ??= (_, child) => CodeWhileConfig.forJavaLike(child);
     functionCallConfig ??=
         (_, child) => CodeFunctionCallConfig.forJavaLike(child);
+    constructorCallConfig ??=
+        (_, child) => CodeConstructorCallConfig.forJavaLike(child);
 
     // Annotation configs
     annotationNameConfig ??=
@@ -433,6 +437,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       forEachConfig,
       whileConfig,
       functionCallConfig,
+      constructorCallConfig,
 
       // Annotation configs,
       annotationNameConfig,

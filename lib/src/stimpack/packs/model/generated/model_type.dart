@@ -50,16 +50,24 @@ abstract class StimModelTypeScope
   StimModelType of(dynamic name, {dynamic fields, dynamic rules});
 }
 
+
+        
 class StimModelTypeSymbols {
   final _StimModelTypeScopeImpl _scope;
   /// All symbols
   StimModelTypeSet all;
-
+  StimModelType double;
+    StimModelType float;
+    StimModelType int32;
+    StimModelType int64;
   
   StimModelTypeSymbols(this._scope) {
     final _s = stimpack.model.type;
     all = _s.noneSet;
-
+    all += double = _scope.of('double');
+    all += float = _scope.of('float');
+    all += int32 = _scope.of('int32');
+    all += int64 = _scope.of('int64');
   }
 }
 

@@ -1,4 +1,3 @@
-import 'package:g3m/src/stimpack/meta/meta_gen.dart';
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 
@@ -22,7 +21,12 @@ import 'package:g3m/stimpack_meta.dart';
 ///     - category, fields: name, description
 ///
 void main() {
-  final m = stimpack.meta, t = m.type, f = m.field, p = m.pack, k = m.kind;
+  final m = stimpack.meta,
+      t = m.type,
+      f = m.field,
+      p = m.preset,
+      v = m.value,
+      k = m.kind;
 
   final tField = t.of('field'), tType = t.of('type'), tRule = t.of('rule');
 
@@ -32,7 +36,17 @@ void main() {
 
   tType.fields += fFields + fRules;
   tField.fields += fType + fRules;
+  tRule.presets += p.of(
+    null,
+    values: v.of('required') + v.of('unique'),
+  );
 
-  final meta = p.of('model', types: tType + tField + tRule);
+  tField.presets +=
+      p.of('grpc', values: v.of('first name') + v.of('last name'));
+
+  tType.presets += p.of(null,
+      values: v.of('double') + v.of('float') + v.of('int32') + v.of('int64'));
+
+  final meta = m.pack.of('model', types: tType + tField + tRule);
   stimpackGen(meta, 'lib/src/stimpack/packs/model/generated');
 }

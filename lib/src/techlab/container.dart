@@ -1,7 +1,7 @@
 part of g3.techlab;
 
 class Container implements Node {
-  final List<dynamic> children;
+  final Iterable<dynamic> children;
 
   Container(this.children);
 

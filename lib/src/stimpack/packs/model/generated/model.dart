@@ -79,25 +79,53 @@ class _StimModelModelImpl implements StimModelModel {
     _rule.init();
 
     _buildMeta();
+    _buildValues();
   }
 
   void _buildMeta() {
     final meta = stimpack.meta;
+    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
     final listKind = meta.kind.s.list;
 
-    final typeType = meta.type.of('type');
-    final fieldType = meta.type.of('field');
-    final ruleType = meta.type.of('rule');
+    final typeType = t.of('type');
+    final fieldType = t.of('field');
+    final ruleType = t.of('rule');
 
     typeType.fields += 
-        meta.field.of('fields', kind: listKind, type: fieldType) + 
-        meta.field.of('rules', kind: listKind, type: ruleType);
+        f.of('fields', kind: listKind, type: fieldType) + 
+        f.of('rules', kind: listKind, type: ruleType);
 
     fieldType.fields += 
-        meta.field.of('type', type: typeType) + 
-        meta.field.of('rules', kind: listKind, type: ruleType);
+        f.of('type', type: typeType) + 
+        f.of('rules', kind: listKind, type: ruleType);
+
+    typeType.presets += 
+        p.of('', values: 
+              v.of('double') + 
+              v.of('float') + 
+              v.of('int32') + 
+              v.of('int64'),);
+
+    fieldType.presets += 
+        p.of('grpc', values: 
+              v.of('first name') + 
+              v.of('last name'),);
+
+    ruleType.presets += 
+        p.of('', values: 
+              v.of('required') + 
+              v.of('unique'),);
 
     _meta = meta.pack.of('model', types: typeType + fieldType + ruleType);
   }
+  
+  // region custom code of model stimpack
+
+  /// This function shall be call during the init process.
+  void _buildValues() {
+    _type.s.int32.rules += _rule.s.required;
+    _field.s.grpc.firstName.rules += _rule.s.required;
+  }
+// endregion custom code of model stimpack
 }
     
