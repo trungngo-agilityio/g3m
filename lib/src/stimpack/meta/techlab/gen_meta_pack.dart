@@ -15,53 +15,58 @@ class StimGenMetaPack implements Node {
 
   Node _buildBody(StimpackCodeConfig config) {
     final template = ''' 
-library g3.stimpack.{{ packNameCamel }}.generated;
+library g3.stimpack.{{ packName.camel }}.generated;
 
 import 'package:g3m/stimpack_base.dart';
-import 'package:g3m/stimpack_meta.dart';
+{{{ metaImport }}}
 
 {{{ partOfList }}}
 
-_Stim{{ packNamePascal }}PackImpl _stim{{ packNamePascal }}Pack;
+{{ packClass }}  _{{ packClass.camel }};
 
-extension Stim{{ packNamePascal }}PackExtension on Stimpack {
-  _Stim{{ packNamePascal }}Pack get {{ packNameCamel }} {
-    return _stim{{ packNamePascal }}Pack ??= _Stim{{ packNamePascal }}PackImpl();
+'''
+
+        /// Extension on stim pack to inject the pack getter.
+        '''
+extension {{ packExtensionClass }} on Stimpack {
+  {{ packClass }} get {{ packName.camel }} {
+    if (_{{ packClass.camel }} == null) {
+      final impl = _{{ packClass.camel }} = {{ packImplClass }}();
+      impl.init();
+      return _{{ packClass.camel }};
+    }
+    
+    return _{{ packClass.camel }};
   }
 }
 
-abstract class _Stim{{ packNamePascal }}Pack {
+'''
+        // Abstract pack class that provides getters to all symbol scope.
+        '''
+abstract class {{ packClass }} {
   StimMetaPack get meta;
 
-{{# pack.types }}
-  _Stim{{ packNamePascal }}{{# pascal }}{{ name }}{{/ pascal }}Scope get {{# camel }}{{ name }}{{/ camel }};
-{{/ pack.types }}
+{{{ packClassFields }}}
 }
 
-class _Stim{{ packNamePascal }}PackImpl implements _Stim{{ packNamePascal }}Pack {
+class {{ packImplClass }} implements {{ packClass }} {
   StimMetaPack _meta;
 
-{{# pack.types }}
-  _Stim{{ packNamePascal }}{{# pascal }}{{ name }}{{/ pascal }}ScopeImpl _{{# camel }}{{ name }}{{/ camel }};
-{{/ pack.types }}
+{{{packImplClassFields}}}
 
   @override
   StimMetaPack get meta => _meta;
 
-{{# pack.types }}
-  @override
-  _Stim{{ packNamePascal }}{{# pascal }}{{ name }}{{/ pascal }}Scope get {{# camel }}{{ name }}{{/ camel }} => _{{# camel }}{{ name }}{{/ camel }};
-{{/ pack.types }}
-
-  _Stim{{ packNamePascal }}PackImpl() {
-{{# pack.types }}
-    _{{# camel }}{{ name }}{{/ camel }} = _Stim{{ packNamePascal }}{{# pascal }}{{ name }}{{/ pascal }}ScopeImpl._(this);
-{{/ pack.types }}
-
-{{# pack.types }}
-    _{{# camel }}{{ name }}{{/ camel }}.init();
-{{/ pack.types }}
-
+{{{ packImplClassScopeFields }}}
+'''
+        // Constructor
+        '''
+  {{ packImplClass }}() {
+{{{ packImplClassConstructorFieldSet }}}
+  }
+  
+  void init() {
+{{{ packImplClassInitFunctionFieldSet }}}
     _buildMeta();
   }
 
@@ -71,13 +76,25 @@ class _Stim{{ packNamePascal }}PackImpl implements _Stim{{ packNamePascal }}Pack
 }
     ''';
 
-    return Mustache.template(template, values: {
-      'pack': pack,
-      'packNameCamel': pack.name.camel(),
-      'packNamePascal': pack.name.pascal(),
-      'partOfList': _buildPartOfList(config),
-      'buildMetaFunction': _buildMetaFunction(config),
-    });
+    final metaImport = pack.name.toString() == 'meta'
+        ? ''
+        : '''import 'package:g3m/stimpack_meta.dart';''';
+
+    return StimGenMetaTemplate(
+        template,
+        {
+          'metaImport': metaImport,
+          'partOfList': _buildPartOfList(config),
+          'packClassFields': _packClassFields(config),
+          'packImplClassFields': _packImplClassFields(config),
+          'packImplClassScopeFields': _packImplClassScopeFields(config),
+          'packImplClassConstructorFieldSet':
+              _packImplClassConstructorFieldSet(config),
+          'packImplClassInitFunctionFieldSet':
+              _packImplClassInitFunctionFieldSet(config),
+          'buildMetaFunction': _buildMetaFunction(config),
+        },
+        pack: pack);
   }
 
   Node _buildPartOfList(StimpackCodeConfig config) {
@@ -107,8 +124,10 @@ class _Stim{{ packNamePascal }}PackImpl implements _Stim{{ packNamePascal }}Pack
   Node _buildMetaFunction(StimpackCodeConfig config) {
     final nodes = <Node>[
       Container([
-        'final meta = stimpack.meta;\n',
-        'final listKind = meta.kind.list;\n',
+        pack.name.toString() == 'meta'
+            ? 'final meta = this;\n'
+            : 'final meta = stimpack.meta;\n',
+        'final listKind = meta.kind.s.list;\n',
         '\n',
       ]),
     ];
@@ -136,7 +155,7 @@ class _Stim{{ packNamePascal }}PackImpl implements _Stim{{ packNamePascal }}Pack
       var fieldDefs = i.fields.map((e) {
         final fieldName = e.name.camel().toString();
         final typeName = e.type.name.camel().toString() + 'Type';
-        final isList = e.kind == stimpack.meta.kind.list;
+        final isList = e.kind == stimpack.meta.kind.s.list;
 
         return Container([
           '\nmeta.field.of(\'',
@@ -175,5 +194,78 @@ class _Stim{{ packNamePascal }}PackImpl implements _Stim{{ packNamePascal }}Pack
     ]));
 
     return Indent(Container(nodes), level: 2);
+  }
+
+  Node _packClassFields(StimpackCodeConfig config) {
+    final template = '''
+  {{ typeScopeClass }} get {{ typeName.camel }};
+''';
+    return Container(pack.types
+        .map((e) => StimGenMetaTemplate(
+              template,
+              null,
+              pack: pack,
+              type: e,
+            ))
+        .toList());
+  }
+
+  Node _packImplClassFields(StimpackCodeConfig config) {
+    final template = '''
+  
+  {{ typeScopeImplClass }} _{{ typeName.camel }};
+''';
+    return Container(pack.types
+        .map((e) => StimGenMetaTemplate(
+              template,
+              null,
+              pack: pack,
+              type: e,
+            ))
+        .toList());
+  }
+
+  Node _packImplClassScopeFields(StimpackCodeConfig config) {
+    final template = '''
+  
+  @override
+  {{ typeScopeClass }} get {{ typeName.camel }} => _{{ typeName.camel }};
+''';
+    return Container(pack.types
+        .map((e) => StimGenMetaTemplate(
+              template,
+              null,
+              pack: pack,
+              type: e,
+            ))
+        .toList());
+  }
+
+  Node _packImplClassConstructorFieldSet(StimpackCodeConfig config) {
+    final template = '''
+    _{{ typeName.camel }} = {{ typeScopeImplClass }}._(this);
+''';
+    return Container(pack.types
+        .map((e) => StimGenMetaTemplate(
+              template,
+              null,
+              pack: pack,
+              type: e,
+            ))
+        .toList());
+  }
+
+  Node _packImplClassInitFunctionFieldSet(StimpackCodeConfig config) {
+    final template = '''
+    _{{ typeName.camel }}.init();
+''';
+    return Container(pack.types
+        .map((e) => StimGenMetaTemplate(
+              template,
+              null,
+              pack: pack,
+              type: e,
+            ))
+        .toList());
   }
 }

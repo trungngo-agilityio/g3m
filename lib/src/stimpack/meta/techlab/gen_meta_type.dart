@@ -16,84 +16,119 @@ class StimGenMetaType implements Node {
 
   Node _buildBody() {
     final template = '''
-part of g3.stimpack.{{ packNameCamel }}.generated;
+part of g3.stimpack.{{ packName.camel }}.generated;
 
-class Stim{{ packNamePascal }}{{ typeNamePascal }} extends StimSymbol<Stim{{ packNamePascal }}{{ typeNamePascal }}, Stim{{ packNamePascal }}{{ typeNamePascal }}Set> {
+class {{ typeClass }} extends StimSymbol<{{ typeClass }}, {{ typeSetClass }} > {
 {{ fieldListDef }}
 
-  Stim{{ packNamePascal }}{{ typeNamePascal }}._(StimScopeImpl<Stim{{ packNamePascal }}{{ typeNamePascal }}, Stim{{ packNamePascal }}{{ typeNamePascal }}Set> scope)
+  {{ typeClass }}._({{ typeScopeImplClass }} scope)
       : super(scope);
 
   @override
-  Stim{{ packNamePascal }}{{ typeNamePascal }} clone() {
+  {{ typeClass }} clone() {
     return super.clone()
 {{ fieldListClone }}    
   }
 }
 
-class Stim{{ packNamePascal }}{{ typeNamePascal }}Set
-    extends StimSymbolSet<Stim{{ packNamePascal }}{{ typeNamePascal }}, Stim{{ packNamePascal }}{{ typeNamePascal }}Set> {
-  final _Stim{{ packNamePascal }}PackImpl _pack;
+class {{ typeSetClass }}
+    extends StimSymbolSet<{{ typeClass }}, {{ typeSetClass }}> {
+  final {{ packImplClass }} __pack;
 
-  Stim{{ packNamePascal }}{{ typeNamePascal }}Set._(this._pack, List<Stim{{ packNamePascal }}{{ typeNamePascal }}> items)
-      : super(_pack._{{ typeNameCamel }}, items);
+  
+  {{ typeSetClass }}._(this.__pack, List<{{ typeClass }}> items)
+      : super(__pack._{{ typeName.camel }}, items);
 
 {{{setFieldListDef}}}
 }
 
-abstract class _Stim{{ packNamePascal }}{{ typeNamePascal }}Scope
-    extends StimScope<Stim{{ packNamePascal }}{{ typeNamePascal }}, Stim{{ packNamePascal }}{{ typeNamePascal }}Set> {
-  Stim{{ packNamePascal }}{{ typeNamePascal }} of({{ ofFunctionArgs }});
+abstract class {{ typeScopeClass }}
+    extends StimScope<{{ typeClass }}, {{ typeSetClass }}> {
+    
+  {{ typeSymbolsClass }} get s;
+    
+  {{ typeClass }} of({{ ofFunctionArgs }});
 }
 
-class _Stim{{ packNamePascal }}{{ typeNamePascal }}ScopeImpl
-    extends StimScopeImpl<Stim{{ packNamePascal }}{{ typeNamePascal }}, Stim{{ packNamePascal }}{{ typeNamePascal }}Set>
-    implements _Stim{{ packNamePascal }}{{ typeNamePascal }}Scope {
-  final _Stim{{ packNamePascal }}PackImpl _pack;
+'''
+        // Symbols preset
+        '''
+class {{ typeSymbolsClass }} {
+  final {{ typeScopeImplClass }} _scope;
+  /// All symbols
+  {{ typeSetClass }} all;
+{{{ symbolClassFields }}}
+  
+  {{ typeSymbolsClass }}(this._scope) {
+    final _s = stimpack.{{ packName.camel }}.{{ typeName.camel }};
+    all = _s.noneSet;
+{{{ symbolClassFieldsInit }}}
+  }
+}
 
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}ScopeImpl._(this._pack) : super();
+'''
+        // Scope implementation class.
+        '''
+class {{ typeScopeImplClass }} 
+    extends StimScopeImpl<{{ typeClass }}, {{ typeSetClass }}>
+    implements {{ typeScopeClass }} {
+  final {{ packImplClass }} __pack;
+  
+  {{ typeScopeImplClass }}._(this.__pack) : super();
+
+'''
+        // Scope symbols
+        '''
+  {{ typeSymbolsClass }} _s;
 
   @override
-  void clear(Stim{{ packNamePascal }}{{ typeNamePascal }} symbol) {
-    symbol
+  {{ typeSymbolsClass }} get s => _s ??= {{ typeSymbolsClass }}(this);
+'''
+        // clear function, to reset a symbol
+        '''
+  @override
+  void clear({{ typeClass }} symbol) {
 {{ fieldListClear }}    
   }
 
   @override
-  Stim{{ packNamePascal }}{{ typeNamePascal }} create() => Stim{{ packNamePascal }}{{ typeNamePascal }}._(this);
+  {{ typeClass }} create() => {{ typeClass }}._(this);
 
   @override
-  Stim{{ packNamePascal }}{{ typeNamePascal }} of({{ ofFunctionArgs }}) {
+  {{ typeClass }} of({{ ofFunctionArgs }}) {
     return createAndClear(name)
 {{ fieldListInit }}    
   }
 
   @override
-  Stim{{ packNamePascal }}{{ typeNamePascal }}Set createSet(List<Stim{{ packNamePascal }}{{ typeNamePascal }}> items) {
-    return Stim{{ packNamePascal }}{{ typeNamePascal }}Set._(_pack, items);
+  {{ typeSetClass }} createSet(List<{{ typeClass }}> items) {
+    return {{ typeSetClass }}._(__pack, items);
   }
 }
     ''';
 
-    return Mustache.template(template, values: {
-      'packNamePascal': pack.name.pascal(),
-      'packNameCamel': pack.name.camel(),
-      'typeNamePascal': type.name.pascal(),
-      'typeNameCamel': type.name.camel(),
-      'fieldListDef': _buildFieldListDef(),
-      'fieldListClone': _buildFieldListClone(),
-      'fieldListClear': _buildFieldListClear(),
-      'fieldListInit': _buildFieldListInit(),
-      'setFieldListDef': _buildSetFieldListDef(),
-      'ofFunctionArgs': _buildOfFunctionArgs(),
-    });
+    return StimGenMetaTemplate(
+      template,
+      {
+        'fieldListDef': _buildFieldListDef(),
+        'fieldListClone': _buildFieldListClone(),
+        'fieldListClear': _buildFieldListClear(),
+        'fieldListInit': _buildFieldListInit(),
+        'setFieldListDef': _buildSetFieldListDef(),
+        'symbolClassFields': _symbolClassFields(),
+        'symbolClassFieldsInit': _symbolClassFieldsInit(),
+        'ofFunctionArgs': _buildOfFunctionArgs(),
+      },
+      pack: pack,
+      type: type,
+    );
   }
 
   String _buildFieldListDef() {
     return type.fields
         .map((e) {
           var s = '';
-          if (e.kind == stimpack.meta.kind.list) {
+          if (e.kind == stimpack.meta.kind.s.list) {
             s = 'Set';
           }
           return '  Stim${pack.name.pascal()}${e.type.name.pascal()}${s} ${e.name.camel()};';
@@ -113,13 +148,17 @@ class _Stim{{ packNamePascal }}{{ typeNamePascal }}ScopeImpl
   }
 
   String _buildFieldListClear() {
-    return type.fields
+    if (type.fields.isEmpty) {
+      return '';
+    }
+
+    return '    symbol\n' +
+        type.fields
             .map((e) {
               final f = e.name.camel();
               final t = e.type.name.camel();
-              final s = '      ..${f} = _pack.${t}';
-
-              if (e.kind == stimpack.meta.kind.list) {
+              final s = '      ..${f} = __pack.${t}';
+              if (e.kind == stimpack.meta.kind.s.list) {
                 return '${s}.noneSet';
               } else {
                 return '${s}.none';
@@ -139,11 +178,12 @@ class _Stim{{ packNamePascal }}{{ typeNamePascal }}ScopeImpl
               // Type name
               final t = e.type.name.camel();
 
-              final s = '      ..${f} = ${f} ?? _pack.${t}';
-              if (e.kind == stimpack.meta.kind.list) {
-                return '$s.noneSet';
+              final s1 = '      ..${f}';
+              final s2 = '${f} ?? __pack.${t}';
+              if (e.kind == stimpack.meta.kind.s.list) {
+                return '$s1 += $s2.noneSet';
               } else {
-                return '$s.none';
+                return '$s1 = $s2.none';
               }
             })
             .join('\n')
@@ -155,45 +195,95 @@ class _Stim{{ packNamePascal }}{{ typeNamePascal }}ScopeImpl
     final nodes = <Node>[];
     for (final i in type.fields) {
       String template;
-      if (i.kind == stimpack.meta.kind.list) {
+      if (i.kind == stimpack.meta.kind.s.list) {
         template = '''
         
         
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp _{{ fieldNameCamel }};
+  {{ setOpClass }} _{{ fieldName.camel }};
 
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp get {{ fieldNameCamel }} =>
-      _{{ fieldNameCamel }} ??= _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp(this, _pack.{{ fieldTypeCamel }});
+  {{ setOpClass }} get {{ fieldTypeName.camel }} =>
+      _{{ fieldName.camel }} ??= {{ setOpClass }}(this, __pack.{{ fieldTypeName.camel }});
 
-  set {{ fieldNameCamel }}(_Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp value) => _{{ fieldNameCamel }} = value;
+  set {{ fieldName.camel}}({{ setOpClass }} value) => _{{ fieldName.camel }} = value;
         ''';
       } else {
         template = '''
          
          
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op _{{ fieldNameCamel }};
+  {{ setOpClass }} _{{ fieldName.camel }};
 
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op get {{ fieldNameCamel }} =>
-      _{{ fieldNameCamel }} ??= _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op(this, _pack.{{ fieldTypeCamel }});
+  {{ setOpClass }} get {{ fieldName.camel }} =>
+      _{{ fieldName.camel }} ??= {{ setOpClass }}(this, __pack.{{ fieldTypeName.camel }});
 
-  set {{ fieldNameCamel }}(_Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op value) => _{{ fieldNameCamel }} = value;
+  set {{ fieldName.camel }}({{ setOpClass}} value) => _{{ fieldName.camel }} = value;
         ''';
       }
 
       nodes.add(
-        Mustache.template(template, values: {
-          'packNamePascal': pack.name.pascal(),
-          'packNameCamel': pack.name.camel(),
-          'typeNamePascal': type.name.pascal(),
-          'typeNameCamel': type.name.camel(),
-          'fieldNamePascal': i.name.pascal(),
-          'fieldNameCamel': i.name.camel(),
-          'fieldTypePascal': i.type.name.pascal(),
-          'fieldTypeCamel': i.type.name.camel(),
-        }),
+        StimGenMetaTemplate(
+          template,
+          null,
+          pack: pack,
+          type: type,
+          field: i,
+        ),
       );
     }
 
     return Container(nodes);
+  }
+
+  Node _symbolClassFieldsInit() {
+    final children = <Node>[];
+    for (final i in type.presets) {
+      if (i.name.toString().isNotEmpty == true) {
+        // This preset has name.
+
+      } else {
+        // This preset do not have name.
+        // render it as the symbols level.
+        children.add(_symbolClassFieldsPresetInit(i));
+      }
+    }
+
+    return Container(children);
+  }
+
+  Node _symbolClassFieldsPresetInit(StimMetaPreset preset) {
+    final children = preset.values.map((value) {
+      return '''
+    all += ${value.name.camel()} = _scope.of('${value.name}');''';
+    });
+
+    return Text.of(children.join('\n'));
+  }
+
+  Node _symbolClassFields() {
+    final children = <Node>[];
+    for (final i in type.presets) {
+      if (i.name.toString().isNotEmpty == true) {
+        // This preset has name.
+
+      } else {
+        // This preset do not have name.
+        // render it as the symbols level.
+        children.add(_presetClassFields(i));
+      }
+    }
+
+    return Container(children);
+  }
+
+  Node _presetClassFields(StimMetaPreset preset) {
+    final children = preset.values.map((value) {
+      final template = '''
+  {{ typeClass }} {{ valueName.camel }};
+''';
+      return StimGenMetaTemplate(template, {},
+          pack: pack, type: type, preset: preset, value: value);
+    });
+
+    return Container(children.toList());
   }
 
   Node _buildOfFunctionArgs() {

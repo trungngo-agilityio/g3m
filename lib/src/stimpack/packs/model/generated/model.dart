@@ -19,44 +19,61 @@ part 'model_rule.dart';
 
 
 
-_StimModelPackImpl _stimModelPack;
+StimModelModel  _stimModelModel;
 
-extension StimModelPackExtension on Stimpack {
-  _StimModelPack get model {
-    return _stimModelPack ??= _StimModelPackImpl();
+extension StimModelModelExtension on Stimpack {
+  StimModelModel get model {
+    if (_stimModelModel == null) {
+      final impl = _stimModelModel = _StimModelModelImpl();
+      impl.init();
+      return _stimModelModel;
+    }
+    
+    return _stimModelModel;
   }
 }
 
-abstract class _StimModelPack {
+abstract class StimModelModel {
   StimMetaPack get meta;
 
-  _StimModelTypeScope get type;
-  _StimModelFieldScope get field;
-  _StimModelRuleScope get rule;
+  StimModelTypeScope get type;
+  StimModelFieldScope get field;
+  StimModelRuleScope get rule;
+
 }
 
-class _StimModelPackImpl implements _StimModelPack {
+class _StimModelModelImpl implements StimModelModel {
   StimMetaPack _meta;
 
+  
   _StimModelTypeScopeImpl _type;
+  
   _StimModelFieldScopeImpl _field;
+  
   _StimModelRuleScopeImpl _rule;
+
 
   @override
   StimMetaPack get meta => _meta;
 
+  
   @override
-  _StimModelTypeScope get type => _type;
+  StimModelTypeScope get type => _type;
+  
   @override
-  _StimModelFieldScope get field => _field;
+  StimModelFieldScope get field => _field;
+  
   @override
-  _StimModelRuleScope get rule => _rule;
+  StimModelRuleScope get rule => _rule;
 
-  _StimModelPackImpl() {
+  _StimModelModelImpl() {
     _type = _StimModelTypeScopeImpl._(this);
     _field = _StimModelFieldScopeImpl._(this);
     _rule = _StimModelRuleScopeImpl._(this);
 
+  }
+  
+  void init() {
     _type.init();
     _field.init();
     _rule.init();
@@ -66,7 +83,7 @@ class _StimModelPackImpl implements _StimModelPack {
 
   void _buildMeta() {
     final meta = stimpack.meta;
-    final listKind = meta.kind.list;
+    final listKind = meta.kind.s.list;
 
     final typeType = meta.type.of('type');
     final fieldType = meta.type.of('field');

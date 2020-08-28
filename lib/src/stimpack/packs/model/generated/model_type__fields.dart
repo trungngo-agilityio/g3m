@@ -1,8 +1,7 @@
 part of g3.stimpack.model.generated;
 
-class _StimModelType_FieldSetOp extends StimSymbolSetOpImpl<StimModelType,
-    StimModelTypeSet, StimModelField, StimModelFieldSet> {
-  _StimModelType_FieldSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
+class StimModelTypeXFieldsSetOp extends StimSymbolSetOpImpl<StimModelType, StimModelTypeSet, StimModelField, StimModelFieldSet> {
+  StimModelTypeXFieldsSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
       StimScope<StimModelField, StimModelFieldSet> scope)
       : super(symbols, scope);
 

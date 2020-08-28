@@ -37,16 +37,13 @@ abstract class StimScopeImpl<T extends StimSymbol<T, S>,
     clear(_none);
   }
 
-  /// Just an internal counter for creating symbol name.
-  int _counter = 0;
-
   T createAndClear(dynamic name) {
     Name n;
 
     if (name is Name) {
       n = name;
     } else {
-      n = Name(name?.toString() ?? '${T.toString()}_${_counter++}');
+      n = Name(name?.toString() ?? '');
     }
     final res = create();
     res.name = n;

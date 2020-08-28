@@ -19,7 +19,7 @@ class StimGenMetaTypeField implements Node {
   Node _buildBody() {
     return Container([
       'part of g3.stimpack.${pack.name.camel()}.generated;\n',
-      field.kind == stimpack.meta.kind.list
+      field.kind == stimpack.meta.kind.s.list
           ? _buildListField()
           : _buildSingleField(),
     ]);
@@ -29,15 +29,14 @@ class StimGenMetaTypeField implements Node {
     final template = '''
 
     
-class _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op extends StimSymbolOpImpl<Stim{{ packNamePascal }}{{ typeNamePascal }},
-    Stim{{ packNamePascal }}{{ typeNamePascal }}Set, Stim{{ packNamePascal }}{{ fieldTypePascal }}, Stim{{ packNamePascal }}{{ fieldTypePascal }}Set> {
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<Stim{{ packNamePascal }}{{ fieldTypePascal }}, Stim{{ packNamePascal }}{{ fieldTypePascal }}Set> scope)
+class {{ setOpClass }} extends StimSymbolOpImpl<{{ setOpClassGeneric }}> {
+  {{ setOpClass }}(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
+      StimScope<{{ fieldTypeClass}}, {{ fieldTypeSetClass }}> scope)
       : super(symbols, scope);
 
   @override
-  void onSet(Stim{{ packNamePascal }}{{ typeNamePascal }} child, Stim{{ packNamePascal }}{{ fieldTypePascal }} value) {
-    child.{{ fieldNameCamel }} = value;
+  void onSet({{ typeClass }} child, {{ fieldTypeClass }} value) {
+    child.{{ fieldName.camel }} = value;
   }
 }
     ''';
@@ -47,20 +46,19 @@ class _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}Op exte
   Node _buildListField() {
     final template = '''
 
-class _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp extends StimSymbolSetOpImpl<Stim{{ packNamePascal }}{{ typeNamePascal }},
-    Stim{{ packNamePascal }}{{ typeNamePascal }}Set, Stim{{ packNamePascal }}{{ fieldTypePascal }}, Stim{{ packNamePascal }}{{ fieldTypePascal }}Set> {
-  _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<Stim{{ packNamePascal }}{{ fieldTypePascal }}, Stim{{ packNamePascal }}{{ fieldTypePascal }}Set> scope)
+class {{ setOpClass }} extends StimSymbolSetOpImpl<{{ setOpClassGeneric }}> {
+  {{ setOpClass }}(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
+      StimScope<{{ fieldTypeClass }}, {{ fieldTypeSetClass }}> scope)
       : super(symbols, scope);
 
   @override
-  void onAdd(Stim{{ packNamePascal }}{{ typeNamePascal }} child, Stim{{ packNamePascal }}{{ fieldTypePascal }}Set values) {
-    child.{{ fieldNameCamel }} += values;
+  void onAdd({{ typeClass }} child, {{ fieldTypeSetClass }} values) {
+    child.{{ fieldName.camel }} += values;
   }
 
   @override
-  void onSet(Stim{{ packNamePascal }}{{ typeNamePascal }} child, Stim{{ packNamePascal }}{{ fieldTypePascal }}Set values) {
-    child.{{ fieldNameCamel }} = values;
+  void onSet({{ typeClass }} child, {{ fieldTypeSetClass }} values) {
+    child.{{ fieldName.camel }} = values;
   }
 }
     ''';
@@ -68,15 +66,7 @@ class _Stim{{ packNamePascal }}{{ typeNamePascal }}_{{ fieldTypePascal }}SetOp e
   }
 
   Node _buildTemplate(String template) {
-    return Mustache.template(template, values: {
-      'packNamePascal': pack.name.pascal(),
-      'packNameCamel': pack.name.camel(),
-      'typeNamePascal': type.name.pascal(),
-      'typeNameCamel': type.name.camel(),
-      'fieldNamePascal': field.name.pascal(),
-      'fieldNameCamel': field.name.camel(),
-      'fieldTypePascal': field.type.name.pascal(),
-      'fieldTypeCamel': field.type.name.camel(),
-    });
+    return StimGenMetaTemplate(template, null,
+        pack: pack, type: type, field: field);
   }
 }

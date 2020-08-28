@@ -5,7 +5,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
 
   String packFileNameOf(StimMetaPack pack) {
     var p = pack.name.snake();
-    return '${p}_pack';
+    return '${p}';
   }
 
   String typeFileNameOf(
