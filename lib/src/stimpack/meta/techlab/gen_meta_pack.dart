@@ -127,6 +127,7 @@ class {{ packImplClass }} implements {{ packClass }} {
         pack.name.toString() == 'meta'
             ? 'final meta = this;\n'
             : 'final meta = stimpack.meta;\n',
+        'final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;\n',
         'final listKind = meta.kind.s.list;\n',
         '\n',
       ]),
@@ -139,7 +140,7 @@ class {{ packImplClass }} implements {{ packClass }} {
         Container([
           'final ',
           t,
-          'Type = meta.type.of(\'',
+          'Type = t.of(\'',
           t,
           '\');\n',
         ]),
@@ -158,7 +159,7 @@ class {{ packImplClass }} implements {{ packClass }} {
         final isList = e.kind == stimpack.meta.kind.s.list;
 
         return Container([
-          '\nmeta.field.of(\'',
+          '\nf.of(\'',
           fieldName,
           '\'',
           isList ? Text.of(', kind: listKind') : null,
@@ -174,6 +175,48 @@ class {{ packImplClass }} implements {{ packClass }} {
             Join.of(
               ' + ',
               fieldDefs.toList(),
+            ),
+            level: 2),
+        ';\n\n',
+      ]));
+    }
+    // Builds the type presets.
+    for (final i in pack.types) {
+      final t = i.name.camel();
+      if (i.presets.isEmpty) continue;
+
+      final presetDefs = i.presets.map((preset) {
+        final presetName = preset.name.camel().toString();
+
+        final valueDefs = preset.values.map((value) {
+          return Container([
+            '\nv.of(\'',
+            value.name,
+            '\')',
+          ]);
+        });
+
+        return Container([
+          '\np.of(\'',
+          presetName,
+          '\', values: \n',
+          Indent(
+              Join.of(
+                ' + ',
+                valueDefs.toList(),
+              ),
+              level: 3),
+          ',)\n',
+        ]);
+      });
+
+      nodes.add(Container([
+        t,
+        'Type.presets += \n',
+        Indent(
+            Join.of(
+              ' + ',
+              presetDefs.toList(),
             ),
             level: 2),
         ';\n\n',

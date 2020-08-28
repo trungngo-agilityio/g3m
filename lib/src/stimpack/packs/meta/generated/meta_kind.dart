@@ -36,12 +36,13 @@ class StimMetaKindSymbols {
   final _StimMetaKindScopeImpl _scope;
   /// All symbols
   StimMetaKindSet all;
+  StimMetaKind list;
 
   
   StimMetaKindSymbols(this._scope) {
     final _s = stimpack.meta.kind;
     all = _s.noneSet;
-
+    all += list = _scope.of('list');
   }
 }
 

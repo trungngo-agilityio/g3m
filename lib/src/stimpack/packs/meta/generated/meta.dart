@@ -119,29 +119,34 @@ class _StimMetaMetaImpl implements StimMetaMeta {
 
   void _buildMeta() {
     final meta = this;
+    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
     final listKind = meta.kind.s.list;
 
-    final kindType = meta.type.of('kind');
-    final typeType = meta.type.of('type');
-    final fieldType = meta.type.of('field');
-    final packType = meta.type.of('pack');
-    final presetType = meta.type.of('preset');
-    final valueType = meta.type.of('value');
+    final kindType = t.of('kind');
+    final typeType = t.of('type');
+    final fieldType = t.of('field');
+    final packType = t.of('pack');
+    final presetType = t.of('preset');
+    final valueType = t.of('value');
 
     typeType.fields += 
-        meta.field.of('fields', kind: listKind, type: fieldType) + 
-        meta.field.of('presets', kind: listKind, type: presetType) + 
-        meta.field.of('pack', type: packType);
+        f.of('fields', kind: listKind, type: fieldType) + 
+        f.of('presets', kind: listKind, type: presetType) + 
+        f.of('pack', type: packType);
 
     fieldType.fields += 
-        meta.field.of('kind', type: kindType) + 
-        meta.field.of('type', type: typeType);
+        f.of('kind', type: kindType) + 
+        f.of('type', type: typeType);
 
     packType.fields += 
-        meta.field.of('types', kind: listKind, type: typeType);
+        f.of('types', kind: listKind, type: typeType);
 
     presetType.fields += 
-        meta.field.of('values', kind: listKind, type: valueType);
+        f.of('values', kind: listKind, type: valueType);
+
+    kindType.presets += 
+        p.of('', values: 
+              v.of('list'),);
 
     _meta = meta.pack.of('meta', types: kindType + typeType + fieldType + packType + presetType + valueType);
   }

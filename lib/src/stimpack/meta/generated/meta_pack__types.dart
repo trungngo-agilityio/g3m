@@ -1,7 +1,6 @@
 part of g3.stimpack.meta.generated;
 
-class StimMetaPackXTypesSetOp extends StimSymbolSetOpImpl<StimMetaPack,
-    StimMetaPackSet, StimMetaType, StimMetaTypeSet> {
+class StimMetaPackXTypesSetOp extends StimSymbolSetOpImpl<StimMetaPack, StimMetaPackSet, StimMetaType, StimMetaTypeSet> {
   StimMetaPackXTypesSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
       StimScope<StimMetaType, StimMetaTypeSet> scope)
       : super(symbols, scope);
@@ -16,3 +15,4 @@ class StimMetaPackXTypesSetOp extends StimSymbolSetOpImpl<StimMetaPack,
     child.types = values;
   }
 }
+    

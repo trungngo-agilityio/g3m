@@ -237,9 +237,11 @@ class {{ typeScopeImplClass }}
     final children = <Node>[];
     for (final i in type.presets) {
       if (i.name.toString().isNotEmpty == true) {
+        print('here name not null');
         // This preset has name.
 
       } else {
+        print('here');
         // This preset do not have name.
         // render it as the symbols level.
         children.add(_symbolClassFieldsPresetInit(i));
