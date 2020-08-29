@@ -166,3 +166,19 @@ class StimModelRuleValidationPreset {
     all += alpha = scope.of('alpha');
   }
 }
+StimModelRuleDefaultPreset  _extStimModelRuleDefaultPreset;
+
+extension StimModelRuleDefaultPresetExtension on StimModelRuleScope {
+  StimModelRuleDefaultPreset get  {
+    return _extStimModelRuleDefaultPreset ??= StimModelRuleDefaultPreset(stimpack.model.rule);
+  }
+}
+    
+StimModelRuleValidationPreset  _extStimModelRuleValidationPreset;
+
+extension StimModelRuleValidationPresetExtension on StimModelRuleScope {
+  StimModelRuleValidationPreset get validation {
+    return _extStimModelRuleValidationPreset ??= StimModelRuleValidationPreset(stimpack.model.rule);
+  }
+}
+    

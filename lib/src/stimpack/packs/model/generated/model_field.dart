@@ -219,3 +219,27 @@ class StimModelFieldDbPreset {
     all += version = scope.of('version');
   }
 }
+StimModelFieldUserPreset  _extStimModelFieldUserPreset;
+
+extension StimModelFieldUserPresetExtension on StimModelFieldScope {
+  StimModelFieldUserPreset get user {
+    return _extStimModelFieldUserPreset ??= StimModelFieldUserPreset(stimpack.model.field);
+  }
+}
+    
+StimModelFieldPaginationPreset  _extStimModelFieldPaginationPreset;
+
+extension StimModelFieldPaginationPresetExtension on StimModelFieldScope {
+  StimModelFieldPaginationPreset get pagination {
+    return _extStimModelFieldPaginationPreset ??= StimModelFieldPaginationPreset(stimpack.model.field);
+  }
+}
+    
+StimModelFieldDbPreset  _extStimModelFieldDbPreset;
+
+extension StimModelFieldDbPresetExtension on StimModelFieldScope {
+  StimModelFieldDbPreset get db {
+    return _extStimModelFieldDbPreset ??= StimModelFieldDbPreset(stimpack.model.field);
+  }
+}
+    

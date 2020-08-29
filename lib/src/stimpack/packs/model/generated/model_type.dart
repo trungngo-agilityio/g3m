@@ -217,3 +217,35 @@ class StimModelTypeCommonPreset {
     all += url = scope.of('url');
   }
 }
+StimModelTypeGrpcPreset  _extStimModelTypeGrpcPreset;
+
+extension StimModelTypeGrpcPresetExtension on StimModelTypeScope {
+  StimModelTypeGrpcPreset get grpc {
+    return _extStimModelTypeGrpcPreset ??= StimModelTypeGrpcPreset(stimpack.model.type);
+  }
+}
+    
+StimModelTypeDatePreset  _extStimModelTypeDatePreset;
+
+extension StimModelTypeDatePresetExtension on StimModelTypeScope {
+  StimModelTypeDatePreset get date {
+    return _extStimModelTypeDatePreset ??= StimModelTypeDatePreset(stimpack.model.type);
+  }
+}
+    
+StimModelTypeAuthPreset  _extStimModelTypeAuthPreset;
+
+extension StimModelTypeAuthPresetExtension on StimModelTypeScope {
+  StimModelTypeAuthPreset get auth {
+    return _extStimModelTypeAuthPreset ??= StimModelTypeAuthPreset(stimpack.model.type);
+  }
+}
+    
+StimModelTypeCommonPreset  _extStimModelTypeCommonPreset;
+
+extension StimModelTypeCommonPresetExtension on StimModelTypeScope {
+  StimModelTypeCommonPreset get common {
+    return _extStimModelTypeCommonPreset ??= StimModelTypeCommonPreset(stimpack.model.type);
+  }
+}
+    

@@ -116,3 +116,11 @@ class StimModelPatternValidationPreset {
     all += alpha = scope.of('alpha');
   }
 }
+StimModelPatternValidationPreset  _extStimModelPatternValidationPreset;
+
+extension StimModelPatternValidationPresetExtension on StimModelPatternScope {
+  StimModelPatternValidationPreset get validation {
+    return _extStimModelPatternValidationPreset ??= StimModelPatternValidationPreset(stimpack.model.pattern);
+  }
+}
+    

@@ -10,8 +10,6 @@ class StimGenMetaType implements Node {
       _scopeImplClassName;
 
   CodeArg _scopeArg, _scopeImplArg;
-  CodeField _packField;
-  CodeRef _packFieldRef;
 
   StimpackCodeConfig _config;
 
@@ -34,6 +32,7 @@ class StimGenMetaType implements Node {
         _symbolsClassDef(),
         ..._presetClassListDef(),
       ],
+      body: presetExtensionList(),
     );
   }
 
@@ -61,14 +60,6 @@ class StimGenMetaType implements Node {
       name: 'scope',
       type: _config.scopeImplClassNameOf(pack, type),
     );
-
-    _packField = CodeField.of(
-      name: 'pack',
-      type: _config.packImplClassNameOf(pack),
-      isPrivate: true,
-      isFinal: true,
-    );
-    _packFieldRef = CodeRef.of(_packField);
   }
 
   CodeClass _symbolClassDef() {
@@ -391,6 +382,8 @@ class StimGenMetaType implements Node {
   CodeClass _symbolsClassDef() {
     final className = _config.symbolListClassNameOf(pack, type);
     var values = stimpack.meta.value.noneSet;
+
+    // Builds the list of value that belong to preset without name.
     for (final preset in type.presets.whereNoName()) {
       values += preset.values;
     }
@@ -449,5 +442,33 @@ class StimGenMetaType implements Node {
       fields: fields,
       constructors: constructor,
     );
+  }
+
+  Node _presetExtension(StimMetaPreset preset) {
+    // TODO: Fix this after extension support
+    final template = ''' 
+{{ className }}  _ext{{ className }};
+
+extension {{ className }}Extension on {{ scopeClassName }} {
+  {{ className }} get {{ presetName }} {
+    return _ext{{ className }} ??= {{ className }}({{ publicScope }});
+  }
+}
+    ''';
+
+    final publicScope = _config.publicTypeScopeOf(pack, type);
+    final scopeClassName = _config.scopeClassNameOf(pack, type);
+
+    return Mustache.template(template, values: {
+      'className': _config.presetClassNameOf(pack, type, preset),
+      'presetName': preset.name,
+      'scopeClassName': scopeClassName,
+      'publicScope': publicScope,
+    });
+  }
+
+  Node presetExtensionList() {
+    final children = type.presets.map((e) => _presetExtension(e));
+    return Join.newLineSeparated(children);
   }
 }
