@@ -11,25 +11,132 @@ class StimGenMetaType implements Node {
     final config =
         context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
     final fileName = config.typeFileNameOf(pack, type);
-    return DartCodeFile.of(fileName, body: _buildBody(config));
+
+    return DartCodeFile.of(
+      fileName,
+      package: config.codePackageLibraryOf(pack, isPart: true),
+      classes: [
+        _symbolClass(config),
+        _symbolSetClass(config),
+        _abstractScopeClass(config),
+        _implementScopeClass(config),
+      ],
+      body: _buildBody(config),
+    );
+  }
+
+  CodeClass _symbolClass(StimpackCodeConfig config) {
+    final symbolClass = config.symbolClassNameOf(pack, type);
+    final symbolSetClass = config.symbolSetClassNameOf(pack, type);
+    final baseSymbolClass = CodeType.of(
+        name: 'stim symbol', generic: [symbolClass, symbolSetClass]);
+
+    final fields = <CodeField>[];
+    final fieldCloneList = <Node>[];
+    for (final field in type.fields) {
+      final fieldClass = config.symbolClassNameOf(pack, field.type);
+      fields.add(CodeField.of(name: field.name, type: fieldClass));
+
+      fieldCloneList.add(
+        CodeCascade.of(
+          CodeAssignExpr.of(
+            field.name,
+            CodeAccessExpr.of(
+              field.name,
+              CodeFunctionCall.of(name: 'clone'),
+            ),
+          ),
+        ),
+      );
+    }
+
+    var scopeArg = CodeArg.of(
+      name: 'scope',
+      type: config.typeScopeImplClassNameOf(pack, type),
+    );
+
+    // Creates a constructor that accepts a scope argument.
+    final constructor = CodeConstructor.of(
+      requiredArgs: scopeArg,
+      init: CodeFunctionCall.of(name: 'super', args: CodeRef.of(scopeArg)),
+    );
+
+    final cloneFunction = CodeFunction.of(
+      name: 'clone',
+      isOverride: true,
+      returns: symbolClass,
+      body: CodeReturn.of(Container([
+        'super.clone()\n',
+        Indent(Join.newLineSeparated(fieldCloneList), level: 2),
+      ])),
+    );
+
+    return CodeClass.of(
+      name: symbolClass,
+      extend: baseSymbolClass,
+      fields: fields,
+      constructors: constructor,
+      functions: [cloneFunction],
+    );
+  }
+
+  CodeClass _symbolSetClass(StimpackCodeConfig config) {
+    final symbolClass = config.symbolClassNameOf(pack, type);
+    final symbolSetClass = config.symbolSetClassNameOf(pack, type);
+
+    final baseSymbolSetClass = CodeType.of(
+        name: 'stim symbol set', generic: [symbolClass, symbolSetClass]);
+
+    final packField = CodeField.of(
+      name: 'pack',
+      type: config.packImplClassNameOf(pack),
+      isPrivate: true,
+      isFinal: true,
+    );
+
+    final fields = <CodeField>[packField];
+
+    final packFieldArg = CodeArg.ofField(field: packField);
+
+    final itemsArg = CodeArg.of(
+        name: 'items',
+        type: CodeType.of(
+          name: symbolClass,
+          array: true,
+        ));
+
+    final symbolScopeFieldName =
+        CodeFieldName.of(name: type.name, isPrivate: true);
+    
+    final constructor = CodeConstructor.of(
+      requiredArgs: [
+        packFieldArg,
+        itemsArg,
+      ],
+      init: CodeFunctionCall.ofSuper(args: [
+        CodeAccessExpr.of(packField.name, symbolScopeFieldName),
+        CodeRef.of(itemsArg),
+      ]),
+    );
+
+    return CodeClass.of(
+      name: symbolSetClass,
+      extend: baseSymbolSetClass,
+      fields: fields,
+      constructors: constructor,
+    );
+  }
+
+  CodeClass _abstractScopeClass(StimpackCodeConfig config) {
+    return null;
+  }
+
+  CodeClass _implementScopeClass(StimpackCodeConfig config) {
+    return null;
   }
 
   Node _buildBody(StimpackCodeConfig config) {
     final template = '''
-part of g3.stimpack.{{ packName.camel }}.generated;
-
-class {{ typeClass }} extends StimSymbol<{{ typeClass }}, {{ typeSetClass }} > {
-{{ fieldListDef }}
-
-  {{ typeClass }}._({{ typeScopeImplClass }} scope)
-      : super(scope);
-
-  @override
-  {{ typeClass }} clone() {
-    return super.clone()
-{{ fieldListClone }}    
-  }
-}
 
 class {{ typeSetClass }}
     extends StimSymbolSet<{{ typeClass }}, {{ typeSetClass }}> {
@@ -130,7 +237,7 @@ class {{ typeScopeImplClass }}
   String _buildFieldListDef(StimpackCodeConfig config) {
     return type.fields
         .map((field) {
-          var name = config.typeClassNameOf(pack, field.type);
+          var name = config.symbolClassNameOf(pack, field.type);
           var s = '';
           if (field.isSet) {
             s = 'Set';
@@ -203,7 +310,7 @@ class {{ typeScopeImplClass }}
         // preset values.
         .map((preset) {
       final name = config.presetClassNameOf(pack, type, preset);
-      final fieldType = config.typeClassNameOf(pack, type);
+      final fieldType = config.symbolClassNameOf(pack, type);
 
       var fields = preset.values
           .map((e) => CodeField.of(
@@ -216,7 +323,7 @@ class {{ typeScopeImplClass }}
       fields.add(
         CodeField.of(
           name: 'all',
-          type: config.typeSetClassNameOf(pack, type),
+          type: config.symbolSetClassNameOf(pack, type),
         ),
       );
 

@@ -1,16 +1,27 @@
 part of g3.stimpack.grpc.generated;
 
-class StimGrpcMessage extends StimSymbol<StimGrpcMessage, StimGrpcMessageSet > {
-StimModelType type;
 
-  StimGrpcMessage._(_StimGrpcMessageScopeImpl scope)
-      : super(scope);
+
+class StimGrpcMessage extends StimSymbol<StimGrpcMessage, StimGrpcMessageSet> {
+  StimModelType type;
+
+  StimGrpcMessage(_StimGrpcMessageScopeImpl scope):
+      super(scope);
+
 
   @override
   StimGrpcMessage clone() {
     return super.clone()
-      ..type = type.clone();    
+        ..type = type.clone();
   }
+}
+
+
+class StimGrpcMessageSet extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageSet> {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcMessageSet(this._pack, List<StimGrpcMessage> items):
+      super(_pack._message, items);
 }
 
 class StimGrpcMessageSet

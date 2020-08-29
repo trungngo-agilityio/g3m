@@ -1,16 +1,24 @@
 part of g3.stimpack.grpc.generated;
 
-class StimGrpcMethodRequest extends StimSymbol<StimGrpcMethodRequest, StimGrpcMethodRequestSet > {
 
 
-  StimGrpcMethodRequest._(_StimGrpcMethodRequestScopeImpl scope)
-      : super(scope);
+class StimGrpcMethodRequest extends StimSymbol<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
+  StimGrpcMethodRequest(_StimGrpcMethodRequestScopeImpl scope):
+      super(scope);
+
 
   @override
   StimGrpcMethodRequest clone() {
-    return super.clone()
-;    
+    return super.clone();
   }
+}
+
+
+class StimGrpcMethodRequestSet extends StimSymbolSet<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcMethodRequestSet(this._pack, List<StimGrpcMethodRequest> items):
+      super(_pack._methodRequest, items);
 }
 
 class StimGrpcMethodRequestSet

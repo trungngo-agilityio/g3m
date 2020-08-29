@@ -44,4 +44,14 @@ class CodeFunctionCall extends CodeConfigProxyNode<CodeFunctionCall> {
         generic: CodeGenericParamList.of(generic),
         args: CodeExpr.listOf(args),
       );
+
+  factory CodeFunctionCall.ofSuper({
+    dynamic comment,
+    dynamic args,
+  }) =>
+      CodeFunctionCall.of(
+        name: 'super',
+        comment: comment,
+        args: args,
+      );
 }

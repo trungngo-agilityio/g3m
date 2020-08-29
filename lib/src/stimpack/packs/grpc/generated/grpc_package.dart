@@ -1,18 +1,30 @@
 part of g3.stimpack.grpc.generated;
 
-class StimGrpcPackage extends StimSymbol<StimGrpcPackage, StimGrpcPackageSet > {
-StimGrpcMessage messages;
-StimGrpcService services;
 
-  StimGrpcPackage._(_StimGrpcPackageScopeImpl scope)
-      : super(scope);
+
+class StimGrpcPackage extends StimSymbol<StimGrpcPackage, StimGrpcPackageSet> {
+  StimGrpcMessage messages;
+
+  StimGrpcService services;
+
+  StimGrpcPackage(_StimGrpcPackageScopeImpl scope):
+      super(scope);
+
 
   @override
   StimGrpcPackage clone() {
     return super.clone()
-      ..messages = messages.clone()
-      ..services = services.clone();    
+        ..messages = messages.clone()
+        ..services = services.clone();
   }
+}
+
+
+class StimGrpcPackageSet extends StimSymbolSet<StimGrpcPackage, StimGrpcPackageSet> {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcPackageSet(this._pack, List<StimGrpcPackage> items):
+      super(_pack._package, items);
 }
 
 class StimGrpcPackageSet

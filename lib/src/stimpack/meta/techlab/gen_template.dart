@@ -40,11 +40,11 @@ class StimGenMetaTemplate implements Node {
 
     if (type != null) {
       final typeClass =
-          values['typeClass'] = config.typeClassNameOf(pack, type);
+          values['typeClass'] = config.symbolClassNameOf(pack, type);
 
       if (field != null) {
         final fieldTypeClass =
-            values['fieldTypeClass'] = config.typeClassNameOf(pack, field.type);
+            values['fieldTypeClass'] = config.symbolClassNameOf(pack, field.type);
 
         values['setOpClass'] =
             (_stim >> pack.name >> type.name >> 'x' >> field.name >> 'set op')

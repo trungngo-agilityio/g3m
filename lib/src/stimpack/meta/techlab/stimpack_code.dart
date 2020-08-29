@@ -44,7 +44,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// if the [pack] is 'grpc' and the [type] is 'message' then
   /// the class name is 'StimGrpcMessage'.
   ///
-  Name typeClassNameOf(StimMetaPack pack, StimMetaType type) {
+  Name symbolClassNameOf(StimMetaPack pack, StimMetaType type) {
     final typePack = type.pack ?? pack;
     assert(typePack != null);
     assert(type.name?.isNotEmpty == true);
@@ -52,10 +52,10 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   }
 
   Name typeImplClassNameOf(StimMetaPack pack, StimMetaType type) {
-    return _implClassNameOf(typeClassNameOf(pack, type));
+    return _implClassNameOf(symbolClassNameOf(pack, type));
   }
 
-  Name typeSetClassNameOf(StimMetaPack pack, StimMetaType type) {
+  Name symbolSetClassNameOf(StimMetaPack pack, StimMetaType type) {
     return ('stim' >> pack.name >> type.name >> 'set').pascal();
   }
 

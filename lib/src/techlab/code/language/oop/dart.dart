@@ -156,7 +156,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
             'bool': 'bool',
           }),
           typeNameConfig: null,
-          typeConfig: null,
+          typeConfig: (_, child) => CodeTypeConfig.forDartLike(child),
           typeListConfig: null,
 
           // Expr configs

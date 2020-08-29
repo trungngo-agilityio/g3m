@@ -160,4 +160,13 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
       isOptional: isOptional,
     );
   }
+
+  factory CodeArg.ofField({
+    @required CodeField field,
+  }) =>
+      CodeArg.of(
+        name: field.name,
+        type: null,
+        isPrivate: field.modifier?.isPrivate,
+      );
 }
