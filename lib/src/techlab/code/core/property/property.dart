@@ -108,4 +108,40 @@ class CodeProperty extends CodeConfigProxyNode<CodeProperty>
       comment: CodeComment.of(comment),
     );
   }
+
+  factory CodeProperty.ofField({
+    @required CodeField field,
+    dynamic annotations,
+    dynamic type,
+    bool isOverride,
+    bool isPrivate,
+    bool isPublic,
+    bool isProtected,
+    bool isInternal,
+    dynamic comment,
+    bool setter,
+    bool getter,
+  }) {
+    assert(setter == true || getter == true,
+        'either setter or getter must be true');
+
+    return CodeProperty.of(
+      name: field.name,
+      type: type ?? field.type,
+      annotations: annotations,
+      isOverride: isOverride,
+      isPrivate: isPrivate,
+      isPublic: isPublic,
+      isProtected: isProtected,
+      isInternal: isInternal,
+      comment: comment,
+      getter: getter == true
+          ? CodePropertyGetter.of(body: CodeReturn.of(field.name))
+          : null,
+      setter: setter == true
+          ? CodePropertySetter.of(
+              body: CodeAssignExpr.of(field.name, CodeRef.of('value')))
+          : null,
+    );
+  }
 }

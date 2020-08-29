@@ -3,27 +3,27 @@ library g3.stimpack.model.generated;
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 
+part 'model_field.dart';
+
+part 'model_field__rules.dart';
+
+part 'model_field__type.dart';
+
+part 'model_pattern.dart';
+
+part 'model_range.dart';
+
+part 'model_rule.dart';
+
+part 'model_rule__patterns.dart';
+
+part 'model_rule__range.dart';
+
 part 'model_type.dart';
 
 part 'model_type__fields.dart';
 
 part 'model_type__rules.dart';
-
-part 'model_field.dart';
-
-part 'model_field__type.dart';
-
-part 'model_field__rules.dart';
-
-part 'model_rule.dart';
-
-part 'model_rule__range.dart';
-
-part 'model_rule__patterns.dart';
-
-part 'model_pattern.dart';
-
-part 'model_range.dart';
 
 StimModelModel _stimModelModel;
 
@@ -238,8 +238,9 @@ class _StimModelModelImpl implements StimModelModel {
           v.of('alpha'),
     );
 
-    _meta = meta.pack.of('model',
-        types: typeType + fieldType + ruleType + patternType + rangeType);
+    final allTypes = typeType + fieldType + ruleType + patternType + rangeType;
+    _meta = meta.pack.of('model', types: allTypes);
+    allTypes.pack.set(_meta);
   }
 
   // region custom code of model stimpack

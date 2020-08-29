@@ -174,8 +174,13 @@ void main() {
       p.ofValues('auth', authModels) +
       p.ofValues('common', commonTypes);
 
-  final meta = m.pack
-      .of('model', types: tType + tField + tRule + tPattern + tRange);
+  // ---------------------------------------------------------------------------
+  // Builds final pack
+  // ---------------------------------------------------------------------------
+  final allTypes = tType + tField + tRule + tPattern + tRange;
+  final meta = m.pack.of('model', types: allTypes);
+
+  allTypes.pack.set(meta);
 
   stimpackGen(meta, 'lib/src/stimpack/packs/model/generated');
 }

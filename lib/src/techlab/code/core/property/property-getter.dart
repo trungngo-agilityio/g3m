@@ -72,7 +72,7 @@ class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter> {
     this.comment,
     this.annotations,
     @required this.body,
-  }) : assert(body != null, 'property body is required');
+  });
 
   factory CodePropertyGetter._parse(
     dynamic value, {

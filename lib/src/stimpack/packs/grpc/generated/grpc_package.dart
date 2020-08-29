@@ -2,7 +2,7 @@ part of g3.stimpack.grpc.generated;
 
 class StimGrpcPackage extends StimSymbol<StimGrpcPackage, StimGrpcPackageSet > {
 StimGrpcMessage messages;
-StimNullService services;
+StimGrpcService services;
 
   StimGrpcPackage._(_StimGrpcPackageScopeImpl scope)
       : super(scope);

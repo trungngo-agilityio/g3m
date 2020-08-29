@@ -24,6 +24,7 @@ class DartCodeFile implements Node {
     CodePackage package,
     CodeComment comment,
     List<CodeImport> imports,
+    List<String> parts,
     List<CodeEnum> enums,
     List<CodeFunction> functions,
     List<CodeClass> classes,
@@ -36,6 +37,7 @@ class DartCodeFile implements Node {
           package: package,
           comment: comment,
           imports: imports,
+          parts: parts,
           enums: enums,
           functions: functions,
           classes: classes,
@@ -64,17 +66,44 @@ class DartCode extends SingleChildNode {
     dynamic comment,
     dynamic enums,
     dynamic imports,
+    List<String> parts,
     dynamic functions,
     dynamic classes,
     dynamic mixins,
     dynamic body,
   }) {
+    Node partsNode;
+
+    if (parts?.isNotEmpty == true) {
+      partsNode = Join.newLineSeparated(
+        parts.map(
+          (e) {
+            if (e == null) return null;
+            // make sure the part name is always end with .dart extension.
+            var name = e;
+            if (name?.endsWith(DartCodeFile.extension) != true) {
+              name = name + '.' + DartCodeFile.extension;
+            }
+
+            return Container([
+              'part \'',
+              name,
+              '\';',
+            ]);
+          },
+        ),
+      );
+
+      partsNode = Container([partsNode, '\n']);
+    }
+
     final source = Container([
       CodeStatement.of(
         Container([
           comment,
           package,
           CodeImportList.of(imports),
+          partsNode,
           CodeEnumList.of(enums),
           CodeFunctionList.of(functions),
           CodeClassList.of(classes),

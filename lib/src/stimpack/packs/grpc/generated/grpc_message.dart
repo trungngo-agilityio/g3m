@@ -1,7 +1,7 @@
 part of g3.stimpack.grpc.generated;
 
 class StimGrpcMessage extends StimSymbol<StimGrpcMessage, StimGrpcMessageSet > {
-StimNullType type;
+StimModelType type;
 
   StimGrpcMessage._(_StimGrpcMessageScopeImpl scope)
       : super(scope);

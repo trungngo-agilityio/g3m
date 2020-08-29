@@ -1,8 +1,8 @@
 part of g3.stimpack.grpc.generated;
 
-class StimGrpcPackageXServicesSetOp extends StimSymbolSetOpImpl<StimGrpcPackage, StimGrpcPackageSet, StimNullService, StimGrpcServiceSet> {
+class StimGrpcPackageXServicesSetOp extends StimSymbolSetOpImpl<StimGrpcPackage, StimGrpcPackageSet, StimGrpcService, StimGrpcServiceSet> {
   StimGrpcPackageXServicesSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<StimNullService, StimGrpcServiceSet> scope)
+      StimScope<StimGrpcService, StimGrpcServiceSet> scope)
       : super(symbols, scope);
 
   @override

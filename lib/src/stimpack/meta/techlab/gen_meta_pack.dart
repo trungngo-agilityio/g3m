@@ -10,122 +10,186 @@ class StimGenMetaPack implements Node {
     final config =
         context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
     final fileName = config.packFileNameOf(pack);
-    return DartCodeFile.of(fileName, body: _buildBody(config));
+    return DartCodeFile.of(
+      fileName,
+      package: config.codePackageLibraryOf(pack),
+      parts: _parts(config),
+      imports: _imports(config),
+      body: _extension(config),
+      classes: [
+        // The abstract class that provides the pack public interface.
+        _abstractTypeClass(config),
+
+        // The internal implementation.
+        _typeClass(config),
+      ],
+    );
   }
 
-  Node _buildBody(StimpackCodeConfig config) {
-    final template = ''' 
-library g3.stimpack.{{ packName.camel }}.generated;
+  /// Builds the list of code imports.
+  ///
+  List<CodeImport> _imports(StimpackCodeConfig config) {
+    final imports = <CodeImport>[
+      // imports the base stimpack
+      CodeImport.of(path: 'package:g3m/stimpack_base.dart'),
+      // Imports additional package refers by this package.
+    ];
 
-import 'package:g3m/stimpack_base.dart';
-{{{ metaImport }}}
+    final externalPacks = <StimMetaPack>{};
 
-{{{ partOfList }}}
-
-{{ packClass }}  _{{ packClass.camel }};
-
-'''
-
-        /// Extension on stim pack to inject the pack getter.
-        '''
-extension {{ packExtensionClass }} on Stimpack {
-  {{ packClass }} get {{ packName.camel }} {
-    if (_{{ packClass.camel }} == null) {
-      final impl = _{{ packClass.camel }} = {{ packImplClass }}();
-      impl.init();
-      return _{{ packClass.camel }};
-    }
-    
-    return _{{ packClass.camel }};
-  }
-}
-
-'''
-        // Abstract pack class that provides getters to all symbol scope.
-        '''
-abstract class {{ packClass }} {
-  StimMetaPack get meta;
-
-{{{ packClassFields }}}
-}
-
-class {{ packImplClass }} implements {{ packClass }} {
-  StimMetaPack _meta;
-
-{{{packImplClassFields}}}
-
-  @override
-  StimMetaPack get meta => _meta;
-
-{{{ packImplClassScopeFields }}}
-'''
-        // Constructor
-        '''
-  {{ packImplClass }}() {
-{{{ packImplClassConstructorFieldSet }}}
-  }
-  
-  void init() {
-{{{ packImplClassInitFunctionFieldSet }}}
-    _buildMeta();
-    _buildValues();
-  }
-
-  void _buildMeta() {
-{{{ buildMetaFunction }}}
-  }
-  
-{{{ buildValuesFunction }}}
-}
-    ''';
-
-    final metaImport = pack.name.toString() == 'meta'
-        ? ''
-        : '''import 'package:g3m/stimpack_meta.dart';''';
-
-    return StimGenMetaTemplate(
-        template,
-        {
-          'metaImport': metaImport,
-          'partOfList': _buildPartOfList(config),
-          'packClassFields': _packClassFields(config),
-          'packImplClassFields': _packImplClassFields(config),
-          'packImplClassScopeFields': _packImplClassScopeFields(config),
-          'packImplClassConstructorFieldSet':
-              _packImplClassConstructorFieldSet(config),
-          'packImplClassInitFunctionFieldSet':
-              _packImplClassInitFunctionFieldSet(config),
-          'buildMetaFunction': _buildMetaFunction(config),
-          'buildValuesFunction': _buildValuesFunction(config),
-        },
-        pack: pack);
-  }
-
-  Node _buildPartOfList(StimpackCodeConfig config) {
-    final nodes = <Node>[];
-
-    for (final i in pack.types) {
-      // Includes the type definition file
-      nodes.add(_buildPartOf(config.typeFileNameOf(pack, i)));
-
-      for (final j in i.fields) {
-        // Include the type field definition file.
-        nodes.add(_buildPartOf(config.typeFieldFileNameOf(pack, i, j)));
+    // Finds all external packs that this pack depends on.
+    for (final type in pack.types) {
+      for (final field in type.fields) {
+        final fieldTypePack = field.type?.pack;
+        if (fieldTypePack != null && fieldTypePack != pack) {
+          externalPacks.add(fieldTypePack);
+        }
       }
     }
 
-    return Container(nodes);
+    // Imports the meta package if the current package is not meta
+    if (pack.name.camel().toString() != 'meta') {
+      externalPacks.add(stimpack.meta.meta);
+    }
+
+    // Imports all external packs
+    for (final externalPack in externalPacks.toSet()) {
+      imports.add(config.codePackImportOf(externalPack));
+    }
+
+    return imports;
   }
 
-  Node _buildPartOf(String path) {
-    return Container([
-      'part ',
-      Pad.singleQuotes(Container([path, '.dart'])),
-      ';\n\n'
+  /// Builds the class that defines all getters to all scopes.
+  CodeClass _abstractTypeClass(StimpackCodeConfig config) {
+    final properties = <CodeProperty>[
+      // FIX THIS, the meta preset should provide access to the pack instance
+      CodeProperty.of(
+          name: 'meta',
+          type: 'stim meta pack',
+          getter: CodePropertyGetter.of(body: null)),
+    ];
+
+    for (final type in pack.types) {
+      properties.add(CodeProperty.of(
+        name: type.name,
+        type: config.typeScopeClassNameOf(pack, type),
+        getter: CodePropertyGetter.of(body: null),
+      ));
+    }
+
+    return CodeClass.of(
+      name: config.packClassNameOf(pack),
+      isAbstract: true,
+      properties: properties,
+    );
+  }
+
+  CodeClass _typeClass(StimpackCodeConfig config) {
+    var metaField =
+        CodeField.of(name: 'meta', type: 'stim meta pack', isPrivate: true);
+    final fields = <CodeField>[metaField];
+    final properties = <CodeProperty>[
+      CodeProperty.ofField(field: metaField, isOverride: true, getter: true),
+    ];
+
+    final scopeFieldInitExprList = <Node>[];
+    final fieldInitFunctionCallList = <Node>[];
+    final thisRef = CodeRef.ofThis();
+    final initFunctionCall = CodeFunctionCall.of(name: 'init');
+
+    for (final type in pack.types) {
+      var scopeImplClass = config.typeScopeImplClassNameOf(pack, type);
+      final field = CodeField.of(
+        name: type.name,
+        type: scopeImplClass,
+        isPrivate: true,
+      );
+
+      final property = CodeProperty.ofField(
+        field: field,
+        isOverride: true,
+        getter: true,
+      );
+
+      fields.add(field);
+      properties.add(property);
+
+      // Adds an expression to invoke constructor to create scope fields.
+      scopeFieldInitExprList.add(CodeAssignExpr.of(field.name,
+          CodeConstructorCall.of(className: scopeImplClass, args: thisRef)));
+
+      // Add an expression to invoke init function of scope fields.
+      fieldInitFunctionCallList
+          .add(CodeAccessExpr.of(field.name, initFunctionCall));
+    }
+    // The constructor just need to create all scopes.
+    final constructor = CodeConstructor.of(
+      body: scopeFieldInitExprList,
+    );
+
+    final buildMetaFunction = CodeFunction.of(
+      name: 'build meta',
+      isPrivate: true,
+      returns: 'void',
+      body: _buildMetaFunctionBody(config),
+    );
+
+    final buildValuesFunction = CodeFunction.of(
+      name: 'buildValues',
+      isPrivate: true,
+      returns: 'void',
+      comment: 'This function shall be call during the init process.',
+      body: CodeComment.of(
+        'build all preset values here',
+      ),
+    );
+
+    final buildValuePlaceHolder = CodePlaceHolder.of(
+      name: pack.name >> ' stimpack',
+      body: Container([
+        buildValuesFunction,
+        '\n\n',
+      ]),
+    );
+
+    final initFunction = CodeFunction.of(name: 'init', returns: 'void', body: [
+      ...fieldInitFunctionCallList,
+      CodeFunctionCall.of(name: buildMetaFunction),
+      CodeFunctionCall.of(name: buildValuesFunction),
     ]);
+
+    return CodeClass.of(
+      name: config.packImplClassNameOf(pack),
+      implements: config.packClassNameOf(pack),
+      fields: fields,
+      properties: properties,
+      constructors: constructor,
+      functions: [
+        initFunction,
+        buildMetaFunction,
+      ],
+      body: buildValuePlaceHolder,
+    );
   }
 
-  Node _buildMetaFunction(StimpackCodeConfig config) {
+  List<String> _parts(StimpackCodeConfig config) {
+    final parts = <String>[];
+
+    for (final i in pack.types) {
+      // Includes the type definition file
+      parts.add(config.typeFileNameOf(pack, i));
+
+      for (final j in i.fields) {
+        // Include the type field definition file.
+        parts.add(config.typeFieldFileNameOf(pack, i, j));
+      }
+    }
+
+    return parts;
+  }
+
+  Node _buildMetaFunctionBody(StimpackCodeConfig config) {
     final nodes = <Node>[
       Container([
         pack.name.toString() == 'meta'
@@ -250,100 +314,27 @@ class {{ packImplClass }} implements {{ packClass }} {
       Text.of('allTypes.pack.set(_meta);\n'),
     );
 
-    return Indent(Container(nodes), level: 2);
+    return Container(nodes);
   }
 
-  Node _buildValuesFunction(StimpackCodeConfig config) {
-    final function = CodeFunction.of(
-      name: '_buildValues',
-      returns: 'void',
-      comment: 'This function shall be call during the init process.',
-      body: CodeComment.of(
-        'build all preset values here',
-      ),
-    );
+  Node _extension(StimpackCodeConfig config) {
+    // TODO: Fix this after extension support
+    final template = ''' 
+{{ packClass }}  _{{ packClass.camel }};
 
-    final holder = CodePlaceHolder.of(
-      name: pack.name >> ' stimpack',
-      body: Container([
-        function,
-        '\n\n',
-      ]),
-    );
-
-    return Indent(holder);
+extension {{ packExtensionClass }} on Stimpack {
+  {{ packClass }} get {{ packName.camel }} {
+    if (_{{ packClass.camel }} == null) {
+      final impl = _{{ packClass.camel }} = {{ packImplClass }}();
+      impl.init();
+      return _{{ packClass.camel }};
+    }
+    
+    return _{{ packClass.camel }};
   }
+}
+    ''';
 
-  Node _packClassFields(StimpackCodeConfig config) {
-    final template = '''
-  {{ typeScopeClass }} get {{ typeName.camel }};
-''';
-    return Container(pack.types
-        .map((e) => StimGenMetaTemplate(
-              template,
-              null,
-              pack: pack,
-              type: e,
-            ))
-        .toList());
-  }
-
-  Node _packImplClassFields(StimpackCodeConfig config) {
-    final template = '''
-  
-  {{ typeScopeImplClass }} _{{ typeName.camel }};
-''';
-    return Container(pack.types
-        .map((e) => StimGenMetaTemplate(
-              template,
-              null,
-              pack: pack,
-              type: e,
-            ))
-        .toList());
-  }
-
-  Node _packImplClassScopeFields(StimpackCodeConfig config) {
-    final template = '''
-  
-  @override
-  {{ typeScopeClass }} get {{ typeName.camel }} => _{{ typeName.camel }};
-''';
-    return Container(pack.types
-        .map((e) => StimGenMetaTemplate(
-              template,
-              null,
-              pack: pack,
-              type: e,
-            ))
-        .toList());
-  }
-
-  Node _packImplClassConstructorFieldSet(StimpackCodeConfig config) {
-    final template = '''
-    _{{ typeName.camel }} = {{ typeScopeImplClass }}._(this);
-''';
-    return Container(pack.types
-        .map((e) => StimGenMetaTemplate(
-              template,
-              null,
-              pack: pack,
-              type: e,
-            ))
-        .toList());
-  }
-
-  Node _packImplClassInitFunctionFieldSet(StimpackCodeConfig config) {
-    final template = '''
-    _{{ typeName.camel }}.init();
-''';
-    return Container(pack.types
-        .map((e) => StimGenMetaTemplate(
-              template,
-              null,
-              pack: pack,
-              type: e,
-            ))
-        .toList());
+    return StimGenMetaTemplate(template, null, pack: pack);
   }
 }
