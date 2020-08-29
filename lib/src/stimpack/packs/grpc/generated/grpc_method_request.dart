@@ -21,25 +21,47 @@ class StimGrpcMethodRequestSet extends StimSymbolSet<StimGrpcMethodRequest, Stim
       super(_pack._methodRequest, items);
 }
 
-class StimGrpcMethodRequestSet
-    extends StimSymbolSet<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
-  final _StimGrpcGrpcImpl __pack;
 
-  
-  StimGrpcMethodRequestSet._(this.__pack, List<StimGrpcMethodRequest> items)
-      : super(__pack._methodRequest, items);
-
-
-}
-
-abstract class StimGrpcMethodRequestScope
-    extends StimScope<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
-    
+abstract class StimGrpcMethodRequestScope extends StimScope<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
   StimGrpcMethodRequestSymbols get s;
-    
-  StimGrpcMethodRequest of(dynamic name);
+
+  StimGrpcMethodRequest of(name);
 }
 
+
+class _StimGrpcMethodRequestScopeImpl extends StimScopeImpl<StimGrpcMethodRequest, StimGrpcMethodRequestSet> implements StimGrpcMethodRequestScope {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcMethodRequestSymbols _s;
+
+  @override
+  StimGrpcMethodRequestSymbols get s {
+    return _s ??= StimGrpcMethodRequestSymbols(this);
+  }
+  _StimGrpcMethodRequestScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimGrpcMethodRequest of(name) {
+    return createAndClear(name)
+  }
+
+  @override
+  void clear(StimGrpcMethodRequest symbol) {
+    symbol
+  }
+
+  @override
+  StimGrpcMethodRequest create() {
+    return StimGrpcMethodRequest(this);
+  }
+
+  @override
+  StimGrpcMethodRequestSet createSet(List<StimGrpcMethodRequest> items) {
+    return StimGrpcMethodRequestSet(_pack, items);
+  }
+}
 
         
 class StimGrpcMethodRequestSymbols {
@@ -55,34 +77,3 @@ class StimGrpcMethodRequestSymbols {
   }
 }
 
-class _StimGrpcMethodRequestScopeImpl 
-    extends StimScopeImpl<StimGrpcMethodRequest, StimGrpcMethodRequestSet>
-    implements StimGrpcMethodRequestScope {
-  final _StimGrpcGrpcImpl __pack;
-  
-  _StimGrpcMethodRequestScopeImpl._(this.__pack) : super();
-
-  StimGrpcMethodRequestSymbols _s;
-
-  @override
-  StimGrpcMethodRequestSymbols get s => _s ??= StimGrpcMethodRequestSymbols(this);
-  @override
-  void clear(StimGrpcMethodRequest symbol) {
-    
-  }
-
-  @override
-  StimGrpcMethodRequest create() => StimGrpcMethodRequest._(this);
-
-  @override
-  StimGrpcMethodRequest of(dynamic name) {
-    return createAndClear(name)
-;    
-  }
-
-  @override
-  StimGrpcMethodRequestSet createSet(List<StimGrpcMethodRequest> items) {
-    return StimGrpcMethodRequestSet._(__pack, items);
-  }
-}
-    

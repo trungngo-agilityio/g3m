@@ -4,37 +4,82 @@ class StimGenMetaType implements Node {
   final StimMetaPack pack;
   final StimMetaType type;
 
+  Name _symbolClassName,
+      _symbolSetClassName,
+      _scopeClassName,
+      _scopeImplClassName;
+
+  CodeArg _scopeArg, _scopeImplArg;
+  CodeField _packField;
+  CodeRef _packFieldRef;
+
+  StimpackCodeConfig _config;
+
   StimGenMetaType(this.pack, this.type);
 
   @override
   Node build(BuildContext context) {
-    final config =
-        context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
-    final fileName = config.typeFileNameOf(pack, type);
+    _initCommonFields(context);
+
+    final fileName = _config.typeFileNameOf(pack, type);
 
     return DartCodeFile.of(
       fileName,
-      package: config.codePackageLibraryOf(pack, isPart: true),
+      package: _config.codePackageLibraryOf(pack, isPart: true),
       classes: [
-        _symbolClass(config),
-        _symbolSetClass(config),
-        _abstractScopeClass(config),
-        _implementScopeClass(config),
+        _symbolClassDef(),
+        _symbolSetClassDef(),
+        _abstractScopeClassDef(),
+        _implementScopeClassDef(),
+        _symbolsClassDef(),
+        ..._presetClassListDef(),
       ],
-      body: _buildBody(config),
     );
   }
 
-  CodeClass _symbolClass(StimpackCodeConfig config) {
-    final symbolClass = config.symbolClassNameOf(pack, type);
-    final symbolSetClass = config.symbolSetClassNameOf(pack, type);
+  void _initCommonFields(BuildContext context) {
+    _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
+
+    // The symbol definition class
+    _symbolClassName = _config.symbolClassNameOf(pack, type);
+
+    // The symbol set definition class
+    _symbolSetClassName = _config.symbolSetClassNameOf(pack, type);
+
+    // The abstract scope class
+    _scopeClassName = _config.scopeClassNameOf(pack, type);
+
+    // The implementation scope class
+    _scopeImplClassName = _config.scopeImplClassNameOf(pack, type);
+
+    _scopeArg = CodeArg.of(
+      name: 'scope',
+      type: _config.scopeClassNameOf(pack, type),
+    );
+
+    _scopeImplArg = CodeArg.of(
+      name: 'scope',
+      type: _config.scopeImplClassNameOf(pack, type),
+    );
+
+    _packField = CodeField.of(
+      name: 'pack',
+      type: _config.packImplClassNameOf(pack),
+      isPrivate: true,
+      isFinal: true,
+    );
+    _packFieldRef = CodeRef.of(_packField);
+  }
+
+  CodeClass _symbolClassDef() {
     final baseSymbolClass = CodeType.of(
-        name: 'stim symbol', generic: [symbolClass, symbolSetClass]);
+        name: 'stim symbol', generic: [_symbolClassName, _symbolSetClassName]);
 
     final fields = <CodeField>[];
     final fieldCloneList = <Node>[];
+
     for (final field in type.fields) {
-      final fieldClass = config.symbolClassNameOf(pack, field.type);
+      final fieldClass = _config.fieldSymbolOrSetNameOf(pack, field);
       fields.add(CodeField.of(name: field.name, type: fieldClass));
 
       fieldCloneList.add(
@@ -50,29 +95,26 @@ class StimGenMetaType implements Node {
       );
     }
 
-    var scopeArg = CodeArg.of(
-      name: 'scope',
-      type: config.typeScopeImplClassNameOf(pack, type),
-    );
-
     // Creates a constructor that accepts a scope argument.
     final constructor = CodeConstructor.of(
-      requiredArgs: scopeArg,
-      init: CodeFunctionCall.of(name: 'super', args: CodeRef.of(scopeArg)),
+      requiredArgs: _scopeImplArg,
+      init: CodeFunctionCall.of(name: 'super', args: CodeRef.of(_scopeImplArg)),
     );
+
+    final cloneFunctionBody = CodeReturn.of(Container([
+      'super.clone()\n',
+      Indent(Join.newLineSeparated(fieldCloneList), level: 2),
+    ]));
 
     final cloneFunction = CodeFunction.of(
       name: 'clone',
       isOverride: true,
-      returns: symbolClass,
-      body: CodeReturn.of(Container([
-        'super.clone()\n',
-        Indent(Join.newLineSeparated(fieldCloneList), level: 2),
-      ])),
+      returns: _symbolClassName,
+      body: cloneFunctionBody,
     );
 
     return CodeClass.of(
-      name: symbolClass,
+      name: _symbolClassName,
       extend: baseSymbolClass,
       fields: fields,
       constructors: constructor,
@@ -80,411 +122,340 @@ class StimGenMetaType implements Node {
     );
   }
 
-  CodeClass _symbolSetClass(StimpackCodeConfig config) {
-    final symbolClass = config.symbolClassNameOf(pack, type);
-    final symbolSetClass = config.symbolSetClassNameOf(pack, type);
-
+  CodeClass _symbolSetClassDef() {
     final baseSymbolSetClass = CodeType.of(
-        name: 'stim symbol set', generic: [symbolClass, symbolSetClass]);
+        name: 'stim symbol set',
+        generic: [_symbolClassName, _symbolSetClassName]);
 
-    final packField = CodeField.of(
-      name: 'pack',
-      type: config.packImplClassNameOf(pack),
-      isPrivate: true,
-      isFinal: true,
-    );
+    // Build fields and properties
+    final fields = <CodeField>[_packField];
+    final properties = <CodeProperty>[];
 
-    final fields = <CodeField>[packField];
+    for (final i in type.fields) {
+      final opClass = _config.fieldOpOrSetOpNameOf(pack, type, i);
+      final field = CodeField.of(name: i.name, type: opClass, isPrivate: true);
 
-    final packFieldArg = CodeArg.ofField(field: packField);
+      final packFieldRef = CodeRef.of(_packField);
+      final scopeField = i.type.name.camel();
+      final property = CodeProperty.of(
+        name: i.name,
+        type: field.type,
+        getter: CodeReturn.of(
+          CodeAssignIfNullExpr.of(
+            field.name,
+            CodeConstructorCall.of(
+              className: opClass,
+              args: [
+                CodeRef.ofThis(),
+                CodeAccessExpr.of(packFieldRef, scopeField)
+              ],
+            ),
+          ),
+        ),
+        setter: CodeAssignExpr.of(
+          CodeRef.of(field),
+          CodeRef.of('value'),
+        ),
+      );
 
-    final itemsArg = CodeArg.of(
-        name: 'items',
-        type: CodeType.of(
-          name: symbolClass,
-          array: true,
-        ));
+      fields.add(field);
+      properties.add(property);
+    }
+
+    // Builds constructor
+
+    final packFieldArg = CodeArg.ofField(field: _packField);
+
+    final itemsArg = _symbolListArgs();
 
     final symbolScopeFieldName =
         CodeFieldName.of(name: type.name, isPrivate: true);
-    
+
     final constructor = CodeConstructor.of(
       requiredArgs: [
         packFieldArg,
         itemsArg,
       ],
       init: CodeFunctionCall.ofSuper(args: [
-        CodeAccessExpr.of(packField.name, symbolScopeFieldName),
+        CodeAccessExpr.of(_packField.name, symbolScopeFieldName),
         CodeRef.of(itemsArg),
       ]),
     );
 
     return CodeClass.of(
-      name: symbolSetClass,
+      name: _symbolSetClassName,
       extend: baseSymbolSetClass,
       fields: fields,
+      properties: properties,
       constructors: constructor,
     );
   }
 
-  CodeClass _abstractScopeClass(StimpackCodeConfig config) {
-    return null;
+  CodeArg _symbolListArgs() {
+    return CodeArg.of(
+        name: 'items',
+        type: CodeType.of(
+          name: _symbolClassName,
+          array: true,
+        ));
   }
 
-  CodeClass _implementScopeClass(StimpackCodeConfig config) {
-    return null;
-  }
+  CodeClass _abstractScopeClassDef() {
+    final baseScopeClass = CodeType.of(
+        name: 'stim scope', generic: [_symbolClassName, _symbolSetClassName]);
 
-  Node _buildBody(StimpackCodeConfig config) {
-    final template = '''
+    final properties = <CodeProperty>[_symbolsProperty()];
 
-class {{ typeSetClass }}
-    extends StimSymbolSet<{{ typeClass }}, {{ typeSetClass }}> {
-  final {{ packImplClass }} __pack;
+    final ofFunction = _scopeClassOfFunction();
 
-  
-  {{ typeSetClass }}._(this.__pack, List<{{ typeClass }}> items)
-      : super(__pack._{{ typeName.camel }}, items);
-
-{{{setFieldListDef}}}
-}
-
-abstract class {{ typeScopeClass }}
-    extends StimScope<{{ typeClass }}, {{ typeSetClass }}> {
-    
-  {{ typeSymbolsClass }} get s;
-    
-  {{ typeClass }} of({{ ofFunctionArgs }});
-}
-
-'''
-        // Symbols preset
-        '''
-{{{ typePresetClasses }}}
-        
-class {{ typeSymbolsClass }} {
-  final {{ typeScopeImplClass }} _scope;
-  /// All symbols
-  {{ typeSetClass }} all;
-{{{ symbolClassFields }}}
-  
-  {{ typeSymbolsClass }}(this._scope) {
-    final _s = stimpack.{{ packName.camel }}.{{ typeName.camel }};
-    all = _s.noneSet;
-{{{ symbolClassFieldsInit }}}
-  }
-}
-
-'''
-        // Scope implementation class.
-        '''
-class {{ typeScopeImplClass }} 
-    extends StimScopeImpl<{{ typeClass }}, {{ typeSetClass }}>
-    implements {{ typeScopeClass }} {
-  final {{ packImplClass }} __pack;
-  
-  {{ typeScopeImplClass }}._(this.__pack) : super();
-
-'''
-        // Scope symbols
-        '''
-  {{ typeSymbolsClass }} _s;
-
-  @override
-  {{ typeSymbolsClass }} get s => _s ??= {{ typeSymbolsClass }}(this);
-'''
-        // clear function, to reset a symbol
-        '''
-  @override
-  void clear({{ typeClass }} symbol) {
-{{ fieldListClear }}    
-  }
-
-  @override
-  {{ typeClass }} create() => {{ typeClass }}._(this);
-
-  @override
-  {{ typeClass }} of({{ ofFunctionArgs }}) {
-    return createAndClear(name)
-{{ fieldListInit }}    
-  }
-
-  @override
-  {{ typeSetClass }} createSet(List<{{ typeClass }}> items) {
-    return {{ typeSetClass }}._(__pack, items);
-  }
-}
-    ''';
-
-    return StimGenMetaTemplate(
-      template,
-      {
-        'fieldListDef': _buildFieldListDef(config),
-        'fieldListClone': _buildFieldListClone(),
-        'fieldListClear': _buildFieldListClear(),
-        'fieldListInit': _buildFieldListInit(),
-        'setFieldListDef': _buildSetFieldListDef(),
-        'typePresetClasses': _typePresetClasses(config),
-        'symbolClassFields': _symbolClassFields(config),
-        'symbolClassFieldsInit': _symbolClassFieldsInit(),
-        'ofFunctionArgs': _buildOfFunctionArgs(),
-      },
-      pack: pack,
-      type: type,
+    return CodeClass.of(
+      name: _config.scopeClassNameOf(pack, type),
+      extend: baseScopeClass,
+      isAbstract: true,
+      properties: properties,
+      functions: [ofFunction],
     );
   }
 
-  String _buildFieldListDef(StimpackCodeConfig config) {
-    return type.fields
-        .map((field) {
-          var name = config.symbolClassNameOf(pack, field.type);
-          var s = '';
-          if (field.isSet) {
-            s = 'Set';
-          }
-          return '$name ${field.name.camel()};';
-        })
-        .join('\n')
-        .toString();
+  CodeProperty _symbolsProperty({Node body}) {
+    return CodeProperty.of(
+        name: 's',
+        type: _config.symbolListClassNameOf(pack, type),
+        isOverride: body != null,
+        getter: CodePropertyGetter.of(body: body));
   }
 
-  String _buildFieldListClone() {
-    return type.fields
-            .map((e) {
-              return '      ..${e.name.camel()} = ${e.name.camel()}.clone()';
-            })
-            .join('\n')
-            .toString() +
-        ';';
+  CodeField _symbolsField() {
+    return CodeField.of(
+      name: 's',
+      type: _config.symbolListClassNameOf(pack, type),
+      isPrivate: true,
+    );
   }
 
-  String _buildFieldListClear() {
-    if (type.fields.isEmpty) {
-      return '';
+  CodeFunction _scopeClassOfFunction({Node body}) {
+    final ofFunctionArgs = <CodeArg>[];
+    for (final i in type.fields) {
+      ofFunctionArgs.add(CodeArg.of(name: i.name.camel(), type: 'dynamic'));
     }
 
-    return '    symbol\n' +
-        type.fields
-            .map((field) {
-              final f = field.name.camel();
-              final t = field.type.name.camel();
-              final s = '      ..${f} = __pack.${t}';
-              if (field.isSet) {
-                return '${s}.noneSet';
-              } else {
-                return '${s}.none';
-              }
-            })
-            .join('\n')
-            .toString() +
-        ';';
+    return CodeFunction.of(
+      name: 'of',
+      returns: _symbolClassName,
+      requiredArgs: 'name',
+      namedArgs: ofFunctionArgs,
+      isOverride: body != null,
+      body: body,
+    );
   }
 
-  String _buildFieldListInit() {
-    return type.fields
-            .map((e) {
-              // Field name
-              final f = e.name.camel();
+  CodeClass _implementScopeClassDef() {
+    final baseScopeImplClass = CodeType.of(
+        name: 'stim scope impl',
+        generic: [_symbolClassName, _symbolSetClassName]);
 
-              // Type name
-              final t = e.type.name.camel();
-
-              final s1 = '      ..${f}';
-              final s2 = '${f} ?? __pack.${t}';
-              if (e.isSet) {
-                return '$s1 += $s2.noneSet';
-              } else {
-                return '$s1 = $s2.none';
-              }
-            })
-            .join('\n')
-            .toString() +
-        ';';
-  }
-
-  Node _typePresetClasses(StimpackCodeConfig config) {
-    final presets = type.presets
-        // gets out the preset does not have empty name.
-        .whereHasName()
-        // converts the preset to a class with its fields are the
-        // preset values.
-        .map((preset) {
-      final name = config.presetClassNameOf(pack, type, preset);
-      final fieldType = config.symbolClassNameOf(pack, type);
-
-      var fields = preset.values
-          .map((e) => CodeField.of(
-                name: e.name.camel(),
-                type: fieldType,
-              ))
-          .toList();
-
-      // Generates an all field that will be the combine of all other values.
-      fields.add(
-        CodeField.of(
-          name: 'all',
-          type: config.symbolSetClassNameOf(pack, type),
-        ),
-      );
-
-      final scopeArg = CodeArg.of(
-        name: 'scope',
-        type: config.typeScopeClassNameOf(pack, type),
-      );
-
-      final fieldInits = preset.values.whereHasName().map(
-            (value) => CodeAssignExpr.of(
-              value.name.camel(),
-              CodeAccessExpr.of(
-                scopeArg.name,
-                CodeFunctionCall.of(
-                    name: 'of', args: CodeStringLiteral.of(value.name)),
-              ),
-            ),
-          );
-
-      final constructor = CodeConstructor.of(
-        requiredArgs: scopeArg,
-        body: fieldInits.toList(),
-      );
-
-      return CodeClass.of(
-        name: name,
-        fields: fields,
-        constructors: constructor,
-      );
-    }).toList();
-
-    return Container(presets);
-  }
-
-  Node _buildSetFieldListDef() {
-    final nodes = <Node>[];
-    for (final field in type.fields) {
-      String template;
-      if (field.isSet) {
-        template = '''
-        
-        
-  {{ setOpClass }} _{{ fieldName.camel }};
-
-  {{ setOpClass }} get {{ fieldTypeName.camel }} =>
-      _{{ fieldName.camel }} ??= {{ setOpClass }}(this, __pack.{{ fieldTypeName.camel }});
-
-  set {{ fieldName.camel}}({{ setOpClass }} value) => _{{ fieldName.camel }} = value;
-        ''';
-      } else {
-        template = '''
-         
-         
-  {{ setOpClass }} _{{ fieldName.camel }};
-
-  {{ setOpClass }} get {{ fieldName.camel }} =>
-      _{{ fieldName.camel }} ??= {{ setOpClass }}(this, __pack.{{ fieldTypeName.camel }});
-
-  set {{ fieldName.camel }}({{ setOpClass}} value) => _{{ fieldName.camel }} = value;
-        ''';
-      }
-
-      nodes.add(
-        StimGenMetaTemplate(
-          template,
-          null,
-          pack: pack,
-          type: type,
-          field: field,
-        ),
-      );
-    }
-
-    return Container(nodes);
-  }
-
-  Node _symbolClassFieldsInit() {
-    final children = <Node>[];
-    for (final i in type.presets) {
-      if (i.name.toString().isNotEmpty == true) {
-        // This preset has name.
-
-      } else {
-        // This preset do not have name.
-        // render it as the symbols level.
-        children.add(_symbolClassFieldsPresetInit(i));
-      }
-    }
-
-    return Container(children);
-  }
-
-  Node _symbolClassFieldsPresetInit(StimMetaPreset preset) {
-    final children = preset.values.map((value) {
-      return '''
-    all += ${value.name.camel()} = _scope.of('${value.name}');''';
-    });
-
-    return Text.of(children.join('\n'));
-  }
-
-  Node _symbolClassFields(StimpackCodeConfig config) {
-    final presetFields = type.presets.whereHasName().map((preset) {
-      final fieldType = config.presetClassNameOf(pack, type, preset);
-
-      // Generates a field that hold the preset class
-      final field = CodeField.of(
-        isPrivate: true,
-        name: preset.name.camel(),
-        type: fieldType,
-      );
-
-      // Generates a getter that lazy init and return the preset class
-      final property = CodeProperty.of(
-        name: preset.name.camel(),
-        type: fieldType,
-        getter: CodeReturn.of(
+    final symbolsField = _symbolsField();
+    final fields = <CodeField>[_packField, symbolsField];
+    final properties = <CodeProperty>[
+      _symbolsProperty(
+        body: CodeReturn.of(
           CodeAssignIfNullExpr.of(
-            field.name,
+            CodeRef.of(symbolsField),
             CodeConstructorCall.of(
-                className: fieldType, args: CodeRef.of('_scope')),
+                className: _config.symbolListClassNameOf(pack, type),
+                args: CodeRef.ofThis()),
+          ),
+        ),
+      ),
+    ];
+
+    final clearFunctionFields = <Node>[];
+    final ofFunctionFields = <Node>[];
+
+    for (final field in type.fields) {
+      final fieldClass = _config.fieldSymbolOrSetNameOf(pack, field);
+
+      fields.add(CodeField.of(name: field.name, type: fieldClass));
+
+      final fieldRef = CodeRef.of(field);
+      final none = CodeAccessExpr.of(
+          _packFieldRef,
+          CodeAccessExpr.of(
+            field.type.name.camel(),
+            Text.of(field.isSet ? 'noneSet' : 'none'),
+          ));
+
+      clearFunctionFields.add(
+        CodeCascade.of(
+          CodeAssignExpr.of(
+            field.name,
+            none,
           ),
         ),
       );
 
-      return Container([field, property]);
-    });
+      ofFunctionFields.add(
+        CodeCascade.of(
+          field.isSet
+              ? CodePlusAssignExpr.of(
+                  field.name,
+                  CodeConditionalNullExpr.of(fieldRef, none),
+                )
+              : CodeAssignExpr.of(
+                  field.name,
+                  CodeConditionalNullExpr.of(fieldRef, none),
+                ),
+        ),
+      );
+    }
 
-    final valueFields =
-        type.presets.whereNoName().map((e) => _presetClassFields(e));
-
-    return Indent(Container([
-      '\n',
-      Container(presetFields),
-      '\n',
-      Container(valueFields),
-    ]));
-  }
-
-  Node _presetClassFields(StimMetaPreset preset) {
-    final children = preset.values.map((value) {
-      final template = '''
-  {{ typeClass }} {{ valueName.camel }};
-''';
-      return StimGenMetaTemplate(template, {},
-          pack: pack, type: type, preset: preset, value: value);
-    });
-
-    return Container(children.toList());
-  }
-
-  Node _buildOfFunctionArgs() {
-    return CodeArgList.of(
-      required: [
-        ['name', 'dynamic']
+    // -------------------------------------------------------------------------
+    // Builds constructors
+    final constructor = CodeConstructor.of(
+      requiredArgs: [
+        CodeArg.ofField(field: _packField),
       ],
-      named: type.fields
-          .map(
-            (e) => [e.name, 'dynamic'],
-          )
-          .toList(),
+      init: CodeFunctionCall.ofSuper(),
+    );
+
+    // -------------------------------------------------------------------------
+    // Build functions
+    // -------------------------------------------------------------------------
+
+    final ofFunction = _scopeClassOfFunction(
+      body: CodeExpr.of(
+        Container([
+          'return createAndClear(name)\n',
+          Indent(Join.newLineSeparated(ofFunctionFields), level: 2),
+        ]),
+      ),
+    );
+
+    // -------------------------------------------------------------------------
+    // Generates a function that clear all properties of a symbol.
+    //
+
+    final clearFunction = CodeFunction.of(
+      name: 'clear',
+      isOverride: true,
+      returns: CodeType.ofVoid(),
+      requiredArgs: CodeArg.of(name: 'symbol', type: _symbolClassName),
+      body: CodeExpr.of(
+        Container([
+          'symbol\n',
+          Indent(Join.newLineSeparated(clearFunctionFields), level: 2),
+        ]),
+      ),
+    );
+
+    // -------------------------------------------------------------------------
+    // Generates a function that create a new symbol for the current scope.
+    final createFunction = CodeFunction.of(
+      name: 'create',
+      isOverride: true,
+      returns: _symbolClassName,
+      body: CodeReturn.of(
+        CodeConstructorCall.of(
+          className: _symbolClassName,
+          args: CodeRef.ofThis(),
+        ),
+      ),
+    );
+
+    // -------------------------------------------------------------------------
+    // Generates a function that creates a symbol set from a specified list
+    // of symbols.
+    final symbolListArgs = _symbolListArgs();
+    final createSetFunction = CodeFunction.of(
+      name: 'create set',
+      isOverride: true,
+      returns: _symbolSetClassName,
+      requiredArgs: symbolListArgs,
+      body: CodeReturn.of(CodeConstructorCall.of(
+        className: _symbolSetClassName,
+        args: [
+          _packFieldRef,
+          CodeRef.of(symbolListArgs),
+        ],
+      )),
+    );
+
+    final functions = <CodeFunction>[
+      ofFunction,
+      clearFunction,
+      createFunction,
+      createSetFunction,
+    ];
+
+    // -------------------------------------------------------------------------
+    // Build class
+    // -------------------------------------------------------------------------
+    return CodeClass.of(
+      name: _scopeImplClassName,
+      extend: baseScopeImplClass,
+      implements: _scopeClassName,
+      fields: fields,
+      properties: properties,
+      constructors: constructor,
+      functions: functions,
+    );
+  }
+
+  CodeClass _symbolsClassDef() {
+    final className = _config.symbolListClassNameOf(pack, type);
+    return _presetOrSymbolsClassDef(className, []);
+  }
+
+  List<CodeClass> _presetClassListDef() {
+    return type.presets.whereHasName().map((e) => _presetClassDef(e)).toList();
+  }
+
+  CodeClass _presetClassDef(StimMetaPreset preset) {
+    final className = _config.presetClassNameOf(pack, type, preset);
+    return _presetOrSymbolsClassDef(className, preset.values);
+  }
+
+  CodeClass _presetOrSymbolsClassDef(
+      Name className, Iterable<StimMetaValue> values) {
+    final allField = CodeField.of(name: 'all', type: _symbolSetClassName);
+    final allFieldRef = CodeRef.of(allField);
+
+    final fields = <CodeField>[allField];
+
+    final constructorBody = <Node>[
+      CodeAssignExpr.of(
+        allFieldRef,
+        CodeAccessExpr.of(
+          CodeRef.of(_scopeArg),
+          CodeRef.of('noneSet'),
+        ),
+      )
+    ];
+    for (final i in values) {
+      final field = CodeField.of(name: i.name, type: _symbolClassName);
+      fields.add(field);
+
+      // initializes the field with a symbol with just name.
+      final initField = CodeAssignExpr.of(
+        CodeRef.of(field),
+        CodeAccessExpr.of(
+          _scopeArg.name,
+          CodeFunctionCall.of(name: 'of', args: CodeStringLiteral.of(i.name)),
+        ),
+      );
+
+      // add the field to the all field.
+      final init = CodePlusAssignExpr.of(allFieldRef, initField);
+      constructorBody.add(init);
+    }
+
+    final constructor =
+        CodeConstructor.of(requiredArgs: [_scopeArg], body: constructorBody);
+
+    return CodeClass.of(
+      name: className,
+      fields: fields,
+      constructors: constructor,
     );
   }
 }

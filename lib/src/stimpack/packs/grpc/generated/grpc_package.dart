@@ -3,9 +3,9 @@ part of g3.stimpack.grpc.generated;
 
 
 class StimGrpcPackage extends StimSymbol<StimGrpcPackage, StimGrpcPackageSet> {
-  StimGrpcMessage messages;
+  StimGrpcMessageSet messages;
 
-  StimGrpcService services;
+  StimGrpcServiceSet services;
 
   StimGrpcPackage(_StimGrpcPackageScopeImpl scope):
       super(scope);
@@ -23,45 +23,79 @@ class StimGrpcPackage extends StimSymbol<StimGrpcPackage, StimGrpcPackageSet> {
 class StimGrpcPackageSet extends StimSymbolSet<StimGrpcPackage, StimGrpcPackageSet> {
   final _StimGrpcGrpcImpl _pack;
 
+  StimGrpcPackageXMessagesSetOp _messages;
+
+  StimGrpcPackageXServicesSetOp _services;
+
+  StimGrpcPackageXMessagesSetOp get messages {
+    return _messages ??= StimGrpcPackageXMessagesSetOp(this, _pack.message);
+  }
+
+  set messages(StimGrpcPackageXMessagesSetOp value) {
+    _messages = value;
+  }
+  StimGrpcPackageXServicesSetOp get services {
+    return _services ??= StimGrpcPackageXServicesSetOp(this, _pack.service);
+  }
+
+  set services(StimGrpcPackageXServicesSetOp value) {
+    _services = value;
+  }
   StimGrpcPackageSet(this._pack, List<StimGrpcPackage> items):
       super(_pack._package, items);
 }
 
-class StimGrpcPackageSet
-    extends StimSymbolSet<StimGrpcPackage, StimGrpcPackageSet> {
-  final _StimGrpcGrpcImpl __pack;
 
-  
-  StimGrpcPackageSet._(this.__pack, List<StimGrpcPackage> items)
-      : super(__pack._package, items);
-
-        
-        
-  StimGrpcPackageXMessagesSetOp _messages;
-
-  StimGrpcPackageXMessagesSetOp get message =>
-      _messages ??= StimGrpcPackageXMessagesSetOp(this, __pack.message);
-
-  set messages(StimGrpcPackageXMessagesSetOp value) => _messages = value;
-                
-        
-  StimGrpcPackageXServicesSetOp _services;
-
-  StimGrpcPackageXServicesSetOp get service =>
-      _services ??= StimGrpcPackageXServicesSetOp(this, __pack.service);
-
-  set services(StimGrpcPackageXServicesSetOp value) => _services = value;
-        
-}
-
-abstract class StimGrpcPackageScope
-    extends StimScope<StimGrpcPackage, StimGrpcPackageSet> {
-    
+abstract class StimGrpcPackageScope extends StimScope<StimGrpcPackage, StimGrpcPackageSet> {
   StimGrpcPackageSymbols get s;
-    
-  StimGrpcPackage of(dynamic name, {dynamic messages, dynamic services});
+
+  StimGrpcPackage of(name, {dynamic messages, dynamic services});
 }
 
+
+class _StimGrpcPackageScopeImpl extends StimScopeImpl<StimGrpcPackage, StimGrpcPackageSet> implements StimGrpcPackageScope {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcPackageSymbols _s;
+
+  StimGrpcMessageSet messages;
+
+  StimGrpcServiceSet services;
+
+  @override
+  StimGrpcPackageSymbols get s {
+    return _s ??= StimGrpcPackageSymbols(this);
+  }
+  _StimGrpcPackageScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimGrpcPackage of(name, {dynamic messages, dynamic services}) {
+    return createAndClear(name)
+        ..messages += messages ?? _pack.message.noneSet;
+
+        ..services += services ?? _pack.service.noneSet;
+  }
+
+  @override
+  void clear(StimGrpcPackage symbol) {
+    symbol
+        ..messages = _pack.message.noneSet;
+
+        ..services = _pack.service.noneSet;
+  }
+
+  @override
+  StimGrpcPackage create() {
+    return StimGrpcPackage(this);
+  }
+
+  @override
+  StimGrpcPackageSet createSet(List<StimGrpcPackage> items) {
+    return StimGrpcPackageSet(_pack, items);
+  }
+}
 
         
 class StimGrpcPackageSymbols {
@@ -77,37 +111,3 @@ class StimGrpcPackageSymbols {
   }
 }
 
-class _StimGrpcPackageScopeImpl 
-    extends StimScopeImpl<StimGrpcPackage, StimGrpcPackageSet>
-    implements StimGrpcPackageScope {
-  final _StimGrpcGrpcImpl __pack;
-  
-  _StimGrpcPackageScopeImpl._(this.__pack) : super();
-
-  StimGrpcPackageSymbols _s;
-
-  @override
-  StimGrpcPackageSymbols get s => _s ??= StimGrpcPackageSymbols(this);
-  @override
-  void clear(StimGrpcPackage symbol) {
-    symbol
-      ..messages = __pack.message.noneSet
-      ..services = __pack.service.noneSet;    
-  }
-
-  @override
-  StimGrpcPackage create() => StimGrpcPackage._(this);
-
-  @override
-  StimGrpcPackage of(dynamic name, {dynamic messages, dynamic services}) {
-    return createAndClear(name)
-      ..messages += messages ?? __pack.message.noneSet
-      ..services += services ?? __pack.service.noneSet;    
-  }
-
-  @override
-  StimGrpcPackageSet createSet(List<StimGrpcPackage> items) {
-    return StimGrpcPackageSet._(__pack, items);
-  }
-}
-    

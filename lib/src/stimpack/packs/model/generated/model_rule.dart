@@ -1,57 +1,114 @@
 part of g3.stimpack.model.generated;
 
-class StimModelRule extends StimSymbol<StimModelRule, StimModelRuleSet > {
+
+
+class StimModelRule extends StimSymbol<StimModelRule, StimModelRuleSet> {
   StimModelRange range;
+
   StimModelPatternSet patterns;
 
-  StimModelRule._(_StimModelRuleScopeImpl scope)
-      : super(scope);
+  StimModelRule(_StimModelRuleScopeImpl scope):
+      super(scope);
+
 
   @override
   StimModelRule clone() {
     return super.clone()
-      ..range = range.clone()
-      ..patterns = patterns.clone();    
+        ..range = range.clone()
+        ..patterns = patterns.clone();
   }
 }
 
-class StimModelRuleSet
-    extends StimSymbolSet<StimModelRule, StimModelRuleSet> {
-  final _StimModelModelImpl __pack;
 
-  
-  StimModelRuleSet._(this.__pack, List<StimModelRule> items)
-      : super(__pack._rule, items);
+class StimModelRuleSet extends StimSymbolSet<StimModelRule, StimModelRuleSet> {
+  final _StimModelModelImpl _pack;
 
-         
-         
-  StimModelRuleXRangeSetOp _range;
+  StimModelRuleXRangeOp _range;
 
-  StimModelRuleXRangeSetOp get range =>
-      _range ??= StimModelRuleXRangeSetOp(this, __pack.range);
-
-  set range(StimModelRuleXRangeSetOp value) => _range = value;
-                
-        
   StimModelRuleXPatternsSetOp _patterns;
 
-  StimModelRuleXPatternsSetOp get pattern =>
-      _patterns ??= StimModelRuleXPatternsSetOp(this, __pack.pattern);
+  StimModelRuleXRangeOp get range {
+    return _range ??= StimModelRuleXRangeOp(this, _pack.range);
+  }
 
-  set patterns(StimModelRuleXPatternsSetOp value) => _patterns = value;
-        
+  set range(StimModelRuleXRangeOp value) {
+    _range = value;
+  }
+  StimModelRuleXPatternsSetOp get patterns {
+    return _patterns ??= StimModelRuleXPatternsSetOp(this, _pack.pattern);
+  }
+
+  set patterns(StimModelRuleXPatternsSetOp value) {
+    _patterns = value;
+  }
+  StimModelRuleSet(this._pack, List<StimModelRule> items):
+      super(_pack._rule, items);
 }
 
-abstract class StimModelRuleScope
-    extends StimScope<StimModelRule, StimModelRuleSet> {
-    
+
+abstract class StimModelRuleScope extends StimScope<StimModelRule, StimModelRuleSet> {
   StimModelRuleSymbols get s;
-    
-  StimModelRule of(dynamic name, {dynamic range, dynamic patterns});
+
+  StimModelRule of(name, {dynamic range, dynamic patterns});
+}
+
+
+class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRuleSet> implements StimModelRuleScope {
+  final _StimModelModelImpl _pack;
+
+  StimModelRuleSymbols _s;
+
+  StimModelRange range;
+
+  StimModelPatternSet patterns;
+
+  @override
+  StimModelRuleSymbols get s {
+    return _s ??= StimModelRuleSymbols(this);
+  }
+  _StimModelRuleScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimModelRule of(name, {dynamic range, dynamic patterns}) {
+    return createAndClear(name)
+        ..range = range ?? _pack.range.none
+        ..patterns += patterns ?? _pack.pattern.noneSet;
+  }
+
+  @override
+  void clear(StimModelRule symbol) {
+    symbol
+        ..range = _pack.range.none
+        ..patterns = _pack.pattern.noneSet;
+  }
+
+  @override
+  StimModelRule create() {
+    return StimModelRule(this);
+  }
+
+  @override
+  StimModelRuleSet createSet(List<StimModelRule> items) {
+    return StimModelRuleSet(_pack, items);
+  }
+}
+
+
+class StimModelRuleSymbols {
+  StimModelRuleSet all;
+
+
+  StimModelRuleSymbols(StimModelRuleScope scope) {
+    all = scope.noneSet;
+  }
 }
 
 
 class StimModelRuleValidationPreset {
+  StimModelRuleSet all;
+
   StimModelRule text;
 
   StimModelRule desc;
@@ -84,81 +141,24 @@ class StimModelRuleValidationPreset {
 
   StimModelRule alpha;
 
-  StimModelRuleSet all;
-
 
   StimModelRuleValidationPreset(StimModelRuleScope scope) {
-    text = scope.of('text');
-    desc = scope.of('desc');
-    longText = scope.of('long text');
-    shortText = scope.of('short text');
-    id = scope.of('id');
-    uuidV4 = scope.of('uuid v4');
-    slug = scope.of('slug');
-    ipv4 = scope.of('ipv4');
-    ipv6 = scope.of('ipv6');
-    ip = scope.of('ip');
-    url = scope.of('url');
-    email = scope.of('email');
-    username = scope.of('username');
-    password = scope.of('password');
-    phone = scope.of('phone');
-    alpha = scope.of('alpha');
+    all = scope.noneSet;
+    all += text = scope.of('text');
+    all += desc = scope.of('desc');
+    all += longText = scope.of('long text');
+    all += shortText = scope.of('short text');
+    all += id = scope.of('id');
+    all += uuidV4 = scope.of('uuid v4');
+    all += slug = scope.of('slug');
+    all += ipv4 = scope.of('ipv4');
+    all += ipv6 = scope.of('ipv6');
+    all += ip = scope.of('ip');
+    all += url = scope.of('url');
+    all += email = scope.of('email');
+    all += username = scope.of('username');
+    all += password = scope.of('password');
+    all += phone = scope.of('phone');
+    all += alpha = scope.of('alpha');
   }
 }
-
-        
-class StimModelRuleSymbols {
-  final _StimModelRuleScopeImpl _scope;
-  /// All symbols
-  StimModelRuleSet all;
-  StimModelRuleValidationPreset _validation;
-
-  StimModelRuleValidationPreset get validation {
-    return _validation ??= StimModelRuleValidationPreset(_scope);
-  }
-    StimModelRule unique;
-    StimModelRule required;
-  
-  StimModelRuleSymbols(this._scope) {
-    final _s = stimpack.model.rule;
-    all = _s.noneSet;
-    all += unique = _scope.of('unique');
-    all += required = _scope.of('required');
-  }
-}
-
-class _StimModelRuleScopeImpl 
-    extends StimScopeImpl<StimModelRule, StimModelRuleSet>
-    implements StimModelRuleScope {
-  final _StimModelModelImpl __pack;
-  
-  _StimModelRuleScopeImpl._(this.__pack) : super();
-
-  StimModelRuleSymbols _s;
-
-  @override
-  StimModelRuleSymbols get s => _s ??= StimModelRuleSymbols(this);
-  @override
-  void clear(StimModelRule symbol) {
-    symbol
-      ..range = __pack.range.none
-      ..patterns = __pack.pattern.noneSet;    
-  }
-
-  @override
-  StimModelRule create() => StimModelRule._(this);
-
-  @override
-  StimModelRule of(dynamic name, {dynamic range, dynamic patterns}) {
-    return createAndClear(name)
-      ..range = range ?? __pack.range.none
-      ..patterns += patterns ?? __pack.pattern.noneSet;    
-  }
-
-  @override
-  StimModelRuleSet createSet(List<StimModelRule> items) {
-    return StimModelRuleSet._(__pack, items);
-  }
-}
-    

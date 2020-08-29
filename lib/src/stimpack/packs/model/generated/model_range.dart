@@ -1,80 +1,74 @@
 part of g3.stimpack.model.generated;
 
-class StimModelRange extends StimSymbol<StimModelRange, StimModelRangeSet > {
 
 
-  StimModelRange._(_StimModelRangeScopeImpl scope)
-      : super(scope);
+class StimModelRange extends StimSymbol<StimModelRange, StimModelRangeSet> {
+  StimModelRange(_StimModelRangeScopeImpl scope):
+      super(scope);
+
 
   @override
   StimModelRange clone() {
-    return super.clone()
-;    
+    return super.clone();
   }
 }
 
-class StimModelRangeSet
-    extends StimSymbolSet<StimModelRange, StimModelRangeSet> {
-  final _StimModelModelImpl __pack;
 
-  
-  StimModelRangeSet._(this.__pack, List<StimModelRange> items)
-      : super(__pack._range, items);
+class StimModelRangeSet extends StimSymbolSet<StimModelRange, StimModelRangeSet> {
+  final _StimModelModelImpl _pack;
 
-
+  StimModelRangeSet(this._pack, List<StimModelRange> items):
+      super(_pack._range, items);
 }
 
-abstract class StimModelRangeScope
-    extends StimScope<StimModelRange, StimModelRangeSet> {
-    
+
+abstract class StimModelRangeScope extends StimScope<StimModelRange, StimModelRangeSet> {
   StimModelRangeSymbols get s;
-    
-  StimModelRange of(dynamic name);
+
+  StimModelRange of(name);
 }
 
 
-        
-class StimModelRangeSymbols {
-  final _StimModelRangeScopeImpl _scope;
-  /// All symbols
-  StimModelRangeSet all;
-
-  
-  StimModelRangeSymbols(this._scope) {
-    final _s = stimpack.model.range;
-    all = _s.noneSet;
-
-  }
-}
-
-class _StimModelRangeScopeImpl 
-    extends StimScopeImpl<StimModelRange, StimModelRangeSet>
-    implements StimModelRangeScope {
-  final _StimModelModelImpl __pack;
-  
-  _StimModelRangeScopeImpl._(this.__pack) : super();
+class _StimModelRangeScopeImpl extends StimScopeImpl<StimModelRange, StimModelRangeSet> implements StimModelRangeScope {
+  final _StimModelModelImpl _pack;
 
   StimModelRangeSymbols _s;
 
   @override
-  StimModelRangeSymbols get s => _s ??= StimModelRangeSymbols(this);
+  StimModelRangeSymbols get s {
+    return _s ??= StimModelRangeSymbols(this);
+  }
+  _StimModelRangeScopeImpl(this._pack):
+      super();
+
+
   @override
-  void clear(StimModelRange symbol) {
-    
+  StimModelRange of(name) {
+    return createAndClear(name);
   }
 
   @override
-  StimModelRange create() => StimModelRange._(this);
+  void clear(StimModelRange symbol) {
+    symbol;
+  }
 
   @override
-  StimModelRange of(dynamic name) {
-    return createAndClear(name)
-;    
+  StimModelRange create() {
+    return StimModelRange(this);
   }
 
   @override
   StimModelRangeSet createSet(List<StimModelRange> items) {
-    return StimModelRangeSet._(__pack, items);
+    return StimModelRangeSet(_pack, items);
   }
 }
-    
+
+
+class StimModelRangeSymbols {
+  StimModelRangeSet all;
+
+
+  StimModelRangeSymbols(StimModelRangeScope scope) {
+    all = scope.noneSet;
+  }
+}

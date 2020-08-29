@@ -28,6 +28,10 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${p}_${t}__${f}';
   }
 
+  // ===========================================================================
+  // Pack
+  // ===========================================================================
+
   Name packClassNameOf(StimMetaPack pack) {
     return ('stim' >> pack.name >> pack.name).pascal();
   }
@@ -36,12 +40,12 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return ('_stim' >> pack.name >> pack.name >> 'impl').pascal();
   }
 
-  Name _implClassNameOf(Name clazzName) {
-    return ('_' >> clazzName >> 'impl').pascal();
-  }
+  // ===========================================================================
+  // Symbol
+  // ===========================================================================
 
-  /// Gets the class name that defines a type. For example
-  /// if the [pack] is 'grpc' and the [type] is 'message' then
+  /// Gets the abstract class name that inherits from [StimSymbol].
+  /// For example if the [pack] is 'grpc' and the [type] is 'message' then
   /// the class name is 'StimGrpcMessage'.
   ///
   Name symbolClassNameOf(StimMetaPack pack, StimMetaType type) {
@@ -51,27 +55,118 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return ('stim' >> typePack.name >> type.name).pascal();
   }
 
-  Name typeImplClassNameOf(StimMetaPack pack, StimMetaType type) {
+  /// Gets a class name that implements the abstract class named by
+  /// [symbolClassNameOf]. For example, if the [pack] is 'grpc' and the
+  /// [type] is 'message' then the class name is '_StimGrpcMessageImpl'
+  ///
+  Name symbolImplClassNameOf(StimMetaPack pack, StimMetaType type) {
     return _implClassNameOf(symbolClassNameOf(pack, type));
   }
 
+  // ===========================================================================
+  // Symbol Set
+  // ===========================================================================
+
+  /// Gets an abstract class name that inherits from [StimSymbolSet].
+  /// For example if the [pack] is 'grpc' and the [type] is 'message' then
+  /// the class name is 'StimGrpcMessageSet'.
+  ///
   Name symbolSetClassNameOf(StimMetaPack pack, StimMetaType type) {
     return ('stim' >> pack.name >> type.name >> 'set').pascal();
   }
 
-  Name typeScopeClassNameOf(StimMetaPack pack, StimMetaType type) {
+  // ===========================================================================
+  // Field
+  // ===========================================================================
+  Name fieldSymbolOrSetNameOf(StimMetaPack pack, StimMetaField field) {
+    return field.isSet
+        ? symbolSetClassNameOf(pack, field.type)
+        : symbolClassNameOf(pack, field.type);
+  }
+
+  Name fieldOpOrSetOpNameOf(
+      StimMetaPack pack, StimMetaType type, StimMetaField field) {
+    return field.isSet
+        ? setOpClassNameOf(pack, type, field)
+        : opClassNameOf(pack, type, field);
+  }
+
+  // ===========================================================================
+  // Scope
+  // ===========================================================================
+
+  /// Gets an abstract class name that inherits from [StimScope].
+  /// For example if the [pack] is 'grpc' and the [type] is 'message' then
+  /// the class name is 'StimGrpcMessageScope'.
+  ///
+  Name scopeClassNameOf(StimMetaPack pack, StimMetaType type) {
     return ('stim' >> pack.name >> type.name >> 'scope').pascal();
   }
 
-  Name typeScopeImplClassNameOf(StimMetaPack pack, StimMetaType type) {
-    return _implClassNameOf(typeScopeClassNameOf(pack, type));
+  Name scopeImplClassNameOf(StimMetaPack pack, StimMetaType type) {
+    return _implClassNameOf(scopeClassNameOf(pack, type));
   }
+
+  // ===========================================================================
+  // Op
+  // ===========================================================================
+
+  /// Gets an abstract class name that inherits from [StimSymbolOp].
+  /// For example if the [pack] is 'grpc', the [type] is 'message', and [field]
+  /// is 'rule' then
+  /// the class name is 'StimGrpcMessageXRuleOp'.
+  ///
+  Name opClassNameOf(
+      StimMetaPack pack, StimMetaType type, StimMetaField field) {
+    return ('stim' >> pack.name >> type.name >> 'x' >> field.name >> 'op')
+        .pascal();
+  }
+
+  Name opImplClassNameOf(
+      StimMetaPack pack, StimMetaType type, StimMetaField field) {
+    return _implClassNameOf(opClassNameOf(pack, type, field));
+  }
+
+  // ===========================================================================
+  // Set Op
+  // ===========================================================================
+
+  /// Gets an abstract class name that inherits from [StimSymbolSetOp].
+  /// For example if the [pack] is 'grpc', the [type] is 'message', and [field]
+  /// is 'rule' then
+  /// the class name is 'StimGrpcMessageXRuleSetOp'.
+  Name setOpClassNameOf(
+      StimMetaPack pack, StimMetaType type, StimMetaField field) {
+    return ('stim' >> pack.name >> type.name >> 'x' >> field.name >> 'set op')
+        .pascal();
+  }
+
+  Name setOpImplClassNameOf(
+      StimMetaPack pack, StimMetaType type, StimMetaField field) {
+    return _implClassNameOf(setOpClassNameOf(pack, type, field));
+  }
+
+  // ===========================================================================
+  // Preset
+  // ===========================================================================
 
   Name presetClassNameOf(
       StimMetaPack pack, StimMetaType type, StimMetaPreset preset) {
-    return ('stim' >> pack.name >> type.name >> preset.name >> 'preset')
-        .pascal();
+    var name = preset.name;
+    if (name?.isNotEmpty != true) {
+      name = Name('default');
+    }
+
+    return ('stim' >> pack.name >> type.name >> name >> 'preset').pascal();
   }
+
+  Name symbolListClassNameOf(StimMetaPack pack, StimMetaType type) {
+    return ('stim' >> pack.name >> type.name >> 'symbols').pascal();
+  }
+
+  // ===========================================================================
+  // Code
+  // ===========================================================================
 
   CodePackage codePackageLibraryOf(StimMetaPack pack, {bool isPart}) {
     final path = ['g3', 'stimpack', pack.name];
@@ -95,5 +190,9 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
         child,
       ),
     );
+  }
+
+  Name _implClassNameOf(Name clazzName) {
+    return ('_' >> clazzName >> 'impl').pascal();
   }
 }

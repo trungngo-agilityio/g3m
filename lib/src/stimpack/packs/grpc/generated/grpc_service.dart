@@ -3,7 +3,7 @@ part of g3.stimpack.grpc.generated;
 
 
 class StimGrpcService extends StimSymbol<StimGrpcService, StimGrpcServiceSet> {
-  StimGrpcMethod methods;
+  StimGrpcMethodSet methods;
 
   StimGrpcService(_StimGrpcServiceScopeImpl scope):
       super(scope);
@@ -20,37 +20,64 @@ class StimGrpcService extends StimSymbol<StimGrpcService, StimGrpcServiceSet> {
 class StimGrpcServiceSet extends StimSymbolSet<StimGrpcService, StimGrpcServiceSet> {
   final _StimGrpcGrpcImpl _pack;
 
+  StimGrpcServiceXMethodsSetOp _methods;
+
+  StimGrpcServiceXMethodsSetOp get methods {
+    return _methods ??= StimGrpcServiceXMethodsSetOp(this, _pack.method);
+  }
+
+  set methods(StimGrpcServiceXMethodsSetOp value) {
+    _methods = value;
+  }
   StimGrpcServiceSet(this._pack, List<StimGrpcService> items):
       super(_pack._service, items);
 }
 
-class StimGrpcServiceSet
-    extends StimSymbolSet<StimGrpcService, StimGrpcServiceSet> {
-  final _StimGrpcGrpcImpl __pack;
 
-  
-  StimGrpcServiceSet._(this.__pack, List<StimGrpcService> items)
-      : super(__pack._service, items);
-
-        
-        
-  StimGrpcServiceXMethodsSetOp _methods;
-
-  StimGrpcServiceXMethodsSetOp get method =>
-      _methods ??= StimGrpcServiceXMethodsSetOp(this, __pack.method);
-
-  set methods(StimGrpcServiceXMethodsSetOp value) => _methods = value;
-        
-}
-
-abstract class StimGrpcServiceScope
-    extends StimScope<StimGrpcService, StimGrpcServiceSet> {
-    
+abstract class StimGrpcServiceScope extends StimScope<StimGrpcService, StimGrpcServiceSet> {
   StimGrpcServiceSymbols get s;
-    
-  StimGrpcService of(dynamic name, {dynamic methods});
+
+  StimGrpcService of(name, {dynamic methods});
 }
 
+
+class _StimGrpcServiceScopeImpl extends StimScopeImpl<StimGrpcService, StimGrpcServiceSet> implements StimGrpcServiceScope {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcServiceSymbols _s;
+
+  StimGrpcMethodSet methods;
+
+  @override
+  StimGrpcServiceSymbols get s {
+    return _s ??= StimGrpcServiceSymbols(this);
+  }
+  _StimGrpcServiceScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimGrpcService of(name, {dynamic methods}) {
+    return createAndClear(name)
+        ..methods += methods ?? _pack.method.noneSet;
+  }
+
+  @override
+  void clear(StimGrpcService symbol) {
+    symbol
+        ..methods = _pack.method.noneSet;
+  }
+
+  @override
+  StimGrpcService create() {
+    return StimGrpcService(this);
+  }
+
+  @override
+  StimGrpcServiceSet createSet(List<StimGrpcService> items) {
+    return StimGrpcServiceSet(_pack, items);
+  }
+}
 
         
 class StimGrpcServiceSymbols {
@@ -66,35 +93,3 @@ class StimGrpcServiceSymbols {
   }
 }
 
-class _StimGrpcServiceScopeImpl 
-    extends StimScopeImpl<StimGrpcService, StimGrpcServiceSet>
-    implements StimGrpcServiceScope {
-  final _StimGrpcGrpcImpl __pack;
-  
-  _StimGrpcServiceScopeImpl._(this.__pack) : super();
-
-  StimGrpcServiceSymbols _s;
-
-  @override
-  StimGrpcServiceSymbols get s => _s ??= StimGrpcServiceSymbols(this);
-  @override
-  void clear(StimGrpcService symbol) {
-    symbol
-      ..methods = __pack.method.noneSet;    
-  }
-
-  @override
-  StimGrpcService create() => StimGrpcService._(this);
-
-  @override
-  StimGrpcService of(dynamic name, {dynamic methods}) {
-    return createAndClear(name)
-      ..methods += methods ?? __pack.method.noneSet;    
-  }
-
-  @override
-  StimGrpcServiceSet createSet(List<StimGrpcService> items) {
-    return StimGrpcServiceSet._(__pack, items);
-  }
-}
-    

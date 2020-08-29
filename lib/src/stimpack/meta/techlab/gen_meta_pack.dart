@@ -73,7 +73,7 @@ class StimGenMetaPack implements Node {
     for (final type in pack.types) {
       properties.add(CodeProperty.of(
         name: type.name,
-        type: config.typeScopeClassNameOf(pack, type),
+        type: config.scopeClassNameOf(pack, type),
         getter: CodePropertyGetter.of(body: null),
       ));
     }
@@ -99,7 +99,7 @@ class StimGenMetaPack implements Node {
     final initFunctionCall = CodeFunctionCall.of(name: 'init');
 
     for (final type in pack.types) {
-      var scopeImplClass = config.typeScopeImplClassNameOf(pack, type);
+      var scopeImplClass = config.scopeImplClassNameOf(pack, type);
       final field = CodeField.of(
         name: type.name,
         type: scopeImplClass,

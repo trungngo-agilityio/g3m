@@ -21,25 +21,47 @@ class StimGrpcMethodResponseSet extends StimSymbolSet<StimGrpcMethodResponse, St
       super(_pack._methodResponse, items);
 }
 
-class StimGrpcMethodResponseSet
-    extends StimSymbolSet<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
-  final _StimGrpcGrpcImpl __pack;
 
-  
-  StimGrpcMethodResponseSet._(this.__pack, List<StimGrpcMethodResponse> items)
-      : super(__pack._methodResponse, items);
-
-
-}
-
-abstract class StimGrpcMethodResponseScope
-    extends StimScope<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
-    
+abstract class StimGrpcMethodResponseScope extends StimScope<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
   StimGrpcMethodResponseSymbols get s;
-    
-  StimGrpcMethodResponse of(dynamic name);
+
+  StimGrpcMethodResponse of(name);
 }
 
+
+class _StimGrpcMethodResponseScopeImpl extends StimScopeImpl<StimGrpcMethodResponse, StimGrpcMethodResponseSet> implements StimGrpcMethodResponseScope {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcMethodResponseSymbols _s;
+
+  @override
+  StimGrpcMethodResponseSymbols get s {
+    return _s ??= StimGrpcMethodResponseSymbols(this);
+  }
+  _StimGrpcMethodResponseScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimGrpcMethodResponse of(name) {
+    return createAndClear(name)
+  }
+
+  @override
+  void clear(StimGrpcMethodResponse symbol) {
+    symbol
+  }
+
+  @override
+  StimGrpcMethodResponse create() {
+    return StimGrpcMethodResponse(this);
+  }
+
+  @override
+  StimGrpcMethodResponseSet createSet(List<StimGrpcMethodResponse> items) {
+    return StimGrpcMethodResponseSet(_pack, items);
+  }
+}
 
         
 class StimGrpcMethodResponseSymbols {
@@ -55,34 +77,3 @@ class StimGrpcMethodResponseSymbols {
   }
 }
 
-class _StimGrpcMethodResponseScopeImpl 
-    extends StimScopeImpl<StimGrpcMethodResponse, StimGrpcMethodResponseSet>
-    implements StimGrpcMethodResponseScope {
-  final _StimGrpcGrpcImpl __pack;
-  
-  _StimGrpcMethodResponseScopeImpl._(this.__pack) : super();
-
-  StimGrpcMethodResponseSymbols _s;
-
-  @override
-  StimGrpcMethodResponseSymbols get s => _s ??= StimGrpcMethodResponseSymbols(this);
-  @override
-  void clear(StimGrpcMethodResponse symbol) {
-    
-  }
-
-  @override
-  StimGrpcMethodResponse create() => StimGrpcMethodResponse._(this);
-
-  @override
-  StimGrpcMethodResponse of(dynamic name) {
-    return createAndClear(name)
-;    
-  }
-
-  @override
-  StimGrpcMethodResponseSet createSet(List<StimGrpcMethodResponse> items) {
-    return StimGrpcMethodResponseSet._(__pack, items);
-  }
-}
-    

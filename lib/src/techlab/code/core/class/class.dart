@@ -126,8 +126,8 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
             CodeStatement.of(
               Container([
                 CodeFieldList.of(fields),
-                CodeConstructorList.of(constructors),
                 CodePropertyList.of(properties),
+                CodeConstructorList.of(constructors),
                 CodeFunctionList.of(functions),
               ]),
             ),

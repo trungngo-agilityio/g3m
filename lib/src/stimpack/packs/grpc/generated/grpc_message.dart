@@ -20,37 +20,64 @@ class StimGrpcMessage extends StimSymbol<StimGrpcMessage, StimGrpcMessageSet> {
 class StimGrpcMessageSet extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageSet> {
   final _StimGrpcGrpcImpl _pack;
 
+  StimGrpcMessageXTypeOp _type;
+
+  StimGrpcMessageXTypeOp get type {
+    return _type ??= StimGrpcMessageXTypeOp(this, _pack.type);
+  }
+
+  set type(StimGrpcMessageXTypeOp value) {
+    _type = value;
+  }
   StimGrpcMessageSet(this._pack, List<StimGrpcMessage> items):
       super(_pack._message, items);
 }
 
-class StimGrpcMessageSet
-    extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageSet> {
-  final _StimGrpcGrpcImpl __pack;
 
-  
-  StimGrpcMessageSet._(this.__pack, List<StimGrpcMessage> items)
-      : super(__pack._message, items);
-
-         
-         
-  StimGrpcMessageXTypeSetOp _type;
-
-  StimGrpcMessageXTypeSetOp get type =>
-      _type ??= StimGrpcMessageXTypeSetOp(this, __pack.type);
-
-  set type(StimGrpcMessageXTypeSetOp value) => _type = value;
-        
-}
-
-abstract class StimGrpcMessageScope
-    extends StimScope<StimGrpcMessage, StimGrpcMessageSet> {
-    
+abstract class StimGrpcMessageScope extends StimScope<StimGrpcMessage, StimGrpcMessageSet> {
   StimGrpcMessageSymbols get s;
-    
-  StimGrpcMessage of(dynamic name, {dynamic type});
+
+  StimGrpcMessage of(name, {dynamic type});
 }
 
+
+class _StimGrpcMessageScopeImpl extends StimScopeImpl<StimGrpcMessage, StimGrpcMessageSet> implements StimGrpcMessageScope {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcMessageSymbols _s;
+
+  StimModelType type;
+
+  @override
+  StimGrpcMessageSymbols get s {
+    return _s ??= StimGrpcMessageSymbols(this);
+  }
+  _StimGrpcMessageScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimGrpcMessage of(name, {dynamic type}) {
+    return createAndClear(name)
+        ..type += type ?? _pack.type.none;
+  }
+
+  @override
+  void clear(StimGrpcMessage symbol) {
+    symbol
+        ..type = _pack.type.none;
+  }
+
+  @override
+  StimGrpcMessage create() {
+    return StimGrpcMessage(this);
+  }
+
+  @override
+  StimGrpcMessageSet createSet(List<StimGrpcMessage> items) {
+    return StimGrpcMessageSet(_pack, items);
+  }
+}
 
         
 class StimGrpcMessageSymbols {
@@ -66,35 +93,3 @@ class StimGrpcMessageSymbols {
   }
 }
 
-class _StimGrpcMessageScopeImpl 
-    extends StimScopeImpl<StimGrpcMessage, StimGrpcMessageSet>
-    implements StimGrpcMessageScope {
-  final _StimGrpcGrpcImpl __pack;
-  
-  _StimGrpcMessageScopeImpl._(this.__pack) : super();
-
-  StimGrpcMessageSymbols _s;
-
-  @override
-  StimGrpcMessageSymbols get s => _s ??= StimGrpcMessageSymbols(this);
-  @override
-  void clear(StimGrpcMessage symbol) {
-    symbol
-      ..type = __pack.type.none;    
-  }
-
-  @override
-  StimGrpcMessage create() => StimGrpcMessage._(this);
-
-  @override
-  StimGrpcMessage of(dynamic name, {dynamic type}) {
-    return createAndClear(name)
-      ..type = type ?? __pack.type.none;    
-  }
-
-  @override
-  StimGrpcMessageSet createSet(List<StimGrpcMessage> items) {
-    return StimGrpcMessageSet._(__pack, items);
-  }
-}
-    

@@ -23,45 +23,79 @@ class StimGrpcMethod extends StimSymbol<StimGrpcMethod, StimGrpcMethodSet> {
 class StimGrpcMethodSet extends StimSymbolSet<StimGrpcMethod, StimGrpcMethodSet> {
   final _StimGrpcGrpcImpl _pack;
 
+  StimGrpcMethodXRequestOp _request;
+
+  StimGrpcMethodXResponseOp _response;
+
+  StimGrpcMethodXRequestOp get request {
+    return _request ??= StimGrpcMethodXRequestOp(this, _pack.methodRequest);
+  }
+
+  set request(StimGrpcMethodXRequestOp value) {
+    _request = value;
+  }
+  StimGrpcMethodXResponseOp get response {
+    return _response ??= StimGrpcMethodXResponseOp(this, _pack.methodResponse);
+  }
+
+  set response(StimGrpcMethodXResponseOp value) {
+    _response = value;
+  }
   StimGrpcMethodSet(this._pack, List<StimGrpcMethod> items):
       super(_pack._method, items);
 }
 
-class StimGrpcMethodSet
-    extends StimSymbolSet<StimGrpcMethod, StimGrpcMethodSet> {
-  final _StimGrpcGrpcImpl __pack;
 
-  
-  StimGrpcMethodSet._(this.__pack, List<StimGrpcMethod> items)
-      : super(__pack._method, items);
-
-         
-         
-  StimGrpcMethodXRequestSetOp _request;
-
-  StimGrpcMethodXRequestSetOp get request =>
-      _request ??= StimGrpcMethodXRequestSetOp(this, __pack.methodRequest);
-
-  set request(StimGrpcMethodXRequestSetOp value) => _request = value;
-                 
-         
-  StimGrpcMethodXResponseSetOp _response;
-
-  StimGrpcMethodXResponseSetOp get response =>
-      _response ??= StimGrpcMethodXResponseSetOp(this, __pack.methodResponse);
-
-  set response(StimGrpcMethodXResponseSetOp value) => _response = value;
-        
-}
-
-abstract class StimGrpcMethodScope
-    extends StimScope<StimGrpcMethod, StimGrpcMethodSet> {
-    
+abstract class StimGrpcMethodScope extends StimScope<StimGrpcMethod, StimGrpcMethodSet> {
   StimGrpcMethodSymbols get s;
-    
-  StimGrpcMethod of(dynamic name, {dynamic request, dynamic response});
+
+  StimGrpcMethod of(name, {dynamic request, dynamic response});
 }
 
+
+class _StimGrpcMethodScopeImpl extends StimScopeImpl<StimGrpcMethod, StimGrpcMethodSet> implements StimGrpcMethodScope {
+  final _StimGrpcGrpcImpl _pack;
+
+  StimGrpcMethodSymbols _s;
+
+  StimGrpcMethodRequest request;
+
+  StimGrpcMethodResponse response;
+
+  @override
+  StimGrpcMethodSymbols get s {
+    return _s ??= StimGrpcMethodSymbols(this);
+  }
+  _StimGrpcMethodScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimGrpcMethod of(name, {dynamic request, dynamic response}) {
+    return createAndClear(name)
+        ..request += request ?? _pack.methodRequest.none;
+
+        ..response += response ?? _pack.methodResponse.none;
+  }
+
+  @override
+  void clear(StimGrpcMethod symbol) {
+    symbol
+        ..request = _pack.methodRequest.none;
+
+        ..response = _pack.methodResponse.none;
+  }
+
+  @override
+  StimGrpcMethod create() {
+    return StimGrpcMethod(this);
+  }
+
+  @override
+  StimGrpcMethodSet createSet(List<StimGrpcMethod> items) {
+    return StimGrpcMethodSet(_pack, items);
+  }
+}
 
         
 class StimGrpcMethodSymbols {
@@ -77,37 +111,3 @@ class StimGrpcMethodSymbols {
   }
 }
 
-class _StimGrpcMethodScopeImpl 
-    extends StimScopeImpl<StimGrpcMethod, StimGrpcMethodSet>
-    implements StimGrpcMethodScope {
-  final _StimGrpcGrpcImpl __pack;
-  
-  _StimGrpcMethodScopeImpl._(this.__pack) : super();
-
-  StimGrpcMethodSymbols _s;
-
-  @override
-  StimGrpcMethodSymbols get s => _s ??= StimGrpcMethodSymbols(this);
-  @override
-  void clear(StimGrpcMethod symbol) {
-    symbol
-      ..request = __pack.methodRequest.none
-      ..response = __pack.methodResponse.none;    
-  }
-
-  @override
-  StimGrpcMethod create() => StimGrpcMethod._(this);
-
-  @override
-  StimGrpcMethod of(dynamic name, {dynamic request, dynamic response}) {
-    return createAndClear(name)
-      ..request = request ?? __pack.methodRequest.none
-      ..response = response ?? __pack.methodResponse.none;    
-  }
-
-  @override
-  StimGrpcMethodSet createSet(List<StimGrpcMethod> items) {
-    return StimGrpcMethodSet._(__pack, items);
-  }
-}
-    

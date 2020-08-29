@@ -107,6 +107,8 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     );
   }
 
+  factory CodeType.ofVoid() => CodeType.simple('void');
+
   factory CodeType.simple(String name) => CodeType.of(
         name: CodeTypeName.of(name),
       );

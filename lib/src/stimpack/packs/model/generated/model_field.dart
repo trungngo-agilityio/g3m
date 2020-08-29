@@ -1,57 +1,114 @@
 part of g3.stimpack.model.generated;
 
-class StimModelField extends StimSymbol<StimModelField, StimModelFieldSet > {
+
+
+class StimModelField extends StimSymbol<StimModelField, StimModelFieldSet> {
   StimModelType type;
+
   StimModelRuleSet rules;
 
-  StimModelField._(_StimModelFieldScopeImpl scope)
-      : super(scope);
+  StimModelField(_StimModelFieldScopeImpl scope):
+      super(scope);
+
 
   @override
   StimModelField clone() {
     return super.clone()
-      ..type = type.clone()
-      ..rules = rules.clone();    
+        ..type = type.clone()
+        ..rules = rules.clone();
   }
 }
 
-class StimModelFieldSet
-    extends StimSymbolSet<StimModelField, StimModelFieldSet> {
-  final _StimModelModelImpl __pack;
 
-  
-  StimModelFieldSet._(this.__pack, List<StimModelField> items)
-      : super(__pack._field, items);
+class StimModelFieldSet extends StimSymbolSet<StimModelField, StimModelFieldSet> {
+  final _StimModelModelImpl _pack;
 
-         
-         
-  StimModelFieldXTypeSetOp _type;
+  StimModelFieldXTypeOp _type;
 
-  StimModelFieldXTypeSetOp get type =>
-      _type ??= StimModelFieldXTypeSetOp(this, __pack.type);
-
-  set type(StimModelFieldXTypeSetOp value) => _type = value;
-                
-        
   StimModelFieldXRulesSetOp _rules;
 
-  StimModelFieldXRulesSetOp get rule =>
-      _rules ??= StimModelFieldXRulesSetOp(this, __pack.rule);
+  StimModelFieldXTypeOp get type {
+    return _type ??= StimModelFieldXTypeOp(this, _pack.type);
+  }
 
-  set rules(StimModelFieldXRulesSetOp value) => _rules = value;
-        
+  set type(StimModelFieldXTypeOp value) {
+    _type = value;
+  }
+  StimModelFieldXRulesSetOp get rules {
+    return _rules ??= StimModelFieldXRulesSetOp(this, _pack.rule);
+  }
+
+  set rules(StimModelFieldXRulesSetOp value) {
+    _rules = value;
+  }
+  StimModelFieldSet(this._pack, List<StimModelField> items):
+      super(_pack._field, items);
 }
 
-abstract class StimModelFieldScope
-    extends StimScope<StimModelField, StimModelFieldSet> {
-    
+
+abstract class StimModelFieldScope extends StimScope<StimModelField, StimModelFieldSet> {
   StimModelFieldSymbols get s;
-    
-  StimModelField of(dynamic name, {dynamic type, dynamic rules});
+
+  StimModelField of(name, {dynamic type, dynamic rules});
+}
+
+
+class _StimModelFieldScopeImpl extends StimScopeImpl<StimModelField, StimModelFieldSet> implements StimModelFieldScope {
+  final _StimModelModelImpl _pack;
+
+  StimModelFieldSymbols _s;
+
+  StimModelType type;
+
+  StimModelRuleSet rules;
+
+  @override
+  StimModelFieldSymbols get s {
+    return _s ??= StimModelFieldSymbols(this);
+  }
+  _StimModelFieldScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimModelField of(name, {dynamic type, dynamic rules}) {
+    return createAndClear(name)
+        ..type = type ?? _pack.type.none
+        ..rules += rules ?? _pack.rule.noneSet;
+  }
+
+  @override
+  void clear(StimModelField symbol) {
+    symbol
+        ..type = _pack.type.none
+        ..rules = _pack.rule.noneSet;
+  }
+
+  @override
+  StimModelField create() {
+    return StimModelField(this);
+  }
+
+  @override
+  StimModelFieldSet createSet(List<StimModelField> items) {
+    return StimModelFieldSet(_pack, items);
+  }
+}
+
+
+class StimModelFieldSymbols {
+  StimModelFieldSet all;
+
+
+  StimModelFieldSymbols(StimModelFieldScope scope) {
+    all = scope.noneSet;
+  }
 }
 
 
 class StimModelFieldUserPreset {
+  StimModelFieldSet all;
+
   StimModelField userId;
 
   StimModelField userName;
@@ -86,31 +143,33 @@ class StimModelFieldUserPreset {
 
   StimModelField avatarUrl;
 
-  StimModelFieldSet all;
-
 
   StimModelFieldUserPreset(StimModelFieldScope scope) {
-    userId = scope.of('user id');
-    userName = scope.of('user name');
-    email = scope.of('email');
-    emailVerified = scope.of('email verified');
-    phone = scope.of('phone');
-    phoneVerified = scope.of('phone verified');
-    password = scope.of('password');
-    confirmPassword = scope.of('confirm password');
-    name = scope.of('name');
-    desc = scope.of('desc');
-    firstName = scope.of('first name');
-    lastName = scope.of('last name');
-    middleName = scope.of('middle name');
-    gender = scope.of('gender');
-    birthday = scope.of('birthday');
-    photoUrl = scope.of('photo url');
-    avatarUrl = scope.of('avatar url');
+    all = scope.noneSet;
+    all += userId = scope.of('user id');
+    all += userName = scope.of('user name');
+    all += email = scope.of('email');
+    all += emailVerified = scope.of('email verified');
+    all += phone = scope.of('phone');
+    all += phoneVerified = scope.of('phone verified');
+    all += password = scope.of('password');
+    all += confirmPassword = scope.of('confirm password');
+    all += name = scope.of('name');
+    all += desc = scope.of('desc');
+    all += firstName = scope.of('first name');
+    all += lastName = scope.of('last name');
+    all += middleName = scope.of('middle name');
+    all += gender = scope.of('gender');
+    all += birthday = scope.of('birthday');
+    all += photoUrl = scope.of('photo url');
+    all += avatarUrl = scope.of('avatar url');
   }
 }
 
+
 class StimModelFieldPaginationPreset {
+  StimModelFieldSet all;
+
   StimModelField total;
 
   StimModelField count;
@@ -127,22 +186,24 @@ class StimModelFieldPaginationPreset {
 
   StimModelField limit;
 
-  StimModelFieldSet all;
-
 
   StimModelFieldPaginationPreset(StimModelFieldScope scope) {
-    total = scope.of('total');
-    count = scope.of('count');
-    size = scope.of('size');
-    index = scope.of('index');
-    pageSize = scope.of('page size');
-    pageIndex = scope.of('page index');
-    offset = scope.of('offset');
-    limit = scope.of('limit');
+    all = scope.noneSet;
+    all += total = scope.of('total');
+    all += count = scope.of('count');
+    all += size = scope.of('size');
+    all += index = scope.of('index');
+    all += pageSize = scope.of('page size');
+    all += pageIndex = scope.of('page index');
+    all += offset = scope.of('offset');
+    all += limit = scope.of('limit');
   }
 }
 
+
 class StimModelFieldDbPreset {
+  StimModelFieldSet all;
+
   StimModelField id;
 
   StimModelField createdAt;
@@ -151,76 +212,12 @@ class StimModelFieldDbPreset {
 
   StimModelField version;
 
-  StimModelFieldSet all;
-
 
   StimModelFieldDbPreset(StimModelFieldScope scope) {
-    id = scope.of('id');
-    createdAt = scope.of('created at');
-    modifiedAt = scope.of('modified at');
-    version = scope.of('version');
+    all = scope.noneSet;
+    all += id = scope.of('id');
+    all += createdAt = scope.of('created at');
+    all += modifiedAt = scope.of('modified at');
+    all += version = scope.of('version');
   }
 }
-
-        
-class StimModelFieldSymbols {
-  final _StimModelFieldScopeImpl _scope;
-  /// All symbols
-  StimModelFieldSet all;
-  StimModelFieldUserPreset _user;
-
-  StimModelFieldUserPreset get user {
-    return _user ??= StimModelFieldUserPreset(_scope);
-  }
-  StimModelFieldPaginationPreset _pagination;
-
-  StimModelFieldPaginationPreset get pagination {
-    return _pagination ??= StimModelFieldPaginationPreset(_scope);
-  }
-  StimModelFieldDbPreset _db;
-
-  StimModelFieldDbPreset get db {
-    return _db ??= StimModelFieldDbPreset(_scope);
-  }
-  
-  StimModelFieldSymbols(this._scope) {
-    final _s = stimpack.model.field;
-    all = _s.noneSet;
-
-  }
-}
-
-class _StimModelFieldScopeImpl 
-    extends StimScopeImpl<StimModelField, StimModelFieldSet>
-    implements StimModelFieldScope {
-  final _StimModelModelImpl __pack;
-  
-  _StimModelFieldScopeImpl._(this.__pack) : super();
-
-  StimModelFieldSymbols _s;
-
-  @override
-  StimModelFieldSymbols get s => _s ??= StimModelFieldSymbols(this);
-  @override
-  void clear(StimModelField symbol) {
-    symbol
-      ..type = __pack.type.none
-      ..rules = __pack.rule.noneSet;    
-  }
-
-  @override
-  StimModelField create() => StimModelField._(this);
-
-  @override
-  StimModelField of(dynamic name, {dynamic type, dynamic rules}) {
-    return createAndClear(name)
-      ..type = type ?? __pack.type.none
-      ..rules += rules ?? __pack.rule.noneSet;    
-  }
-
-  @override
-  StimModelFieldSet createSet(List<StimModelField> items) {
-    return StimModelFieldSet._(__pack, items);
-  }
-}
-    

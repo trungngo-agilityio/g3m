@@ -1,57 +1,114 @@
 part of g3.stimpack.model.generated;
 
-class StimModelType extends StimSymbol<StimModelType, StimModelTypeSet > {
+
+
+class StimModelType extends StimSymbol<StimModelType, StimModelTypeSet> {
   StimModelFieldSet fields;
+
   StimModelRuleSet rules;
 
-  StimModelType._(_StimModelTypeScopeImpl scope)
-      : super(scope);
+  StimModelType(_StimModelTypeScopeImpl scope):
+      super(scope);
+
 
   @override
   StimModelType clone() {
     return super.clone()
-      ..fields = fields.clone()
-      ..rules = rules.clone();    
+        ..fields = fields.clone()
+        ..rules = rules.clone();
   }
 }
 
-class StimModelTypeSet
-    extends StimSymbolSet<StimModelType, StimModelTypeSet> {
-  final _StimModelModelImpl __pack;
 
-  
-  StimModelTypeSet._(this.__pack, List<StimModelType> items)
-      : super(__pack._type, items);
+class StimModelTypeSet extends StimSymbolSet<StimModelType, StimModelTypeSet> {
+  final _StimModelModelImpl _pack;
 
-        
-        
   StimModelTypeXFieldsSetOp _fields;
 
-  StimModelTypeXFieldsSetOp get field =>
-      _fields ??= StimModelTypeXFieldsSetOp(this, __pack.field);
-
-  set fields(StimModelTypeXFieldsSetOp value) => _fields = value;
-                
-        
   StimModelTypeXRulesSetOp _rules;
 
-  StimModelTypeXRulesSetOp get rule =>
-      _rules ??= StimModelTypeXRulesSetOp(this, __pack.rule);
+  StimModelTypeXFieldsSetOp get fields {
+    return _fields ??= StimModelTypeXFieldsSetOp(this, _pack.field);
+  }
 
-  set rules(StimModelTypeXRulesSetOp value) => _rules = value;
-        
+  set fields(StimModelTypeXFieldsSetOp value) {
+    _fields = value;
+  }
+  StimModelTypeXRulesSetOp get rules {
+    return _rules ??= StimModelTypeXRulesSetOp(this, _pack.rule);
+  }
+
+  set rules(StimModelTypeXRulesSetOp value) {
+    _rules = value;
+  }
+  StimModelTypeSet(this._pack, List<StimModelType> items):
+      super(_pack._type, items);
 }
 
-abstract class StimModelTypeScope
-    extends StimScope<StimModelType, StimModelTypeSet> {
-    
+
+abstract class StimModelTypeScope extends StimScope<StimModelType, StimModelTypeSet> {
   StimModelTypeSymbols get s;
-    
-  StimModelType of(dynamic name, {dynamic fields, dynamic rules});
+
+  StimModelType of(name, {dynamic fields, dynamic rules});
+}
+
+
+class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelTypeSet> implements StimModelTypeScope {
+  final _StimModelModelImpl _pack;
+
+  StimModelTypeSymbols _s;
+
+  StimModelFieldSet fields;
+
+  StimModelRuleSet rules;
+
+  @override
+  StimModelTypeSymbols get s {
+    return _s ??= StimModelTypeSymbols(this);
+  }
+  _StimModelTypeScopeImpl(this._pack):
+      super();
+
+
+  @override
+  StimModelType of(name, {dynamic fields, dynamic rules}) {
+    return createAndClear(name)
+        ..fields += fields ?? _pack.field.noneSet
+        ..rules += rules ?? _pack.rule.noneSet;
+  }
+
+  @override
+  void clear(StimModelType symbol) {
+    symbol
+        ..fields = _pack.field.noneSet
+        ..rules = _pack.rule.noneSet;
+  }
+
+  @override
+  StimModelType create() {
+    return StimModelType(this);
+  }
+
+  @override
+  StimModelTypeSet createSet(List<StimModelType> items) {
+    return StimModelTypeSet(_pack, items);
+  }
+}
+
+
+class StimModelTypeSymbols {
+  StimModelTypeSet all;
+
+
+  StimModelTypeSymbols(StimModelTypeScope scope) {
+    all = scope.noneSet;
+  }
 }
 
 
 class StimModelTypeGrpcPreset {
+  StimModelTypeSet all;
+
   StimModelType double;
 
   StimModelType float;
@@ -80,28 +137,30 @@ class StimModelTypeGrpcPreset {
 
   StimModelType bytes;
 
-  StimModelTypeSet all;
-
 
   StimModelTypeGrpcPreset(StimModelTypeScope scope) {
-    double = scope.of('double');
-    float = scope.of('float');
-    int32 = scope.of('int32');
-    int64 = scope.of('int64');
-    uint32 = scope.of('uint32');
-    uint64 = scope.of('uint64');
-    sint32 = scope.of('sint32');
-    sint64 = scope.of('sint64');
-    fixed32 = scope.of('fixed32');
-    fixed64 = scope.of('fixed64');
-    sfixed32 = scope.of('sfixed32');
-    sfixed64 = scope.of('sfixed64');
-    string = scope.of('string');
-    bytes = scope.of('bytes');
+    all = scope.noneSet;
+    all += double = scope.of('double');
+    all += float = scope.of('float');
+    all += int32 = scope.of('int32');
+    all += int64 = scope.of('int64');
+    all += uint32 = scope.of('uint32');
+    all += uint64 = scope.of('uint64');
+    all += sint32 = scope.of('sint32');
+    all += sint64 = scope.of('sint64');
+    all += fixed32 = scope.of('fixed32');
+    all += fixed64 = scope.of('fixed64');
+    all += sfixed32 = scope.of('sfixed32');
+    all += sfixed64 = scope.of('sfixed64');
+    all += string = scope.of('string');
+    all += bytes = scope.of('bytes');
   }
 }
 
+
 class StimModelTypeDatePreset {
+  StimModelTypeSet all;
+
   StimModelType timestamp;
 
   StimModelType date;
@@ -116,112 +175,47 @@ class StimModelTypeDatePreset {
 
   StimModelType localDatetime;
 
-  StimModelTypeSet all;
-
 
   StimModelTypeDatePreset(StimModelTypeScope scope) {
-    timestamp = scope.of('timestamp');
-    date = scope.of('date');
-    time = scope.of('time');
-    datetime = scope.of('datetime');
-    localDate = scope.of('local date');
-    localTime = scope.of('local time');
-    localDatetime = scope.of('local datetime');
+    all = scope.noneSet;
+    all += timestamp = scope.of('timestamp');
+    all += date = scope.of('date');
+    all += time = scope.of('time');
+    all += datetime = scope.of('datetime');
+    all += localDate = scope.of('local date');
+    all += localTime = scope.of('local time');
+    all += localDatetime = scope.of('local datetime');
   }
 }
 
+
 class StimModelTypeAuthPreset {
+  StimModelTypeSet all;
+
   StimModelType user;
 
   StimModelType userProfile;
 
   StimModelType accessToken;
 
-  StimModelTypeSet all;
-
 
   StimModelTypeAuthPreset(StimModelTypeScope scope) {
-    user = scope.of('user');
-    userProfile = scope.of('user profile');
-    accessToken = scope.of('access token');
+    all = scope.noneSet;
+    all += user = scope.of('user');
+    all += userProfile = scope.of('user profile');
+    all += accessToken = scope.of('access token');
   }
 }
 
-class StimModelTypeCommonPreset {
-  StimModelType url;
 
+class StimModelTypeCommonPreset {
   StimModelTypeSet all;
+
+  StimModelType url;
 
 
   StimModelTypeCommonPreset(StimModelTypeScope scope) {
-    url = scope.of('url');
+    all = scope.noneSet;
+    all += url = scope.of('url');
   }
 }
-
-        
-class StimModelTypeSymbols {
-  final _StimModelTypeScopeImpl _scope;
-  /// All symbols
-  StimModelTypeSet all;
-  StimModelTypeGrpcPreset _grpc;
-
-  StimModelTypeGrpcPreset get grpc {
-    return _grpc ??= StimModelTypeGrpcPreset(_scope);
-  }
-  StimModelTypeDatePreset _date;
-
-  StimModelTypeDatePreset get date {
-    return _date ??= StimModelTypeDatePreset(_scope);
-  }
-  StimModelTypeAuthPreset _auth;
-
-  StimModelTypeAuthPreset get auth {
-    return _auth ??= StimModelTypeAuthPreset(_scope);
-  }
-  StimModelTypeCommonPreset _common;
-
-  StimModelTypeCommonPreset get common {
-    return _common ??= StimModelTypeCommonPreset(_scope);
-  }
-  
-  StimModelTypeSymbols(this._scope) {
-    final _s = stimpack.model.type;
-    all = _s.noneSet;
-
-  }
-}
-
-class _StimModelTypeScopeImpl 
-    extends StimScopeImpl<StimModelType, StimModelTypeSet>
-    implements StimModelTypeScope {
-  final _StimModelModelImpl __pack;
-  
-  _StimModelTypeScopeImpl._(this.__pack) : super();
-
-  StimModelTypeSymbols _s;
-
-  @override
-  StimModelTypeSymbols get s => _s ??= StimModelTypeSymbols(this);
-  @override
-  void clear(StimModelType symbol) {
-    symbol
-      ..fields = __pack.field.noneSet
-      ..rules = __pack.rule.noneSet;    
-  }
-
-  @override
-  StimModelType create() => StimModelType._(this);
-
-  @override
-  StimModelType of(dynamic name, {dynamic fields, dynamic rules}) {
-    return createAndClear(name)
-      ..fields += fields ?? __pack.field.noneSet
-      ..rules += rules ?? __pack.rule.noneSet;    
-  }
-
-  @override
-  StimModelTypeSet createSet(List<StimModelType> items) {
-    return StimModelTypeSet._(__pack, items);
-  }
-}
-    

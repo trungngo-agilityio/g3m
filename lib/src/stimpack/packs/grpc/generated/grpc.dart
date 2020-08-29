@@ -45,16 +45,6 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
 
   _StimGrpcServiceScopeImpl _service;
 
-
-  _StimGrpcGrpcImpl() {
-    _package = _StimGrpcPackageScopeImpl(this);
-    _message = _StimGrpcMessageScopeImpl(this);
-    _method = _StimGrpcMethodScopeImpl(this);
-    _methodRequest = _StimGrpcMethodRequestScopeImpl(this);
-    _methodResponse = _StimGrpcMethodResponseScopeImpl(this);
-    _service = _StimGrpcServiceScopeImpl(this);
-  }
-
   @override
   StimMetaPack get meta {
     return _meta;
@@ -83,6 +73,16 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
   _StimGrpcServiceScopeImpl get service {
     return _service;
   }
+
+  _StimGrpcGrpcImpl() {
+    _package = _StimGrpcPackageScopeImpl(this);
+    _message = _StimGrpcMessageScopeImpl(this);
+    _method = _StimGrpcMethodScopeImpl(this);
+    _methodRequest = _StimGrpcMethodRequestScopeImpl(this);
+    _methodResponse = _StimGrpcMethodResponseScopeImpl(this);
+    _service = _StimGrpcServiceScopeImpl(this);
+  }
+
 
   void init() {
     _package.init();
