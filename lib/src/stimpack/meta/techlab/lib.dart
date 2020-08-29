@@ -12,6 +12,7 @@ part 'gen_meta.dart';
 part 'gen_meta_pack.dart';
 
 part 'gen_meta_type.dart';
+part 'gen_meta_preset.dart';
 
 part 'gen_meta_type_field.dart';
 

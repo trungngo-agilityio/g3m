@@ -13,6 +13,8 @@ abstract class StimScope<T, S> {
   /// All reference to symbol sets produced by this scope
   /// should use this instance instead of null.
   S get noneSet;
+
+  S createSet(List<T> symbols);
 }
 
 abstract class StimScopeImpl<T extends StimSymbol<T, S>,

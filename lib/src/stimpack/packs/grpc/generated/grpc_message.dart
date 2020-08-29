@@ -35,21 +35,13 @@ class StimGrpcMessageSet extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageS
 
 
 abstract class StimGrpcMessageScope extends StimScope<StimGrpcMessage, StimGrpcMessageSet> {
-  StimGrpcMessageSymbols get s;
-
   StimGrpcMessage of(name, {dynamic type});
 }
 
 
 class _StimGrpcMessageScopeImpl extends StimScopeImpl<StimGrpcMessage, StimGrpcMessageSet> implements StimGrpcMessageScope {
-  StimGrpcMessageSymbols _s;
-
   StimModelType type;
 
-  @override
-  StimGrpcMessageSymbols get s {
-    return _s ??= StimGrpcMessageSymbols(this);
-  }
   _StimGrpcMessageScopeImpl():
       super();
 
@@ -74,15 +66,5 @@ class _StimGrpcMessageScopeImpl extends StimScopeImpl<StimGrpcMessage, StimGrpcM
   @override
   StimGrpcMessageSet createSet(List<StimGrpcMessage> items) {
     return StimGrpcMessageSet(this, items);
-  }
-}
-
-
-class StimGrpcMessageSymbols {
-  StimGrpcMessageSet all;
-
-
-  StimGrpcMessageSymbols(StimGrpcMessageScope scope) {
-    all = scope.noneSet;
   }
 }

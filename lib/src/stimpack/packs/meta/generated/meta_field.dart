@@ -47,23 +47,15 @@ class StimMetaFieldSet extends StimSymbolSet<StimMetaField, StimMetaFieldSet> {
 
 
 abstract class StimMetaFieldScope extends StimScope<StimMetaField, StimMetaFieldSet> {
-  StimMetaFieldSymbols get s;
-
   StimMetaField of(name, {dynamic kind, dynamic type});
 }
 
 
 class _StimMetaFieldScopeImpl extends StimScopeImpl<StimMetaField, StimMetaFieldSet> implements StimMetaFieldScope {
-  StimMetaFieldSymbols _s;
-
   StimMetaKind kind;
 
   StimMetaType type;
 
-  @override
-  StimMetaFieldSymbols get s {
-    return _s ??= StimMetaFieldSymbols(this);
-  }
   _StimMetaFieldScopeImpl():
       super();
 
@@ -90,15 +82,5 @@ class _StimMetaFieldScopeImpl extends StimScopeImpl<StimMetaField, StimMetaField
   @override
   StimMetaFieldSet createSet(List<StimMetaField> items) {
     return StimMetaFieldSet(this, items);
-  }
-}
-
-
-class StimMetaFieldSymbols {
-  StimMetaFieldSet all;
-
-
-  StimMetaFieldSymbols(StimMetaFieldScope scope) {
-    all = scope.noneSet;
   }
 }

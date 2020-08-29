@@ -137,11 +137,15 @@ const validationRules = [
 ];
 
 void main() {
+  final pack = stimpack.meta.pack.of('model');
+
   final tField = t.of('field'),
       tType = t.of('type'),
       tRule = t.of('rule'),
       tPattern = t.of('pattern'),
       tRange = t.of('range');
+
+  final tMetaType = stimpack.meta.meta.types.firstWhereNameIs('type');
 
   final fType = f.of('type', type: tType);
   final fRules = f.listOf('rules', type: tRule);
@@ -157,27 +161,24 @@ void main() {
   // Preset settings
   // ---------------------------------------------------------------------------
 
-  tRule.presets +=
-      p.ofValues('validation', [...validationRules, ...validationPatterns]);
-
-  tPattern.presets += p.ofValues('validation', validationPatterns);
-
-  tField.presets += p.ofValues('user', userProfileFields) +
-      p.ofValues('pagination', paginationFields) +
-      p.ofValues('db', dbFields);
-
-  tType.presets += p.ofValues('grpc', grpcTypes) +
-      p.ofValues('date', dateTypes) +
-      p.ofValues('auth', authModels) +
-      p.ofValues('common', commonTypes);
+  pack.presets += p.ofValues('validation',
+          type: tRule, values: [...validationRules, ...validationPatterns]) +
+      p.ofValues('validation', type: tPattern, values: validationPatterns) +
+      p.ofValues('user', type: tField, values: userProfileFields) +
+      p.ofValues('pagination', type: tField, values: paginationFields) +
+      p.ofValues('db', type: tField, values: dbFields) +
+      p.ofValues('grpc', type: tType, values: grpcTypes) +
+      p.ofValues('date', type: tType, values: dateTypes) +
+      p.ofValues('auth', type: tType, values: authModels) +
+      p.ofValues('common', type: tType, values: commonTypes) +
+  p.ofValues('model', type: tMetaType, values: ['type', 'rule', 'field'])
+  ;
 
   // ---------------------------------------------------------------------------
   // Builds final pack
   // ---------------------------------------------------------------------------
-  final allTypes = tType + tField + tRule + tPattern + tRange;
-  final meta = m.pack.of('model', types: allTypes);
+  pack.types = tType + tField + tRule + tPattern + tRange;
+  pack.types.pack.set(pack);
 
-  allTypes.pack.set(meta);
-
-  stimpackGen(meta, 'lib/src/stimpack/packs/model/generated');
+  stimpackGen(pack, 'lib/src/stimpack/packs/model/generated');
 }

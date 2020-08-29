@@ -3,6 +3,7 @@ library g3.stimpack.model.generated;
 
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
+part 'model_presets.dart';
 part 'model_type.dart';
 part 'model_type__fields.dart';
 part 'model_type__rules.dart';
@@ -86,14 +87,15 @@ class _StimModelModelImpl  implements StimModelModel {
 
   void _buildMeta() {
     final meta = stimpack.meta;
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
+    final pack = stimpack.meta.pack.of('model');
+    final f = meta.field, t = meta.type.forModel, p = meta.preset, v = meta.value;
     final listKind = meta.kind.forMeta.list;
 
-    final  typeType = t.of('type');
-    final  fieldType = t.of('field');
-    final  ruleType = t.of('rule');
-    final  patternType = t.of('pattern');
-    final  rangeType = t.of('range');
+    final  typeType = t.type;
+    final  fieldType = t.field;
+    final  ruleType = t.rule;
+    final  patternType = t.pattern;
+    final  rangeType = t.range;
 
     typeType.fields += 
         f.of('fields', kind: listKind, type: fieldType) + 
@@ -107,42 +109,42 @@ class _StimModelModelImpl  implements StimModelModel {
         f.of('range', kind: listKind, type: rangeType) + 
         f.of('patterns', kind: listKind, type: patternType);
 
-    typeType.presets += 
-        p.of('grpc', values: 
-              v.of('double') + 
-              v.of('float') + 
-              v.of('int32') + 
-              v.of('int64') + 
-              v.of('uint32') + 
-              v.of('uint64') + 
-              v.of('sint32') + 
-              v.of('sint64') + 
-              v.of('fixed32') + 
-              v.of('fixed64') + 
-              v.of('sfixed32') + 
-              v.of('sfixed64') + 
-              v.of('string') + 
-              v.of('bytes'),)
+    pack.presets += 
+        p.of('validation', type: stimpack.meta.type.forModel.rule, values: 
+              v.of('unique') + 
+              v.of('required') + 
+              v.of('text') + 
+              v.of('desc') + 
+              v.of('long text') + 
+              v.of('short text') + 
+              v.of('id') + 
+              v.of('uuid v4') + 
+              v.of('slug') + 
+              v.of('ipv4') + 
+              v.of('ipv6') + 
+              v.of('ip') + 
+              v.of('url') + 
+              v.of('email') + 
+              v.of('username') + 
+              v.of('password') + 
+              v.of('phone') + 
+              v.of('alpha'),)
          + 
-        p.of('date', values: 
-              v.of('timestamp') + 
-              v.of('date') + 
-              v.of('time') + 
-              v.of('datetime') + 
-              v.of('local date') + 
-              v.of('local time') + 
-              v.of('local datetime'),)
+        p.of('validation', type: stimpack.meta.type.forModel.pattern, values: 
+              v.of('id') + 
+              v.of('uuid v4') + 
+              v.of('slug') + 
+              v.of('ipv4') + 
+              v.of('ipv6') + 
+              v.of('ip') + 
+              v.of('url') + 
+              v.of('email') + 
+              v.of('username') + 
+              v.of('password') + 
+              v.of('phone') + 
+              v.of('alpha'),)
          + 
-        p.of('auth', values: 
-              v.of('user') + 
-              v.of('user profile') + 
-              v.of('access token'),)
-         + 
-        p.of('common', values: 
-              v.of('url'),);
-
-    fieldType.presets += 
-        p.of('user', values: 
+        p.of('user', type: stimpack.meta.type.forModel.field, values: 
               v.of('user id') + 
               v.of('user name') + 
               v.of('email') + 
@@ -161,7 +163,7 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('photo url') + 
               v.of('avatar url'),)
          + 
-        p.of('pagination', values: 
+        p.of('pagination', type: stimpack.meta.type.forModel.field, values: 
               v.of('total') + 
               v.of('count') + 
               v.of('size') + 
@@ -171,51 +173,55 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('offset') + 
               v.of('limit'),)
          + 
-        p.of('db', values: 
+        p.of('db', type: stimpack.meta.type.forModel.field, values: 
               v.of('id') + 
               v.of('created at') + 
               v.of('modified at') + 
-              v.of('version'),);
+              v.of('version'),)
+         + 
+        p.of('grpc', type: stimpack.meta.type.forModel.type, values: 
+              v.of('double') + 
+              v.of('float') + 
+              v.of('int32') + 
+              v.of('int64') + 
+              v.of('uint32') + 
+              v.of('uint64') + 
+              v.of('sint32') + 
+              v.of('sint64') + 
+              v.of('fixed32') + 
+              v.of('fixed64') + 
+              v.of('sfixed32') + 
+              v.of('sfixed64') + 
+              v.of('string') + 
+              v.of('bytes'),)
+         + 
+        p.of('date', type: stimpack.meta.type.forModel.type, values: 
+              v.of('timestamp') + 
+              v.of('date') + 
+              v.of('time') + 
+              v.of('datetime') + 
+              v.of('local date') + 
+              v.of('local time') + 
+              v.of('local datetime'),)
+         + 
+        p.of('auth', type: stimpack.meta.type.forModel.type, values: 
+              v.of('user') + 
+              v.of('user profile') + 
+              v.of('access token'),)
+         + 
+        p.of('common', type: stimpack.meta.type.forModel.type, values: 
+              v.of('url'),)
+         + 
+        p.of('model', type: stimpack.meta.type.forMeta.type, values: 
+              v.of('type') + 
+              v.of('field') + 
+              v.of('rule') + 
+              v.of('pattern') + 
+              v.of('range'),);
 
-    ruleType.presets += 
-        p.of('validation', values: 
-              v.of('unique') + 
-              v.of('required') + 
-              v.of('text') + 
-              v.of('desc') + 
-              v.of('long text') + 
-              v.of('short text') + 
-              v.of('id') + 
-              v.of('uuid v4') + 
-              v.of('slug') + 
-              v.of('ipv4') + 
-              v.of('ipv6') + 
-              v.of('ip') + 
-              v.of('url') + 
-              v.of('email') + 
-              v.of('username') + 
-              v.of('password') + 
-              v.of('phone') + 
-              v.of('alpha'),);
-
-    patternType.presets += 
-        p.of('validation', values: 
-              v.of('id') + 
-              v.of('uuid v4') + 
-              v.of('slug') + 
-              v.of('ipv4') + 
-              v.of('ipv6') + 
-              v.of('ip') + 
-              v.of('url') + 
-              v.of('email') + 
-              v.of('username') + 
-              v.of('password') + 
-              v.of('phone') + 
-              v.of('alpha'),);
-
-    final packTypes = typeType + fieldType + ruleType + patternType + rangeType;
-    _meta = meta.pack.of('model', types: packTypes);
-    packTypes.pack.set(_meta);
+    pack.types += typeType + fieldType + ruleType + patternType + rangeType;
+    pack.types.pack.set(pack);
+    _meta = pack;
   }
   // region custom code of model stimpack
 

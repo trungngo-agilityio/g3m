@@ -2,6 +2,7 @@ library g3.stimpack.meta.generated;
 
 
 import 'package:g3m/stimpack_base.dart';
+part 'meta_presets.dart';
 part 'meta_kind.dart';
 part 'meta_type.dart';
 part 'meta_type__fields.dart';
@@ -12,8 +13,10 @@ part 'meta_field__kind.dart';
 part 'meta_field__type.dart';
 part 'meta_pack.dart';
 part 'meta_pack__types.dart';
+part 'meta_pack__presets.dart';
 part 'meta_preset.dart';
 part 'meta_preset__values.dart';
+part 'meta_preset__type.dart';
 part 'meta_value.dart';
 
 
@@ -96,15 +99,16 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
 
   void _buildMeta() {
     final meta = this;
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
+    final pack = stimpack.meta.pack.of('meta');
+    final f = meta.field, t = meta.type.forMeta, p = meta.preset, v = meta.value;
     final listKind = meta.kind.forMeta.list;
 
-    final  kindType = t.of('kind');
-    final  typeType = t.of('type');
-    final  fieldType = t.of('field');
-    final  packType = t.of('pack');
-    final  presetType = t.of('preset');
-    final  valueType = t.of('value');
+    final  kindType = t.kind;
+    final  typeType = t.type;
+    final  fieldType = t.field;
+    final  packType = t.pack;
+    final  presetType = t.preset;
+    final  valueType = t.value;
 
     typeType.fields += 
         f.of('fields', kind: listKind, type: fieldType) + 
@@ -116,18 +120,28 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
         f.of('type', type: typeType);
 
     packType.fields += 
-        f.of('types', kind: listKind, type: typeType);
+        f.of('types', kind: listKind, type: typeType) + 
+        f.of('presets', kind: listKind, type: presetType);
 
     presetType.fields += 
-        f.of('values', kind: listKind, type: valueType);
+        f.of('values', kind: listKind, type: valueType) + 
+        f.of('type', type: typeType);
 
-    kindType.presets += 
-        p.of('meta', values: 
-              v.of('list'),);
+    pack.presets += 
+        p.of('meta', type: stimpack.meta.type.forMeta.kind, values: 
+              v.of('list'),)
+         + 
+        p.of('meta', type: stimpack.meta.type.forMeta.type, values: 
+              v.of('kind') + 
+              v.of('type') + 
+              v.of('field') + 
+              v.of('pack') + 
+              v.of('preset') + 
+              v.of('value'),);
 
-    final packTypes = kindType + typeType + fieldType + packType + presetType + valueType;
-    _meta = meta.pack.of('meta', types: packTypes);
-    packTypes.pack.set(_meta);
+    pack.types += kindType + typeType + fieldType + packType + presetType + valueType;
+    pack.types.pack.set(pack);
+    _meta = pack;
   }
   // region custom code of meta stimpack
 
@@ -136,7 +150,7 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
     /// build all preset values here
   }
 
-// endregion custom code of meta stimpack
+  // endregion custom code of meta stimpack
 }
 StimMetaMeta  _stimMetaMeta;
 

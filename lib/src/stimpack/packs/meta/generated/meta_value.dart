@@ -23,19 +23,11 @@ class StimMetaValueSet extends StimSymbolSet<StimMetaValue, StimMetaValueSet> {
 
 
 abstract class StimMetaValueScope extends StimScope<StimMetaValue, StimMetaValueSet> {
-  StimMetaValueSymbols get s;
-
   StimMetaValue of(name);
 }
 
 
 class _StimMetaValueScopeImpl extends StimScopeImpl<StimMetaValue, StimMetaValueSet> implements StimMetaValueScope {
-  StimMetaValueSymbols _s;
-
-  @override
-  StimMetaValueSymbols get s {
-    return _s ??= StimMetaValueSymbols(this);
-  }
   _StimMetaValueScopeImpl():
       super();
 
@@ -58,15 +50,5 @@ class _StimMetaValueScopeImpl extends StimScopeImpl<StimMetaValue, StimMetaValue
   @override
   StimMetaValueSet createSet(List<StimMetaValue> items) {
     return StimMetaValueSet(this, items);
-  }
-}
-
-
-class StimMetaValueSymbols {
-  StimMetaValueSet all;
-
-
-  StimMetaValueSymbols(StimMetaValueScope scope) {
-    all = scope.noneSet;
   }
 }

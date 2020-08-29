@@ -17,6 +17,13 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${p}_${t}';
   }
 
+  String presetFileNameOf(
+    StimMetaPack pack,
+  ) {
+    final packName = pack.name.snake();
+    return '${packName}_presets';
+  }
+
   String typeFieldFileNameOf(
     StimMetaPack pack,
     StimMetaType type,
@@ -168,11 +175,6 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return ('stim' >> typePack.name >> type.name >> name >> 'preset').pascal();
   }
 
-  Name symbolListClassNameOf(StimMetaPack pack, StimMetaType type) {
-    final typePack = type.pack ?? pack;
-    return ('stim' >> typePack.name >> type.name >> 'symbols').pascal();
-  }
-
   // ===========================================================================
   // Code
   // ===========================================================================
@@ -180,6 +182,12 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   String publicTypeScopeOf(StimMetaPack pack, StimMetaType type) {
     final fieldTypePack = type.pack ?? pack;
     return 'stimpack.${fieldTypePack.name.camel()}.${type.name.camel()}';
+  }
+
+  String publicMetaTypeName(StimMetaPack pack, StimMetaType type) {
+    final fieldTypePack = type.pack ?? pack;
+    final presetName = ('for' >> fieldTypePack.name).camel();
+    return 'stimpack.meta.type.${presetName}.${type.name.camel()}';
   }
 
   CodePackage codePackageLibraryOf(StimMetaPack pack, {bool isPart}) {

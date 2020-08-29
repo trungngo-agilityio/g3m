@@ -23,19 +23,11 @@ class StimGrpcMethodRequestSet extends StimSymbolSet<StimGrpcMethodRequest, Stim
 
 
 abstract class StimGrpcMethodRequestScope extends StimScope<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
-  StimGrpcMethodRequestSymbols get s;
-
   StimGrpcMethodRequest of(name);
 }
 
 
 class _StimGrpcMethodRequestScopeImpl extends StimScopeImpl<StimGrpcMethodRequest, StimGrpcMethodRequestSet> implements StimGrpcMethodRequestScope {
-  StimGrpcMethodRequestSymbols _s;
-
-  @override
-  StimGrpcMethodRequestSymbols get s {
-    return _s ??= StimGrpcMethodRequestSymbols(this);
-  }
   _StimGrpcMethodRequestScopeImpl():
       super();
 
@@ -58,15 +50,5 @@ class _StimGrpcMethodRequestScopeImpl extends StimScopeImpl<StimGrpcMethodReques
   @override
   StimGrpcMethodRequestSet createSet(List<StimGrpcMethodRequest> items) {
     return StimGrpcMethodRequestSet(this, items);
-  }
-}
-
-
-class StimGrpcMethodRequestSymbols {
-  StimGrpcMethodRequestSet all;
-
-
-  StimGrpcMethodRequestSymbols(StimGrpcMethodRequestScope scope) {
-    all = scope.noneSet;
   }
 }

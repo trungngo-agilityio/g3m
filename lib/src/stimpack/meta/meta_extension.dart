@@ -2,13 +2,21 @@ part of g3.stimpack.meta;
 
 extension StimMetaPresetScopeExtension on StimMetaPresetScope {
   /// Creates a presets from a given list of [values].
-  StimMetaPreset ofValues(dynamic name, List<dynamic> values) {
+  StimMetaPreset ofValues(
+    String name, {
+    @required StimMetaType type,
+    @required List<dynamic> values,
+  }) {
+    assert(name?.isNotEmpty == true, 'name is required');
+    assert(type != null, 'type is required');
+    assert(values?.isNotEmpty == true, 'values is required');
+
     final v = stimpack.meta.value;
     var pv = stimpack.meta.value.noneSet;
     for (final i in values) {
       pv += v.of(i);
     }
-    return stimpack.meta.preset.of(name, values: pv);
+    return stimpack.meta.preset.of(name, type: type, values: pv);
   }
 }
 

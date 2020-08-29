@@ -23,19 +23,11 @@ class StimGrpcMethodResponseSet extends StimSymbolSet<StimGrpcMethodResponse, St
 
 
 abstract class StimGrpcMethodResponseScope extends StimScope<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
-  StimGrpcMethodResponseSymbols get s;
-
   StimGrpcMethodResponse of(name);
 }
 
 
 class _StimGrpcMethodResponseScopeImpl extends StimScopeImpl<StimGrpcMethodResponse, StimGrpcMethodResponseSet> implements StimGrpcMethodResponseScope {
-  StimGrpcMethodResponseSymbols _s;
-
-  @override
-  StimGrpcMethodResponseSymbols get s {
-    return _s ??= StimGrpcMethodResponseSymbols(this);
-  }
   _StimGrpcMethodResponseScopeImpl():
       super();
 
@@ -58,15 +50,5 @@ class _StimGrpcMethodResponseScopeImpl extends StimScopeImpl<StimGrpcMethodRespo
   @override
   StimGrpcMethodResponseSet createSet(List<StimGrpcMethodResponse> items) {
     return StimGrpcMethodResponseSet(this, items);
-  }
-}
-
-
-class StimGrpcMethodResponseSymbols {
-  StimGrpcMethodResponseSet all;
-
-
-  StimGrpcMethodResponseSymbols(StimGrpcMethodResponseScope scope) {
-    all = scope.noneSet;
   }
 }

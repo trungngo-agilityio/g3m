@@ -47,23 +47,15 @@ class StimGrpcPackageSet extends StimSymbolSet<StimGrpcPackage, StimGrpcPackageS
 
 
 abstract class StimGrpcPackageScope extends StimScope<StimGrpcPackage, StimGrpcPackageSet> {
-  StimGrpcPackageSymbols get s;
-
   StimGrpcPackage of(name, {dynamic messages, dynamic services});
 }
 
 
 class _StimGrpcPackageScopeImpl extends StimScopeImpl<StimGrpcPackage, StimGrpcPackageSet> implements StimGrpcPackageScope {
-  StimGrpcPackageSymbols _s;
-
   StimGrpcMessageSet messages;
 
   StimGrpcServiceSet services;
 
-  @override
-  StimGrpcPackageSymbols get s {
-    return _s ??= StimGrpcPackageSymbols(this);
-  }
   _StimGrpcPackageScopeImpl():
       super();
 
@@ -90,15 +82,5 @@ class _StimGrpcPackageScopeImpl extends StimScopeImpl<StimGrpcPackage, StimGrpcP
   @override
   StimGrpcPackageSet createSet(List<StimGrpcPackage> items) {
     return StimGrpcPackageSet(this, items);
-  }
-}
-
-
-class StimGrpcPackageSymbols {
-  StimGrpcPackageSet all;
-
-
-  StimGrpcPackageSymbols(StimGrpcPackageScope scope) {
-    all = scope.noneSet;
   }
 }

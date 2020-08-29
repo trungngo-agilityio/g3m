@@ -5,6 +5,8 @@ part of g3.stimpack.meta.generated;
 class StimMetaPreset extends StimSymbol<StimMetaPreset, StimMetaPresetSet> {
   StimMetaValueSet values;
 
+  StimMetaType type;
+
   StimMetaPreset(_StimMetaPresetScopeImpl scope):
       super(scope);
 
@@ -12,7 +14,8 @@ class StimMetaPreset extends StimSymbol<StimMetaPreset, StimMetaPresetSet> {
   @override
   StimMetaPreset clone() {
     return super.clone()
-        ..values = values.clone();
+        ..values = values.clone()
+        ..type = type.clone();
   }
 }
 
@@ -22,6 +25,8 @@ class StimMetaPresetSet extends StimSymbolSet<StimMetaPreset, StimMetaPresetSet>
 
   StimMetaPresetXValuesSetOp _values;
 
+  StimMetaPresetXTypeOp _type;
+
   StimMetaPresetXValuesSetOp get values {
     return _values ??= StimMetaPresetXValuesSetOp(this, stimpack.meta.value);
   }
@@ -29,41 +34,44 @@ class StimMetaPresetSet extends StimSymbolSet<StimMetaPreset, StimMetaPresetSet>
   set values(StimMetaPresetXValuesSetOp value) {
     _values = value;
   }
+  StimMetaPresetXTypeOp get type {
+    return _type ??= StimMetaPresetXTypeOp(this, stimpack.meta.type);
+  }
+
+  set type(StimMetaPresetXTypeOp value) {
+    _type = value;
+  }
   StimMetaPresetSet(this._scope, List<StimMetaPreset> items):
       super(_scope, items);
 }
 
 
 abstract class StimMetaPresetScope extends StimScope<StimMetaPreset, StimMetaPresetSet> {
-  StimMetaPresetSymbols get s;
-
-  StimMetaPreset of(name, {dynamic values});
+  StimMetaPreset of(name, {dynamic values, dynamic type});
 }
 
 
 class _StimMetaPresetScopeImpl extends StimScopeImpl<StimMetaPreset, StimMetaPresetSet> implements StimMetaPresetScope {
-  StimMetaPresetSymbols _s;
-
   StimMetaValueSet values;
 
-  @override
-  StimMetaPresetSymbols get s {
-    return _s ??= StimMetaPresetSymbols(this);
-  }
+  StimMetaType type;
+
   _StimMetaPresetScopeImpl():
       super();
 
 
   @override
-  StimMetaPreset of(name, {dynamic values}) {
+  StimMetaPreset of(name, {dynamic values, dynamic type}) {
     return createAndClear(name)
-        ..values += values ?? stimpack.meta.value.noneSet;
+        ..values += values ?? stimpack.meta.value.noneSet
+        ..type = type ?? stimpack.meta.type.none;
   }
 
   @override
   void clear(StimMetaPreset symbol) {
     symbol
-        ..values = stimpack.meta.value.noneSet;
+        ..values = stimpack.meta.value.noneSet
+        ..type = stimpack.meta.type.none;
   }
 
   @override
@@ -74,15 +82,5 @@ class _StimMetaPresetScopeImpl extends StimScopeImpl<StimMetaPreset, StimMetaPre
   @override
   StimMetaPresetSet createSet(List<StimMetaPreset> items) {
     return StimMetaPresetSet(this, items);
-  }
-}
-
-
-class StimMetaPresetSymbols {
-  StimMetaPresetSet all;
-
-
-  StimMetaPresetSymbols(StimMetaPresetScope scope) {
-    all = scope.noneSet;
   }
 }

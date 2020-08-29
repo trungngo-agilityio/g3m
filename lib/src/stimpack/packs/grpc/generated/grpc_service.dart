@@ -35,21 +35,13 @@ class StimGrpcServiceSet extends StimSymbolSet<StimGrpcService, StimGrpcServiceS
 
 
 abstract class StimGrpcServiceScope extends StimScope<StimGrpcService, StimGrpcServiceSet> {
-  StimGrpcServiceSymbols get s;
-
   StimGrpcService of(name, {dynamic methods});
 }
 
 
 class _StimGrpcServiceScopeImpl extends StimScopeImpl<StimGrpcService, StimGrpcServiceSet> implements StimGrpcServiceScope {
-  StimGrpcServiceSymbols _s;
-
   StimGrpcMethodSet methods;
 
-  @override
-  StimGrpcServiceSymbols get s {
-    return _s ??= StimGrpcServiceSymbols(this);
-  }
   _StimGrpcServiceScopeImpl():
       super();
 
@@ -74,15 +66,5 @@ class _StimGrpcServiceScopeImpl extends StimScopeImpl<StimGrpcService, StimGrpcS
   @override
   StimGrpcServiceSet createSet(List<StimGrpcService> items) {
     return StimGrpcServiceSet(this, items);
-  }
-}
-
-
-class StimGrpcServiceSymbols {
-  StimGrpcServiceSet all;
-
-
-  StimGrpcServiceSymbols(StimGrpcServiceScope scope) {
-    all = scope.noneSet;
   }
 }

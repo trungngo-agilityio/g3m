@@ -11,6 +11,7 @@ class StimGenMeta implements Node {
       _buildPackFile(),
       _buildTypeFiles(),
       _buildTypeFieldFiles(),
+      _buildPresetFile(),
     ]);
   }
 
@@ -31,5 +32,9 @@ class StimGenMeta implements Node {
     }
 
     return Container(files);
+  }
+
+  Node _buildPresetFile() {
+    return StimGenMetaPreset(pack);
   }
 }

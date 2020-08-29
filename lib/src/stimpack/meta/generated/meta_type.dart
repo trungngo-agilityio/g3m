@@ -59,25 +59,17 @@ class StimMetaTypeSet extends StimSymbolSet<StimMetaType, StimMetaTypeSet> {
 
 
 abstract class StimMetaTypeScope extends StimScope<StimMetaType, StimMetaTypeSet> {
-  StimMetaTypeSymbols get s;
-
   StimMetaType of(name, {dynamic fields, dynamic presets, dynamic pack});
 }
 
 
 class _StimMetaTypeScopeImpl extends StimScopeImpl<StimMetaType, StimMetaTypeSet> implements StimMetaTypeScope {
-  StimMetaTypeSymbols _s;
-
   StimMetaFieldSet fields;
 
   StimMetaPresetSet presets;
 
   StimMetaPack pack;
 
-  @override
-  StimMetaTypeSymbols get s {
-    return _s ??= StimMetaTypeSymbols(this);
-  }
   _StimMetaTypeScopeImpl():
       super();
 
@@ -106,15 +98,5 @@ class _StimMetaTypeScopeImpl extends StimScopeImpl<StimMetaType, StimMetaTypeSet
   @override
   StimMetaTypeSet createSet(List<StimMetaType> items) {
     return StimMetaTypeSet(this, items);
-  }
-}
-
-
-class StimMetaTypeSymbols {
-  StimMetaTypeSet all;
-
-
-  StimMetaTypeSymbols(StimMetaTypeScope scope) {
-    all = scope.noneSet;
   }
 }

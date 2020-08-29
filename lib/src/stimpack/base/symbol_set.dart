@@ -23,11 +23,11 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
     return _scope.createSet(List<T>.of(_items));
   }
 
-  set add(dynamic another) {}
-
-  set set(dynamic another) {}
-
-  set remove(dynamic another) {}
+  // TODO: FIXME, dynamic?
+  void set(Iterable<T> items) {
+    _items.clear();
+    if (items != null) _items.addAll(items);
+  }
 
   // region syntax sugar for symbol set collection
 

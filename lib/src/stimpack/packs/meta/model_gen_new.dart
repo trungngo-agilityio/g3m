@@ -15,10 +15,11 @@ StimMetaPack _buildMeta() {
       k = meta.kind;
   final listKind = meta.kind.forMeta.list;
 
-  final kindType = t.of('kind');
-  final typeType = t.of('type');
-  final fieldType = t.of('field');
-  final packType = t.of('pack');
+  var m = meta.type.forMeta;
+  final kindType = m.kind;
+  final typeType = m.type;
+  final fieldType = m.field;
+  final packType = m.pack;
   final presetType = t.of('preset');
   final valueType = t.of('value');
 
@@ -29,12 +30,15 @@ StimMetaPack _buildMeta() {
   fieldType.fields +=
       f.of('kind', type: kindType) + f.of('type', type: typeType);
 
-  packType.fields += f.of('types', kind: listKind, type: typeType);
+  packType.fields += f.of('types', kind: listKind, type: typeType) +
+      f.of('presets', kind: listKind, type: presetType);
 
-  presetType.fields += f.of('values', kind: listKind, type: valueType);
+  presetType.fields += f.of('values', kind: listKind, type: valueType) +
+      f.of('type', type: typeType);
 
   kindType.presets += p.of(
     'meta',
+    type: kindType,
     values: v.of('list'),
   );
 

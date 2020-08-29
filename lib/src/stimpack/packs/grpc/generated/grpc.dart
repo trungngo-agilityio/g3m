@@ -4,6 +4,7 @@ library g3.stimpack.grpc.generated;
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_meta.dart';
+part 'grpc_presets.dart';
 part 'grpc_package.dart';
 part 'grpc_package__messages.dart';
 part 'grpc_package__services.dart';
@@ -97,17 +98,19 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
 
   void _buildMeta() {
     final meta = stimpack.meta;
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
+    final pack = stimpack.meta.pack.of('grpc');
+    final f = meta.field, t = meta.type.forGrpc, p = meta.preset, v = meta.value;
     final listKind = meta.kind.forMeta.list;
 
-    final  packageType = t.of('package');
-    final  messageType = t.of('message');
-    final  methodType = t.of('method');
-    final  methodRequestType = t.of('method request');
-    final  methodResponseType = t.of('method response');
-    final  serviceType = t.of('service');
+    final  packageType = t.package;
+    final  messageType = t.message;
+    final  methodType = t.method;
+    final  methodRequestType = t.methodRequest;
+    final  methodResponseType = t.methodResponse;
+    final  serviceType = t.service;
 
-    final  typeType = stimpack.model.type;
+    final  typeType = stimpack.model.meta.types.firstWhereNameIs('type');
+    assert(typeType != null);
     packageType.fields += 
         f.of('messages', kind: listKind, type: messageType) + 
         f.of('services', kind: listKind, type: serviceType);
@@ -122,9 +125,18 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
     serviceType.fields += 
         f.of('methods', kind: listKind, type: methodType);
 
-    final packTypes = packageType + messageType + methodType + methodRequestType + methodResponseType + serviceType;
-    _meta = meta.pack.of('grpc', types: packTypes);
-    packTypes.pack.set(_meta);
+    pack.presets += 
+        p.of('grpc', type: stimpack.meta.type.forMeta.type, values: 
+              v.of('package') + 
+              v.of('message') + 
+              v.of('method') + 
+              v.of('methodRequest') + 
+              v.of('methodResponse') + 
+              v.of('service'),);
+
+    pack.types += packageType + messageType + methodType + methodRequestType + methodResponseType + serviceType;
+    pack.types.pack.set(pack);
+    _meta = pack;
   }
   // region custom code of grpc stimpack
 

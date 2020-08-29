@@ -23,19 +23,11 @@ class StimMetaKindSet extends StimSymbolSet<StimMetaKind, StimMetaKindSet> {
 
 
 abstract class StimMetaKindScope extends StimScope<StimMetaKind, StimMetaKindSet> {
-  StimMetaKindSymbols get s;
-
   StimMetaKind of(name);
 }
 
 
 class _StimMetaKindScopeImpl extends StimScopeImpl<StimMetaKind, StimMetaKindSet> implements StimMetaKindScope {
-  StimMetaKindSymbols _s;
-
-  @override
-  StimMetaKindSymbols get s {
-    return _s ??= StimMetaKindSymbols(this);
-  }
   _StimMetaKindScopeImpl():
       super();
 
@@ -60,34 +52,3 @@ class _StimMetaKindScopeImpl extends StimScopeImpl<StimMetaKind, StimMetaKindSet
     return StimMetaKindSet(this, items);
   }
 }
-
-
-class StimMetaKindSymbols {
-  StimMetaKindSet all;
-
-
-  StimMetaKindSymbols(StimMetaKindScope scope) {
-    all = scope.noneSet;
-  }
-}
-
-
-class StimMetaKindMetaPreset {
-  StimMetaKindSet all;
-
-  StimMetaKind list;
-
-
-  StimMetaKindMetaPreset(StimMetaKindScope scope) {
-    all = scope.noneSet;
-    all += list = scope.of('list');
-  }
-}
-StimMetaKindMetaPreset  _extStimMetaKindMetaPreset;
-
-extension StimMetaKindMetaPresetExtension on StimMetaKindScope {
-  StimMetaKindMetaPreset get forMeta {
-    return _extStimMetaKindMetaPreset ??= StimMetaKindMetaPreset(stimpack.meta.kind);
-  }
-}
-    
