@@ -287,24 +287,16 @@ class StimGenMetaType implements Node {
 
       clearFunctionFields.add(
         CodeCascade.of(
-          CodeAssignExpr.of(
-            field.name,
-            none,
-          ),
+          CodeAssignExpr.of(field.name, none),
         ),
       );
 
+      final lazyField = CodeConditionalNullExpr.of(fieldRef, none);
       ofFunctionFields.add(
         CodeCascade.of(
           field.isSet
-              ? CodePlusAssignExpr.of(
-                  field.name,
-                  CodeConditionalNullExpr.of(fieldRef, none),
-                )
-              : CodeAssignExpr.of(
-                  field.name,
-                  CodeConditionalNullExpr.of(fieldRef, none),
-                ),
+              ? CodePlusAssignExpr.of(field.name, lazyField)
+              : CodeAssignExpr.of(field.name, lazyField),
         ),
       );
     }
