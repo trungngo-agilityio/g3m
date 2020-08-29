@@ -1,87 +1,88 @@
 part of g3.stimpack.meta.generated;
 
-class StimMetaPack extends StimSymbol<StimMetaPack, StimMetaPackSet > {
+
+
+class StimMetaPack extends StimSymbol<StimMetaPack, StimMetaPackSet> {
   StimMetaTypeSet types;
 
-  StimMetaPack._(_StimMetaPackScopeImpl scope)
-      : super(scope);
+  StimMetaPack(_StimMetaPackScopeImpl scope):
+      super(scope);
+
 
   @override
   StimMetaPack clone() {
     return super.clone()
-      ..types = types.clone();    
+        ..types = types.clone();
   }
 }
 
-class StimMetaPackSet
-    extends StimSymbolSet<StimMetaPack, StimMetaPackSet> {
-  final _StimMetaMetaImpl __pack;
 
-  
-  StimMetaPackSet._(this.__pack, List<StimMetaPack> items)
-      : super(__pack._pack, items);
+class StimMetaPackSet extends StimSymbolSet<StimMetaPack, StimMetaPackSet> {
+  final _StimMetaPackScopeImpl _scope;
 
-        
-        
   StimMetaPackXTypesSetOp _types;
 
-  StimMetaPackXTypesSetOp get type =>
-      _types ??= StimMetaPackXTypesSetOp(this, __pack.type);
-
-  set types(StimMetaPackXTypesSetOp value) => _types = value;
-        
-}
-
-abstract class StimMetaPackScope
-    extends StimScope<StimMetaPack, StimMetaPackSet> {
-    
-  StimMetaPackSymbols get s;
-    
-  StimMetaPack of(dynamic name, {dynamic types});
-}
-
-class StimMetaPackSymbols {
-  final _StimMetaPackScopeImpl _scope;
-  /// All symbols
-  StimMetaPackSet all;
-
-  
-  StimMetaPackSymbols(this._scope) {
-    final _s = stimpack.meta.pack;
-    all = _s.noneSet;
-
+  StimMetaPackXTypesSetOp get types {
+    return _types ??= StimMetaPackXTypesSetOp(this, stimpack.meta.type);
   }
+
+  set types(StimMetaPackXTypesSetOp value) {
+    _types = value;
+  }
+  StimMetaPackSet(this._scope, List<StimMetaPack> items):
+      super(_scope, items);
 }
 
-class _StimMetaPackScopeImpl 
-    extends StimScopeImpl<StimMetaPack, StimMetaPackSet>
-    implements StimMetaPackScope {
-  final _StimMetaMetaImpl __pack;
-  
-  _StimMetaPackScopeImpl._(this.__pack) : super();
 
+abstract class StimMetaPackScope extends StimScope<StimMetaPack, StimMetaPackSet> {
+  StimMetaPackSymbols get s;
+
+  StimMetaPack of(name, {dynamic types});
+}
+
+
+class _StimMetaPackScopeImpl extends StimScopeImpl<StimMetaPack, StimMetaPackSet> implements StimMetaPackScope {
   StimMetaPackSymbols _s;
 
+  StimMetaTypeSet types;
+
   @override
-  StimMetaPackSymbols get s => _s ??= StimMetaPackSymbols(this);
+  StimMetaPackSymbols get s {
+    return _s ??= StimMetaPackSymbols(this);
+  }
+  _StimMetaPackScopeImpl():
+      super();
+
+
+  @override
+  StimMetaPack of(name, {dynamic types}) {
+    return createAndClear(name)
+        ..types += types ?? stimpack.meta.type.noneSet;
+  }
+
   @override
   void clear(StimMetaPack symbol) {
     symbol
-      ..types = __pack.type.noneSet;    
+        ..types = stimpack.meta.type.noneSet;
   }
 
   @override
-  StimMetaPack create() => StimMetaPack._(this);
-
-  @override
-  StimMetaPack of(dynamic name, {dynamic types}) {
-    return createAndClear(name)
-      ..types += types ?? __pack.type.noneSet;    
+  StimMetaPack create() {
+    return StimMetaPack(this);
   }
 
   @override
   StimMetaPackSet createSet(List<StimMetaPack> items) {
-    return StimMetaPackSet._(__pack, items);
+    return StimMetaPackSet(this, items);
   }
 }
-    
+
+
+class StimMetaPackSymbols {
+  StimMetaPackSet all;
+
+
+  StimMetaPackSymbols(StimMetaPackScope scope) {
+    all = scope.noneSet;
+  }
+}

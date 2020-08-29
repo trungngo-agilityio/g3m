@@ -461,7 +461,7 @@ extension {{ className }}Extension on {{ scopeClassName }} {
 
     return Mustache.template(template, values: {
       'className': _config.presetClassNameOf(pack, type, preset),
-      'presetName': preset.name,
+      'presetName': ('for' >> preset.name).camel(),
       'scopeClassName': scopeClassName,
       'publicScope': publicScope,
     });

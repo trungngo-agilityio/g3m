@@ -204,7 +204,7 @@ class StimGenMetaPack implements Node {
             ? 'final meta = this;\n'
             : 'final meta = stimpack.meta;\n',
         'final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;\n',
-        'final listKind = meta.kind.s.list;\n',
+        'final listKind = meta.kind.forMeta.list;\n',
         '\n',
       ]),
     ];
@@ -241,23 +241,29 @@ class StimGenMetaPack implements Node {
 
     for (final i in pack.types) {
       final t = i.name.camel();
+
+      // stop if this field does not have and fields.
       if (i.fields.isEmpty) continue;
-      var fieldDefs = i.fields.map((e) {
+
+      final fieldDefs = <Node>[];
+
+      for (final e in i.fields) {
         final fieldName = e.name;
         final typeName = e.type.name >> 'type';
-        e.type.name.camel().toString() + 'Type';
-        final isList = e.kind == stimpack.meta.kind.s.list;
 
-        return Container([
+        final fieldDef = Container([
           '\nf.of(\'',
           fieldName.camel(),
           '\'',
-          isList ? Text.of(', kind: listKind') : null,
+          e.isSet ? Text.of(', kind: listKind') : null,
           ', type: ',
           typeName.camel(),
           ')',
         ]);
-      });
+
+        fieldDefs.add(fieldDef);
+      }
+
       nodes.add(Container([
         t,
         'Type.fields += \n',
@@ -314,14 +320,14 @@ class StimGenMetaPack implements Node {
     }
 
     // Builds the final meta
-    final types = pack.types.map((e) {
+    final packTypes = pack.types.map((e) {
       return Text.of(e.name.camel().toString() + 'Type');
     }).toList();
 
     nodes.add(
       Container([
-        'final allTypes = ',
-        Join.of(' + ', types),
+        'final packTypes = ',
+        Join.of(' + ', packTypes),
         ';\n',
       ]),
     );
@@ -329,11 +335,11 @@ class StimGenMetaPack implements Node {
     nodes.add(Container([
       '_meta = meta.pack.of(\'',
       pack.name.camel(),
-      '\', types: allTypes);\n',
+      '\', types: packTypes);\n',
     ]));
 
     nodes.add(
-      Text.of('allTypes.pack.set(_meta);\n'),
+      Text.of('packTypes.pack.set(_meta);\n'),
     );
 
     return Container(nodes);

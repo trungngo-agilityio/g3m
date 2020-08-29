@@ -1,99 +1,104 @@
 part of g3.stimpack.meta.generated;
 
-class StimMetaField extends StimSymbol<StimMetaField, StimMetaFieldSet > {
+
+
+class StimMetaField extends StimSymbol<StimMetaField, StimMetaFieldSet> {
   StimMetaKind kind;
+
   StimMetaType type;
 
-  StimMetaField._(_StimMetaFieldScopeImpl scope)
-      : super(scope);
+  StimMetaField(_StimMetaFieldScopeImpl scope):
+      super(scope);
+
 
   @override
   StimMetaField clone() {
     return super.clone()
-      ..kind = kind.clone()
-      ..type = type.clone();    
+        ..kind = kind.clone()
+        ..type = type.clone();
   }
 }
 
-class StimMetaFieldSet
-    extends StimSymbolSet<StimMetaField, StimMetaFieldSet> {
-  final _StimMetaMetaImpl __pack;
 
-  
-  StimMetaFieldSet._(this.__pack, List<StimMetaField> items)
-      : super(__pack._field, items);
-
-         
-         
-  StimMetaFieldXKindSetOp _kind;
-
-  StimMetaFieldXKindSetOp get kind =>
-      _kind ??= StimMetaFieldXKindSetOp(this, __pack.kind);
-
-  set kind(StimMetaFieldXKindSetOp value) => _kind = value;
-                 
-         
-  StimMetaFieldXTypeSetOp _type;
-
-  StimMetaFieldXTypeSetOp get type =>
-      _type ??= StimMetaFieldXTypeSetOp(this, __pack.type);
-
-  set type(StimMetaFieldXTypeSetOp value) => _type = value;
-        
-}
-
-abstract class StimMetaFieldScope
-    extends StimScope<StimMetaField, StimMetaFieldSet> {
-    
-  StimMetaFieldSymbols get s;
-    
-  StimMetaField of(dynamic name, {dynamic kind, dynamic type});
-}
-
-class StimMetaFieldSymbols {
+class StimMetaFieldSet extends StimSymbolSet<StimMetaField, StimMetaFieldSet> {
   final _StimMetaFieldScopeImpl _scope;
-  /// All symbols
-  StimMetaFieldSet all;
 
-  
-  StimMetaFieldSymbols(this._scope) {
-    final _s = stimpack.meta.field;
-    all = _s.noneSet;
+  StimMetaFieldXKindOp _kind;
 
+  StimMetaFieldXTypeOp _type;
+
+  StimMetaFieldXKindOp get kind {
+    return _kind ??= StimMetaFieldXKindOp(this, stimpack.meta.kind);
   }
+
+  set kind(StimMetaFieldXKindOp value) {
+    _kind = value;
+  }
+  StimMetaFieldXTypeOp get type {
+    return _type ??= StimMetaFieldXTypeOp(this, stimpack.meta.type);
+  }
+
+  set type(StimMetaFieldXTypeOp value) {
+    _type = value;
+  }
+  StimMetaFieldSet(this._scope, List<StimMetaField> items):
+      super(_scope, items);
 }
 
-class _StimMetaFieldScopeImpl 
-    extends StimScopeImpl<StimMetaField, StimMetaFieldSet>
-    implements StimMetaFieldScope {
-  final _StimMetaMetaImpl __pack;
-  
-  _StimMetaFieldScopeImpl._(this.__pack) : super();
 
+abstract class StimMetaFieldScope extends StimScope<StimMetaField, StimMetaFieldSet> {
+  StimMetaFieldSymbols get s;
+
+  StimMetaField of(name, {dynamic kind, dynamic type});
+}
+
+
+class _StimMetaFieldScopeImpl extends StimScopeImpl<StimMetaField, StimMetaFieldSet> implements StimMetaFieldScope {
   StimMetaFieldSymbols _s;
 
+  StimMetaKind kind;
+
+  StimMetaType type;
+
   @override
-  StimMetaFieldSymbols get s => _s ??= StimMetaFieldSymbols(this);
+  StimMetaFieldSymbols get s {
+    return _s ??= StimMetaFieldSymbols(this);
+  }
+  _StimMetaFieldScopeImpl():
+      super();
+
+
+  @override
+  StimMetaField of(name, {dynamic kind, dynamic type}) {
+    return createAndClear(name)
+        ..kind = kind ?? stimpack.meta.kind.none
+        ..type = type ?? stimpack.meta.type.none;
+  }
+
   @override
   void clear(StimMetaField symbol) {
     symbol
-      ..kind = __pack.kind.none
-      ..type = __pack.type.none;    
+        ..kind = stimpack.meta.kind.none
+        ..type = stimpack.meta.type.none;
   }
 
   @override
-  StimMetaField create() => StimMetaField._(this);
-
-  @override
-  StimMetaField of(dynamic name, {dynamic kind, dynamic type}) {
-    return createAndClear(name)
-      ..kind = kind ?? __pack.kind.none
-      ..type = type ?? __pack.type.none;    
+  StimMetaField create() {
+    return StimMetaField(this);
   }
 
   @override
   StimMetaFieldSet createSet(List<StimMetaField> items) {
-    return StimMetaFieldSet._(__pack, items);
+    return StimMetaFieldSet(this, items);
   }
 }
-    
+
+
+class StimMetaFieldSymbols {
+  StimMetaFieldSet all;
+
+
+  StimMetaFieldSymbols(StimMetaFieldScope scope) {
+    all = scope.noneSet;
+  }
+}

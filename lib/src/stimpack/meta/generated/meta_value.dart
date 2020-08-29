@@ -1,78 +1,72 @@
 part of g3.stimpack.meta.generated;
 
-class StimMetaValue extends StimSymbol<StimMetaValue, StimMetaValueSet > {
 
 
-  StimMetaValue._(_StimMetaValueScopeImpl scope)
-      : super(scope);
+class StimMetaValue extends StimSymbol<StimMetaValue, StimMetaValueSet> {
+  StimMetaValue(_StimMetaValueScopeImpl scope):
+      super(scope);
+
 
   @override
   StimMetaValue clone() {
-    return super.clone()
-;    
+    return super.clone();
   }
 }
 
-class StimMetaValueSet
-    extends StimSymbolSet<StimMetaValue, StimMetaValueSet> {
-  final _StimMetaMetaImpl __pack;
 
-  
-  StimMetaValueSet._(this.__pack, List<StimMetaValue> items)
-      : super(__pack._value, items);
-
-
-}
-
-abstract class StimMetaValueScope
-    extends StimScope<StimMetaValue, StimMetaValueSet> {
-    
-  StimMetaValueSymbols get s;
-    
-  StimMetaValue of(dynamic name);
-}
-
-class StimMetaValueSymbols {
+class StimMetaValueSet extends StimSymbolSet<StimMetaValue, StimMetaValueSet> {
   final _StimMetaValueScopeImpl _scope;
-  /// All symbols
-  StimMetaValueSet all;
 
-  
-  StimMetaValueSymbols(this._scope) {
-    final _s = stimpack.meta.value;
-    all = _s.noneSet;
-
-  }
+  StimMetaValueSet(this._scope, List<StimMetaValue> items):
+      super(_scope, items);
 }
 
-class _StimMetaValueScopeImpl 
-    extends StimScopeImpl<StimMetaValue, StimMetaValueSet>
-    implements StimMetaValueScope {
-  final _StimMetaMetaImpl __pack;
-  
-  _StimMetaValueScopeImpl._(this.__pack) : super();
 
+abstract class StimMetaValueScope extends StimScope<StimMetaValue, StimMetaValueSet> {
+  StimMetaValueSymbols get s;
+
+  StimMetaValue of(name);
+}
+
+
+class _StimMetaValueScopeImpl extends StimScopeImpl<StimMetaValue, StimMetaValueSet> implements StimMetaValueScope {
   StimMetaValueSymbols _s;
 
   @override
-  StimMetaValueSymbols get s => _s ??= StimMetaValueSymbols(this);
+  StimMetaValueSymbols get s {
+    return _s ??= StimMetaValueSymbols(this);
+  }
+  _StimMetaValueScopeImpl():
+      super();
+
+
   @override
-  void clear(StimMetaValue symbol) {
-    
+  StimMetaValue of(name) {
+    return createAndClear(name);
   }
 
   @override
-  StimMetaValue create() => StimMetaValue._(this);
+  void clear(StimMetaValue symbol) {
+    symbol;
+  }
 
   @override
-  StimMetaValue of(dynamic name) {
-    return createAndClear(name)
-;    
+  StimMetaValue create() {
+    return StimMetaValue(this);
   }
 
   @override
   StimMetaValueSet createSet(List<StimMetaValue> items) {
-    return StimMetaValueSet._(__pack, items);
+    return StimMetaValueSet(this, items);
   }
 }
-    
+
+
+class StimMetaValueSymbols {
+  StimMetaValueSet all;
+
+
+  StimMetaValueSymbols(StimMetaValueScope scope) {
+    all = scope.noneSet;
+  }
+}

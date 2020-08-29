@@ -87,7 +87,7 @@ class _StimModelModelImpl  implements StimModelModel {
   void _buildMeta() {
     final meta = stimpack.meta;
     final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
-    final listKind = meta.kind.s.list;
+    final listKind = meta.kind.forMeta.list;
 
     final  typeType = t.of('type');
     final  fieldType = t.of('field');
@@ -104,7 +104,7 @@ class _StimModelModelImpl  implements StimModelModel {
         f.of('rules', kind: listKind, type: ruleType);
 
     ruleType.fields += 
-        f.of('range', type: rangeType) + 
+        f.of('range', kind: listKind, type: rangeType) + 
         f.of('patterns', kind: listKind, type: patternType);
 
     typeType.presets += 
@@ -178,11 +178,9 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('version'),);
 
     ruleType.presets += 
-        p.of('', values: 
-              v.of('unique') + 
-              v.of('required'),)
-         + 
         p.of('validation', values: 
+              v.of('unique') + 
+              v.of('required') + 
               v.of('text') + 
               v.of('desc') + 
               v.of('long text') + 
@@ -215,9 +213,9 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('phone') + 
               v.of('alpha'),);
 
-    final allTypes = typeType + fieldType + ruleType + patternType + rangeType;
-    _meta = meta.pack.of('model', types: allTypes);
-    allTypes.pack.set(_meta);
+    final packTypes = typeType + fieldType + ruleType + patternType + rangeType;
+    _meta = meta.pack.of('model', types: packTypes);
+    packTypes.pack.set(_meta);
   }
   // region custom code of model stimpack
 

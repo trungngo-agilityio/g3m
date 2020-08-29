@@ -127,12 +127,9 @@ const validationPatterns = [
   'alpha'
 ];
 
-const defaultRules = [
+const validationRules = [
   'unique',
   'required',
-];
-
-const validationRules = [
   'text',
   'desc',
   'long text',
@@ -147,10 +144,10 @@ void main() {
       tRange = t.of('range');
 
   final fType = f.of('type', type: tType);
-  final fRules = f.of('rules', type: tRule, kind: k.s.list);
-  final fFields = f.of('fields', type: tField, kind: k.s.list);
-  final fRange = f.of('range', type: tRange);
-  final fPatterns = f.of('patterns', type: tPattern, kind: k.s.list);
+  final fRules = f.listOf('rules', type: tRule);
+  final fFields = f.listOf('fields', type: tField);
+  final fRange = f.listOf('range', type: tRange);
+  final fPatterns = f.listOf('patterns', type: tPattern);
 
   tType.fields += fFields + fRules;
   tField.fields += fType + fRules;
@@ -160,7 +157,7 @@ void main() {
   // Preset settings
   // ---------------------------------------------------------------------------
 
-  tRule.presets += p.ofValues(null, defaultRules) +
+  tRule.presets +=
       p.ofValues('validation', [...validationRules, ...validationPatterns]);
 
   tPattern.presets += p.ofValues('validation', validationPatterns);

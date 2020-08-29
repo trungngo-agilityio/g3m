@@ -3,7 +3,7 @@ part of g3.stimpack.model.generated;
 
 
 class StimModelRule extends StimSymbol<StimModelRule, StimModelRuleSet> {
-  StimModelRange range;
+  StimModelRangeSet range;
 
   StimModelPatternSet patterns;
 
@@ -23,15 +23,15 @@ class StimModelRule extends StimSymbol<StimModelRule, StimModelRuleSet> {
 class StimModelRuleSet extends StimSymbolSet<StimModelRule, StimModelRuleSet> {
   final _StimModelRuleScopeImpl _scope;
 
-  StimModelRuleXRangeOp _range;
+  StimModelRuleXRangeSetOp _range;
 
   StimModelRuleXPatternsSetOp _patterns;
 
-  StimModelRuleXRangeOp get range {
-    return _range ??= StimModelRuleXRangeOp(this, stimpack.model.range);
+  StimModelRuleXRangeSetOp get range {
+    return _range ??= StimModelRuleXRangeSetOp(this, stimpack.model.range);
   }
 
-  set range(StimModelRuleXRangeOp value) {
+  set range(StimModelRuleXRangeSetOp value) {
     _range = value;
   }
   StimModelRuleXPatternsSetOp get patterns {
@@ -56,7 +56,7 @@ abstract class StimModelRuleScope extends StimScope<StimModelRule, StimModelRule
 class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRuleSet> implements StimModelRuleScope {
   StimModelRuleSymbols _s;
 
-  StimModelRange range;
+  StimModelRangeSet range;
 
   StimModelPatternSet patterns;
 
@@ -71,14 +71,14 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
   @override
   StimModelRule of(name, {dynamic range, dynamic patterns}) {
     return createAndClear(name)
-        ..range = range ?? stimpack.model.range.none
+        ..range += range ?? stimpack.model.range.noneSet
         ..patterns += patterns ?? stimpack.model.pattern.noneSet;
   }
 
   @override
   void clear(StimModelRule symbol) {
     symbol
-        ..range = stimpack.model.range.none
+        ..range = stimpack.model.range.noneSet
         ..patterns = stimpack.model.pattern.noneSet;
   }
 
@@ -97,21 +97,19 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
 class StimModelRuleSymbols {
   StimModelRuleSet all;
 
-  StimModelRule unique;
-
-  StimModelRule required;
-
 
   StimModelRuleSymbols(StimModelRuleScope scope) {
     all = scope.noneSet;
-    all += unique = scope.of('unique');
-    all += required = scope.of('required');
   }
 }
 
 
 class StimModelRuleValidationPreset {
   StimModelRuleSet all;
+
+  StimModelRule unique;
+
+  StimModelRule required;
 
   StimModelRule text;
 
@@ -148,6 +146,8 @@ class StimModelRuleValidationPreset {
 
   StimModelRuleValidationPreset(StimModelRuleScope scope) {
     all = scope.noneSet;
+    all += unique = scope.of('unique');
+    all += required = scope.of('required');
     all += text = scope.of('text');
     all += desc = scope.of('desc');
     all += longText = scope.of('long text');
@@ -166,18 +166,10 @@ class StimModelRuleValidationPreset {
     all += alpha = scope.of('alpha');
   }
 }
-StimModelRuleDefaultPreset  _extStimModelRuleDefaultPreset;
-
-extension StimModelRuleDefaultPresetExtension on StimModelRuleScope {
-  StimModelRuleDefaultPreset get  {
-    return _extStimModelRuleDefaultPreset ??= StimModelRuleDefaultPreset(stimpack.model.rule);
-  }
-}
-    
 StimModelRuleValidationPreset  _extStimModelRuleValidationPreset;
 
 extension StimModelRuleValidationPresetExtension on StimModelRuleScope {
-  StimModelRuleValidationPreset get validation {
+  StimModelRuleValidationPreset get forValidation {
     return _extStimModelRuleValidationPreset ??= StimModelRuleValidationPreset(stimpack.model.rule);
   }
 }

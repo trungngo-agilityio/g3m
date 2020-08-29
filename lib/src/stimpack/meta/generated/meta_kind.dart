@@ -1,79 +1,93 @@
 part of g3.stimpack.meta.generated;
 
-class StimMetaKind extends StimSymbol<StimMetaKind, StimMetaKindSet > {
 
 
-  StimMetaKind._(_StimMetaKindScopeImpl scope)
-      : super(scope);
+class StimMetaKind extends StimSymbol<StimMetaKind, StimMetaKindSet> {
+  StimMetaKind(_StimMetaKindScopeImpl scope):
+      super(scope);
+
 
   @override
   StimMetaKind clone() {
-    return super.clone()
-;    
+    return super.clone();
   }
 }
 
-class StimMetaKindSet
-    extends StimSymbolSet<StimMetaKind, StimMetaKindSet> {
-  final _StimMetaMetaImpl __pack;
 
-  
-  StimMetaKindSet._(this.__pack, List<StimMetaKind> items)
-      : super(__pack._kind, items);
-
-
-}
-
-abstract class StimMetaKindScope
-    extends StimScope<StimMetaKind, StimMetaKindSet> {
-    
-  StimMetaKindSymbols get s;
-    
-  StimMetaKind of(dynamic name);
-}
-
-class StimMetaKindSymbols {
+class StimMetaKindSet extends StimSymbolSet<StimMetaKind, StimMetaKindSet> {
   final _StimMetaKindScopeImpl _scope;
-  /// All symbols
-  StimMetaKindSet all;
-  StimMetaKind list;
 
-  
-  StimMetaKindSymbols(this._scope) {
-    final _s = stimpack.meta.kind;
-    all = _s.noneSet;
-    all += list = _scope.of('list');
-  }
+  StimMetaKindSet(this._scope, List<StimMetaKind> items):
+      super(_scope, items);
 }
 
-class _StimMetaKindScopeImpl 
-    extends StimScopeImpl<StimMetaKind, StimMetaKindSet>
-    implements StimMetaKindScope {
-  final _StimMetaMetaImpl __pack;
-  
-  _StimMetaKindScopeImpl._(this.__pack) : super();
 
+abstract class StimMetaKindScope extends StimScope<StimMetaKind, StimMetaKindSet> {
+  StimMetaKindSymbols get s;
+
+  StimMetaKind of(name);
+}
+
+
+class _StimMetaKindScopeImpl extends StimScopeImpl<StimMetaKind, StimMetaKindSet> implements StimMetaKindScope {
   StimMetaKindSymbols _s;
 
   @override
-  StimMetaKindSymbols get s => _s ??= StimMetaKindSymbols(this);
+  StimMetaKindSymbols get s {
+    return _s ??= StimMetaKindSymbols(this);
+  }
+  _StimMetaKindScopeImpl():
+      super();
+
+
   @override
-  void clear(StimMetaKind symbol) {
-    
+  StimMetaKind of(name) {
+    return createAndClear(name);
   }
 
   @override
-  StimMetaKind create() => StimMetaKind._(this);
+  void clear(StimMetaKind symbol) {
+    symbol;
+  }
 
   @override
-  StimMetaKind of(dynamic name) {
-    return createAndClear(name)
-;    
+  StimMetaKind create() {
+    return StimMetaKind(this);
   }
 
   @override
   StimMetaKindSet createSet(List<StimMetaKind> items) {
-    return StimMetaKindSet._(__pack, items);
+    return StimMetaKindSet(this, items);
+  }
+}
+
+
+class StimMetaKindSymbols {
+  StimMetaKindSet all;
+
+
+  StimMetaKindSymbols(StimMetaKindScope scope) {
+    all = scope.noneSet;
+  }
+}
+
+
+class StimMetaKindMetaPreset {
+  StimMetaKindSet all;
+
+  StimMetaKind list;
+
+
+  StimMetaKindMetaPreset(StimMetaKindScope scope) {
+    all = scope.noneSet;
+    all += list = scope.of('list');
+  }
+}
+StimMetaKindMetaPreset  _extStimMetaKindMetaPreset;
+
+extension StimMetaKindMetaPresetExtension on StimMetaKindScope {
+  StimMetaKindMetaPreset get forMeta {
+    return _extStimMetaKindMetaPreset ??= StimMetaKindMetaPreset(stimpack.meta.kind);
   }
 }
     

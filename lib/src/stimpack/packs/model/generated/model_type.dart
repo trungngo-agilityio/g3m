@@ -220,7 +220,7 @@ class StimModelTypeCommonPreset {
 StimModelTypeGrpcPreset  _extStimModelTypeGrpcPreset;
 
 extension StimModelTypeGrpcPresetExtension on StimModelTypeScope {
-  StimModelTypeGrpcPreset get grpc {
+  StimModelTypeGrpcPreset get forGrpc {
     return _extStimModelTypeGrpcPreset ??= StimModelTypeGrpcPreset(stimpack.model.type);
   }
 }
@@ -228,7 +228,7 @@ extension StimModelTypeGrpcPresetExtension on StimModelTypeScope {
 StimModelTypeDatePreset  _extStimModelTypeDatePreset;
 
 extension StimModelTypeDatePresetExtension on StimModelTypeScope {
-  StimModelTypeDatePreset get date {
+  StimModelTypeDatePreset get forDate {
     return _extStimModelTypeDatePreset ??= StimModelTypeDatePreset(stimpack.model.type);
   }
 }
@@ -236,7 +236,7 @@ extension StimModelTypeDatePresetExtension on StimModelTypeScope {
 StimModelTypeAuthPreset  _extStimModelTypeAuthPreset;
 
 extension StimModelTypeAuthPresetExtension on StimModelTypeScope {
-  StimModelTypeAuthPreset get auth {
+  StimModelTypeAuthPreset get forAuth {
     return _extStimModelTypeAuthPreset ??= StimModelTypeAuthPreset(stimpack.model.type);
   }
 }
@@ -244,7 +244,7 @@ extension StimModelTypeAuthPresetExtension on StimModelTypeScope {
 StimModelTypeCommonPreset  _extStimModelTypeCommonPreset;
 
 extension StimModelTypeCommonPresetExtension on StimModelTypeScope {
-  StimModelTypeCommonPreset get common {
+  StimModelTypeCommonPreset get forCommon {
     return _extStimModelTypeCommonPreset ??= StimModelTypeCommonPreset(stimpack.model.type);
   }
 }

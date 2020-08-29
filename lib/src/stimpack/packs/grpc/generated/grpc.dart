@@ -98,7 +98,7 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
   void _buildMeta() {
     final meta = stimpack.meta;
     final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
-    final listKind = meta.kind.s.list;
+    final listKind = meta.kind.forMeta.list;
 
     final  packageType = t.of('package');
     final  messageType = t.of('message');
@@ -122,9 +122,9 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
     serviceType.fields += 
         f.of('methods', kind: listKind, type: methodType);
 
-    final allTypes = packageType + messageType + methodType + methodRequestType + methodResponseType + serviceType;
-    _meta = meta.pack.of('grpc', types: allTypes);
-    allTypes.pack.set(_meta);
+    final packTypes = packageType + messageType + methodType + methodRequestType + methodResponseType + serviceType;
+    _meta = meta.pack.of('grpc', types: packTypes);
+    packTypes.pack.set(_meta);
   }
   // region custom code of grpc stimpack
 

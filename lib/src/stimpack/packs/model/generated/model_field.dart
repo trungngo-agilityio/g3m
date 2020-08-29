@@ -222,7 +222,7 @@ class StimModelFieldDbPreset {
 StimModelFieldUserPreset  _extStimModelFieldUserPreset;
 
 extension StimModelFieldUserPresetExtension on StimModelFieldScope {
-  StimModelFieldUserPreset get user {
+  StimModelFieldUserPreset get forUser {
     return _extStimModelFieldUserPreset ??= StimModelFieldUserPreset(stimpack.model.field);
   }
 }
@@ -230,7 +230,7 @@ extension StimModelFieldUserPresetExtension on StimModelFieldScope {
 StimModelFieldPaginationPreset  _extStimModelFieldPaginationPreset;
 
 extension StimModelFieldPaginationPresetExtension on StimModelFieldScope {
-  StimModelFieldPaginationPreset get pagination {
+  StimModelFieldPaginationPreset get forPagination {
     return _extStimModelFieldPaginationPreset ??= StimModelFieldPaginationPreset(stimpack.model.field);
   }
 }
@@ -238,7 +238,7 @@ extension StimModelFieldPaginationPresetExtension on StimModelFieldScope {
 StimModelFieldDbPreset  _extStimModelFieldDbPreset;
 
 extension StimModelFieldDbPresetExtension on StimModelFieldScope {
-  StimModelFieldDbPreset get db {
+  StimModelFieldDbPreset get forDb {
     return _extStimModelFieldDbPreset ??= StimModelFieldDbPreset(stimpack.model.field);
   }
 }

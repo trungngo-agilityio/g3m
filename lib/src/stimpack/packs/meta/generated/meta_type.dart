@@ -1,111 +1,120 @@
 part of g3.stimpack.meta.generated;
 
-class StimMetaType extends StimSymbol<StimMetaType, StimMetaTypeSet > {
+
+
+class StimMetaType extends StimSymbol<StimMetaType, StimMetaTypeSet> {
   StimMetaFieldSet fields;
+
   StimMetaPresetSet presets;
+
   StimMetaPack pack;
 
-  StimMetaType._(_StimMetaTypeScopeImpl scope)
-      : super(scope);
+  StimMetaType(_StimMetaTypeScopeImpl scope):
+      super(scope);
+
 
   @override
   StimMetaType clone() {
     return super.clone()
-      ..fields = fields.clone()
-      ..presets = presets.clone()
-      ..pack = pack.clone();    
+        ..fields = fields.clone()
+        ..presets = presets.clone()
+        ..pack = pack.clone();
   }
 }
 
-class StimMetaTypeSet
-    extends StimSymbolSet<StimMetaType, StimMetaTypeSet> {
-  final _StimMetaMetaImpl __pack;
 
-  
-  StimMetaTypeSet._(this.__pack, List<StimMetaType> items)
-      : super(__pack._type, items);
+class StimMetaTypeSet extends StimSymbolSet<StimMetaType, StimMetaTypeSet> {
+  final _StimMetaTypeScopeImpl _scope;
 
-        
-        
   StimMetaTypeXFieldsSetOp _fields;
 
-  StimMetaTypeXFieldsSetOp get field =>
-      _fields ??= StimMetaTypeXFieldsSetOp(this, __pack.field);
-
-  set fields(StimMetaTypeXFieldsSetOp value) => _fields = value;
-                
-        
   StimMetaTypeXPresetsSetOp _presets;
 
-  StimMetaTypeXPresetsSetOp get preset =>
-      _presets ??= StimMetaTypeXPresetsSetOp(this, __pack.preset);
+  StimMetaTypeXPackOp _pack;
 
-  set presets(StimMetaTypeXPresetsSetOp value) => _presets = value;
-                 
-         
-  StimMetaTypeXPackSetOp _pack;
-
-  StimMetaTypeXPackSetOp get pack =>
-      _pack ??= StimMetaTypeXPackSetOp(this, __pack.pack);
-
-  set pack(StimMetaTypeXPackSetOp value) => _pack = value;
-        
-}
-
-abstract class StimMetaTypeScope
-    extends StimScope<StimMetaType, StimMetaTypeSet> {
-    
-  StimMetaTypeSymbols get s;
-    
-  StimMetaType of(dynamic name, {dynamic fields, dynamic presets, dynamic pack});
-}
-
-class StimMetaTypeSymbols {
-  final _StimMetaTypeScopeImpl _scope;
-  /// All symbols
-  StimMetaTypeSet all;
-
-  
-  StimMetaTypeSymbols(this._scope) {
-    final _s = stimpack.meta.type;
-    all = _s.noneSet;
-
+  StimMetaTypeXFieldsSetOp get fields {
+    return _fields ??= StimMetaTypeXFieldsSetOp(this, stimpack.meta.field);
   }
+
+  set fields(StimMetaTypeXFieldsSetOp value) {
+    _fields = value;
+  }
+  StimMetaTypeXPresetsSetOp get presets {
+    return _presets ??= StimMetaTypeXPresetsSetOp(this, stimpack.meta.preset);
+  }
+
+  set presets(StimMetaTypeXPresetsSetOp value) {
+    _presets = value;
+  }
+  StimMetaTypeXPackOp get pack {
+    return _pack ??= StimMetaTypeXPackOp(this, stimpack.meta.pack);
+  }
+
+  set pack(StimMetaTypeXPackOp value) {
+    _pack = value;
+  }
+  StimMetaTypeSet(this._scope, List<StimMetaType> items):
+      super(_scope, items);
 }
 
-class _StimMetaTypeScopeImpl 
-    extends StimScopeImpl<StimMetaType, StimMetaTypeSet>
-    implements StimMetaTypeScope {
-  final _StimMetaMetaImpl __pack;
-  
-  _StimMetaTypeScopeImpl._(this.__pack) : super();
 
+abstract class StimMetaTypeScope extends StimScope<StimMetaType, StimMetaTypeSet> {
+  StimMetaTypeSymbols get s;
+
+  StimMetaType of(name, {dynamic fields, dynamic presets, dynamic pack});
+}
+
+
+class _StimMetaTypeScopeImpl extends StimScopeImpl<StimMetaType, StimMetaTypeSet> implements StimMetaTypeScope {
   StimMetaTypeSymbols _s;
 
+  StimMetaFieldSet fields;
+
+  StimMetaPresetSet presets;
+
+  StimMetaPack pack;
+
   @override
-  StimMetaTypeSymbols get s => _s ??= StimMetaTypeSymbols(this);
+  StimMetaTypeSymbols get s {
+    return _s ??= StimMetaTypeSymbols(this);
+  }
+  _StimMetaTypeScopeImpl():
+      super();
+
+
+  @override
+  StimMetaType of(name, {dynamic fields, dynamic presets, dynamic pack}) {
+    return createAndClear(name)
+        ..fields += fields ?? stimpack.meta.field.noneSet
+        ..presets += presets ?? stimpack.meta.preset.noneSet
+        ..pack = pack ?? stimpack.meta.pack.none;
+  }
+
   @override
   void clear(StimMetaType symbol) {
     symbol
-      ..fields = __pack.field.noneSet
-      ..presets = __pack.preset.noneSet
-      ..pack = __pack.pack.none;    
+        ..fields = stimpack.meta.field.noneSet
+        ..presets = stimpack.meta.preset.noneSet
+        ..pack = stimpack.meta.pack.none;
   }
 
   @override
-  StimMetaType create() => StimMetaType._(this);
-
-  @override
-  StimMetaType of(dynamic name, {dynamic fields, dynamic presets, dynamic pack}) {
-    return createAndClear(name)
-      ..fields += fields ?? __pack.field.noneSet
-      ..presets += presets ?? __pack.preset.noneSet
-      ..pack = pack ?? __pack.pack.none;    
+  StimMetaType create() {
+    return StimMetaType(this);
   }
 
   @override
   StimMetaTypeSet createSet(List<StimMetaType> items) {
-    return StimMetaTypeSet._(__pack, items);
+    return StimMetaTypeSet(this, items);
   }
 }
-    
+
+
+class StimMetaTypeSymbols {
+  StimMetaTypeSet all;
+
+
+  StimMetaTypeSymbols(StimMetaTypeScope scope) {
+    all = scope.noneSet;
+  }
+}

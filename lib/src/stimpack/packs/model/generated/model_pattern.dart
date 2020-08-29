@@ -119,7 +119,7 @@ class StimModelPatternValidationPreset {
 StimModelPatternValidationPreset  _extStimModelPatternValidationPreset;
 
 extension StimModelPatternValidationPresetExtension on StimModelPatternScope {
-  StimModelPatternValidationPreset get validation {
+  StimModelPatternValidationPreset get forValidation {
     return _extStimModelPatternValidationPreset ??= StimModelPatternValidationPreset(stimpack.model.pattern);
   }
 }
