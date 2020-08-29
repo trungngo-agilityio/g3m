@@ -28,8 +28,15 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${p}_${t}__${f}';
   }
 
+  /// Gets the class name that defines a type. For example
+  /// if the [pack] is 'grpc' and the [type] is 'message' then
+  /// the class name is 'StimGrpcMessage'.
+  ///
   Name typeClassNameOf(StimMetaPack pack, StimMetaType type) {
-    return ('stim' >> pack.name >> type.name).pascal();
+    final typePack = type.pack ?? pack;
+    assert(typePack != null);
+    assert(type.name?.isNotEmpty == true);
+    return ('stim' >> typePack.name >> type.name).pascal();
   }
 
   Name typeSetClassNameOf(StimMetaPack pack, StimMetaType type) {

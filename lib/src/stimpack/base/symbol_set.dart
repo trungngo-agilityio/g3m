@@ -31,6 +31,7 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
 
   // region syntax sugar for symbol set collection
 
+  /// Filters the symbol list to get only symbols without name.
   Iterable<T> whereNoName() {
     return where((element) {
       var empty = element.name?.isEmpty;
@@ -38,8 +39,15 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
     });
   }
 
+  /// Filters the symbol list to get only symbols with name.
   Iterable<T> whereHasName() {
     return where((element) => element.name?.isNotEmpty == true);
+  }
+
+  /// Finds the first symbol by its [name].
+  T firstWhereNameIs(dynamic name) {
+    return firstWhere((s) => s?.name.toString() == name?.toString(),
+        orElse: () => null);
   }
 
   // endregion

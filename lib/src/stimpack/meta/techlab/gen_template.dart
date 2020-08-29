@@ -24,6 +24,8 @@ class StimGenMetaTemplate implements Node {
 
   @override
   Node build(BuildContext context) {
+    final config =
+        context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
     final values = <String, dynamic>{};
     final symbols = <String, StimSymbol>{
       'pack': pack,
@@ -34,48 +36,55 @@ class StimGenMetaTemplate implements Node {
       'preset': preset,
       'value': value,
     };
-    _addSymbols(values, symbols);
+    _addSymbols(config, values, symbols);
 
-    if (type != null && field != null) {
-      values['setOpClass'] =
-          (_stim >> pack.name >> type.name >> 'x' >> field.name >> 'set op')
-              .pascal();
+    if (type != null) {
+      final typeClass =
+          values['typeClass'] = config.typeClassNameOf(pack, type);
 
-      final typeClass = values['typeClass'] as Name;
-      final typeSetClass = values['typeSetClass'] as Name;
-      final fieldTypeClass = values['fieldTypeClass'] as Name;
-      final fieldTypeSetClass = values['fieldTypeSetClass'] as Name;
+      if (field != null) {
+        final fieldTypeClass =
+            values['fieldTypeClass'] = config.typeClassNameOf(pack, field.type);
 
-      // The generic part of set operations class.
-      values['setOpClassGeneric'] = [
-        typeClass.pascal(),
-        typeSetClass.pascal(),
-        fieldTypeClass.pascal(),
-        fieldTypeSetClass.pascal(),
-      ].join(', ');
-    }
+        values['setOpClass'] =
+            (_stim >> pack.name >> type.name >> 'x' >> field.name >> 'set op')
+                .pascal();
 
-    if (type != null && preset != null) {
-      values['typePresetClass'] =
-          (_stim >> pack.name >> type.name >> 'x' >> preset.name >> 'preset')
-              .pascal();
+        final typeSetClass = values['typeSetClass'] as Name;
+        final fieldTypeSetClass = values['fieldTypeSetClass'] as Name;
+
+        // The generic part of set operations class.
+        values['setOpClassGeneric'] = [
+          typeClass.pascal(),
+          typeSetClass.pascal(),
+          fieldTypeClass.pascal(),
+          fieldTypeSetClass.pascal(),
+        ].join(', ');
+      }
+
+      if (preset != null) {
+        values['typePresetClass'] =
+            (_stim >> pack.name >> type.name >> 'x' >> preset.name >> 'preset')
+                .pascal();
+      }
     }
 
     values.addAll(templateValues ?? {});
     return Mustache.template(template, values: values);
   }
 
-  void _addSymbols(
-      Map<String, dynamic> values, Map<String, StimSymbol> symbols) {
+  void _addSymbols(StimpackCodeConfig config, Map<String, dynamic> values,
+      Map<String, StimSymbol> symbols) {
     for (final i in symbols.entries) {
       if (i.value != null) {
         values[i.key] = i.value;
-        _add(values, i.key, i.value.name);
+        _add(config, values, i.key, i.value.name);
       }
     }
   }
 
-  void _add(Map<String, dynamic> values, String k, Name n) {
+  void _add(StimpackCodeConfig config, Map<String, dynamic> values, String k,
+      Name n) {
     final prefix = _stim >> pack.name;
     values[k + 'Name'] = n.pascal();
     values[k + 'Class'] = (n << prefix).pascal();

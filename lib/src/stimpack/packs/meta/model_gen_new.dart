@@ -3,11 +3,13 @@ import 'package:g3m/stimpack_meta.dart';
 
 void main() {
   final meta = stimpack.meta;
+  final f = meta.field,
+      t = meta.type,
+      p = meta.preset,
+      v = meta.value,
+      k = meta.kind;
   final listKind = meta.kind.s.list;
 
-  final t = meta.type;
-  final p = meta.preset;
-  final v = meta.value;
   final kindType = t.of('kind');
   final typeType = t.of('type');
   final fieldType = t.of('field');
@@ -15,7 +17,6 @@ void main() {
   final presetType = t.of('preset');
   final valueType = t.of('value');
 
-  final f = meta.field;
   typeType.fields += f.of('fields', kind: listKind, type: fieldType) +
       f.of('presets', kind: listKind, type: presetType) +
       f.of('pack', type: packType);
@@ -27,11 +28,14 @@ void main() {
 
   presetType.fields += f.of('values', kind: listKind, type: valueType);
 
-  kindType.presets +=
-    p.of('', values: v.of('list') + v.of('item'));
+  kindType.presets += p.of(
+    '',
+    values: v.of('list'),
+  );
 
   final newMeta = meta.pack.of('meta',
       types:
           kindType + typeType + fieldType + packType + presetType + valueType);
+
   stimpackGen(newMeta, 'lib/src/stimpack/packs/meta/generated');
 }

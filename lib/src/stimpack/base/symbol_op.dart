@@ -21,7 +21,10 @@ abstract class StimSymbolOp<
     S extends StimSymbolSet<T, S>,
     FT extends StimSymbol<FT, FS>,
     FS extends StimSymbolSet<FT, FS>> {
-  StimSymbolOp<T, S, FT, FS> operator ^(dynamic other);
+
+  void set(dynamic value);
+
+  StimSymbolOp<T, S, FT, FS> operator ^(dynamic value);
 }
 
 abstract class StimSymbolOpImpl<
@@ -62,8 +65,13 @@ abstract class StimSymbolOpImpl<
 
   @override
   StimSymbolOpImpl<T, S, FT, FS> operator ^(dynamic value) {
-    _execute('set', onSet, value);
+    set(value);
     return this;
+  }
+
+  @override
+  void set(value) {
+    _execute('set', onSet, value);
   }
 
   void onSet(T child, FT value);

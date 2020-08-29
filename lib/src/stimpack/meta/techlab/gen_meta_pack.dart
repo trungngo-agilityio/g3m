@@ -232,13 +232,23 @@ class {{ packImplClass }} implements {{ packClass }} {
       return Text.of(e.name.camel().toString() + 'Type');
     }).toList();
 
+    nodes.add(
+      Container([
+        'final allTypes = ',
+        Join.of(' + ', types),
+        ');\n',
+      ]),
+    );
+
     nodes.add(Container([
       '_meta = meta.pack.of(\'',
       pack.name.camel(),
-      '\', types: ',
-      Join.of(' + ', types),
-      ');\n',
+      '\', types: allTypes);\n',
     ]));
+
+    nodes.add(
+      Text.of('allTypes.pack.set(_meta);\n'),
+    );
 
     return Indent(Container(nodes), level: 2);
   }

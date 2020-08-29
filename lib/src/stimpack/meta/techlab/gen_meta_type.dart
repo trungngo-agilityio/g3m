@@ -112,7 +112,7 @@ class {{ typeScopeImplClass }}
     return StimGenMetaTemplate(
       template,
       {
-        'fieldListDef': _buildFieldListDef(),
+        'fieldListDef': _buildFieldListDef(config),
         'fieldListClone': _buildFieldListClone(),
         'fieldListClear': _buildFieldListClear(),
         'fieldListInit': _buildFieldListInit(),
@@ -127,14 +127,15 @@ class {{ typeScopeImplClass }}
     );
   }
 
-  String _buildFieldListDef() {
+  String _buildFieldListDef(StimpackCodeConfig config) {
     return type.fields
-        .map((e) {
+        .map((field) {
+          var name = config.typeClassNameOf(pack, field.type);
           var s = '';
-          if (e.kind == stimpack.meta.kind.s.list) {
+          if (field.isSet) {
             s = 'Set';
           }
-          return '  Stim${pack.name.pascal()}${e.type.name.pascal()}${s} ${e.name.camel()};';
+          return '$name ${field.name.camel()};';
         })
         .join('\n')
         .toString();
@@ -157,11 +158,11 @@ class {{ typeScopeImplClass }}
 
     return '    symbol\n' +
         type.fields
-            .map((e) {
-              final f = e.name.camel();
-              final t = e.type.name.camel();
+            .map((field) {
+              final f = field.name.camel();
+              final t = field.type.name.camel();
               final s = '      ..${f} = __pack.${t}';
-              if (e.kind == stimpack.meta.kind.s.list) {
+              if (field.isSet) {
                 return '${s}.noneSet';
               } else {
                 return '${s}.none';
@@ -183,7 +184,7 @@ class {{ typeScopeImplClass }}
 
               final s1 = '      ..${f}';
               final s2 = '${f} ?? __pack.${t}';
-              if (e.kind == stimpack.meta.kind.s.list) {
+              if (e.isSet) {
                 return '$s1 += $s2.noneSet';
               } else {
                 return '$s1 = $s2.none';
@@ -252,9 +253,9 @@ class {{ typeScopeImplClass }}
 
   Node _buildSetFieldListDef() {
     final nodes = <Node>[];
-    for (final i in type.fields) {
+    for (final field in type.fields) {
       String template;
-      if (i.kind == stimpack.meta.kind.s.list) {
+      if (field.isSet) {
         template = '''
         
         
@@ -284,7 +285,7 @@ class {{ typeScopeImplClass }}
           null,
           pack: pack,
           type: type,
-          field: i,
+          field: field,
         ),
       );
     }

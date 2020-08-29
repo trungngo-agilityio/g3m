@@ -2,7 +2,6 @@ library g3.stimpack.meta.generated;
 
 import 'package:g3m/stimpack_base.dart';
 
-
 part 'meta_kind.dart';
 
 part 'meta_type.dart';
@@ -29,9 +28,7 @@ part 'meta_preset__values.dart';
 
 part 'meta_value.dart';
 
-
-
-StimMetaMeta  _stimMetaMeta;
+StimMetaMeta _stimMetaMeta;
 
 extension StimMetaMetaExtension on Stimpack {
   StimMetaMeta get meta {
@@ -40,7 +37,7 @@ extension StimMetaMetaExtension on Stimpack {
       impl.init();
       return _stimMetaMeta;
     }
-    
+
     return _stimMetaMeta;
   }
 }
@@ -49,50 +46,51 @@ abstract class StimMetaMeta {
   StimMetaPack get meta;
 
   StimMetaKindScope get kind;
-  StimMetaTypeScope get type;
-  StimMetaFieldScope get field;
-  StimMetaPackScope get pack;
-  StimMetaPresetScope get preset;
-  StimMetaValueScope get value;
 
+  StimMetaTypeScope get type;
+
+  StimMetaFieldScope get field;
+
+  StimMetaPackScope get pack;
+
+  StimMetaPresetScope get preset;
+
+  StimMetaValueScope get value;
 }
 
 class _StimMetaMetaImpl implements StimMetaMeta {
   StimMetaPack _meta;
 
-  
   _StimMetaKindScopeImpl _kind;
-  
-  _StimMetaTypeScopeImpl _type;
-  
-  _StimMetaFieldScopeImpl _field;
-  
-  _StimMetaPackScopeImpl _pack;
-  
-  _StimMetaPresetScopeImpl _preset;
-  
-  _StimMetaValueScopeImpl _value;
 
+  _StimMetaTypeScopeImpl _type;
+
+  _StimMetaFieldScopeImpl _field;
+
+  _StimMetaPackScopeImpl _pack;
+
+  _StimMetaPresetScopeImpl _preset;
+
+  _StimMetaValueScopeImpl _value;
 
   @override
   StimMetaPack get meta => _meta;
 
-  
   @override
   StimMetaKindScope get kind => _kind;
-  
+
   @override
   StimMetaTypeScope get type => _type;
-  
+
   @override
   StimMetaFieldScope get field => _field;
-  
+
   @override
   StimMetaPackScope get pack => _pack;
-  
+
   @override
   StimMetaPresetScope get preset => _preset;
-  
+
   @override
   StimMetaValueScope get value => _value;
 
@@ -103,9 +101,8 @@ class _StimMetaMetaImpl implements StimMetaMeta {
     _pack = _StimMetaPackScopeImpl._(this);
     _preset = _StimMetaPresetScopeImpl._(this);
     _value = _StimMetaValueScopeImpl._(this);
-
   }
-  
+
   void init() {
     _kind.init();
     _type.init();
@@ -129,26 +126,28 @@ class _StimMetaMetaImpl implements StimMetaMeta {
     final presetType = t.of('preset');
     final valueType = t.of('value');
 
-    typeType.fields += 
-        f.of('fields', kind: listKind, type: fieldType) + 
-        f.of('presets', kind: listKind, type: presetType) + 
+    typeType.fields += f.of('fields', kind: listKind, type: fieldType) +
+        f.of('presets', kind: listKind, type: presetType) +
         f.of('pack', type: packType);
 
-    fieldType.fields += 
-        f.of('kind', type: kindType) + 
-        f.of('type', type: typeType);
+    fieldType.fields +=
+        f.of('kind', type: kindType) + f.of('type', type: typeType);
 
-    packType.fields += 
-        f.of('types', kind: listKind, type: typeType);
+    packType.fields += f.of('types', kind: listKind, type: typeType);
 
-    presetType.fields += 
-        f.of('values', kind: listKind, type: valueType);
+    presetType.fields += f.of('values', kind: listKind, type: valueType);
 
-    kindType.presets += 
-        p.of('', values: 
-              v.of('list'),);
+    kindType.presets += p.of(
+      '',
+      values: v.of('list'),
+    );
 
-    _meta = meta.pack.of('meta', types: kindType + typeType + fieldType + packType + presetType + valueType);
+    final allTypes =
+        kindType + typeType + fieldType + packType + presetType + valueType;
+
+    _meta = meta.pack.of('meta', types: allTypes);
+
+    // Makes all types belong to this set.
+    allTypes.pack.set(_meta);
   }
 }
-    
