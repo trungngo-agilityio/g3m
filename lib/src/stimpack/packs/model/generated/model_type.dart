@@ -21,28 +21,28 @@ class StimModelType extends StimSymbol<StimModelType, StimModelTypeSet> {
 
 
 class StimModelTypeSet extends StimSymbolSet<StimModelType, StimModelTypeSet> {
-  final _StimModelModelImpl _pack;
+  final _StimModelTypeScopeImpl _scope;
 
   StimModelTypeXFieldsSetOp _fields;
 
   StimModelTypeXRulesSetOp _rules;
 
   StimModelTypeXFieldsSetOp get fields {
-    return _fields ??= StimModelTypeXFieldsSetOp(this, _pack.field);
+    return _fields ??= StimModelTypeXFieldsSetOp(this, stimpack.model.field);
   }
 
   set fields(StimModelTypeXFieldsSetOp value) {
     _fields = value;
   }
   StimModelTypeXRulesSetOp get rules {
-    return _rules ??= StimModelTypeXRulesSetOp(this, _pack.rule);
+    return _rules ??= StimModelTypeXRulesSetOp(this, stimpack.model.rule);
   }
 
   set rules(StimModelTypeXRulesSetOp value) {
     _rules = value;
   }
-  StimModelTypeSet(this._pack, List<StimModelType> items):
-      super(_pack._type, items);
+  StimModelTypeSet(this._scope, List<StimModelType> items):
+      super(_scope, items);
 }
 
 
@@ -54,8 +54,6 @@ abstract class StimModelTypeScope extends StimScope<StimModelType, StimModelType
 
 
 class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelTypeSet> implements StimModelTypeScope {
-  final _StimModelModelImpl _pack;
-
   StimModelTypeSymbols _s;
 
   StimModelFieldSet fields;
@@ -66,22 +64,22 @@ class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelType
   StimModelTypeSymbols get s {
     return _s ??= StimModelTypeSymbols(this);
   }
-  _StimModelTypeScopeImpl(this._pack):
+  _StimModelTypeScopeImpl():
       super();
 
 
   @override
   StimModelType of(name, {dynamic fields, dynamic rules}) {
     return createAndClear(name)
-        ..fields += fields ?? _pack.field.noneSet
-        ..rules += rules ?? _pack.rule.noneSet;
+        ..fields += fields ?? stimpack.model.field.noneSet
+        ..rules += rules ?? stimpack.model.rule.noneSet;
   }
 
   @override
   void clear(StimModelType symbol) {
     symbol
-        ..fields = _pack.field.noneSet
-        ..rules = _pack.rule.noneSet;
+        ..fields = stimpack.model.field.noneSet
+        ..rules = stimpack.model.rule.noneSet;
   }
 
   @override
@@ -91,7 +89,7 @@ class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelType
 
   @override
   StimModelTypeSet createSet(List<StimModelType> items) {
-    return StimModelTypeSet(_pack, items);
+    return StimModelTypeSet(this, items);
   }
 }
 

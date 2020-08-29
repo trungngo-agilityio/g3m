@@ -15,10 +15,10 @@ class StimModelPattern extends StimSymbol<StimModelPattern, StimModelPatternSet>
 
 
 class StimModelPatternSet extends StimSymbolSet<StimModelPattern, StimModelPatternSet> {
-  final _StimModelModelImpl _pack;
+  final _StimModelPatternScopeImpl _scope;
 
-  StimModelPatternSet(this._pack, List<StimModelPattern> items):
-      super(_pack._pattern, items);
+  StimModelPatternSet(this._scope, List<StimModelPattern> items):
+      super(_scope, items);
 }
 
 
@@ -30,15 +30,13 @@ abstract class StimModelPatternScope extends StimScope<StimModelPattern, StimMod
 
 
 class _StimModelPatternScopeImpl extends StimScopeImpl<StimModelPattern, StimModelPatternSet> implements StimModelPatternScope {
-  final _StimModelModelImpl _pack;
-
   StimModelPatternSymbols _s;
 
   @override
   StimModelPatternSymbols get s {
     return _s ??= StimModelPatternSymbols(this);
   }
-  _StimModelPatternScopeImpl(this._pack):
+  _StimModelPatternScopeImpl():
       super();
 
 
@@ -59,7 +57,7 @@ class _StimModelPatternScopeImpl extends StimScopeImpl<StimModelPattern, StimMod
 
   @override
   StimModelPatternSet createSet(List<StimModelPattern> items) {
-    return StimModelPatternSet(_pack, items);
+    return StimModelPatternSet(this, items);
   }
 }
 

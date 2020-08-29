@@ -128,15 +128,19 @@ class StimGenMetaType implements Node {
         generic: [_symbolClassName, _symbolSetClassName]);
 
     // Build fields and properties
-    final fields = <CodeField>[_packField];
+    final scopeField = CodeField.of(
+        name: 'scope',
+        type: _scopeImplClassName,
+        isPrivate: true,
+        isFinal: true);
+    final fields = <CodeField>[scopeField];
     final properties = <CodeProperty>[];
 
     for (final i in type.fields) {
       final opClass = _config.fieldOpOrSetOpNameOf(pack, type, i);
       final field = CodeField.of(name: i.name, type: opClass, isPrivate: true);
+      final fieldTypeScope = _config.publicTypeScopeOf(pack, i.type);
 
-      final packFieldRef = CodeRef.of(_packField);
-      final scopeField = i.type.name.camel();
       final property = CodeProperty.of(
         name: i.name,
         type: field.type,
@@ -147,7 +151,7 @@ class StimGenMetaType implements Node {
               className: opClass,
               args: [
                 CodeRef.ofThis(),
-                CodeAccessExpr.of(packFieldRef, scopeField)
+                CodeRef.of(fieldTypeScope),
               ],
             ),
           ),
@@ -164,20 +168,16 @@ class StimGenMetaType implements Node {
 
     // Builds constructor
 
-    final packFieldArg = CodeArg.ofField(field: _packField);
-
+    final scopeFieldArg = CodeArg.ofField(field: scopeField);
     final itemsArg = _symbolListArgs();
-
-    final symbolScopeFieldName =
-        CodeFieldName.of(name: type.name, isPrivate: true);
 
     final constructor = CodeConstructor.of(
       requiredArgs: [
-        packFieldArg,
+        scopeFieldArg,
         itemsArg,
       ],
       init: CodeFunctionCall.ofSuper(args: [
-        CodeAccessExpr.of(_packField.name, symbolScopeFieldName),
+        scopeFieldArg.name,
         CodeRef.of(itemsArg),
       ]),
     );
@@ -255,7 +255,7 @@ class StimGenMetaType implements Node {
         generic: [_symbolClassName, _symbolSetClassName]);
 
     final symbolsField = _symbolsField();
-    final fields = <CodeField>[_packField, symbolsField];
+    final fields = <CodeField>[symbolsField];
     final properties = <CodeProperty>[
       _symbolsProperty(
         body: CodeReturn.of(
@@ -279,11 +279,9 @@ class StimGenMetaType implements Node {
 
       final fieldRef = CodeRef.of(field);
       final none = CodeAccessExpr.of(
-          _packFieldRef,
-          CodeAccessExpr.of(
-            field.type.name.camel(),
-            Text.of(field.isSet ? 'noneSet' : 'none'),
-          ));
+        CodeRef.of(_config.publicTypeScopeOf(pack, field.type)),
+        Text.of(field.isSet ? 'noneSet' : 'none'),
+      );
 
       clearFunctionFields.add(
         CodeCascade.of(
@@ -304,9 +302,6 @@ class StimGenMetaType implements Node {
     // -------------------------------------------------------------------------
     // Builds constructors
     final constructor = CodeConstructor.of(
-      requiredArgs: [
-        CodeArg.ofField(field: _packField),
-      ],
       init: CodeFunctionCall.ofSuper(),
     );
 
@@ -366,7 +361,7 @@ class StimGenMetaType implements Node {
       body: CodeReturn.of(CodeConstructorCall.of(
         className: _symbolSetClassName,
         args: [
-          _packFieldRef,
+          CodeRef.ofThis(),
           CodeRef.of(symbolListArgs),
         ],
       )),
@@ -395,7 +390,12 @@ class StimGenMetaType implements Node {
 
   CodeClass _symbolsClassDef() {
     final className = _config.symbolListClassNameOf(pack, type);
-    return _presetOrSymbolsClassDef(className, []);
+    var values = stimpack.meta.value.noneSet;
+    for (final preset in type.presets.whereNoName()) {
+      values += preset.values;
+    }
+
+    return _presetOrSymbolsClassDef(className, values);
   }
 
   List<CodeClass> _presetClassListDef() {

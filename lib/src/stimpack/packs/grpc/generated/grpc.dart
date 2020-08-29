@@ -75,12 +75,12 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
   }
 
   _StimGrpcGrpcImpl() {
-    _package = _StimGrpcPackageScopeImpl(this);
-    _message = _StimGrpcMessageScopeImpl(this);
-    _method = _StimGrpcMethodScopeImpl(this);
-    _methodRequest = _StimGrpcMethodRequestScopeImpl(this);
-    _methodResponse = _StimGrpcMethodResponseScopeImpl(this);
-    _service = _StimGrpcServiceScopeImpl(this);
+    _package = _StimGrpcPackageScopeImpl();
+    _message = _StimGrpcMessageScopeImpl();
+    _method = _StimGrpcMethodScopeImpl();
+    _methodRequest = _StimGrpcMethodRequestScopeImpl();
+    _methodResponse = _StimGrpcMethodResponseScopeImpl();
+    _service = _StimGrpcServiceScopeImpl();
   }
 
 
@@ -91,8 +91,8 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
     _methodRequest.init();
     _methodResponse.init();
     _service.init();
-    buildMeta();
-    buildValues();
+    _buildMeta();
+    _buildValues();
   }
 
   void _buildMeta() {
@@ -100,13 +100,14 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
     final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
     final listKind = meta.kind.s.list;
 
-    final packageType = t.of('package');
-    final messageType = t.of('message');
-    final methodType = t.of('method');
-    final methodRequestType = t.of('methodRequest');
-    final methodResponseType = t.of('methodResponse');
-    final serviceType = t.of('service');
+    final  packageType = t.of('package');
+    final  messageType = t.of('message');
+    final  methodType = t.of('method');
+    final  methodRequestType = t.of('method request');
+    final  methodResponseType = t.of('method response');
+    final  serviceType = t.of('service');
 
+    final  typeType = stimpack.model.type;
     packageType.fields += 
         f.of('messages', kind: listKind, type: messageType) + 
         f.of('services', kind: listKind, type: serviceType);
@@ -121,7 +122,7 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
     serviceType.fields += 
         f.of('methods', kind: listKind, type: methodType);
 
-    final allTypes = packageType + messageType + methodType + methodRequestType + methodResponseType + serviceType);
+    final allTypes = packageType + messageType + methodType + methodRequestType + methodResponseType + serviceType;
     _meta = meta.pack.of('grpc', types: allTypes);
     allTypes.pack.set(_meta);
   }
@@ -132,7 +133,7 @@ class _StimGrpcGrpcImpl  implements StimGrpcGrpc {
     /// build all preset values here
   }
 
-// endregion custom code of grpc stimpack
+  // endregion custom code of grpc stimpack
 }
 StimGrpcGrpc  _stimGrpcGrpc;
 

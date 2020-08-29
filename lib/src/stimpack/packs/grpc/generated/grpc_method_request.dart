@@ -15,10 +15,10 @@ class StimGrpcMethodRequest extends StimSymbol<StimGrpcMethodRequest, StimGrpcMe
 
 
 class StimGrpcMethodRequestSet extends StimSymbolSet<StimGrpcMethodRequest, StimGrpcMethodRequestSet> {
-  final _StimGrpcGrpcImpl _pack;
+  final _StimGrpcMethodRequestScopeImpl _scope;
 
-  StimGrpcMethodRequestSet(this._pack, List<StimGrpcMethodRequest> items):
-      super(_pack._methodRequest, items);
+  StimGrpcMethodRequestSet(this._scope, List<StimGrpcMethodRequest> items):
+      super(_scope, items);
 }
 
 
@@ -30,26 +30,24 @@ abstract class StimGrpcMethodRequestScope extends StimScope<StimGrpcMethodReques
 
 
 class _StimGrpcMethodRequestScopeImpl extends StimScopeImpl<StimGrpcMethodRequest, StimGrpcMethodRequestSet> implements StimGrpcMethodRequestScope {
-  final _StimGrpcGrpcImpl _pack;
-
   StimGrpcMethodRequestSymbols _s;
 
   @override
   StimGrpcMethodRequestSymbols get s {
     return _s ??= StimGrpcMethodRequestSymbols(this);
   }
-  _StimGrpcMethodRequestScopeImpl(this._pack):
+  _StimGrpcMethodRequestScopeImpl():
       super();
 
 
   @override
   StimGrpcMethodRequest of(name) {
-    return createAndClear(name)
+    return createAndClear(name);
   }
 
   @override
   void clear(StimGrpcMethodRequest symbol) {
-    symbol
+    symbol;
   }
 
   @override
@@ -59,21 +57,16 @@ class _StimGrpcMethodRequestScopeImpl extends StimScopeImpl<StimGrpcMethodReques
 
   @override
   StimGrpcMethodRequestSet createSet(List<StimGrpcMethodRequest> items) {
-    return StimGrpcMethodRequestSet(_pack, items);
+    return StimGrpcMethodRequestSet(this, items);
   }
 }
 
-        
+
 class StimGrpcMethodRequestSymbols {
-  final _StimGrpcMethodRequestScopeImpl _scope;
-  /// All symbols
   StimGrpcMethodRequestSet all;
 
-  
-  StimGrpcMethodRequestSymbols(this._scope) {
-    final _s = stimpack.grpc.methodRequest;
-    all = _s.noneSet;
 
+  StimGrpcMethodRequestSymbols(StimGrpcMethodRequestScope scope) {
+    all = scope.noneSet;
   }
 }
-

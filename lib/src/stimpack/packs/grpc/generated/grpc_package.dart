@@ -21,28 +21,28 @@ class StimGrpcPackage extends StimSymbol<StimGrpcPackage, StimGrpcPackageSet> {
 
 
 class StimGrpcPackageSet extends StimSymbolSet<StimGrpcPackage, StimGrpcPackageSet> {
-  final _StimGrpcGrpcImpl _pack;
+  final _StimGrpcPackageScopeImpl _scope;
 
   StimGrpcPackageXMessagesSetOp _messages;
 
   StimGrpcPackageXServicesSetOp _services;
 
   StimGrpcPackageXMessagesSetOp get messages {
-    return _messages ??= StimGrpcPackageXMessagesSetOp(this, _pack.message);
+    return _messages ??= StimGrpcPackageXMessagesSetOp(this, stimpack.grpc.message);
   }
 
   set messages(StimGrpcPackageXMessagesSetOp value) {
     _messages = value;
   }
   StimGrpcPackageXServicesSetOp get services {
-    return _services ??= StimGrpcPackageXServicesSetOp(this, _pack.service);
+    return _services ??= StimGrpcPackageXServicesSetOp(this, stimpack.grpc.service);
   }
 
   set services(StimGrpcPackageXServicesSetOp value) {
     _services = value;
   }
-  StimGrpcPackageSet(this._pack, List<StimGrpcPackage> items):
-      super(_pack._package, items);
+  StimGrpcPackageSet(this._scope, List<StimGrpcPackage> items):
+      super(_scope, items);
 }
 
 
@@ -54,8 +54,6 @@ abstract class StimGrpcPackageScope extends StimScope<StimGrpcPackage, StimGrpcP
 
 
 class _StimGrpcPackageScopeImpl extends StimScopeImpl<StimGrpcPackage, StimGrpcPackageSet> implements StimGrpcPackageScope {
-  final _StimGrpcGrpcImpl _pack;
-
   StimGrpcPackageSymbols _s;
 
   StimGrpcMessageSet messages;
@@ -66,24 +64,22 @@ class _StimGrpcPackageScopeImpl extends StimScopeImpl<StimGrpcPackage, StimGrpcP
   StimGrpcPackageSymbols get s {
     return _s ??= StimGrpcPackageSymbols(this);
   }
-  _StimGrpcPackageScopeImpl(this._pack):
+  _StimGrpcPackageScopeImpl():
       super();
 
 
   @override
   StimGrpcPackage of(name, {dynamic messages, dynamic services}) {
     return createAndClear(name)
-        ..messages += messages ?? _pack.message.noneSet;
-
-        ..services += services ?? _pack.service.noneSet;
+        ..messages += messages ?? stimpack.grpc.message.noneSet
+        ..services += services ?? stimpack.grpc.service.noneSet;
   }
 
   @override
   void clear(StimGrpcPackage symbol) {
     symbol
-        ..messages = _pack.message.noneSet;
-
-        ..services = _pack.service.noneSet;
+        ..messages = stimpack.grpc.message.noneSet
+        ..services = stimpack.grpc.service.noneSet;
   }
 
   @override
@@ -93,21 +89,16 @@ class _StimGrpcPackageScopeImpl extends StimScopeImpl<StimGrpcPackage, StimGrpcP
 
   @override
   StimGrpcPackageSet createSet(List<StimGrpcPackage> items) {
-    return StimGrpcPackageSet(_pack, items);
+    return StimGrpcPackageSet(this, items);
   }
 }
 
-        
+
 class StimGrpcPackageSymbols {
-  final _StimGrpcPackageScopeImpl _scope;
-  /// All symbols
   StimGrpcPackageSet all;
 
-  
-  StimGrpcPackageSymbols(this._scope) {
-    final _s = stimpack.grpc.package;
-    all = _s.noneSet;
 
+  StimGrpcPackageSymbols(StimGrpcPackageScope scope) {
+    all = scope.noneSet;
   }
 }
-

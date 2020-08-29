@@ -50,8 +50,6 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   ///
   Name symbolClassNameOf(StimMetaPack pack, StimMetaType type) {
     final typePack = type.pack ?? pack;
-    assert(typePack != null);
-    assert(type.name?.isNotEmpty == true);
     return ('stim' >> typePack.name >> type.name).pascal();
   }
 
@@ -72,7 +70,8 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessageSet'.
   ///
   Name symbolSetClassNameOf(StimMetaPack pack, StimMetaType type) {
-    return ('stim' >> pack.name >> type.name >> 'set').pascal();
+    final typePack = type.pack ?? pack;
+    return ('stim' >> typePack.name >> type.name >> 'set').pascal();
   }
 
   // ===========================================================================
@@ -100,7 +99,8 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessageScope'.
   ///
   Name scopeClassNameOf(StimMetaPack pack, StimMetaType type) {
-    return ('stim' >> pack.name >> type.name >> 'scope').pascal();
+    final typePack = type.pack ?? pack;
+    return ('stim' >> typePack.name >> type.name >> 'scope').pascal();
   }
 
   Name scopeImplClassNameOf(StimMetaPack pack, StimMetaType type) {
@@ -118,7 +118,8 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   ///
   Name opClassNameOf(
       StimMetaPack pack, StimMetaType type, StimMetaField field) {
-    return ('stim' >> pack.name >> type.name >> 'x' >> field.name >> 'op')
+    final typePack = type.pack ?? pack;
+    return ('stim' >> typePack.name >> type.name >> 'x' >> field.name >> 'op')
         .pascal();
   }
 
@@ -137,7 +138,13 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessageXRuleSetOp'.
   Name setOpClassNameOf(
       StimMetaPack pack, StimMetaType type, StimMetaField field) {
-    return ('stim' >> pack.name >> type.name >> 'x' >> field.name >> 'set op')
+    final typePack = type.pack ?? pack;
+    return ('stim' >>
+            typePack.name >>
+            type.name >>
+            'x' >>
+            field.name >>
+            'set op')
         .pascal();
   }
 
@@ -152,21 +159,28 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
 
   Name presetClassNameOf(
       StimMetaPack pack, StimMetaType type, StimMetaPreset preset) {
+    final typePack = type.pack ?? pack;
     var name = preset.name;
     if (name?.isNotEmpty != true) {
       name = Name('default');
     }
 
-    return ('stim' >> pack.name >> type.name >> name >> 'preset').pascal();
+    return ('stim' >> typePack.name >> type.name >> name >> 'preset').pascal();
   }
 
   Name symbolListClassNameOf(StimMetaPack pack, StimMetaType type) {
-    return ('stim' >> pack.name >> type.name >> 'symbols').pascal();
+    final typePack = type.pack ?? pack;
+    return ('stim' >> typePack.name >> type.name >> 'symbols').pascal();
   }
 
   // ===========================================================================
   // Code
   // ===========================================================================
+
+  String publicTypeScopeOf(StimMetaPack pack, StimMetaType type) {
+    final fieldTypePack = type.pack ?? pack;
+    return 'stimpack.${fieldTypePack.name.camel()}.${type.name.camel()}';
+  }
 
   CodePackage codePackageLibraryOf(StimMetaPack pack, {bool isPart}) {
     final path = ['g3', 'stimpack', pack.name];

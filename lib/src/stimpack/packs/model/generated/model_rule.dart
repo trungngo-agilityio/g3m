@@ -21,28 +21,28 @@ class StimModelRule extends StimSymbol<StimModelRule, StimModelRuleSet> {
 
 
 class StimModelRuleSet extends StimSymbolSet<StimModelRule, StimModelRuleSet> {
-  final _StimModelModelImpl _pack;
+  final _StimModelRuleScopeImpl _scope;
 
   StimModelRuleXRangeOp _range;
 
   StimModelRuleXPatternsSetOp _patterns;
 
   StimModelRuleXRangeOp get range {
-    return _range ??= StimModelRuleXRangeOp(this, _pack.range);
+    return _range ??= StimModelRuleXRangeOp(this, stimpack.model.range);
   }
 
   set range(StimModelRuleXRangeOp value) {
     _range = value;
   }
   StimModelRuleXPatternsSetOp get patterns {
-    return _patterns ??= StimModelRuleXPatternsSetOp(this, _pack.pattern);
+    return _patterns ??= StimModelRuleXPatternsSetOp(this, stimpack.model.pattern);
   }
 
   set patterns(StimModelRuleXPatternsSetOp value) {
     _patterns = value;
   }
-  StimModelRuleSet(this._pack, List<StimModelRule> items):
-      super(_pack._rule, items);
+  StimModelRuleSet(this._scope, List<StimModelRule> items):
+      super(_scope, items);
 }
 
 
@@ -54,8 +54,6 @@ abstract class StimModelRuleScope extends StimScope<StimModelRule, StimModelRule
 
 
 class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRuleSet> implements StimModelRuleScope {
-  final _StimModelModelImpl _pack;
-
   StimModelRuleSymbols _s;
 
   StimModelRange range;
@@ -66,22 +64,22 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
   StimModelRuleSymbols get s {
     return _s ??= StimModelRuleSymbols(this);
   }
-  _StimModelRuleScopeImpl(this._pack):
+  _StimModelRuleScopeImpl():
       super();
 
 
   @override
   StimModelRule of(name, {dynamic range, dynamic patterns}) {
     return createAndClear(name)
-        ..range = range ?? _pack.range.none
-        ..patterns += patterns ?? _pack.pattern.noneSet;
+        ..range = range ?? stimpack.model.range.none
+        ..patterns += patterns ?? stimpack.model.pattern.noneSet;
   }
 
   @override
   void clear(StimModelRule symbol) {
     symbol
-        ..range = _pack.range.none
-        ..patterns = _pack.pattern.noneSet;
+        ..range = stimpack.model.range.none
+        ..patterns = stimpack.model.pattern.noneSet;
   }
 
   @override
@@ -91,7 +89,7 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
 
   @override
   StimModelRuleSet createSet(List<StimModelRule> items) {
-    return StimModelRuleSet(_pack, items);
+    return StimModelRuleSet(this, items);
   }
 }
 
@@ -99,9 +97,15 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
 class StimModelRuleSymbols {
   StimModelRuleSet all;
 
+  StimModelRule unique;
+
+  StimModelRule required;
+
 
   StimModelRuleSymbols(StimModelRuleScope scope) {
     all = scope.noneSet;
+    all += unique = scope.of('unique');
+    all += required = scope.of('required');
   }
 }
 

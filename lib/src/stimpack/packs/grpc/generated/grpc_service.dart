@@ -18,19 +18,19 @@ class StimGrpcService extends StimSymbol<StimGrpcService, StimGrpcServiceSet> {
 
 
 class StimGrpcServiceSet extends StimSymbolSet<StimGrpcService, StimGrpcServiceSet> {
-  final _StimGrpcGrpcImpl _pack;
+  final _StimGrpcServiceScopeImpl _scope;
 
   StimGrpcServiceXMethodsSetOp _methods;
 
   StimGrpcServiceXMethodsSetOp get methods {
-    return _methods ??= StimGrpcServiceXMethodsSetOp(this, _pack.method);
+    return _methods ??= StimGrpcServiceXMethodsSetOp(this, stimpack.grpc.method);
   }
 
   set methods(StimGrpcServiceXMethodsSetOp value) {
     _methods = value;
   }
-  StimGrpcServiceSet(this._pack, List<StimGrpcService> items):
-      super(_pack._service, items);
+  StimGrpcServiceSet(this._scope, List<StimGrpcService> items):
+      super(_scope, items);
 }
 
 
@@ -42,8 +42,6 @@ abstract class StimGrpcServiceScope extends StimScope<StimGrpcService, StimGrpcS
 
 
 class _StimGrpcServiceScopeImpl extends StimScopeImpl<StimGrpcService, StimGrpcServiceSet> implements StimGrpcServiceScope {
-  final _StimGrpcGrpcImpl _pack;
-
   StimGrpcServiceSymbols _s;
 
   StimGrpcMethodSet methods;
@@ -52,20 +50,20 @@ class _StimGrpcServiceScopeImpl extends StimScopeImpl<StimGrpcService, StimGrpcS
   StimGrpcServiceSymbols get s {
     return _s ??= StimGrpcServiceSymbols(this);
   }
-  _StimGrpcServiceScopeImpl(this._pack):
+  _StimGrpcServiceScopeImpl():
       super();
 
 
   @override
   StimGrpcService of(name, {dynamic methods}) {
     return createAndClear(name)
-        ..methods += methods ?? _pack.method.noneSet;
+        ..methods += methods ?? stimpack.grpc.method.noneSet;
   }
 
   @override
   void clear(StimGrpcService symbol) {
     symbol
-        ..methods = _pack.method.noneSet;
+        ..methods = stimpack.grpc.method.noneSet;
   }
 
   @override
@@ -75,21 +73,16 @@ class _StimGrpcServiceScopeImpl extends StimScopeImpl<StimGrpcService, StimGrpcS
 
   @override
   StimGrpcServiceSet createSet(List<StimGrpcService> items) {
-    return StimGrpcServiceSet(_pack, items);
+    return StimGrpcServiceSet(this, items);
   }
 }
 
-        
+
 class StimGrpcServiceSymbols {
-  final _StimGrpcServiceScopeImpl _scope;
-  /// All symbols
   StimGrpcServiceSet all;
 
-  
-  StimGrpcServiceSymbols(this._scope) {
-    final _s = stimpack.grpc.service;
-    all = _s.noneSet;
 
+  StimGrpcServiceSymbols(StimGrpcServiceScope scope) {
+    all = scope.noneSet;
   }
 }
-

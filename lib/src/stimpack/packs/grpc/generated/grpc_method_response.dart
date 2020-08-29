@@ -15,10 +15,10 @@ class StimGrpcMethodResponse extends StimSymbol<StimGrpcMethodResponse, StimGrpc
 
 
 class StimGrpcMethodResponseSet extends StimSymbolSet<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
-  final _StimGrpcGrpcImpl _pack;
+  final _StimGrpcMethodResponseScopeImpl _scope;
 
-  StimGrpcMethodResponseSet(this._pack, List<StimGrpcMethodResponse> items):
-      super(_pack._methodResponse, items);
+  StimGrpcMethodResponseSet(this._scope, List<StimGrpcMethodResponse> items):
+      super(_scope, items);
 }
 
 
@@ -30,26 +30,24 @@ abstract class StimGrpcMethodResponseScope extends StimScope<StimGrpcMethodRespo
 
 
 class _StimGrpcMethodResponseScopeImpl extends StimScopeImpl<StimGrpcMethodResponse, StimGrpcMethodResponseSet> implements StimGrpcMethodResponseScope {
-  final _StimGrpcGrpcImpl _pack;
-
   StimGrpcMethodResponseSymbols _s;
 
   @override
   StimGrpcMethodResponseSymbols get s {
     return _s ??= StimGrpcMethodResponseSymbols(this);
   }
-  _StimGrpcMethodResponseScopeImpl(this._pack):
+  _StimGrpcMethodResponseScopeImpl():
       super();
 
 
   @override
   StimGrpcMethodResponse of(name) {
-    return createAndClear(name)
+    return createAndClear(name);
   }
 
   @override
   void clear(StimGrpcMethodResponse symbol) {
-    symbol
+    symbol;
   }
 
   @override
@@ -59,21 +57,16 @@ class _StimGrpcMethodResponseScopeImpl extends StimScopeImpl<StimGrpcMethodRespo
 
   @override
   StimGrpcMethodResponseSet createSet(List<StimGrpcMethodResponse> items) {
-    return StimGrpcMethodResponseSet(_pack, items);
+    return StimGrpcMethodResponseSet(this, items);
   }
 }
 
-        
+
 class StimGrpcMethodResponseSymbols {
-  final _StimGrpcMethodResponseScopeImpl _scope;
-  /// All symbols
   StimGrpcMethodResponseSet all;
 
-  
-  StimGrpcMethodResponseSymbols(this._scope) {
-    final _s = stimpack.grpc.methodResponse;
-    all = _s.noneSet;
 
+  StimGrpcMethodResponseSymbols(StimGrpcMethodResponseScope scope) {
+    all = scope.noneSet;
   }
 }
-

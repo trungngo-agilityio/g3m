@@ -15,10 +15,10 @@ class StimModelRange extends StimSymbol<StimModelRange, StimModelRangeSet> {
 
 
 class StimModelRangeSet extends StimSymbolSet<StimModelRange, StimModelRangeSet> {
-  final _StimModelModelImpl _pack;
+  final _StimModelRangeScopeImpl _scope;
 
-  StimModelRangeSet(this._pack, List<StimModelRange> items):
-      super(_pack._range, items);
+  StimModelRangeSet(this._scope, List<StimModelRange> items):
+      super(_scope, items);
 }
 
 
@@ -30,15 +30,13 @@ abstract class StimModelRangeScope extends StimScope<StimModelRange, StimModelRa
 
 
 class _StimModelRangeScopeImpl extends StimScopeImpl<StimModelRange, StimModelRangeSet> implements StimModelRangeScope {
-  final _StimModelModelImpl _pack;
-
   StimModelRangeSymbols _s;
 
   @override
   StimModelRangeSymbols get s {
     return _s ??= StimModelRangeSymbols(this);
   }
-  _StimModelRangeScopeImpl(this._pack):
+  _StimModelRangeScopeImpl():
       super();
 
 
@@ -59,7 +57,7 @@ class _StimModelRangeScopeImpl extends StimScopeImpl<StimModelRange, StimModelRa
 
   @override
   StimModelRangeSet createSet(List<StimModelRange> items) {
-    return StimModelRangeSet(_pack, items);
+    return StimModelRangeSet(this, items);
   }
 }
 

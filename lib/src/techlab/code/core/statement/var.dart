@@ -92,6 +92,7 @@ class CodeVar extends CodeConfigProxyNode<CodeVar> {
         name: CodeVarName.of(name),
         type: CodeType.of(name: type),
         init: CodeExpr.of(init),
+        isFinal: isFinal,
         comment: CodeComment.of(comment),
       );
 }

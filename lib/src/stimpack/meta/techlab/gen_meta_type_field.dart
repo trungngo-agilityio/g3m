@@ -5,68 +5,91 @@ class StimGenMetaTypeField implements Node {
   final StimMetaType type;
   final StimMetaField field;
 
+  StimpackCodeConfig _config;
+
   StimGenMetaTypeField(this.pack, this.type, this.field);
 
   @override
   Node build(BuildContext context) {
-    final config =
-        context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
+    _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
 
-    final fileName = config.typeFieldFileNameOf(pack, type, field);
-    return DartCodeFile.of(fileName, body: _buildBody());
+    final fileName = _config.typeFieldFileNameOf(pack, type, field);
+    return DartCodeFile.of(
+      fileName,
+      package: _config.codePackageLibraryOf(pack, isPart: true),
+      classes: [_classDef()],
+    );
   }
 
-  Node _buildBody() {
-    return Container([
-      'part of g3.stimpack.${pack.name.camel()}.generated;\n',
-      field.kind == stimpack.meta.kind.s.list
-          ? _buildListField()
-          : _buildSingleField(),
+  CodeClass _classDef() {
+    final className = _config.fieldOpOrSetOpNameOf(pack, type, field);
+    final isSet = field.isSet;
+    final baseClassName =
+        isSet ? 'stim symbol set op impl' : 'stim symbol op impl';
+
+    final symbolClassName = _config.symbolClassNameOf(pack, type);
+    final fieldSymbolClassName = _config.symbolClassNameOf(pack, field.type);
+    final fieldSymbolSetClassName =
+        _config.symbolSetClassNameOf(pack, field.type);
+
+    final baseClass = CodeType.of(name: baseClassName, generic: [
+      symbolClassName,
+      _config.symbolSetClassNameOf(pack, type),
+      fieldSymbolClassName,
+      fieldSymbolSetClassName,
     ]);
-  }
 
-  Node _buildSingleField() {
-    final template = '''
+    final symbolSetArgs = CodeArg.of(
+        name: 'symbols',
+        type: CodeType.of(name: 'stim symbol set', generic: [
+          'stim symbol',
+          'stim symbol set',
+        ]));
 
-    
-class {{ setOpClass }} extends StimSymbolOpImpl<{{ setOpClassGeneric }}> {
-  {{ setOpClass }}(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<{{ fieldTypeClass}}, {{ fieldTypeSetClass }}> scope)
-      : super(symbols, scope);
+    final scopeArgs = CodeArg.of(
+        name: 'scope', type: _config.scopeClassNameOf(pack, field.type));
 
-  @override
-  void onSet({{ typeClass }} child, {{ fieldTypeClass }} value) {
-    child.{{ fieldName.camel }} = value;
-  }
-}
-    ''';
-    return _buildTemplate(template);
-  }
+    final constructor = CodeConstructor.of(
+        requiredArgs: [symbolSetArgs, scopeArgs],
+        init: CodeFunctionCall.ofSuper(args: [
+          CodeRef.of(symbolSetArgs),
+          CodeRef.of(scopeArgs),
+        ]));
 
-  Node _buildListField() {
-    final template = '''
+    final childArg = CodeArg.of(name: 'child', type: symbolClassName);
+    final childArgRef = CodeRef.of(childArg);
 
-class {{ setOpClass }} extends StimSymbolSetOpImpl<{{ setOpClassGeneric }}> {
-  {{ setOpClass }}(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
-      StimScope<{{ fieldTypeClass }}, {{ fieldTypeSetClass }}> scope)
-      : super(symbols, scope);
+    final valueArgType = isSet ? fieldSymbolSetClassName : fieldSymbolClassName;
+    final valuesArg = CodeArg.of(name: 'values', type: valueArgType);
+    final valuesArgRef = CodeRef.of(valuesArg);
 
-  @override
-  void onAdd({{ typeClass }} child, {{ fieldTypeSetClass }} values) {
-    child.{{ fieldName.camel }} += values;
-  }
+    final childDotValues =
+        CodeAccessExpr.of(childArgRef, CodeRef.of(field.name.camel()));
 
-  @override
-  void onSet({{ typeClass }} child, {{ fieldTypeSetClass }} values) {
-    child.{{ fieldName.camel }} = values;
-  }
-}
-    ''';
-    return _buildTemplate(template);
-  }
+    final onSetFunction = CodeFunction.of(
+        name: 'on set',
+        returns: CodeType.ofVoid(),
+        requiredArgs: [childArg, valuesArg],
+        isOverride: true,
+        body: CodeAssignExpr.of(childDotValues, valuesArgRef));
 
-  Node _buildTemplate(String template) {
-    return StimGenMetaTemplate(template, null,
-        pack: pack, type: type, field: field);
+    final functions = <CodeFunction>[onSetFunction];
+
+    if (isSet) {
+      final onAddFunction = CodeFunction.of(
+          name: 'on add',
+          returns: CodeType.ofVoid(),
+          requiredArgs: [childArg, valuesArg],
+          isOverride: true,
+          body: CodePlusAssignExpr.of(childDotValues, valuesArgRef));
+      functions.add(onAddFunction);
+    }
+
+    return CodeClass.of(
+      name: className,
+      extend: baseClass,
+      functions: functions,
+      constructors: constructor,
+    );
   }
 }

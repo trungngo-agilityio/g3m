@@ -44,8 +44,12 @@ void main() {
   // ---------------------------------------------------------------------------
   // Build final pack
   // ---------------------------------------------------------------------------
-  final allTypes =
-      tPackage + tMessage + tMethod + tMethodRequest + tMethodResponse + tService;
+  final allTypes = tPackage +
+      tMessage +
+      tMethod +
+      tMethodRequest +
+      tMethodResponse +
+      tService;
   final meta = m.pack.of('grpc', types: allTypes);
   allTypes.pack.set(meta);
 
