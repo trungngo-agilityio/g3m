@@ -51,23 +51,143 @@ abstract class StimModelTypeScope
 }
 
 
+class StimModelTypeGrpcPreset {
+  StimModelType double;
+
+  StimModelType float;
+
+  StimModelType int32;
+
+  StimModelType int64;
+
+  StimModelType uint32;
+
+  StimModelType uint64;
+
+  StimModelType sint32;
+
+  StimModelType sint64;
+
+  StimModelType fixed32;
+
+  StimModelType fixed64;
+
+  StimModelType sfixed32;
+
+  StimModelType sfixed64;
+
+  StimModelType string;
+
+  StimModelType bytes;
+
+  StimModelTypeSet all;
+
+
+  StimModelTypeGrpcPreset(StimModelTypeScope scope) {
+    double = scope.of('double');
+    float = scope.of('float');
+    int32 = scope.of('int32');
+    int64 = scope.of('int64');
+    uint32 = scope.of('uint32');
+    uint64 = scope.of('uint64');
+    sint32 = scope.of('sint32');
+    sint64 = scope.of('sint64');
+    fixed32 = scope.of('fixed32');
+    fixed64 = scope.of('fixed64');
+    sfixed32 = scope.of('sfixed32');
+    sfixed64 = scope.of('sfixed64');
+    string = scope.of('string');
+    bytes = scope.of('bytes');
+  }
+}
+
+class StimModelTypeDatePreset {
+  StimModelType timestamp;
+
+  StimModelType date;
+
+  StimModelType time;
+
+  StimModelType datetime;
+
+  StimModelType localDate;
+
+  StimModelType localTime;
+
+  StimModelType localDatetime;
+
+  StimModelTypeSet all;
+
+
+  StimModelTypeDatePreset(StimModelTypeScope scope) {
+    timestamp = scope.of('timestamp');
+    date = scope.of('date');
+    time = scope.of('time');
+    datetime = scope.of('datetime');
+    localDate = scope.of('local date');
+    localTime = scope.of('local time');
+    localDatetime = scope.of('local datetime');
+  }
+}
+
+class StimModelTypeAuthPreset {
+  StimModelType user;
+
+  StimModelType userProfile;
+
+  StimModelType accessToken;
+
+  StimModelTypeSet all;
+
+
+  StimModelTypeAuthPreset(StimModelTypeScope scope) {
+    user = scope.of('user');
+    userProfile = scope.of('user profile');
+    accessToken = scope.of('access token');
+  }
+}
+
+class StimModelTypeCommonPreset {
+  StimModelType url;
+
+  StimModelTypeSet all;
+
+
+  StimModelTypeCommonPreset(StimModelTypeScope scope) {
+    url = scope.of('url');
+  }
+}
+
         
 class StimModelTypeSymbols {
   final _StimModelTypeScopeImpl _scope;
   /// All symbols
   StimModelTypeSet all;
-  StimModelType double;
-    StimModelType float;
-    StimModelType int32;
-    StimModelType int64;
+  StimModelTypeGrpcPreset _grpc;
+
+  StimModelTypeGrpcPreset get grpc {
+    return _grpc ??= StimModelTypeGrpcPreset(_scope);
+  }
+  StimModelTypeDatePreset _date;
+
+  StimModelTypeDatePreset get date {
+    return _date ??= StimModelTypeDatePreset(_scope);
+  }
+  StimModelTypeAuthPreset _auth;
+
+  StimModelTypeAuthPreset get auth {
+    return _auth ??= StimModelTypeAuthPreset(_scope);
+  }
+  StimModelTypeCommonPreset _common;
+
+  StimModelTypeCommonPreset get common {
+    return _common ??= StimModelTypeCommonPreset(_scope);
+  }
   
   StimModelTypeSymbols(this._scope) {
     final _s = stimpack.model.type;
     all = _s.noneSet;
-    all += double = _scope.of('double');
-    all += float = _scope.of('float');
-    all += int32 = _scope.of('int32');
-    all += int64 = _scope.of('int64');
+
   }
 }
 
