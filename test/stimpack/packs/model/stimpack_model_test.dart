@@ -21,8 +21,8 @@ void main() {
   });
 
   test('grpc available', () {
-    print(f.forDb.createdAt.type);
-    expect(f.forDb.createdAt.type, equals(t.forDate.timestamp));
+    print(r.username);
+    expect(r.username, isNotNull);
   });
 
   test('grpc available', () {

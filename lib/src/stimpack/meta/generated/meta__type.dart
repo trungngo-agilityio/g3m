@@ -7,6 +7,8 @@ class StimMetaType extends StimSymbol<StimMetaType, StimMetaTypeSet> {
 
   StimMetaPack pack;
 
+  StimMetaValueSet values;
+
   StimMetaType(_StimMetaTypeScopeImpl scope):
       super(scope);
 
@@ -15,7 +17,8 @@ class StimMetaType extends StimSymbol<StimMetaType, StimMetaTypeSet> {
   StimMetaType clone() {
     return super.clone()
         ..fields = fields.clone()
-        ..pack = pack.clone();
+        ..pack = pack.clone()
+        ..values = values.clone();
   }
 }
 
@@ -26,6 +29,8 @@ class StimMetaTypeSet extends StimSymbolSet<StimMetaType, StimMetaTypeSet> {
   StimMetaTypeXFieldsSetOp _fields;
 
   StimMetaTypeXPackOp _pack;
+
+  StimMetaTypeXValuesSetOp _values;
 
   StimMetaTypeXFieldsSetOp get fields {
     return _fields ??= StimMetaTypeXFieldsSetOp(this, stimpack.meta.field);
@@ -41,13 +46,20 @@ class StimMetaTypeSet extends StimSymbolSet<StimMetaType, StimMetaTypeSet> {
   set pack(StimMetaTypeXPackOp value) {
     _pack = value;
   }
+  StimMetaTypeXValuesSetOp get values {
+    return _values ??= StimMetaTypeXValuesSetOp(this, stimpack.meta.value);
+  }
+
+  set values(StimMetaTypeXValuesSetOp value) {
+    _values = value;
+  }
   StimMetaTypeSet(this._scope, List<StimMetaType> items):
       super(_scope, items);
 }
 
 
 abstract class StimMetaTypeScope extends StimScope<StimMetaType, StimMetaTypeSet> {
-  StimMetaType of(name, {dynamic fields, dynamic pack});
+  StimMetaType of(name, {dynamic fields, dynamic pack, dynamic values});
 }
 
 
@@ -56,22 +68,26 @@ class _StimMetaTypeScopeImpl extends StimScopeImpl<StimMetaType, StimMetaTypeSet
 
   StimMetaPack pack;
 
+  StimMetaValueSet values;
+
   _StimMetaTypeScopeImpl():
       super();
 
 
   @override
-  StimMetaType of(name, {dynamic fields, dynamic pack}) {
+  StimMetaType of(name, {dynamic fields, dynamic pack, dynamic values}) {
     return createAndClear(name)
         ..fields += fields ?? stimpack.meta.field.noneSet
-        ..pack = pack ?? stimpack.meta.pack.none;
+        ..pack = pack ?? stimpack.meta.pack.none
+        ..values += values ?? stimpack.meta.value.noneSet;
   }
 
   @override
   void clear(StimMetaType symbol) {
     symbol
         ..fields = stimpack.meta.field.noneSet
-        ..pack = stimpack.meta.pack.none;
+        ..pack = stimpack.meta.pack.none
+        ..values = stimpack.meta.value.noneSet;
   }
 
   @override

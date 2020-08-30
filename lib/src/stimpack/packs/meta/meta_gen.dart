@@ -25,8 +25,9 @@ StimMetaPack _buildMeta() {
   final tPreset = t.of('preset');
   final tValue = t.of('value');
 
-  tType.fields +=
-      f.of('fields', kind: kSet, type: tField) + f.of('pack', type: tPack);
+  tType.fields += f.of('fields', kind: kSet, type: tField) +
+      f.of('pack', type: tPack) +
+      f.listOf('values', type: tValue);
 
   tField.fields += f.of('kind', type: tKind) + f.of('type', type: tType);
 

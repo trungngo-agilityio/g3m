@@ -141,10 +141,10 @@ void main() {
 
   final tField = t.of('field'),
       tType = t.of('type'),
-      tRule = t.of('rule'),
+      tRule = t.of('rule',
+          values: v.ofNames([...validationPatterns, ...validationRules])),
       tPattern = t.of('pattern'),
       tRange = t.of('range');
-
 
   final fType = f.of('type', type: tType);
   final fRules = f.listOf('rules', type: tRule);

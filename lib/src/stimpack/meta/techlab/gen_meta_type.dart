@@ -190,8 +190,17 @@ class StimGenMetaType implements Node {
     final properties = <CodeProperty>[];
     final ofFunction = _scopeClassOfFunction();
 
+    for (final value in type.values) {
+      final property = CodeProperty.of(
+        name: value.name,
+        type: _symbolClassName,
+        getter: CodePropertyGetter.of(body: null),
+      );
+      properties.add(property);
+    }
+
     return CodeClass.of(
-      name: _config.scopeClassNameOf(pack, type),
+      name: _scopeClassName,
       extend: baseScopeClass,
       isAbstract: true,
       properties: properties,
@@ -225,6 +234,30 @@ class StimGenMetaType implements Node {
 
     final clearFunctionFields = <Node>[];
     final ofFunctionFields = <Node>[];
+
+    for (final value in type.values) {
+      final field = CodeField.of(
+          name: value.name, type: _symbolClassName, isPrivate: true);
+      fields.add(field);
+
+      final property = CodeProperty.of(
+        name: field.name,
+        type: field.type,
+        isOverride: true,
+        getter: CodePropertyGetter.of(
+          body: CodeReturn.of(
+            CodeAssignIfNullExpr.of(
+              CodeRef.of(field),
+              CodeFunctionCall.of(
+                name: 'of',
+                args: CodeStringLiteral.of(value.name),
+              ),
+            ),
+          ),
+        ),
+      );
+      properties.add(property);
+    }
 
     for (final field in type.fields) {
       final fieldClass = _config.fieldSymbolOrSetNameOf(pack, field);

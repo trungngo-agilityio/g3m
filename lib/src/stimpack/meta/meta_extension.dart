@@ -38,4 +38,9 @@ extension StimMetaFieldExtension on StimMetaField {
   }
 }
 
-extension StimMetaKindExtension on StimMetaKind {}
+extension StimMetaValueScopeExtension on StimMetaValueScope {
+  StimMetaValueSet ofNames(Iterable<String> names) {
+    if (names?.isNotEmpty != true) return noneSet;
+    return createSet(names.map((e) => of(e)).toList());
+  }
+}

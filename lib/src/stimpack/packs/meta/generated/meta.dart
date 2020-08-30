@@ -3,10 +3,12 @@ library g3.stimpack.meta.generated;
 
 import 'package:g3m/stimpack_base.dart';
 part 'meta_presets.dart';
+part '../meta_init.dart';
 part 'meta__kind.dart';
 part 'meta__type.dart';
 part 'meta__type__fields.dart';
 part 'meta__type__pack.dart';
+part 'meta__type__values.dart';
 part 'meta__field.dart';
 part 'meta__field__kind.dart';
 part 'meta__field__type.dart';
@@ -101,7 +103,7 @@ class StimMetaImpl  implements StimMeta {
     _metaXTypeXPreset.init(stimpack.meta.type);
     _kindXMetaPreset.init(_kind);
     _buildMeta();
-    _buildValues();
+    stimInitMetaPack(this);
   }
 
   void _buildMeta() {
@@ -112,7 +114,8 @@ class StimMetaImpl  implements StimMeta {
 
     t.forMeta.type.fields = f.noneSet +
         f.of('fields', kind: setKind, type: t.forMeta.field) + 
-        f.of('pack', type: t.forMeta.pack);
+        f.of('pack', type: t.forMeta.pack) + 
+        f.of('values', kind: setKind, type: t.forMeta.value);
 
     t.forMeta.field.fields = f.noneSet +
         f.of('kind', type: t.forMeta.kind) + 
@@ -142,14 +145,6 @@ class StimMetaImpl  implements StimMeta {
     pack.types.pack.set(pack);
     _meta = pack;
   }
-  // region custom code of meta stimpack
-
-  /// This function shall be call during the init process.
-  void _buildValues() {
-    /// build all preset values here
-  }
-
-  // endregion custom code of meta stimpack
 }
 StimMeta  _stimMeta;
 
