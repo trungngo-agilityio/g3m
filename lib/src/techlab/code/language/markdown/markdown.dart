@@ -8,9 +8,9 @@ class MarkdownFile extends Node {
   /// True indicates that the file need to be overwrite all the time.
   /// False indicates that the file never get overwrite.
   /// null indicates that needs human confirm.
-  final bool overwrite;
+  final bool overwriteIfExists;
 
-  MarkdownFile(this.name, {this.source, this.overwrite});
+  MarkdownFile(this.name, {this.source, this.overwriteIfExists});
 
   @override
   Node build(BuildContext context) {
@@ -19,7 +19,7 @@ class MarkdownFile extends Node {
       extension: 'md',
       syntax: 'markdown',
       source: source,
-      overwrite: overwrite,
+      overwriteIfExists: overwriteIfExists,
     );
   }
 }

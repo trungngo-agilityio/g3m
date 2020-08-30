@@ -2,7 +2,7 @@ part of g3.stimpack.meta.generated;
 
 
 
-class _StimMetaXTypeXMetaPreset {
+class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
   StimMetaType kind;
@@ -30,7 +30,7 @@ class _StimMetaXTypeXMetaPreset {
 }
 
 
-class _StimMetaXKindXMetaPreset {
+class StimMetaXKindXMetaPreset {
   StimMetaKindSet all;
 
   StimMetaKind set;
@@ -41,15 +41,15 @@ class _StimMetaXKindXMetaPreset {
     all += set = scope.of('set');
   }
 }
-extension StimMetaXTypeXMetaPresetExtension on StimMetaTypeScope {
-  _StimMetaXTypeXMetaPreset get forMeta {
+extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
+  StimMetaXTypeXPreset get forMeta {
     final impl = stimpack.meta as StimMetaImpl;
-    return impl._metaXTypeXMetaPreset; 
+    return impl._metaXTypeXPreset; 
   }
 }
     
 extension StimMetaXKindXMetaPresetExtension on StimMetaKindScope {
-  _StimMetaXKindXMetaPreset get forMeta {
+  StimMetaXKindXMetaPreset get forMeta {
     final impl = stimpack.meta as StimMetaImpl;
     return impl._kindXMetaPreset; 
   }

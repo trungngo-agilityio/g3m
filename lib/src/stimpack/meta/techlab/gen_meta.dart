@@ -11,15 +11,17 @@ class StimGenMeta implements Node {
   @override
   Node build(BuildContext context) {
     return Container([
-      _buildPackFile(),
-      _buildTypeFiles(),
-      _buildTypeFieldFiles(),
-      _buildPresetFile(),
+      Directory.relative(
+        'generated',
+        Container([
+          StimGenMetaPack(pack),
+          StimGenMetaPreset(pack),
+          _buildTypeFiles(),
+          _buildTypeFieldFiles(),
+        ]),
+      ),
+      StimGenMetaInit(pack),
     ]);
-  }
-
-  Node _buildPackFile() {
-    return StimGenMetaPack(pack);
   }
 
   Node _buildTypeFiles() {
@@ -35,9 +37,5 @@ class StimGenMeta implements Node {
     }
 
     return Container(files);
-  }
-
-  Node _buildPresetFile() {
-    return StimGenMetaPreset(pack);
   }
 }

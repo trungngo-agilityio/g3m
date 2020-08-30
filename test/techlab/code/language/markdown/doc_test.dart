@@ -236,7 +236,7 @@ void main() {
     run(
         Directory.temp(
           'markdown',
-          MarkdownFile('demo', makeFullDoc()),
+          MarkdownFile('demo', source: makeFullDoc()),
         ),
         '');
   });

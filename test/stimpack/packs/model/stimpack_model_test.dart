@@ -19,6 +19,12 @@ void main() {
         f.of('nick', type: string, rules: required) +
         f.of('archived', type: bool);
   });
+
+  test('grpc available', () {
+    print(f.forDb.createdAt.type);
+    expect(f.forDb.createdAt.type, equals(t.forDate.timestamp));
+  });
+
   test('grpc available', () {
     expect(f.forUser.firstName, isNotNull);
     print(f.forUser.firstName);

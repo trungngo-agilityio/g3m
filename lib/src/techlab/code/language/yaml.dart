@@ -17,9 +17,9 @@ class YmlCodeFile implements Node {
   /// True indicates that the file need to be overwrite all the time.
   /// False indicates that the file never get overwrite.
   /// null indicates that needs human confirm.
-  final bool overwrite;
+  final bool overwriteIfExists;
 
-  YmlCodeFile(this.name, {this.source, this.overwrite});
+  YmlCodeFile(this.name, {this.source, this.overwriteIfExists});
 
   factory YmlCodeFile.of(
     String name, {
@@ -35,7 +35,7 @@ class YmlCodeFile implements Node {
       extension: extension,
       syntax: syntax,
       source: YmlCode(source),
-      overwrite: overwrite,
+      overwriteIfExists: overwriteIfExists,
     );
   }
 }

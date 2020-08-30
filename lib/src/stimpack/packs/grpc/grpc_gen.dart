@@ -50,5 +50,5 @@ void main() {
       tService;
   final meta = m.pack.of('grpc', types: allTypes);
 
-  stimpackGen(meta, 'lib/src/stimpack/packs/grpc/generated');
+  stimpackGen(meta, 'lib/src/stimpack/packs/grpc');
 }

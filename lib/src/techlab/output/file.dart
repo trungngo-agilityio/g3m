@@ -15,7 +15,7 @@ class File implements Node, Renderer, PostRenderer {
   /// True indicates that the file need to be overwrite all the time.
   /// False indicates that the file never get overwrite.
   /// null indicates that needs human confirm.
-  final bool overwrite;
+  final bool overwriteIfExists;
 
   // The internal string buffer that captures all children's output.
   StringBuffer _buf;
@@ -24,11 +24,11 @@ class File implements Node, Renderer, PostRenderer {
   /// The file path is related to the directory specified by the nearest
   /// [Directory] ancestor.
   ///
-  File._(this.name, this.content, this.overwrite)
+  File._(this.name, this.content, this.overwriteIfExists)
       : assert(name?.isNotEmpty == true, 'name is required');
 
-  factory File.of(String name, Node content, {bool overwrite}) {
-    return File._(name, content, overwrite);
+  factory File.of(String name, Node content, {bool overwriteIfExists}) {
+    return File._(name, content, overwriteIfExists);
   }
 
   factory File.confirmOverwrite(String name, Node content) {
@@ -76,10 +76,11 @@ class File implements Node, Renderer, PostRenderer {
       if (existingContent == content) {
         // The content has not been modified, just skip it.
         print('$relativePath has not been modified.');
-      } else if (overwrite == false) {
+      } else if (overwriteIfExists == false) {
         printWarn(
             '$relativePath has been modified, but skipped because of hard settings.');
-      } else if (overwrite == true || context.yesToAll == true) {
+        return;
+      } else if (overwriteIfExists == true || context.yesToAll == true) {
         printInfo('$relativePath has been overwritten.');
       } else {
         // The content has been modified. Need to prompt.

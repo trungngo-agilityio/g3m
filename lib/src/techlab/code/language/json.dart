@@ -17,9 +17,9 @@ class JsonCodeFile implements Node {
   /// True indicates that the file need to be overwrite all the time.
   /// False indicates that the file never get overwrite.
   /// null indicates that needs human confirm.
-  final bool overwrite;
+  final bool overwriteIfExists;
 
-  JsonCodeFile(this.name, {this.source, this.overwrite});
+  JsonCodeFile(this.name, {this.source, this.overwriteIfExists});
 
   factory JsonCodeFile.of(
     String name, {
@@ -35,7 +35,7 @@ class JsonCodeFile implements Node {
       extension: extension,
       syntax: syntax,
       source: JsonCode(source),
-      overwrite: overwrite,
+      overwriteIfExists: overwriteIfExists,
     );
   }
 }

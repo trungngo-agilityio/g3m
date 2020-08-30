@@ -104,6 +104,7 @@ class StimGenMetaPack implements Node {
   List<String> _parts(StimpackCodeConfig config) {
     final parts = <String>[];
     parts.add(config.presetFileNameOf(pack));
+    parts.add('../' + config.initPackFileNameOf(pack).toString());
 
     for (final i in pack.types) {
       // Includes the type definition file
@@ -283,22 +284,15 @@ class StimGenMetaPack implements Node {
       ),
     );
 
-    final buildValuePlaceHolder = CodePlaceHolder.of(
-      name: pack.name >> ' stimpack',
-      body: Container([
-        buildValuesFunction,
-        '\n\n',
-      ]),
-    );
-
     // ------------------------------------------------------------------------
     // init() function
     // ------------------------------------------------------------------------
 
+    final initPackFunctionName = config.initPackFunctionNameOf(pack);
     final initFunction = CodeFunction.of(name: 'init', returns: 'void', body: [
       ...fieldInitFunctionCallList,
       '_buildMeta();\n',
-      '_buildValues();\n',
+      CodeFunctionCall.of(name: initPackFunctionName, args: CodeRef.ofThis()),
     ]);
 
     // ------------------------------------------------------------------------
@@ -315,7 +309,6 @@ class StimGenMetaPack implements Node {
         initFunction,
         buildMetaFunction,
       ],
-      body: buildValuePlaceHolder,
     );
   }
 

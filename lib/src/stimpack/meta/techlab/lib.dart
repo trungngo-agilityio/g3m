@@ -8,6 +8,8 @@ import 'package:meta/meta.dart';
 
 part 'gen_meta.dart';
 
+part 'gen_meta_init.dart';
+
 part 'gen_meta_pack.dart';
 
 part 'gen_meta_validator.dart';

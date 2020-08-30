@@ -177,5 +177,5 @@ void main() {
   pack.types = tType + tField + tRule + tPattern + tRange;
   pack.types.pack.set(pack);
 
-  stimpackGen(pack, 'lib/src/stimpack/packs/model/generated');
+  stimpackGen(pack, 'lib/src/stimpack/packs/model');
 }

@@ -4,6 +4,7 @@ library g3.stimpack.model.generated;
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 part 'model_presets.dart';
+part '../model_init.dart';
 part 'model__type.dart';
 part 'model__type__fields.dart';
 part 'model__type__rules.dart';
@@ -122,7 +123,7 @@ class StimModelImpl  implements StimModel {
     _typeXAuthPreset.init(_type);
     _typeXCommonPreset.init(_type);
     _buildMeta();
-    _buildValues();
+    stimInitModelPack(this);
   }
 
   void _buildMeta() {
@@ -257,14 +258,6 @@ class StimModelImpl  implements StimModel {
     pack.types.pack.set(pack);
     _meta = pack;
   }
-  // region custom code of model stimpack
-
-  /// This function shall be call during the init process.
-  void _buildValues() {
-    /// build all preset values here
-  }
-
-  // endregion custom code of model stimpack
 }
 StimModel  _stimModel;
 

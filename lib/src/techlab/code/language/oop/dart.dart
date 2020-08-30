@@ -13,19 +13,21 @@ class DartCodeFile implements Node {
 
   /// The file content.
   final Node source;
+
   /// True indicates that the file need to be overwrite all the time.
   /// False indicates that the file never get overwrite.
   /// null indicates that needs human confirm.
-  final bool overwrite;
+  final bool overwriteIfExists;
 
   DartCodeFile._(
     this.name, {
     this.source,
-        this.overwrite,
+    this.overwriteIfExists,
   });
 
   factory DartCodeFile.of(
     String name, {
+    bool overwriteIfExists,
     CodePackage package,
     CodeComment comment,
     List<CodeImport> imports,
@@ -38,6 +40,7 @@ class DartCodeFile implements Node {
     // Node that java code expect the file name to be class name.
     return DartCodeFile._(
       name,
+      overwriteIfExists: overwriteIfExists,
       source: DartCode.of(
           package: package,
           comment: comment,
@@ -58,7 +61,7 @@ class DartCodeFile implements Node {
         extension: extension,
         syntax: syntax,
         source: source,
-        overwrite: overwrite,
+        overwriteIfExists: overwriteIfExists,
       ),
     );
   }

@@ -35,6 +35,14 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${p}__${t}__${f}';
   }
 
+  Name initPackFileNameOf(StimMetaPack pack) {
+    return (pack.name >> 'init').snake();
+  }
+
+  Name initPackFunctionNameOf(StimMetaPack pack) {
+    return ('stim init' >> pack.name >> 'pack').camel();
+  }
+
   // ===========================================================================
   // Pack
   // ===========================================================================

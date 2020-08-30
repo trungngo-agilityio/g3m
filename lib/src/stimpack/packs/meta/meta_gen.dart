@@ -3,7 +3,7 @@ import 'package:g3m/stimpack_meta.dart';
 
 void main() {
   final meta = _buildMeta();
-  stimpackGen(meta, 'lib/src/stimpack/packs/meta/generated');
+  stimpackGen(meta, 'lib/src/stimpack/packs/meta');
 }
 
 StimMetaPack _buildMeta() {
