@@ -45,7 +45,8 @@ class StimMetaValidator {
   }
 
   void validateType(StimMetaType type, {StimMetaPack pack}) {
-    final name = '${_packName(type?.pack ?? pack)}'
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
+    final name = '${_packName(typePack)}'
         '${_typeName(type)}';
 
     assert(
@@ -67,7 +68,7 @@ class StimMetaValidator {
       'Makes sure it is initialized with stimpack.meta.field.noneSet.',
     );
 
-    if (type.pack != null) validatePack(type.pack);
+    if (type?.pack?.isNotNone == true) validatePack(type.pack);
 
     // Make sure not cyclic dependency.
     for (final field in type.fields) {
@@ -77,7 +78,8 @@ class StimMetaValidator {
 
   void validateField(StimMetaField field,
       {StimMetaPack pack, StimMetaType type}) {
-    final name = '${_packName(type?.pack ?? pack)}'
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
+    final name = '${_packName(typePack)}'
         '${_typeName(type)}'
         '${_fieldName(field)}';
 
@@ -103,7 +105,8 @@ class StimMetaValidator {
 
   void validateKind(StimMetaKind kind,
       {StimMetaPack pack, StimMetaType type, StimMetaField field}) {
-    final name = '${_packName(type?.pack ?? pack)}'
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
+    final name = '${_packName(typePack)}'
         '${_typeName(type)}'
         '${_fieldName(field)}'
         '${_kindName(kind)}';
@@ -136,7 +139,7 @@ class StimMetaValidator {
     if (isPresetValidated(preset)) return;
     _validatedPresets.add(preset);
 
-    assert(preset.name?.isNotEmpty == true, '${preset}name is required');
+    // assert(preset.name?.isNotEmpty == true, '${preset}name is required');
 
     assert(
       preset.values != null,

@@ -8,49 +8,41 @@ void main() {
 
 StimMetaPack _buildMeta() {
   final meta = stimpack.meta;
-  final pack = meta.pack.of('meta');
-  final f = meta.field, t = meta.type.forMeta, p = meta.preset, v = meta.value;
-  final listKind = meta.kind.forMeta.list;
+  final packName = 'meta';
+  final pack = meta.pack.of(packName);
+  final f = meta.field,
+      t = meta.type,
+      p = meta.preset,
+      v = meta.value,
+      k = meta.kind;
 
-  final kindType = t.kind;
-  final typeType = t.type;
-  final fieldType = t.field;
-  final packType = t.pack;
-  final presetType = t.preset;
-  final valueType = t.value;
+  final kSet = k.of('set');
 
-  typeType.fields.set(f.of('fields', kind: listKind, type: fieldType) +
-      f.of('pack', type: packType));
+  final tKind = t.of('kind');
+  final tType = t.of('type');
+  final tField = t.of('field');
+  final tPack = t.of('pack');
+  final tPreset = t.of('preset');
+  final tValue = t.of('value');
 
-  fieldType.fields
-      .set(f.of('kind', type: kindType) + f.of('type', type: typeType));
+  tType.fields +=
+      f.of('fields', kind: kSet, type: tField) + f.of('pack', type: tPack);
 
-  packType.fields.set(f.of('types', kind: listKind, type: typeType) +
-      f.of('presets', kind: listKind, type: presetType));
+  tField.fields += f.of('kind', type: tKind) + f.of('type', type: tType);
 
-  presetType.fields.set(
-      f.of('values', kind: listKind, type: valueType) +
-      f.of('type', type: typeType));
+  tPack.fields += (f.of('types', kind: kSet, type: tType) +
+      f.of('presets', kind: kSet, type: tPreset));
 
-  pack.presets.set(
-      p.of(
-        'meta',
-        type: t.kind,
-        values: v.of('list'),
-      ) +
-      p.of(
-        'meta',
-        type: t.type,
-        values: v.of('kind') +
-            v.of('type') +
-            v.of('field') +
-            v.of('pack') +
-            v.of('preset') +
-            v.of('value'),
-      ));
+  tPreset.fields +=
+      f.of('values', kind: kSet, type: tValue) + f.of('type', type: tType);
 
-  pack.types
-      .set(kindType + typeType + fieldType + packType + presetType + valueType);
-  pack.types.pack.set(pack);
+  pack.presets += p.of(
+    packName,
+    type: tKind,
+    values: v.of('set'),
+  );
+
+  pack.types += tKind + tType + tField + tPack + tPreset + tValue;
+  // pack.types.pack.set(pack);
   return pack;
 }

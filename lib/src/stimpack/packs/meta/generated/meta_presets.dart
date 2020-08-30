@@ -2,20 +2,7 @@ part of g3.stimpack.meta.generated;
 
 
 
-class StimMetaKindMetaPreset {
-  StimMetaKindSet all;
-
-  StimMetaKind list;
-
-
-  StimMetaKindMetaPreset(StimMetaKindScope scope) {
-    all = scope.noneSet;
-    all += list = scope.of('list');
-  }
-}
-
-
-class StimMetaTypeMetaPreset {
+class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
   StimMetaType kind;
@@ -31,7 +18,7 @@ class StimMetaTypeMetaPreset {
   StimMetaType value;
 
 
-  StimMetaTypeMetaPreset(StimMetaTypeScope scope) {
+  void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
     all += kind = scope.of('kind');
     all += type = scope.of('type');
@@ -41,19 +28,30 @@ class StimMetaTypeMetaPreset {
     all += value = scope.of('value');
   }
 }
-StimMetaKindMetaPreset  _extStimMetaKindMetaPreset;
 
-extension StimMetaKindMetaPresetExtension on StimMetaKindScope {
-  StimMetaKindMetaPreset get forMeta {
-    return _extStimMetaKindMetaPreset ??= StimMetaKindMetaPreset(stimpack.meta.kind);
+
+class StimMetaXKindXMetaPreset {
+  StimMetaKindSet all;
+
+  StimMetaKind set;
+
+
+  void init(StimMetaKindScope scope) {
+    all = scope.noneSet;
+    all += set = scope.of('set');
+  }
+}
+extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
+  StimMetaXTypeXPreset get forMeta {
+    final impl = stimpack.meta as StimMetaImpl;
+    return impl._metaXTypeXPreset; 
   }
 }
     
-StimMetaTypeMetaPreset  _extStimMetaTypeMetaPreset;
-
-extension StimMetaTypeMetaPresetExtension on StimMetaTypeScope {
-  StimMetaTypeMetaPreset get forMeta {
-    return _extStimMetaTypeMetaPreset ??= StimMetaTypeMetaPreset(stimpack.meta.type);
+extension StimMetaXKindXMetaPresetExtension on StimMetaKindScope {
+  StimMetaXKindXMetaPreset get forMeta {
+    final impl = stimpack.meta as StimMetaImpl;
+    return impl._kindXMetaPreset; 
   }
 }
     

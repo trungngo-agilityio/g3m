@@ -50,7 +50,7 @@ class StimGenMetaPack implements Node {
     for (final type in pack.types) {
       for (final field in type.fields) {
         final fieldTypePack = field.type?.pack;
-        if (fieldTypePack != null && fieldTypePack != pack) {
+        if (fieldTypePack?.isNotNone == true && fieldTypePack != pack) {
           _externalPacks.add(fieldTypePack);
           _externalTypes.add(field.type);
         }
@@ -59,19 +59,20 @@ class StimGenMetaPack implements Node {
 
     // Removes all preset that points to meta pack.
     // This is forbidden.
-    var presets = pack.presets.where((e) {
-      return e.type.pack.name.camel().toString() != 'meta' ||
-          e.type.name.camel().toString() != 'type';
+    var presets = pack.presets.where((preset) {
+      final typePack =
+          preset.type?.pack?.isNotNone == true ? preset.type.pack : pack;
+
+      return typePack?.name?.camel()?.toString() != 'meta' ||
+          preset.type.name.camel().toString() != 'type';
     }).toSet();
 
     // Adds a new preset in to model the pack.
-    final metaPreset = stimpack.meta.preset.ofValues(
-        pack.name.camel().toString(),
+    final metaPreset = stimpack.meta.preset.ofValues('',
         type: stimpack.meta.type.forMeta.type,
         values: pack.types.map((e) => e.name.camel().toString()).toList());
 
-    presets.add(metaPreset);
-    pack.presets.set(presets);
+    pack.presets = metaPreset + presets;
   }
 
   /// Builds the list of code imports.
@@ -96,7 +97,6 @@ class StimGenMetaPack implements Node {
     return imports;
   }
 
-
   /// Builds the list of parts to be included into this library dart file.
   /// These parts are generated via [StimGenMetaType], [StimGenMetaPreset],
   /// and [StimGenMetaTypeField].
@@ -118,8 +118,7 @@ class StimGenMetaPack implements Node {
     return parts;
   }
 
-
-  /// Generates an abstract class like [StimMetaMeta]
+  /// Generates an abstract class like [StimMeta]
   /// that provides public interfaces for users.
   ///
   /// Notes: [_typeClass] generates the implementation class for this interface.
@@ -182,8 +181,6 @@ class StimGenMetaPack implements Node {
     // the void init() function.
     final fieldInitFunctionCallList = <Node>[];
 
-    final initFunctionCall = CodeFunctionCall.of(name: 'init');
-
     // Loops through all types in the pack, for each type, generate
     // a field for the scope implementation, a property for readonly
     // scope access. An example of property is [_StimMetaMetaImpl._type]
@@ -211,6 +208,43 @@ class StimGenMetaPack implements Node {
           field.name, CodeConstructorCall.of(className: scopeImplClass)));
 
       // Add an expression to invoke init function of scope fields.
+      final initFunctionCall = CodeFunctionCall.of(name: 'init');
+      fieldInitFunctionCallList
+          .add(CodeAccessExpr.of(field.name, initFunctionCall));
+    }
+
+    // Adds field and properties for getting presets.
+    for (final preset in pack.presets) {
+      final className = _config.presetClassNameOf(pack, preset);
+      final fieldName = _config.presetFieldNameOf(pack, preset);
+
+      final field = CodeField.of(
+        name: fieldName,
+        type: className,
+        isPrivate: true,
+      );
+
+      fields.add(field);
+
+      // Adds an expression to invoke constructor to create scope fields.
+      scopeFieldInitExprList.add(CodeAssignExpr.of(
+          field.name, CodeConstructorCall.of(className: className)));
+
+      // Add an expression to invoke init function of scope fields.
+
+      final type = preset.type;
+      var scope = '${type.name.camel()}';
+      if (type.pack?.isNotNone == true && type.pack != pack) {
+        // The type come from a different pack.
+        scope = 'stimpack.${type.pack.name}.${scope}';
+      } else {
+        // The type come from the internal pack.
+        scope = '_${scope}';
+      }
+
+      final initFunctionCall = CodeFunctionCall.of(name: 'init', args: [
+        CodeRef.of(scope),
+      ]);
       fieldInitFunctionCallList
           .add(CodeAccessExpr.of(field.name, initFunctionCall));
     }
@@ -293,59 +327,47 @@ class StimGenMetaPack implements Node {
             ? 'final meta = this;\n'
             : 'final meta = stimpack.meta;\n',
         'final pack = meta.pack.of(\'${pack.name.camel()}\');\n',
-        'final f = meta.field, t = meta.type.${forPack}, p = meta.preset, v = meta.value;\n',
-        'final listKind = meta.kind.forMeta.list;\n',
+        'final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;\n',
+        'final setKind = meta.kind.forMeta.set;\n',
         '\n',
       ]),
     ];
 
-    // Builds the model definitions
     for (final i in pack.types) {
-      final varDef = CodeVar.of(
-        name: i.name >> 'type',
-        isFinal: true,
-        init: CodeRef.of('t.${i.name.camel()}'),
-      );
-      nodes.add(varDef);
-    }
-
-    nodes.add(NewLine());
-
-    for (final i in pack.types) {
-      final t = i.name.camel();
-
       // stop if this field does not have and fields.
       if (i.fields.isEmpty) continue;
 
       final fieldDefs = <Node>[];
 
-      for (final e in i.fields) {
-        final fieldName = e.name;
-        final typeName = e.type.name >> 'type';
+      for (final field in i.fields) {
+        final fieldName = field.name;
+        final fieldTypeName =
+            _config.publicMetaTypeName(pack, field.type, prefix: 't');
 
         final fieldDef = Container([
           '\nf.of(\'',
           fieldName.camel(),
           '\'',
-          e.isSet ? Text.of(', kind: listKind') : null,
+          field.isSet ? Text.of(', kind: setKind') : null,
           ', type: ',
-          typeName.camel(),
+          fieldTypeName,
           ')',
         ]);
 
         fieldDefs.add(fieldDef);
       }
 
+      final typeName = _config.publicMetaTypeName(pack, i, prefix: 't');
       nodes.add(Container([
-        t,
-        'Type.fields.set( \n',
+        typeName,
+        '.fields = f.noneSet +\n',
         Indent(
             Join.of(
               ' + ',
               fieldDefs.toList(),
             ),
             level: 2),
-        ');\n\n',
+        ';\n\n',
       ]));
     }
 
@@ -363,7 +385,9 @@ class StimGenMetaPack implements Node {
       }
 
       final type = i.type;
-      final presetTypeName = _config.publicMetaTypeName(pack, type);
+      final presetTypeName =
+          _config.publicMetaTypeName(pack, type, prefix: 't');
+
       final presetDef = Container([
         '\np.of(\'',
         presetName,
@@ -382,24 +406,13 @@ class StimGenMetaPack implements Node {
 
     if (presetDefs.isNotEmpty) {
       nodes.add(Container([
-        'pack.presets.set(\n',
+        'pack.presets = p.noneSet +\n',
         Indent(Join.of(' + ', presetDefs.toList()), level: 2),
-        ');\n\n',
+        ';\n\n',
       ]));
     }
 
-    // Builds the final meta
-    final packTypes = pack.types.map((e) {
-      return Text.of(e.name.camel().toString() + 'Type');
-    }).toList();
-
-    nodes.add(
-      Container([
-        'pack.types.set(',
-        Join.of(' + ', packTypes),
-        ');\n',
-      ]),
-    );
+    nodes.add(Text.of('pack.types = t.${forPack}.all;\n'));
 
     nodes.add(
       Text.of('pack.types.pack.set(pack);\n'),
@@ -417,7 +430,7 @@ class StimGenMetaPack implements Node {
     final template = ''' 
 {{ packClass }}  _{{ packClass.camel }};
 
-extension {{ packExtensionClass }} on Stimpack {
+extension {{ packClass }}StimpackExtension on Stimpack {
   {{ packClass }} get {{ packName.camel }} {
     if (_{{ packClass.camel }} == null) {
       final impl = _{{ packClass.camel }} = {{ packImplClass }}();
@@ -429,7 +442,10 @@ extension {{ packExtensionClass }} on Stimpack {
   }
 }
     ''';
-
-    return StimGenMetaTemplate(template, null, pack: pack);
+    return Mustache.template(template, values: {
+      'packName': pack.name.camel(),
+      'packClass': _config.packClassNameOf(pack),
+      'packImplClass': _config.packImplClassNameOf(pack),
+    });
   }
 }

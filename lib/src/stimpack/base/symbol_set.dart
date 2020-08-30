@@ -23,12 +23,6 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
     return _scope.createSet(List<T>.of(_items));
   }
 
-  // TODO: FIXME, dynamic?
-  void set(Iterable<T> items) {
-    _items.clear();
-    if (items != null) _items.addAll(items);
-  }
-
   // region syntax sugar for symbol set collection
 
   /// Filters the symbol list to get only symbols without name.
@@ -59,9 +53,9 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
 
     final items = List<T>.from(_items);
 
-    if (another is S) {
+    if (another is Iterable<T>) {
       // the another is a set.
-      items.addAll(another._items);
+      items.addAll(another);
       if (items.isEmpty) return _scope.noneSet;
       return _scope.createSet(items);
     } else if (another is T) {

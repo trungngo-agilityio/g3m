@@ -14,11 +14,17 @@ class CodeFile implements Node, _NamedNode {
   /// The file content.
   final Node source;
 
+  /// True indicates that the file need to be overwrite all the time.
+  /// False indicates that the file never get overwrite.
+  /// null indicates that needs human confirm.
+  final bool overwrite;
+
   CodeFile({
     @required this.name,
     @required this.extension,
     this.syntax,
     this.source,
+    this.overwrite,
   });
 
   @override
@@ -28,7 +34,7 @@ class CodeFile implements Node, _NamedNode {
 
     final fileName = '${name}.${extension}';
     if (placeHolderConfig == null) {
-      return CodeSyntax(syntax, File(fileName, source));
+      return CodeSyntax(syntax, File.of(fileName, source, overwrite: overwrite));
     }
 
     var path = ioPath.join(context.dir, fileName);
@@ -36,7 +42,7 @@ class CodeFile implements Node, _NamedNode {
 
     return CodeSyntax(
       syntax,
-      File(
+      File.of(
         fileName,
         PartialText(
           contentName: '"$relativePath"',
@@ -49,6 +55,7 @@ class CodeFile implements Node, _NamedNode {
           onDuplicatedNameBlockError: null,
           onMissingOldBlockError: null,
         ),
+        overwrite: overwrite,
       ),
     );
   }

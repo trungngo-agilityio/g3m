@@ -2,7 +2,32 @@ part of g3.stimpack.model.generated;
 
 
 
-class StimModelRuleValidationPreset {
+class StimMetaXTypeXPreset {
+  StimMetaTypeSet all;
+
+  StimMetaType type;
+
+  StimMetaType field;
+
+  StimMetaType rule;
+
+  StimMetaType pattern;
+
+  StimMetaType range;
+
+
+  void init(StimMetaTypeScope scope) {
+    all = scope.noneSet;
+    all += type = scope.of('type');
+    all += field = scope.of('field');
+    all += rule = scope.of('rule');
+    all += pattern = scope.of('pattern');
+    all += range = scope.of('range');
+  }
+}
+
+
+class StimModelXRuleXValidationPreset {
   StimModelRuleSet all;
 
   StimModelRule unique;
@@ -42,7 +67,7 @@ class StimModelRuleValidationPreset {
   StimModelRule alpha;
 
 
-  StimModelRuleValidationPreset(StimModelRuleScope scope) {
+  void init(StimModelRuleScope scope) {
     all = scope.noneSet;
     all += unique = scope.of('unique');
     all += required = scope.of('required');
@@ -66,7 +91,7 @@ class StimModelRuleValidationPreset {
 }
 
 
-class StimModelPatternValidationPreset {
+class StimModelXPatternXValidationPreset {
   StimModelPatternSet all;
 
   StimModelPattern id;
@@ -94,7 +119,7 @@ class StimModelPatternValidationPreset {
   StimModelPattern alpha;
 
 
-  StimModelPatternValidationPreset(StimModelPatternScope scope) {
+  void init(StimModelPatternScope scope) {
     all = scope.noneSet;
     all += id = scope.of('id');
     all += uuidV4 = scope.of('uuid v4');
@@ -112,7 +137,7 @@ class StimModelPatternValidationPreset {
 }
 
 
-class StimModelFieldUserPreset {
+class StimModelXFieldXUserPreset {
   StimModelFieldSet all;
 
   StimModelField userId;
@@ -150,7 +175,7 @@ class StimModelFieldUserPreset {
   StimModelField avatarUrl;
 
 
-  StimModelFieldUserPreset(StimModelFieldScope scope) {
+  void init(StimModelFieldScope scope) {
     all = scope.noneSet;
     all += userId = scope.of('user id');
     all += userName = scope.of('user name');
@@ -173,7 +198,7 @@ class StimModelFieldUserPreset {
 }
 
 
-class StimModelFieldPaginationPreset {
+class StimModelXFieldXPaginationPreset {
   StimModelFieldSet all;
 
   StimModelField total;
@@ -193,7 +218,7 @@ class StimModelFieldPaginationPreset {
   StimModelField limit;
 
 
-  StimModelFieldPaginationPreset(StimModelFieldScope scope) {
+  void init(StimModelFieldScope scope) {
     all = scope.noneSet;
     all += total = scope.of('total');
     all += count = scope.of('count');
@@ -207,7 +232,7 @@ class StimModelFieldPaginationPreset {
 }
 
 
-class StimModelFieldDbPreset {
+class StimModelXFieldXDbPreset {
   StimModelFieldSet all;
 
   StimModelField id;
@@ -219,7 +244,7 @@ class StimModelFieldDbPreset {
   StimModelField version;
 
 
-  StimModelFieldDbPreset(StimModelFieldScope scope) {
+  void init(StimModelFieldScope scope) {
     all = scope.noneSet;
     all += id = scope.of('id');
     all += createdAt = scope.of('created at');
@@ -229,7 +254,7 @@ class StimModelFieldDbPreset {
 }
 
 
-class StimModelTypeGrpcPreset {
+class StimModelXTypeXGrpcPreset {
   StimModelTypeSet all;
 
   StimModelType double;
@@ -261,7 +286,7 @@ class StimModelTypeGrpcPreset {
   StimModelType bytes;
 
 
-  StimModelTypeGrpcPreset(StimModelTypeScope scope) {
+  void init(StimModelTypeScope scope) {
     all = scope.noneSet;
     all += double = scope.of('double');
     all += float = scope.of('float');
@@ -281,7 +306,7 @@ class StimModelTypeGrpcPreset {
 }
 
 
-class StimModelTypeDatePreset {
+class StimModelXTypeXDatePreset {
   StimModelTypeSet all;
 
   StimModelType timestamp;
@@ -299,7 +324,7 @@ class StimModelTypeDatePreset {
   StimModelType localDatetime;
 
 
-  StimModelTypeDatePreset(StimModelTypeScope scope) {
+  void init(StimModelTypeScope scope) {
     all = scope.noneSet;
     all += timestamp = scope.of('timestamp');
     all += date = scope.of('date');
@@ -312,7 +337,7 @@ class StimModelTypeDatePreset {
 }
 
 
-class StimModelTypeAuthPreset {
+class StimModelXTypeXAuthPreset {
   StimModelTypeSet all;
 
   StimModelType user;
@@ -322,7 +347,7 @@ class StimModelTypeAuthPreset {
   StimModelType accessToken;
 
 
-  StimModelTypeAuthPreset(StimModelTypeScope scope) {
+  void init(StimModelTypeScope scope) {
     all = scope.noneSet;
     all += user = scope.of('user');
     all += userProfile = scope.of('user profile');
@@ -331,119 +356,84 @@ class StimModelTypeAuthPreset {
 }
 
 
-class StimModelTypeCommonPreset {
+class StimModelXTypeXCommonPreset {
   StimModelTypeSet all;
 
   StimModelType url;
 
 
-  StimModelTypeCommonPreset(StimModelTypeScope scope) {
+  void init(StimModelTypeScope scope) {
     all = scope.noneSet;
     all += url = scope.of('url');
   }
 }
-
-
-class StimMetaTypeModelPreset {
-  StimMetaTypeSet all;
-
-  StimMetaType type;
-
-  StimMetaType field;
-
-  StimMetaType rule;
-
-  StimMetaType pattern;
-
-  StimMetaType range;
-
-
-  StimMetaTypeModelPreset(StimMetaTypeScope scope) {
-    all = scope.noneSet;
-    all += type = scope.of('type');
-    all += field = scope.of('field');
-    all += rule = scope.of('rule');
-    all += pattern = scope.of('pattern');
-    all += range = scope.of('range');
-  }
-}
-StimModelRuleValidationPreset  _extStimModelRuleValidationPreset;
-
-extension StimModelRuleValidationPresetExtension on StimModelRuleScope {
-  StimModelRuleValidationPreset get forValidation {
-    return _extStimModelRuleValidationPreset ??= StimModelRuleValidationPreset(stimpack.model.rule);
+extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
+  StimMetaXTypeXPreset get forModel {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._metaXTypeXPreset; 
   }
 }
     
-StimModelPatternValidationPreset  _extStimModelPatternValidationPreset;
-
-extension StimModelPatternValidationPresetExtension on StimModelPatternScope {
-  StimModelPatternValidationPreset get forValidation {
-    return _extStimModelPatternValidationPreset ??= StimModelPatternValidationPreset(stimpack.model.pattern);
+extension StimModelXRuleXValidationPresetExtension on StimModelRuleScope {
+  StimModelXRuleXValidationPreset get forValidation {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._ruleXValidationPreset; 
   }
 }
     
-StimModelFieldUserPreset  _extStimModelFieldUserPreset;
-
-extension StimModelFieldUserPresetExtension on StimModelFieldScope {
-  StimModelFieldUserPreset get forUser {
-    return _extStimModelFieldUserPreset ??= StimModelFieldUserPreset(stimpack.model.field);
+extension StimModelXPatternXValidationPresetExtension on StimModelPatternScope {
+  StimModelXPatternXValidationPreset get forValidation {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._patternXValidationPreset; 
   }
 }
     
-StimModelFieldPaginationPreset  _extStimModelFieldPaginationPreset;
-
-extension StimModelFieldPaginationPresetExtension on StimModelFieldScope {
-  StimModelFieldPaginationPreset get forPagination {
-    return _extStimModelFieldPaginationPreset ??= StimModelFieldPaginationPreset(stimpack.model.field);
+extension StimModelXFieldXUserPresetExtension on StimModelFieldScope {
+  StimModelXFieldXUserPreset get forUser {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._fieldXUserPreset; 
   }
 }
     
-StimModelFieldDbPreset  _extStimModelFieldDbPreset;
-
-extension StimModelFieldDbPresetExtension on StimModelFieldScope {
-  StimModelFieldDbPreset get forDb {
-    return _extStimModelFieldDbPreset ??= StimModelFieldDbPreset(stimpack.model.field);
+extension StimModelXFieldXPaginationPresetExtension on StimModelFieldScope {
+  StimModelXFieldXPaginationPreset get forPagination {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._fieldXPaginationPreset; 
   }
 }
     
-StimModelTypeGrpcPreset  _extStimModelTypeGrpcPreset;
-
-extension StimModelTypeGrpcPresetExtension on StimModelTypeScope {
-  StimModelTypeGrpcPreset get forGrpc {
-    return _extStimModelTypeGrpcPreset ??= StimModelTypeGrpcPreset(stimpack.model.type);
+extension StimModelXFieldXDbPresetExtension on StimModelFieldScope {
+  StimModelXFieldXDbPreset get forDb {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._fieldXDbPreset; 
   }
 }
     
-StimModelTypeDatePreset  _extStimModelTypeDatePreset;
-
-extension StimModelTypeDatePresetExtension on StimModelTypeScope {
-  StimModelTypeDatePreset get forDate {
-    return _extStimModelTypeDatePreset ??= StimModelTypeDatePreset(stimpack.model.type);
+extension StimModelXTypeXGrpcPresetExtension on StimModelTypeScope {
+  StimModelXTypeXGrpcPreset get forGrpc {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._typeXGrpcPreset; 
   }
 }
     
-StimModelTypeAuthPreset  _extStimModelTypeAuthPreset;
-
-extension StimModelTypeAuthPresetExtension on StimModelTypeScope {
-  StimModelTypeAuthPreset get forAuth {
-    return _extStimModelTypeAuthPreset ??= StimModelTypeAuthPreset(stimpack.model.type);
+extension StimModelXTypeXDatePresetExtension on StimModelTypeScope {
+  StimModelXTypeXDatePreset get forDate {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._typeXDatePreset; 
   }
 }
     
-StimModelTypeCommonPreset  _extStimModelTypeCommonPreset;
-
-extension StimModelTypeCommonPresetExtension on StimModelTypeScope {
-  StimModelTypeCommonPreset get forCommon {
-    return _extStimModelTypeCommonPreset ??= StimModelTypeCommonPreset(stimpack.model.type);
+extension StimModelXTypeXAuthPresetExtension on StimModelTypeScope {
+  StimModelXTypeXAuthPreset get forAuth {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._typeXAuthPreset; 
   }
 }
     
-StimMetaTypeModelPreset  _extStimMetaTypeModelPreset;
-
-extension StimMetaTypeModelPresetExtension on StimMetaTypeScope {
-  StimMetaTypeModelPreset get forModel {
-    return _extStimMetaTypeModelPreset ??= StimMetaTypeModelPreset(stimpack.meta.type);
+extension StimModelXTypeXCommonPresetExtension on StimModelTypeScope {
+  StimModelXTypeXCommonPreset get forCommon {
+    final impl = stimpack.model as StimModelImpl;
+    return impl._typeXCommonPreset; 
   }
 }
     

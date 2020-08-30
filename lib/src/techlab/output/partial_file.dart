@@ -28,7 +28,7 @@ class PartialFile implements Node {
   Node build(BuildContext context) {
     context.file = ioPath.join(context.dir, name);
 
-    return File(
+    return File.confirmOverwrite(
         name,
         TextBlend(
           markers: markers,

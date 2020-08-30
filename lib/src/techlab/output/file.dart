@@ -12,6 +12,11 @@ class File implements Node, Renderer, PostRenderer {
   // The file content.
   final Node content;
 
+  /// True indicates that the file need to be overwrite all the time.
+  /// False indicates that the file never get overwrite.
+  /// null indicates that needs human confirm.
+  final bool overwrite;
+
   // The internal string buffer that captures all children's output.
   StringBuffer _buf;
 
@@ -19,7 +24,24 @@ class File implements Node, Renderer, PostRenderer {
   /// The file path is related to the directory specified by the nearest
   /// [Directory] ancestor.
   ///
-  File(this.name, this.content);
+  File._(this.name, this.content, this.overwrite)
+      : assert(name?.isNotEmpty == true, 'name is required');
+
+  factory File.of(String name, Node content, {bool overwrite}) {
+    return File._(name, content, overwrite);
+  }
+
+  factory File.confirmOverwrite(String name, Node content) {
+    return File._(name, content, null);
+  }
+
+  factory File.alwaysOverwrite(String name, Node content) {
+    return File._(name, content, true);
+  }
+
+  factory File.neverOverwrite(String name, Node content) {
+    return File._(name, content, false);
+  }
 
   @override
   Node build(BuildContext context) {
@@ -44,7 +66,7 @@ class File implements Node, Renderer, PostRenderer {
     _buf = null;
 
     if (!file.existsSync()) {
-      print('$relativePath has been generated.');
+      printInfo('$relativePath has been generated.');
     } else {
       // Reads out the existing content to compare with the latest
       // content. If the content has been modified, prompt the user
@@ -53,9 +75,12 @@ class File implements Node, Renderer, PostRenderer {
 
       if (existingContent == content) {
         // The content has not been modified, just skip it.
-        print('$relativePath not modified.');
-      } else if (context.yesToAll == true) {
-        print('$relativePath has been overwritten.');
+        print('$relativePath has not been modified.');
+      } else if (overwrite == false) {
+        printWarn(
+            '$relativePath has been modified, but skipped because of hard settings.');
+      } else if (overwrite == true || context.yesToAll == true) {
+        printInfo('$relativePath has been overwritten.');
       } else {
         // The content has been modified. Need to prompt.
         final no = 'No, skip it.';
@@ -86,14 +111,14 @@ class File implements Node, Renderer, PostRenderer {
           return;
         } else if (choice == no) {
           // Skips the file.
-          print('$relativePath has been skipped.');
+          printWarn('$relativePath has been skipped.');
           return;
         } else if (choice == yesToAll) {
           // Overwrite the file.
-          print('$relativePath and all other changes will be overwrite.');
+          printWarn('$relativePath and all other changes will be overwrite.');
           context.yesToAll = true;
         } else {
-          print('$relativePath has been overwritten.');
+          printInfo('$relativePath has been overwritten.');
         }
       }
     }

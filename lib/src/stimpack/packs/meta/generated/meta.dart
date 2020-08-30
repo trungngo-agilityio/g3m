@@ -3,24 +3,24 @@ library g3.stimpack.meta.generated;
 
 import 'package:g3m/stimpack_base.dart';
 part 'meta_presets.dart';
-part 'meta_kind.dart';
-part 'meta_type.dart';
-part 'meta_type__fields.dart';
-part 'meta_type__pack.dart';
-part 'meta_field.dart';
-part 'meta_field__kind.dart';
-part 'meta_field__type.dart';
-part 'meta_pack.dart';
-part 'meta_pack__types.dart';
-part 'meta_pack__presets.dart';
-part 'meta_preset.dart';
-part 'meta_preset__values.dart';
-part 'meta_preset__type.dart';
-part 'meta_value.dart';
+part 'meta__kind.dart';
+part 'meta__type.dart';
+part 'meta__type__fields.dart';
+part 'meta__type__pack.dart';
+part 'meta__field.dart';
+part 'meta__field__kind.dart';
+part 'meta__field__type.dart';
+part 'meta__pack.dart';
+part 'meta__pack__types.dart';
+part 'meta__pack__presets.dart';
+part 'meta__preset.dart';
+part 'meta__preset__values.dart';
+part 'meta__preset__type.dart';
+part 'meta__value.dart';
 
 
 
-abstract class StimMetaMeta {
+abstract class StimMeta {
   StimMetaPack get meta;
   StimMetaKindScope get kind;
   StimMetaTypeScope get type;
@@ -31,7 +31,7 @@ abstract class StimMetaMeta {
 }
 
 
-class _StimMetaMetaImpl  implements StimMetaMeta {
+class StimMetaImpl  implements StimMeta {
   StimMetaPack _meta;
 
   _StimMetaKindScopeImpl _kind;
@@ -45,6 +45,10 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
   _StimMetaPresetScopeImpl _preset;
 
   _StimMetaValueScopeImpl _value;
+
+  StimMetaXTypeXPreset _metaXTypeXPreset;
+
+  StimMetaXKindXMetaPreset _kindXMetaPreset;
 
   @override
   StimMetaPack get meta {
@@ -75,13 +79,15 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
     return _value;
   }
 
-  _StimMetaMetaImpl() {
+  StimMetaImpl() {
     _kind = _StimMetaKindScopeImpl();
     _type = _StimMetaTypeScopeImpl();
     _field = _StimMetaFieldScopeImpl();
     _pack = _StimMetaPackScopeImpl();
     _preset = _StimMetaPresetScopeImpl();
     _value = _StimMetaValueScopeImpl();
+    _metaXTypeXPreset = StimMetaXTypeXPreset();
+    _kindXMetaPreset = StimMetaXKindXMetaPreset();
   }
 
 
@@ -92,52 +98,47 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
     _pack.init();
     _preset.init();
     _value.init();
+    _metaXTypeXPreset.init(stimpack.meta.type);
+    _kindXMetaPreset.init(_kind);
     _buildMeta();
     _buildValues();
   }
 
   void _buildMeta() {
-    final m = this;
-    final pack = m.pack.of('m');
-    final f = m.field, t = m.type.forMeta, p = m.preset, v = m.value;
-    final listKind = m.kind.forMeta.list;
+    final meta = this;
+    final pack = meta.pack.of('meta');
+    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
+    final setKind = meta.kind.forMeta.set;
 
-    final  kindType = t.kind;
-    final  typeType = t.type;
-    final  fieldType = t.field;
-    final  packType = t.pack;
-    final  presetType = t.preset;
-    final  valueType = t.value;
+    t.forMeta.type.fields = f.noneSet +
+        f.of('fields', kind: setKind, type: t.forMeta.field) + 
+        f.of('pack', type: t.forMeta.pack);
 
-    typeType.fields.set( 
-        f.of('fields', kind: listKind, type: fieldType) + 
-        f.of('pack', type: packType));
+    t.forMeta.field.fields = f.noneSet +
+        f.of('kind', type: t.forMeta.kind) + 
+        f.of('type', type: t.forMeta.type);
 
-    fieldType.fields.set( 
-        f.of('kind', type: kindType) + 
-        f.of('type', type: typeType));
+    t.forMeta.pack.fields = f.noneSet +
+        f.of('types', kind: setKind, type: t.forMeta.type) + 
+        f.of('presets', kind: setKind, type: t.forMeta.preset);
 
-    packType.fields.set( 
-        f.of('types', kind: listKind, type: typeType) + 
-        f.of('presets', kind: listKind, type: presetType));
+    t.forMeta.preset.fields = f.noneSet +
+        f.of('values', kind: setKind, type: t.forMeta.value) + 
+        f.of('type', type: t.forMeta.type);
 
-    presetType.fields.set( 
-        f.of('values', kind: listKind, type: valueType) + 
-        f.of('type', type: typeType));
-
-    pack.presets.set(
-        p.of('m', type: stimpack.meta.type.forMeta.kind, values:
-              v.of('list'),)
-         + 
-        p.of('m', type: stimpack.meta.type.forMeta.type, values:
+    pack.presets = p.noneSet +
+        p.of('', type: t.forMeta.type, values: 
               v.of('kind') + 
               v.of('type') + 
               v.of('field') + 
               v.of('pack') + 
               v.of('preset') + 
-              v.of('value'),));
+              v.of('value'),)
+         + 
+        p.of('meta', type: t.forMeta.kind, values: 
+              v.of('set'),);
 
-    pack.types.set(kindType + typeType + fieldType + packType + presetType + valueType);
+    pack.types = t.forMeta.all;
     pack.types.pack.set(pack);
     _meta = pack;
   }
@@ -150,17 +151,17 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
 
   // endregion custom code of meta stimpack
 }
-StimMetaMeta  _stimMetaMeta;
+StimMeta  _stimMeta;
 
-extension StimMetaMetaExtension on Stimpack {
-  StimMetaMeta get meta {
-    if (_stimMetaMeta == null) {
-      final impl = _stimMetaMeta = _StimMetaMetaImpl();
+extension StimMetaStimpackExtension on Stimpack {
+  StimMeta get meta {
+    if (_stimMeta == null) {
+      final impl = _stimMeta = StimMetaImpl();
       impl.init();
-      return _stimMetaMeta;
+      return _stimMeta;
     }
     
-    return _stimMetaMeta;
+    return _stimMeta;
   }
 }
     

@@ -7,7 +7,7 @@ extension StimMetaPresetScopeExtension on StimMetaPresetScope {
     @required StimMetaType type,
     @required List<dynamic> values,
   }) {
-    assert(name?.isNotEmpty == true, 'name is required');
+    // assert(name?.isNotEmpty == true, 'name is required');
     assert(type != null, 'type is required');
     assert(values?.isNotEmpty == true, 'values is required');
 
@@ -27,14 +27,14 @@ extension StimMetaFieldScopeExtension on StimMetaFieldScope {
   StimMetaField listOf(dynamic name, {dynamic type}) {
     final f = stimpack.meta.field;
     final k = stimpack.meta.kind;
-    return f.of(name, type: type, kind: k.forMeta.list);
+    return f.of(name, type: type, kind: k.forMeta.set);
   }
 }
 
 extension StimMetaFieldExtension on StimMetaField {
   // Determines if the current meta field is a set field.
   bool get isSet {
-    return kind == stimpack.meta.kind.forMeta.list;
+    return kind?.name?.toString() == 'set';
   }
 }
 

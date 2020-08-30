@@ -14,7 +14,12 @@ class JsonCodeFile implements Node {
   /// The file content.
   final CodeMapLiteral source;
 
-  JsonCodeFile(this.name, {this.source});
+  /// True indicates that the file need to be overwrite all the time.
+  /// False indicates that the file never get overwrite.
+  /// null indicates that needs human confirm.
+  final bool overwrite;
+
+  JsonCodeFile(this.name, {this.source, this.overwrite});
 
   factory JsonCodeFile.of(
     String name, {
@@ -30,6 +35,7 @@ class JsonCodeFile implements Node {
       extension: extension,
       syntax: syntax,
       source: JsonCode(source),
+      overwrite: overwrite,
     );
   }
 }

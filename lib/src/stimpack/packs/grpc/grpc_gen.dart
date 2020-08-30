@@ -17,15 +17,13 @@ void main() {
       tMethodRequest = t.of('method request'),
       tMethodResponse = t.of('method response');
 
-  final model = stimpack.model.meta;
-  final modelType = model.types.firstWhereNameIs('type');
-  assert(modelType != null);
-  assert(modelType.pack != null);
+  stimpack.model.type;
+  final tModelType = stimpack.meta.type.forModel.type;
 
   // ---------------------------------------------------------------------------
   // Field settings
   // ---------------------------------------------------------------------------
-  final fType = f.of('type', type: modelType);
+  final fType = f.of('type', type: tModelType);
   final fMessages = f.listOf('messages', type: tMessage);
   final fServices = f.listOf('services', type: tService);
   final fMethods = f.listOf('methods', type: tMethod);
@@ -51,7 +49,6 @@ void main() {
       tMethodResponse +
       tService;
   final meta = m.pack.of('grpc', types: allTypes);
-  allTypes.pack.set(meta);
 
   stimpackGen(meta, 'lib/src/stimpack/packs/grpc/generated');
 }

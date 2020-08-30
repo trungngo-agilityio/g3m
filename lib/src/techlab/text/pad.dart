@@ -6,7 +6,7 @@ class Pad implements Node {
   final Node content;
   final bool onlyIfMissing;
 
-  Pad(this.prefix, this.suffix, this.content, {this.onlyIfMissing = false});
+  Pad._(this.prefix, this.suffix, this.content, {this.onlyIfMissing = false});
 
   factory Pad.left(String prefix, Node content, {bool onlyIfMissing}) =>
       Pad.of(prefix, null, content, onlyIfMissing: onlyIfMissing);
@@ -16,7 +16,7 @@ class Pad implements Node {
 
   factory Pad.of(String prefix, String suffix, Node content,
           {bool onlyIfMissing}) =>
-      Pad(
+      Pad._(
         prefix,
         suffix,
         content,

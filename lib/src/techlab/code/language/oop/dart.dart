@@ -13,10 +13,15 @@ class DartCodeFile implements Node {
 
   /// The file content.
   final Node source;
+  /// True indicates that the file need to be overwrite all the time.
+  /// False indicates that the file never get overwrite.
+  /// null indicates that needs human confirm.
+  final bool overwrite;
 
   DartCodeFile._(
     this.name, {
     this.source,
+        this.overwrite,
   });
 
   factory DartCodeFile.of(
@@ -53,6 +58,7 @@ class DartCodeFile implements Node {
         extension: extension,
         syntax: syntax,
         source: source,
+        overwrite: overwrite,
       ),
     );
   }

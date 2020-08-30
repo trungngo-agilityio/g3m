@@ -2,9 +2,15 @@ part of g3.techlab.markdown;
 
 class MarkdownFile extends Node {
   final String name;
+
   final MarkdownDoc source;
 
-  MarkdownFile(this.name, this.source);
+  /// True indicates that the file need to be overwrite all the time.
+  /// False indicates that the file never get overwrite.
+  /// null indicates that needs human confirm.
+  final bool overwrite;
+
+  MarkdownFile(this.name, {this.source, this.overwrite});
 
   @override
   Node build(BuildContext context) {
@@ -13,6 +19,7 @@ class MarkdownFile extends Node {
       extension: 'md',
       syntax: 'markdown',
       source: source,
+      overwrite: overwrite,
     );
   }
 }

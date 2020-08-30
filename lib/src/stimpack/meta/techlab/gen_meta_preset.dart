@@ -28,7 +28,7 @@ class StimGenMetaPreset implements Node {
     final type = preset.type;
     assert(type != null);
 
-    final className = _config.presetClassNameOf(pack, type, preset);
+    final className = _config.presetClassNameOf(pack, preset);
     final allField = CodeField.of(
         name: 'all', type: _config.symbolSetClassNameOf(pack, type));
     final allFieldRef = CodeRef.of(allField);
@@ -39,7 +39,8 @@ class StimGenMetaPreset implements Node {
       name: 'scope',
       type: _config.scopeClassNameOf(pack, type),
     );
-    final constructorBody = <Node>[
+
+    final initBody = <Node>[
       CodeAssignExpr.of(
         allFieldRef,
         CodeAccessExpr.of(
@@ -65,38 +66,41 @@ class StimGenMetaPreset implements Node {
 
       // add the field to the all field.
       final init = CodePlusAssignExpr.of(allFieldRef, initField);
-      constructorBody.add(init);
+      initBody.add(init);
     }
 
-    final constructor =
-        CodeConstructor.of(requiredArgs: [scopeArg], body: constructorBody);
+    final initFunction = CodeFunction.of(
+        name: 'init',
+        returns: CodeType.ofVoid(),
+        requiredArgs: [scopeArg],
+        body: initBody);
 
     return CodeClass.of(
       name: className,
       fields: fields,
-      constructors: constructor,
+      functions: [initFunction],
     );
   }
 
   Node _presetExtension(StimMetaPreset preset) {
-    // TODO: Fix this after extension support
     final template = ''' 
-{{ className }}  _ext{{ className }};
-
 extension {{ className }}Extension on {{ scopeClassName }} {
   {{ className }} get {{ presetName }} {
-    return _ext{{ className }} ??= {{ className }}({{ publicScope }});
+    final impl = stimpack.{{ packName }} as {{ packImpl }};
+    return impl._{{ presetFieldName }}; 
   }
 }
     ''';
-
     final type = preset.type;
     final publicScope = _config.publicTypeScopeOf(pack, type);
     final scopeClassName = _config.scopeClassNameOf(pack, type);
 
     return Mustache.template(template, values: {
-      'className': _config.presetClassNameOf(pack, type, preset),
-      'presetName': ('for' >> preset.name).camel(),
+      'packName': pack.name,
+      'packImpl': _config.packImplClassNameOf(pack),
+      'presetFieldName': _config.presetFieldNameOf(pack, preset),
+      'className': _config.presetClassNameOf(pack, preset),
+      'presetName': _config.publicPresetName(pack, preset),
       'scopeClassName': scopeClassName,
       'publicScope': publicScope,
     });

@@ -25,7 +25,7 @@ class ReadFile implements Node {
       return Text.of(file.readAsStringSync());
     } else {
       final relativePath = ioPath.relative(path);
-      print('warn: $relativePath does not exist');
+      printWarn('$relativePath does not exist');
       return null;
     }
   }

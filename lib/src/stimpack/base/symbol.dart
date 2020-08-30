@@ -51,17 +51,18 @@ abstract class StimSymbol<T extends StimSymbol<T, S>,
   /// Adds symbols and make a set.
   ///
   S operator +(dynamic another) {
-    if (another == null || another == _scope.none) {
-      return _scope.createSet([this]);
-    }
-
     final items = <T>[];
+    if (another == null || another == _scope.none) {
+      if (isNotNone == true) items.add(this);
+
+      return _scope.createSet(items);
+    }
 
     if (!isNone) items.add(this);
 
-    if (another is S) {
+    if (another is Iterable<T>) {
       // if another is a set.
-      items.addAll(another._items);
+      items.addAll(another);
       if (items.isEmpty) return _scope.noneSet;
       return _scope.createSet(items);
     } else if (another is T) {
@@ -75,4 +76,6 @@ abstract class StimSymbol<T extends StimSymbol<T, S>,
   }
 
   bool get isNone => _scope.none == this;
+
+  bool get isNotNone => _scope.none != this;
 }

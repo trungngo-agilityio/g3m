@@ -18,6 +18,4 @@ part 'gen_meta_type.dart';
 
 part 'gen_meta_type_field.dart';
 
-part 'gen_template.dart';
-
 part 'stimpack_code.dart';

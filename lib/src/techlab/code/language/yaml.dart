@@ -14,7 +14,12 @@ class YmlCodeFile implements Node {
   /// The file content.
   final CodeMapLiteral source;
 
-  YmlCodeFile(this.name, {this.source});
+  /// True indicates that the file need to be overwrite all the time.
+  /// False indicates that the file never get overwrite.
+  /// null indicates that needs human confirm.
+  final bool overwrite;
+
+  YmlCodeFile(this.name, {this.source, this.overwrite});
 
   factory YmlCodeFile.of(
     String name, {
@@ -30,6 +35,7 @@ class YmlCodeFile implements Node {
       extension: extension,
       syntax: syntax,
       source: YmlCode(source),
+      overwrite: overwrite,
     );
   }
 }

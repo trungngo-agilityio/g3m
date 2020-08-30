@@ -4,21 +4,21 @@ library g3.stimpack.model.generated;
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 part 'model_presets.dart';
-part 'model_type.dart';
-part 'model_type__fields.dart';
-part 'model_type__rules.dart';
-part 'model_field.dart';
-part 'model_field__type.dart';
-part 'model_field__rules.dart';
-part 'model_rule.dart';
-part 'model_rule__range.dart';
-part 'model_rule__patterns.dart';
-part 'model_pattern.dart';
-part 'model_range.dart';
+part 'model__type.dart';
+part 'model__type__fields.dart';
+part 'model__type__rules.dart';
+part 'model__field.dart';
+part 'model__field__type.dart';
+part 'model__field__rules.dart';
+part 'model__rule.dart';
+part 'model__rule__range.dart';
+part 'model__rule__patterns.dart';
+part 'model__pattern.dart';
+part 'model__range.dart';
 
 
 
-abstract class StimModelModel {
+abstract class StimModel {
   StimMetaPack get meta;
   StimModelTypeScope get type;
   StimModelFieldScope get field;
@@ -28,7 +28,7 @@ abstract class StimModelModel {
 }
 
 
-class _StimModelModelImpl  implements StimModelModel {
+class StimModelImpl  implements StimModel {
   StimMetaPack _meta;
 
   _StimModelTypeScopeImpl _type;
@@ -40,6 +40,26 @@ class _StimModelModelImpl  implements StimModelModel {
   _StimModelPatternScopeImpl _pattern;
 
   _StimModelRangeScopeImpl _range;
+
+  StimMetaXTypeXPreset _metaXTypeXPreset;
+
+  StimModelXRuleXValidationPreset _ruleXValidationPreset;
+
+  StimModelXPatternXValidationPreset _patternXValidationPreset;
+
+  StimModelXFieldXUserPreset _fieldXUserPreset;
+
+  StimModelXFieldXPaginationPreset _fieldXPaginationPreset;
+
+  StimModelXFieldXDbPreset _fieldXDbPreset;
+
+  StimModelXTypeXGrpcPreset _typeXGrpcPreset;
+
+  StimModelXTypeXDatePreset _typeXDatePreset;
+
+  StimModelXTypeXAuthPreset _typeXAuthPreset;
+
+  StimModelXTypeXCommonPreset _typeXCommonPreset;
 
   @override
   StimMetaPack get meta {
@@ -66,12 +86,22 @@ class _StimModelModelImpl  implements StimModelModel {
     return _range;
   }
 
-  _StimModelModelImpl() {
+  StimModelImpl() {
     _type = _StimModelTypeScopeImpl();
     _field = _StimModelFieldScopeImpl();
     _rule = _StimModelRuleScopeImpl();
     _pattern = _StimModelPatternScopeImpl();
     _range = _StimModelRangeScopeImpl();
+    _metaXTypeXPreset = StimMetaXTypeXPreset();
+    _ruleXValidationPreset = StimModelXRuleXValidationPreset();
+    _patternXValidationPreset = StimModelXPatternXValidationPreset();
+    _fieldXUserPreset = StimModelXFieldXUserPreset();
+    _fieldXPaginationPreset = StimModelXFieldXPaginationPreset();
+    _fieldXDbPreset = StimModelXFieldXDbPreset();
+    _typeXGrpcPreset = StimModelXTypeXGrpcPreset();
+    _typeXDatePreset = StimModelXTypeXDatePreset();
+    _typeXAuthPreset = StimModelXTypeXAuthPreset();
+    _typeXCommonPreset = StimModelXTypeXCommonPreset();
   }
 
 
@@ -81,6 +111,16 @@ class _StimModelModelImpl  implements StimModelModel {
     _rule.init();
     _pattern.init();
     _range.init();
+    _metaXTypeXPreset.init(stimpack.meta.type);
+    _ruleXValidationPreset.init(_rule);
+    _patternXValidationPreset.init(_pattern);
+    _fieldXUserPreset.init(_field);
+    _fieldXPaginationPreset.init(_field);
+    _fieldXDbPreset.init(_field);
+    _typeXGrpcPreset.init(_type);
+    _typeXDatePreset.init(_type);
+    _typeXAuthPreset.init(_type);
+    _typeXCommonPreset.init(_type);
     _buildMeta();
     _buildValues();
   }
@@ -88,29 +128,30 @@ class _StimModelModelImpl  implements StimModelModel {
   void _buildMeta() {
     final meta = stimpack.meta;
     final pack = meta.pack.of('model');
-    final f = meta.field, t = meta.type.forModel, p = meta.preset, v = meta.value;
-    final listKind = meta.kind.forMeta.list;
+    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
+    final setKind = meta.kind.forMeta.set;
 
-    final  typeType = t.type;
-    final  fieldType = t.field;
-    final  ruleType = t.rule;
-    final  patternType = t.pattern;
-    final  rangeType = t.range;
+    t.forModel.type.fields = f.noneSet +
+        f.of('fields', kind: setKind, type: t.forModel.field) + 
+        f.of('rules', kind: setKind, type: t.forModel.rule);
 
-    typeType.fields.set( 
-        f.of('fields', kind: listKind, type: fieldType) + 
-        f.of('rules', kind: listKind, type: ruleType));
+    t.forModel.field.fields = f.noneSet +
+        f.of('type', type: t.forModel.type) + 
+        f.of('rules', kind: setKind, type: t.forModel.rule);
 
-    fieldType.fields.set( 
-        f.of('type', type: typeType) + 
-        f.of('rules', kind: listKind, type: ruleType));
+    t.forModel.rule.fields = f.noneSet +
+        f.of('range', kind: setKind, type: t.forModel.range) + 
+        f.of('patterns', kind: setKind, type: t.forModel.pattern);
 
-    ruleType.fields.set( 
-        f.of('range', kind: listKind, type: rangeType) + 
-        f.of('patterns', kind: listKind, type: patternType));
-
-    pack.presets.set(
-        p.of('validation', type: stimpack.meta.type.forModel.rule, values: 
+    pack.presets = p.noneSet +
+        p.of('', type: t.forMeta.type, values: 
+              v.of('type') + 
+              v.of('field') + 
+              v.of('rule') + 
+              v.of('pattern') + 
+              v.of('range'),)
+         + 
+        p.of('validation', type: t.forModel.rule, values: 
               v.of('unique') + 
               v.of('required') + 
               v.of('text') + 
@@ -130,7 +171,7 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('phone') + 
               v.of('alpha'),)
          + 
-        p.of('validation', type: stimpack.meta.type.forModel.pattern, values: 
+        p.of('validation', type: t.forModel.pattern, values: 
               v.of('id') + 
               v.of('uuid v4') + 
               v.of('slug') + 
@@ -144,7 +185,7 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('phone') + 
               v.of('alpha'),)
          + 
-        p.of('user', type: stimpack.meta.type.forModel.field, values: 
+        p.of('user', type: t.forModel.field, values: 
               v.of('user id') + 
               v.of('user name') + 
               v.of('email') + 
@@ -163,7 +204,7 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('photo url') + 
               v.of('avatar url'),)
          + 
-        p.of('pagination', type: stimpack.meta.type.forModel.field, values: 
+        p.of('pagination', type: t.forModel.field, values: 
               v.of('total') + 
               v.of('count') + 
               v.of('size') + 
@@ -173,13 +214,13 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('offset') + 
               v.of('limit'),)
          + 
-        p.of('db', type: stimpack.meta.type.forModel.field, values: 
+        p.of('db', type: t.forModel.field, values: 
               v.of('id') + 
               v.of('created at') + 
               v.of('modified at') + 
               v.of('version'),)
          + 
-        p.of('grpc', type: stimpack.meta.type.forModel.type, values: 
+        p.of('grpc', type: t.forModel.type, values: 
               v.of('double') + 
               v.of('float') + 
               v.of('int32') + 
@@ -195,7 +236,7 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('string') + 
               v.of('bytes'),)
          + 
-        p.of('date', type: stimpack.meta.type.forModel.type, values: 
+        p.of('date', type: t.forModel.type, values: 
               v.of('timestamp') + 
               v.of('date') + 
               v.of('time') + 
@@ -204,22 +245,15 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('local time') + 
               v.of('local datetime'),)
          + 
-        p.of('auth', type: stimpack.meta.type.forModel.type, values: 
+        p.of('auth', type: t.forModel.type, values: 
               v.of('user') + 
               v.of('user profile') + 
               v.of('access token'),)
          + 
-        p.of('common', type: stimpack.meta.type.forModel.type, values: 
-              v.of('url'),)
-         + 
-        p.of('model', type: stimpack.meta.type.forMeta.type, values: 
-              v.of('type') + 
-              v.of('field') + 
-              v.of('rule') + 
-              v.of('pattern') + 
-              v.of('range'),));
+        p.of('common', type: t.forModel.type, values: 
+              v.of('url'),);
 
-    pack.types.set(typeType + fieldType + ruleType + patternType + rangeType);
+    pack.types = t.forModel.all;
     pack.types.pack.set(pack);
     _meta = pack;
   }
@@ -230,19 +264,19 @@ class _StimModelModelImpl  implements StimModelModel {
     /// build all preset values here
   }
 
-// endregion custom code of model stimpack
+  // endregion custom code of model stimpack
 }
-StimModelModel  _stimModelModel;
+StimModel  _stimModel;
 
-extension StimModelModelExtension on Stimpack {
-  StimModelModel get model {
-    if (_stimModelModel == null) {
-      final impl = _stimModelModel = _StimModelModelImpl();
+extension StimModelStimpackExtension on Stimpack {
+  StimModel get model {
+    if (_stimModel == null) {
+      final impl = _stimModel = StimModelImpl();
       impl.init();
-      return _stimModelModel;
+      return _stimModel;
     }
     
-    return _stimModelModel;
+    return _stimModel;
   }
 }
     

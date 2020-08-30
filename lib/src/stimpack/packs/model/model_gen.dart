@@ -145,7 +145,6 @@ void main() {
       tPattern = t.of('pattern'),
       tRange = t.of('range');
 
-  final tMetaType = stimpack.meta.meta.types.firstWhereNameIs('type');
 
   final fType = f.of('type', type: tType);
   final fRules = f.listOf('rules', type: tRule);
@@ -170,8 +169,7 @@ void main() {
       p.ofValues('grpc', type: tType, values: grpcTypes) +
       p.ofValues('date', type: tType, values: dateTypes) +
       p.ofValues('auth', type: tType, values: authModels) +
-      p.ofValues('common', type: tType, values: commonTypes) +
-      p.ofValues('model', type: tMetaType, values: ['type', 'rule', 'field']);
+      p.ofValues('common', type: tType, values: commonTypes);
 
   // ---------------------------------------------------------------------------
   // Builds final pack

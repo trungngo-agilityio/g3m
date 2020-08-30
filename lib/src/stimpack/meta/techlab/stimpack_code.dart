@@ -14,7 +14,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   ) {
     final p = pack.name.snake();
     final t = type.name.snake();
-    return '${p}_${t}';
+    return '${p}__${t}';
   }
 
   String presetFileNameOf(
@@ -32,7 +32,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     final p = pack.name.snake();
     final t = type.name.snake();
     final f = field.name.snake();
-    return '${p}_${t}__${f}';
+    return '${p}__${t}__${f}';
   }
 
   // ===========================================================================
@@ -40,11 +40,11 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // ===========================================================================
 
   Name packClassNameOf(StimMetaPack pack) {
-    return ('stim' >> pack.name >> pack.name).pascal();
+    return ('stim' >> pack.name).pascal();
   }
 
   Name packImplClassNameOf(StimMetaPack pack) {
-    return ('_stim' >> pack.name >> pack.name >> 'impl').pascal();
+    return ('stim' >> pack.name >> 'impl').pascal();
   }
 
   // ===========================================================================
@@ -56,7 +56,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessage'.
   ///
   Name symbolClassNameOf(StimMetaPack pack, StimMetaType type) {
-    final typePack = type.pack ?? pack;
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
     return ('stim' >> typePack.name >> type.name).pascal();
   }
 
@@ -77,7 +77,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessageSet'.
   ///
   Name symbolSetClassNameOf(StimMetaPack pack, StimMetaType type) {
-    final typePack = type.pack ?? pack;
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
     return ('stim' >> typePack.name >> type.name >> 'set').pascal();
   }
 
@@ -106,7 +106,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessageScope'.
   ///
   Name scopeClassNameOf(StimMetaPack pack, StimMetaType type) {
-    final typePack = type.pack ?? pack;
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
     return ('stim' >> typePack.name >> type.name >> 'scope').pascal();
   }
 
@@ -125,7 +125,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   ///
   Name opClassNameOf(
       StimMetaPack pack, StimMetaType type, StimMetaField field) {
-    final typePack = type.pack ?? pack;
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
     return ('stim' >> typePack.name >> type.name >> 'x' >> field.name >> 'op')
         .pascal();
   }
@@ -145,7 +145,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// the class name is 'StimGrpcMessageXRuleSetOp'.
   Name setOpClassNameOf(
       StimMetaPack pack, StimMetaType type, StimMetaField field) {
-    final typePack = type.pack ?? pack;
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
     return ('stim' >>
             typePack.name >>
             type.name >>
@@ -164,15 +164,21 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // Preset
   // ===========================================================================
 
-  Name presetClassNameOf(
-      StimMetaPack pack, StimMetaType type, StimMetaPreset preset) {
-    final typePack = type.pack ?? pack;
-    var name = preset.name;
-    if (name?.isNotEmpty != true) {
-      name = Name('default');
-    }
+  Name presetClassNameOf(StimMetaPack pack, StimMetaPreset preset) {
+    final type = preset.type;
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
+    var name = type.name >> 'x' >> preset.name >> 'preset';
+    name = 'stim' >> typePack.name >> 'x' >> name;
+    return name.pascal();
+  }
 
-    return ('stim' >> typePack.name >> type.name >> name >> 'preset').pascal();
+  Name presetFieldNameOf(StimMetaPack pack, StimMetaPreset preset) {
+    final type = preset.type;
+    var name = type.name >> 'x' >> preset.name >> 'preset';
+    if (type.pack?.isNotNone == true && type.pack != pack) {
+      name = type.pack.name >> 'x' >> name;
+    }
+    return name.camel();
   }
 
   // ===========================================================================
@@ -180,14 +186,27 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // ===========================================================================
 
   String publicTypeScopeOf(StimMetaPack pack, StimMetaType type) {
-    final fieldTypePack = type.pack ?? pack;
-    return 'stimpack.${fieldTypePack.name.camel()}.${type.name.camel()}';
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
+    return 'stimpack.${typePack.name.camel()}.${type.name.camel()}';
   }
 
-  String publicMetaTypeName(StimMetaPack pack, StimMetaType type) {
-    final fieldTypePack = type.pack ?? pack;
-    final presetName = ('for' >> fieldTypePack.name).camel();
-    return 'stimpack.meta.type.${presetName}.${type.name.camel()}';
+  String publicPresetName(StimMetaPack pack, StimMetaPreset preset) {
+    final type = preset?.type;
+    final typePack = type?.pack;
+    var name = preset.name;
+    if (typePack?.isNotNone == true && typePack != pack) {
+      // This is a different pack.
+      name = pack.name >> name;
+    }
+
+    return ('for' >> name).camel().toString();
+  }
+
+  String publicMetaTypeName(StimMetaPack pack, StimMetaType type,
+      {prefix = 'stimpack.meta.type'}) {
+    final typePack = type?.pack?.isNotNone == true ? type.pack : pack;
+    final presetName = ('for' >> typePack.name).camel();
+    return '${prefix}.${presetName}.${type.name.camel()}';
   }
 
   CodePackage codePackageLibraryOf(StimMetaPack pack, {bool isPart}) {

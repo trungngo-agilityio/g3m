@@ -5,6 +5,6 @@ part of g3.techlab;
 class DotKeepFile implements Node {
   @override
   Node build(BuildContext context) {
-    return File('.keep', null);
+    return File.confirmOverwrite('.keep', null);
   }
 }
