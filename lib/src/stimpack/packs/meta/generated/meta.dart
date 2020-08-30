@@ -2,24 +2,15 @@ library g3.stimpack.meta.generated;
 
 
 import 'package:g3m/stimpack_base.dart';
-import 'package:g3m/stimpack_meta.dart';
 part 'meta_presets.dart';
 part 'meta_kind.dart';
 part 'meta_type.dart';
 part 'meta_type__fields.dart';
-part 'meta_type__presets.dart';
-part 'meta_type__pack.dart';
-part 'meta_type__fields.dart';
-part 'meta_type__presets.dart';
 part 'meta_type__pack.dart';
 part 'meta_field.dart';
 part 'meta_field__kind.dart';
 part 'meta_field__type.dart';
-part 'meta_field__kind.dart';
-part 'meta_field__type.dart';
 part 'meta_pack.dart';
-part 'meta_pack__types.dart';
-part 'meta_pack__presets.dart';
 part 'meta_pack__types.dart';
 part 'meta_pack__presets.dart';
 part 'meta_preset.dart';
@@ -106,10 +97,10 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
   }
 
   void _buildMeta() {
-    final meta = this;
-    final pack = stimpack.meta.pack.of('meta');
-    final f = meta.field, t = meta.type.forMeta, p = meta.preset, v = meta.value;
-    final listKind = meta.kind.forMeta.list;
+    final m = this;
+    final pack = m.pack.of('m');
+    final f = m.field, t = m.type.forMeta, p = m.preset, v = m.value;
+    final listKind = m.kind.forMeta.list;
 
     final  kindType = t.kind;
     final  typeType = t.type;
@@ -118,42 +109,35 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
     final  presetType = t.preset;
     final  valueType = t.value;
 
-    final  presetType = stimpack.meta.meta.types.firstWhereNameIs('preset');
-    assert(presetType != null);
-    typeType.fields += 
+    typeType.fields.set( 
         f.of('fields', kind: listKind, type: fieldType) + 
-        f.of('presets', kind: listKind, type: presetType) + 
-        f.of('pack', type: packType) + 
-        f.of('fields', kind: listKind, type: fieldType) + 
-        f.of('presets', kind: listKind, type: presetType) + 
-        f.of('pack', type: packType);
+        f.of('pack', type: packType));
 
-    fieldType.fields += 
+    fieldType.fields.set( 
         f.of('kind', type: kindType) + 
-        f.of('type', type: typeType) + 
-        f.of('kind', type: kindType) + 
-        f.of('type', type: typeType);
+        f.of('type', type: typeType));
 
-    packType.fields += 
+    packType.fields.set( 
         f.of('types', kind: listKind, type: typeType) + 
-        f.of('presets', kind: listKind, type: presetType) + 
-        f.of('types', kind: listKind, type: typeType) + 
-        f.of('presets', kind: listKind, type: presetType);
+        f.of('presets', kind: listKind, type: presetType));
 
-    presetType.fields += 
+    presetType.fields.set( 
         f.of('values', kind: listKind, type: valueType) + 
-        f.of('type', type: typeType);
+        f.of('type', type: typeType));
 
-    pack.presets += 
-        p.of('meta', type: stimpack.meta.type.forMeta.type, values: 
+    pack.presets.set(
+        p.of('m', type: stimpack.meta.type.forMeta.kind, values:
+              v.of('list'),)
+         + 
+        p.of('m', type: stimpack.meta.type.forMeta.type, values:
               v.of('kind') + 
               v.of('type') + 
               v.of('field') + 
               v.of('pack') + 
               v.of('preset') + 
-              v.of('value'),);
+              v.of('value'),));
 
-    pack.types += kindType + typeType + fieldType + packType + presetType + valueType;
+    pack.types.set(kindType + typeType + fieldType + packType + presetType + valueType);
     pack.types.pack.set(pack);
     _meta = pack;
   }

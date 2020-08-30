@@ -87,7 +87,7 @@ class _StimModelModelImpl  implements StimModelModel {
 
   void _buildMeta() {
     final meta = stimpack.meta;
-    final pack = stimpack.meta.pack.of('model');
+    final pack = meta.pack.of('model');
     final f = meta.field, t = meta.type.forModel, p = meta.preset, v = meta.value;
     final listKind = meta.kind.forMeta.list;
 
@@ -97,19 +97,19 @@ class _StimModelModelImpl  implements StimModelModel {
     final  patternType = t.pattern;
     final  rangeType = t.range;
 
-    typeType.fields += 
+    typeType.fields.set( 
         f.of('fields', kind: listKind, type: fieldType) + 
-        f.of('rules', kind: listKind, type: ruleType);
+        f.of('rules', kind: listKind, type: ruleType));
 
-    fieldType.fields += 
+    fieldType.fields.set( 
         f.of('type', type: typeType) + 
-        f.of('rules', kind: listKind, type: ruleType);
+        f.of('rules', kind: listKind, type: ruleType));
 
-    ruleType.fields += 
+    ruleType.fields.set( 
         f.of('range', kind: listKind, type: rangeType) + 
-        f.of('patterns', kind: listKind, type: patternType);
+        f.of('patterns', kind: listKind, type: patternType));
 
-    pack.presets += 
+    pack.presets.set(
         p.of('validation', type: stimpack.meta.type.forModel.rule, values: 
               v.of('unique') + 
               v.of('required') + 
@@ -217,9 +217,9 @@ class _StimModelModelImpl  implements StimModelModel {
               v.of('field') + 
               v.of('rule') + 
               v.of('pattern') + 
-              v.of('range'),);
+              v.of('range'),));
 
-    pack.types += typeType + fieldType + ruleType + patternType + rangeType;
+    pack.types.set(typeType + fieldType + ruleType + patternType + rangeType);
     pack.types.pack.set(pack);
     _meta = pack;
   }

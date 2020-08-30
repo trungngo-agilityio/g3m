@@ -3,6 +3,10 @@ part of g3.stimpack.grpc.generated;
 
 
 class StimGrpcMethod extends StimSymbol<StimGrpcMethod, StimGrpcMethodSet> {
+  StimModelRangeSet range;
+
+  StimModelPatternSet patterns;
+
   StimGrpcMethodRequest request;
 
   StimGrpcMethodResponse response;
@@ -14,6 +18,8 @@ class StimGrpcMethod extends StimSymbol<StimGrpcMethod, StimGrpcMethodSet> {
   @override
   StimGrpcMethod clone() {
     return super.clone()
+        ..range = range.clone()
+        ..patterns = patterns.clone()
         ..request = request.clone()
         ..response = response.clone();
   }
@@ -23,10 +29,28 @@ class StimGrpcMethod extends StimSymbol<StimGrpcMethod, StimGrpcMethodSet> {
 class StimGrpcMethodSet extends StimSymbolSet<StimGrpcMethod, StimGrpcMethodSet> {
   final _StimGrpcMethodScopeImpl _scope;
 
+  StimGrpcMethodXRangeSetOp _range;
+
+  StimGrpcMethodXPatternsSetOp _patterns;
+
   StimGrpcMethodXRequestOp _request;
 
   StimGrpcMethodXResponseOp _response;
 
+  StimGrpcMethodXRangeSetOp get range {
+    return _range ??= StimGrpcMethodXRangeSetOp(this, stimpack.model.range);
+  }
+
+  set range(StimGrpcMethodXRangeSetOp value) {
+    _range = value;
+  }
+  StimGrpcMethodXPatternsSetOp get patterns {
+    return _patterns ??= StimGrpcMethodXPatternsSetOp(this, stimpack.model.pattern);
+  }
+
+  set patterns(StimGrpcMethodXPatternsSetOp value) {
+    _patterns = value;
+  }
   StimGrpcMethodXRequestOp get request {
     return _request ??= StimGrpcMethodXRequestOp(this, stimpack.grpc.methodRequest);
   }
@@ -47,11 +71,15 @@ class StimGrpcMethodSet extends StimSymbolSet<StimGrpcMethod, StimGrpcMethodSet>
 
 
 abstract class StimGrpcMethodScope extends StimScope<StimGrpcMethod, StimGrpcMethodSet> {
-  StimGrpcMethod of(name, {dynamic request, dynamic response});
+  StimGrpcMethod of(name, {dynamic range, dynamic patterns, dynamic request, dynamic response});
 }
 
 
 class _StimGrpcMethodScopeImpl extends StimScopeImpl<StimGrpcMethod, StimGrpcMethodSet> implements StimGrpcMethodScope {
+  StimModelRangeSet range;
+
+  StimModelPatternSet patterns;
+
   StimGrpcMethodRequest request;
 
   StimGrpcMethodResponse response;
@@ -61,8 +89,10 @@ class _StimGrpcMethodScopeImpl extends StimScopeImpl<StimGrpcMethod, StimGrpcMet
 
 
   @override
-  StimGrpcMethod of(name, {dynamic request, dynamic response}) {
+  StimGrpcMethod of(name, {dynamic range, dynamic patterns, dynamic request, dynamic response}) {
     return createAndClear(name)
+        ..range += range ?? stimpack.model.range.noneSet
+        ..patterns += patterns ?? stimpack.model.pattern.noneSet
         ..request = request ?? stimpack.grpc.methodRequest.none
         ..response = response ?? stimpack.grpc.methodResponse.none;
   }
@@ -70,6 +100,8 @@ class _StimGrpcMethodScopeImpl extends StimScopeImpl<StimGrpcMethod, StimGrpcMet
   @override
   void clear(StimGrpcMethod symbol) {
     symbol
+        ..range = stimpack.model.range.noneSet
+        ..patterns = stimpack.model.pattern.noneSet
         ..request = stimpack.grpc.methodRequest.none
         ..response = stimpack.grpc.methodResponse.none;
   }

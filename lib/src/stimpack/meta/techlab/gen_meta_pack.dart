@@ -292,7 +292,7 @@ class StimGenMetaPack implements Node {
         pack.name.toString() == 'meta'
             ? 'final meta = this;\n'
             : 'final meta = stimpack.meta;\n',
-        'final pack = stimpack.meta.pack.of(\'${pack.name.camel()}\');\n',
+        'final pack = meta.pack.of(\'${pack.name.camel()}\');\n',
         'final f = meta.field, t = meta.type.${forPack}, p = meta.preset, v = meta.value;\n',
         'final listKind = meta.kind.forMeta.list;\n',
         '\n',
@@ -310,24 +310,6 @@ class StimGenMetaPack implements Node {
     }
 
     nodes.add(NewLine());
-
-    // Builds the type field.
-    for (final i in _externalTypes) {
-      final typePack = i.pack;
-      final name = (i.name >> 'type').camel();
-      nodes.add(
-        CodeVar.of(
-          name: name,
-          isFinal: true,
-          init: CodeRef.of(
-              'stimpack.${typePack.name.camel()}.meta.types.firstWhereNameIs(\'${i.name.camel()}\')'),
-        ),
-      );
-
-      nodes.add(CodeFunctionCall.of(
-          name: 'assert',
-          args: [CodeNotEqualExpr.of(name, CodeNullLiteral())]));
-    }
 
     for (final i in pack.types) {
       final t = i.name.camel();
@@ -356,14 +338,14 @@ class StimGenMetaPack implements Node {
 
       nodes.add(Container([
         t,
-        'Type.fields += \n',
+        'Type.fields.set( \n',
         Indent(
             Join.of(
               ' + ',
               fieldDefs.toList(),
             ),
             level: 2),
-        ';\n\n',
+        ');\n\n',
       ]));
     }
 
@@ -400,9 +382,9 @@ class StimGenMetaPack implements Node {
 
     if (presetDefs.isNotEmpty) {
       nodes.add(Container([
-        'pack.presets += \n',
+        'pack.presets.set(\n',
         Indent(Join.of(' + ', presetDefs.toList()), level: 2),
-        ';\n\n',
+        ');\n\n',
       ]));
     }
 
@@ -413,9 +395,9 @@ class StimGenMetaPack implements Node {
 
     nodes.add(
       Container([
-        'pack.types += ',
+        'pack.types.set(',
         Join.of(' + ', packTypes),
-        ';\n',
+        ');\n',
       ]),
     );
 

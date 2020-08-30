@@ -2,6 +2,19 @@ part of g3.stimpack.meta.generated;
 
 
 
+class StimMetaKindMetaPreset {
+  StimMetaKindSet all;
+
+  StimMetaKind list;
+
+
+  StimMetaKindMetaPreset(StimMetaKindScope scope) {
+    all = scope.noneSet;
+    all += list = scope.of('list');
+  }
+}
+
+
 class StimMetaTypeMetaPreset {
   StimMetaTypeSet all;
 
@@ -28,6 +41,14 @@ class StimMetaTypeMetaPreset {
     all += value = scope.of('value');
   }
 }
+StimMetaKindMetaPreset  _extStimMetaKindMetaPreset;
+
+extension StimMetaKindMetaPresetExtension on StimMetaKindScope {
+  StimMetaKindMetaPreset get forMeta {
+    return _extStimMetaKindMetaPreset ??= StimMetaKindMetaPreset(stimpack.meta.kind);
+  }
+}
+    
 StimMetaTypeMetaPreset  _extStimMetaTypeMetaPreset;
 
 extension StimMetaTypeMetaPresetExtension on StimMetaTypeScope {

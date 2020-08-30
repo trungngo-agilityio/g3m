@@ -55,15 +55,19 @@ abstract class StimSymbol<T extends StimSymbol<T, S>,
       return _scope.createSet([this]);
     }
 
-    final items = <T>[this];
+    final items = <T>[];
+
+    if (!isNone) items.add(this);
 
     if (another is S) {
       // if another is a set.
       items.addAll(another._items);
+      if (items.isEmpty) return _scope.noneSet;
       return _scope.createSet(items);
     } else if (another is T) {
       // if another is a symbol
       if (!another.isNone) items.add(another);
+      if (items.isEmpty) return _scope.noneSet;
       return _scope.createSet(items);
     }
 
