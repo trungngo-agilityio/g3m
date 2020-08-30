@@ -2,16 +2,24 @@ library g3.stimpack.meta.generated;
 
 
 import 'package:g3m/stimpack_base.dart';
+import 'package:g3m/stimpack_meta.dart';
 part 'meta_presets.dart';
 part 'meta_kind.dart';
 part 'meta_type.dart';
 part 'meta_type__fields.dart';
 part 'meta_type__presets.dart';
 part 'meta_type__pack.dart';
+part 'meta_type__fields.dart';
+part 'meta_type__presets.dart';
+part 'meta_type__pack.dart';
 part 'meta_field.dart';
 part 'meta_field__kind.dart';
 part 'meta_field__type.dart';
+part 'meta_field__kind.dart';
+part 'meta_field__type.dart';
 part 'meta_pack.dart';
+part 'meta_pack__types.dart';
+part 'meta_pack__presets.dart';
 part 'meta_pack__types.dart';
 part 'meta_pack__presets.dart';
 part 'meta_preset.dart';
@@ -110,16 +118,25 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
     final  presetType = t.preset;
     final  valueType = t.value;
 
+    final  presetType = stimpack.meta.meta.types.firstWhereNameIs('preset');
+    assert(presetType != null);
     typeType.fields += 
+        f.of('fields', kind: listKind, type: fieldType) + 
+        f.of('presets', kind: listKind, type: presetType) + 
+        f.of('pack', type: packType) + 
         f.of('fields', kind: listKind, type: fieldType) + 
         f.of('presets', kind: listKind, type: presetType) + 
         f.of('pack', type: packType);
 
     fieldType.fields += 
         f.of('kind', type: kindType) + 
+        f.of('type', type: typeType) + 
+        f.of('kind', type: kindType) + 
         f.of('type', type: typeType);
 
     packType.fields += 
+        f.of('types', kind: listKind, type: typeType) + 
+        f.of('presets', kind: listKind, type: presetType) + 
         f.of('types', kind: listKind, type: typeType) + 
         f.of('presets', kind: listKind, type: presetType);
 
@@ -128,9 +145,6 @@ class _StimMetaMetaImpl  implements StimMetaMeta {
         f.of('type', type: typeType);
 
     pack.presets += 
-        p.of('meta', type: stimpack.meta.type.forMeta.kind, values: 
-              v.of('list'),)
-         + 
         p.of('meta', type: stimpack.meta.type.forMeta.type, values: 
               v.of('kind') + 
               v.of('type') + 

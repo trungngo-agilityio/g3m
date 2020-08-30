@@ -62,15 +62,19 @@ class StimSymbolSet<T extends StimSymbol<T, S>, S extends StimSymbolSet<T, S>>
     if (another is S) {
       // the another is a set.
       items.addAll(another._items);
+      if (items.isEmpty) return _scope.noneSet;
       return _scope.createSet(items);
     } else if (another is T) {
       // the another is a symbol.
-      items.add(another);
+      if (!another.isNone) items.add(another);
+      if (items.isEmpty) return _scope.noneSet;
       return _scope.createSet(items);
     }
 
     throw 'cannot add $runtimeType with ${another.runtimeType}';
   }
+
+  bool get isNone => _scope.noneSet == this;
 
   @override
   String toString() {

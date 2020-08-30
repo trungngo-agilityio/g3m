@@ -239,7 +239,11 @@ class Name {
 
   @override
   bool operator ==(other) {
-    return text == other.toString();
+    return isEquals(other);
+  }
+
+  bool isEquals(other) {
+    return text == other?.toString();
   }
 }
 

@@ -237,17 +237,21 @@ class Name {
     }
   }
 
-  @override
-  bool operator ==(other) {
-    return text == other.toString();
-  }
-
   bool get isEmpty {
     return toString().isEmpty;
   }
 
   bool get isNotEmpty {
     return toString().isNotEmpty;
+  }
+
+  @override
+  bool operator ==(other) {
+    return isEquals(other);
+  }
+
+  bool isEquals(other) {
+    return text == other?.toString();
   }
 }
 

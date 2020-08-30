@@ -63,10 +63,12 @@ abstract class StimSymbol<T extends StimSymbol<T, S>,
       return _scope.createSet(items);
     } else if (another is T) {
       // if another is a symbol
-      items.add(another);
+      if (!another.isNone) items.add(another);
       return _scope.createSet(items);
     }
 
     throw 'cannot add $runtimeType with ${another.runtimeType}';
   }
+
+  bool get isNone => _scope.none == this;
 }

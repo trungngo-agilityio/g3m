@@ -3,7 +3,10 @@ part of g3.stimpack.meta.techlab;
 class StimGenMeta implements Node {
   final StimMetaPack pack;
 
-  StimGenMeta(this.pack);
+  StimGenMeta(this.pack) {
+    final validator = StimMetaValidator();
+    validator.validatePack(pack);
+  }
 
   @override
   Node build(BuildContext context) {

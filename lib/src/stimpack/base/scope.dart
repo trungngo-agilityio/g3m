@@ -58,6 +58,7 @@ abstract class StimScopeImpl<T extends StimSymbol<T, S>,
   T create();
 
   /// Creates a new symbol set with the specified symbol list.
+  @override
   S createSet(List<T> symbols);
 
   /// Given a symbol, this function need to clear all symbol sub fields

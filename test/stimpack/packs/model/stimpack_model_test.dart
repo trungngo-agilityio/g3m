@@ -20,7 +20,7 @@ void main() {
         f.of('archived', type: bool);
   });
   test('grpc available', () {
-    expect(f.s.user.firstName, isNotNull);
-    print(f.s.user.firstName);
+    expect(f.forUser.firstName, isNotNull);
+    print(f.forUser.firstName);
   });
 }

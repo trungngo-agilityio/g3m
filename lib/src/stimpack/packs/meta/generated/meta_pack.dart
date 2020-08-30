@@ -7,6 +7,10 @@ class StimMetaPack extends StimSymbol<StimMetaPack, StimMetaPackSet> {
 
   StimMetaPresetSet presets;
 
+  StimMetaTypeSet types;
+
+  StimMetaPresetSet presets;
+
   StimMetaPack(_StimMetaPackScopeImpl scope):
       super(scope);
 
@@ -14,6 +18,8 @@ class StimMetaPack extends StimSymbol<StimMetaPack, StimMetaPackSet> {
   @override
   StimMetaPack clone() {
     return super.clone()
+        ..types = types.clone()
+        ..presets = presets.clone()
         ..types = types.clone()
         ..presets = presets.clone();
   }
@@ -27,6 +33,24 @@ class StimMetaPackSet extends StimSymbolSet<StimMetaPack, StimMetaPackSet> {
 
   StimMetaPackXPresetsSetOp _presets;
 
+  StimMetaPackXTypesSetOp _types;
+
+  StimMetaPackXPresetsSetOp _presets;
+
+  StimMetaPackXTypesSetOp get types {
+    return _types ??= StimMetaPackXTypesSetOp(this, stimpack.meta.type);
+  }
+
+  set types(StimMetaPackXTypesSetOp value) {
+    _types = value;
+  }
+  StimMetaPackXPresetsSetOp get presets {
+    return _presets ??= StimMetaPackXPresetsSetOp(this, stimpack.meta.preset);
+  }
+
+  set presets(StimMetaPackXPresetsSetOp value) {
+    _presets = value;
+  }
   StimMetaPackXTypesSetOp get types {
     return _types ??= StimMetaPackXTypesSetOp(this, stimpack.meta.type);
   }
@@ -47,11 +71,15 @@ class StimMetaPackSet extends StimSymbolSet<StimMetaPack, StimMetaPackSet> {
 
 
 abstract class StimMetaPackScope extends StimScope<StimMetaPack, StimMetaPackSet> {
-  StimMetaPack of(name, {dynamic types, dynamic presets});
+  StimMetaPack of(name, {dynamic types, dynamic presets, dynamic types, dynamic presets});
 }
 
 
 class _StimMetaPackScopeImpl extends StimScopeImpl<StimMetaPack, StimMetaPackSet> implements StimMetaPackScope {
+  StimMetaTypeSet types;
+
+  StimMetaPresetSet presets;
+
   StimMetaTypeSet types;
 
   StimMetaPresetSet presets;
@@ -61,8 +89,10 @@ class _StimMetaPackScopeImpl extends StimScopeImpl<StimMetaPack, StimMetaPackSet
 
 
   @override
-  StimMetaPack of(name, {dynamic types, dynamic presets}) {
+  StimMetaPack of(name, {dynamic types, dynamic presets, dynamic types, dynamic presets}) {
     return createAndClear(name)
+        ..types += types ?? stimpack.meta.type.noneSet
+        ..presets += presets ?? stimpack.meta.preset.noneSet
         ..types += types ?? stimpack.meta.type.noneSet
         ..presets += presets ?? stimpack.meta.preset.noneSet;
   }
@@ -70,6 +100,8 @@ class _StimMetaPackScopeImpl extends StimScopeImpl<StimMetaPack, StimMetaPackSet
   @override
   void clear(StimMetaPack symbol) {
     symbol
+        ..types = stimpack.meta.type.noneSet
+        ..presets = stimpack.meta.preset.noneSet
         ..types = stimpack.meta.type.noneSet
         ..presets = stimpack.meta.preset.noneSet;
   }

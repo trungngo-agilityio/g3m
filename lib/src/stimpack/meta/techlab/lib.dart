@@ -1,6 +1,5 @@
 library g3.stimpack.meta.techlab;
 
-import 'package:g3m/gen.dart';
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 import 'package:g3m/techlab_core.dart';
@@ -11,8 +10,11 @@ part 'gen_meta.dart';
 
 part 'gen_meta_pack.dart';
 
-part 'gen_meta_type.dart';
+part 'gen_meta_validator.dart';
+
 part 'gen_meta_preset.dart';
+
+part 'gen_meta_type.dart';
 
 part 'gen_meta_type_field.dart';
 

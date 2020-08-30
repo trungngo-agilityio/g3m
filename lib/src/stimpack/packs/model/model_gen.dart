@@ -171,8 +171,7 @@ void main() {
       p.ofValues('date', type: tType, values: dateTypes) +
       p.ofValues('auth', type: tType, values: authModels) +
       p.ofValues('common', type: tType, values: commonTypes) +
-  p.ofValues('model', type: tMetaType, values: ['type', 'rule', 'field'])
-  ;
+      p.ofValues('model', type: tMetaType, values: ['type', 'rule', 'field']);
 
   // ---------------------------------------------------------------------------
   // Builds final pack
