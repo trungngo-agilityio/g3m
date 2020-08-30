@@ -5,7 +5,10 @@ import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 part 'model_presets.dart';
 part '../model_init.dart';
+part 'model__package.dart';
+part 'model__package__types.dart';
 part 'model__type.dart';
+part 'model__type__mixins.dart';
 part 'model__type__fields.dart';
 part 'model__type__rules.dart';
 part 'model__field.dart';
@@ -21,6 +24,7 @@ part 'model__range.dart';
 
 abstract class StimModel {
   StimMetaPack get meta;
+  StimModelPackageScope get package;
   StimModelTypeScope get type;
   StimModelFieldScope get field;
   StimModelRuleScope get rule;
@@ -31,6 +35,8 @@ abstract class StimModel {
 
 class StimModelImpl  implements StimModel {
   StimMetaPack _meta;
+
+  _StimModelPackageScopeImpl _package;
 
   _StimModelTypeScopeImpl _type;
 
@@ -47,6 +53,10 @@ class StimModelImpl  implements StimModel {
   @override
   StimMetaPack get meta {
     return _meta;
+  }
+  @override
+  _StimModelPackageScopeImpl get package {
+    return _package;
   }
   @override
   _StimModelTypeScopeImpl get type {
@@ -70,6 +80,7 @@ class StimModelImpl  implements StimModel {
   }
 
   StimModelImpl() {
+    _package = _StimModelPackageScopeImpl();
     _type = _StimModelTypeScopeImpl();
     _field = _StimModelFieldScopeImpl();
     _rule = _StimModelRuleScopeImpl();
@@ -80,6 +91,7 @@ class StimModelImpl  implements StimModel {
 
 
   void init() {
+    _package.init();
     _type.init();
     _field.init();
     _rule.init();
@@ -95,7 +107,11 @@ class StimModelImpl  implements StimModel {
     final pack = meta.pack.of('model');
     final f = meta.field, t = meta.type, p = meta.preset, v = meta.value, k = meta.kind;
 
+    t.forModel.package.fields = f.noneSet +
+        f.of('types', kind: k.set, type: t.forModel.type);
+
     t.forModel.type.fields = f.noneSet +
+        f.of('mixins', kind: k.set, type: t.forModel.type) + 
         f.of('fields', kind: k.set, type: t.forModel.field) + 
         f.of('rules', kind: k.set, type: t.forModel.rule);
 
@@ -109,6 +125,7 @@ class StimModelImpl  implements StimModel {
 
     pack.presets = p.noneSet +
         p.of('', type: t.forMeta.type, values: 
+              v.of('package') + 
               v.of('type') + 
               v.of('field') + 
               v.of('rule') + 

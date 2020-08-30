@@ -3,6 +3,8 @@ part of g3.stimpack.model.generated;
 
 
 class StimModelType extends StimSymbol<StimModelType, StimModelTypeSet> {
+  StimModelTypeSet mixins;
+
   StimModelFieldSet fields;
 
   StimModelRuleSet rules;
@@ -14,6 +16,7 @@ class StimModelType extends StimSymbol<StimModelType, StimModelTypeSet> {
   @override
   StimModelType clone() {
     return super.clone()
+        ..mixins = mixins.clone()
         ..fields = fields.clone()
         ..rules = rules.clone();
   }
@@ -23,10 +26,19 @@ class StimModelType extends StimSymbol<StimModelType, StimModelTypeSet> {
 class StimModelTypeSet extends StimSymbolSet<StimModelType, StimModelTypeSet> {
   final _StimModelTypeScopeImpl _scope;
 
+  StimModelTypeXMixinsSetOp _mixins;
+
   StimModelTypeXFieldsSetOp _fields;
 
   StimModelTypeXRulesSetOp _rules;
 
+  StimModelTypeXMixinsSetOp get mixins {
+    return _mixins ??= StimModelTypeXMixinsSetOp(this, stimpack.model.type);
+  }
+
+  set mixins(StimModelTypeXMixinsSetOp value) {
+    _mixins = value;
+  }
   StimModelTypeXFieldsSetOp get fields {
     return _fields ??= StimModelTypeXFieldsSetOp(this, stimpack.model.field);
   }
@@ -74,9 +86,8 @@ abstract class StimModelTypeScope extends StimScope<StimModelType, StimModelType
   StimModelType get accessToken;
   StimModelType get apiPage;
   StimModelType get apiOffsetLimit;
-  StimModelType get dbTable;
 
-  StimModelType of(name, {dynamic fields, dynamic rules});
+  StimModelType of(name, {dynamic mixins, dynamic fields, dynamic rules});
 }
 
 
@@ -135,7 +146,7 @@ class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelType
 
   StimModelType _apiOffsetLimit;
 
-  StimModelType _dbTable;
+  StimModelTypeSet mixins;
 
   StimModelFieldSet fields;
 
@@ -249,17 +260,14 @@ class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelType
   StimModelType get apiOffsetLimit {
     return _apiOffsetLimit ??= of('api offset limit');
   }
-  @override
-  StimModelType get dbTable {
-    return _dbTable ??= of('db table');
-  }
   _StimModelTypeScopeImpl():
       super();
 
 
   @override
-  StimModelType of(name, {dynamic fields, dynamic rules}) {
+  StimModelType of(name, {dynamic mixins, dynamic fields, dynamic rules}) {
     return createAndClear(name)
+        ..mixins += mixins ?? stimpack.model.type.noneSet
         ..fields += fields ?? stimpack.model.field.noneSet
         ..rules += rules ?? stimpack.model.rule.noneSet;
   }
@@ -267,6 +275,7 @@ class _StimModelTypeScopeImpl extends StimScopeImpl<StimModelType, StimModelType
   @override
   void clear(StimModelType symbol) {
     symbol
+        ..mixins = stimpack.model.type.noneSet
         ..fields = stimpack.model.field.noneSet
         ..rules = stimpack.model.rule.noneSet;
   }

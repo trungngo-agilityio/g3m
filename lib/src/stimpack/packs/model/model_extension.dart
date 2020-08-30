@@ -1,11 +1,11 @@
 part of g3.stimpack.model;
 
 extension StimModelFieldExtension on StimModelField {
-  StimModelField required() {
-    return this..rules += stimpack.model.rule.required;
+  StimModelField get required {
+    return clone()..rules += stimpack.model.rule.required;
   }
 
-  StimModelField unique() {
-    return this..rules += stimpack.model.rule.unique;
+  StimModelField get unique {
+    return clone()..rules += stimpack.model.rule.unique;
   }
 }

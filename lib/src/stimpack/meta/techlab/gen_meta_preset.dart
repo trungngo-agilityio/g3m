@@ -96,7 +96,7 @@ extension {{ className }}Extension on {{ scopeClassName }} {
     final scopeClassName = _config.scopeClassNameOf(pack, type);
 
     return Mustache.template(template, values: {
-      'packName': pack.name,
+      'packName': pack.name.camel(),
       'packImpl': _config.packImplClassNameOf(pack),
       'presetFieldName': _config.presetFieldNameOf(pack, preset),
       'className': _config.presetClassNameOf(pack, preset),

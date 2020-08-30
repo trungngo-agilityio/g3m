@@ -68,9 +68,9 @@ class StimGenMetaType implements Node {
       fieldCloneList.add(
         CodeCascade.of(
           CodeAssignExpr.of(
-            field.name,
+            field.name.camel(),
             CodeAccessExpr.of(
-              field.name,
+              field.name.camel(),
               CodeFunctionCall.of(name: 'clone'),
             ),
           ),
@@ -264,7 +264,7 @@ class StimGenMetaType implements Node {
 
       fields.add(CodeField.of(name: field.name, type: fieldClass));
 
-      final fieldRef = CodeRef.of(field);
+      final fieldRef = CodeRef.of(field.name.camel());
       final none = CodeAccessExpr.of(
         CodeRef.of(_config.publicTypeScopeOf(pack, field.type)),
         Text.of(field.isSet ? 'noneSet' : 'none'),
@@ -272,7 +272,7 @@ class StimGenMetaType implements Node {
 
       clearFunctionFields.add(
         CodeCascade.of(
-          CodeAssignExpr.of(field.name, none),
+          CodeAssignExpr.of(field.name.camel(), none),
         ),
       );
 
@@ -280,8 +280,8 @@ class StimGenMetaType implements Node {
       ofFunctionFields.add(
         CodeCascade.of(
           field.isSet
-              ? CodePlusAssignExpr.of(field.name, lazyField)
-              : CodeAssignExpr.of(field.name, lazyField),
+              ? CodePlusAssignExpr.of(field.name.camel(), lazyField)
+              : CodeAssignExpr.of(field.name.camel(), lazyField),
         ),
       );
     }

@@ -5,21 +5,21 @@ import 'package:g3m/stimpack_meta.dart';
 /// The generated code is a complete library 'g3.stimpack.model.generated'
 ///
 /// Pack:
-/// - Model has many types
-/// - Type has many fields, and many rules
+/// - Package: has many types
+/// - Type has many fields, many rules, extend other types
 /// - Fields has a type, and many rules.
 /// - Rule has many patterns, and many ranges
 ///
 /// Example:
 /// - rules: required, unique, no negative
 /// - type: string, double
+/// - types:
+///     - product,  fields: name, description, cost
+///     - category, fields: name, description
 /// - fields:
 ///     - name, type: string, rules: required, unique
 ///     - description, type: string
 ///     - cost: type: double, rules: no negative
-/// - models:
-///     - product,  fields: name, description, cost
-///     - category, fields: name, description
 ///
 /// ============================================================================
 
@@ -175,6 +175,7 @@ const validationRules = [
 void main() {
   final pack = stimpack.meta.pack.of('model');
 
+  final tPackage = t.of('package', values: v.ofNames(['primitive']));
   final tField = t.of('field',
       values: v.ofNames([
         ...userProfileFields,
@@ -200,19 +201,22 @@ void main() {
   final tRange = t.of('range');
 
   final fType = f.of('type', type: tType);
+  final fTypes = f.listOf('types', type: tType);
+  final fMixins = f.listOf('mixins', type: tType);
   final fRules = f.listOf('rules', type: tRule);
   final fFields = f.listOf('fields', type: tField);
   final fRange = f.listOf('range', type: tRange);
   final fPatterns = f.listOf('patterns', type: tPattern);
 
-  tType.fields += fFields + fRules;
+  tPackage.fields += fTypes;
+  tType.fields += fMixins + fFields + fRules;
   tField.fields += fType + fRules;
   tRule.fields += fRange + fPatterns;
 
   // ---------------------------------------------------------------------------
   // Builds final pack
   // ---------------------------------------------------------------------------
-  pack.types = tType + tField + tRule + tPattern + tRange;
+  pack.types = tPackage + tType + tField + tRule + tPattern + tRange;
   pack.types.pack.set(pack);
 
   stimpackGen(pack, 'lib/src/stimpack/packs/model');

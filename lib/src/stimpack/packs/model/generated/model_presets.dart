@@ -5,6 +5,8 @@ part of g3.stimpack.model.generated;
 class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
+  StimMetaType package;
+
   StimMetaType type;
 
   StimMetaType field;
@@ -18,6 +20,7 @@ class StimMetaXTypeXPreset {
 
   void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
+    all += package = scope.of('package');
     all += type = scope.of('type');
     all += field = scope.of('field');
     all += rule = scope.of('rule');

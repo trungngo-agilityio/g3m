@@ -14,6 +14,7 @@ class StimModelPackInit {
     _initFieldTypes();
     _initFieldRules();
     _initModelFields();
+    _initPackages();
   }
 
   void _initPatterns() {}
@@ -128,5 +129,26 @@ class StimModelPackInit {
 
     t.apiPage.fields += f.total + f.count + f.pageSize + f.pageIndex;
     t.apiOffsetLimit.fields += f.offset + f.limit + f.total;
+  }
+
+  void _initPackages() {
+    final p = pack.package, t = pack.type;
+
+    // primitive types package
+    p.primitive.types += t.double +
+        t.float +
+        t.int32 +
+        t.int64 +
+        t.uint32 +
+        t.uint64 +
+        t.sint32 +
+        t.sint64 +
+        t.fixed32 +
+        t.fixed64 +
+        t.sfixed32 +
+        t.sfixed64 +
+        t.bool +
+        t.string +
+        t.bytes;
   }
 }
