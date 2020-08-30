@@ -23,11 +23,19 @@ class StimMetaKindSet extends StimSymbolSet<StimMetaKind, StimMetaKindSet> {
 
 
 abstract class StimMetaKindScope extends StimScope<StimMetaKind, StimMetaKindSet> {
+  StimMetaKind get set;
+
   StimMetaKind of(name);
 }
 
 
 class _StimMetaKindScopeImpl extends StimScopeImpl<StimMetaKind, StimMetaKindSet> implements StimMetaKindScope {
+  StimMetaKind _set;
+
+  @override
+  StimMetaKind get set {
+    return _set ??= of('set');
+  }
   _StimMetaKindScopeImpl():
       super();
 

@@ -320,8 +320,7 @@ class StimGenMetaPack implements Node {
             ? 'final meta = this;\n'
             : 'final meta = stimpack.meta;\n',
         'final pack = meta.pack.of(\'${pack.name.camel()}\');\n',
-        'final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;\n',
-        'final setKind = meta.kind.forMeta.set;\n',
+        'final f = meta.field, t = meta.type, p = meta.preset, v = meta.value, k = meta.kind;\n',
         '\n',
       ]),
     ];
@@ -341,7 +340,7 @@ class StimGenMetaPack implements Node {
           '\nf.of(\'',
           fieldName.camel(),
           '\'',
-          field.isSet ? Text.of(', kind: setKind') : null,
+          field.isSet ? Text.of(', kind: k.set') : null,
           ', type: ',
           fieldTypeName,
           ')',

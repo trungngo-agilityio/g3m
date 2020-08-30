@@ -50,8 +50,6 @@ class StimMetaImpl  implements StimMeta {
 
   StimMetaXTypeXPreset _metaXTypeXPreset;
 
-  StimMetaXKindXMetaPreset _kindXMetaPreset;
-
   @override
   StimMetaPack get meta {
     return _meta;
@@ -89,7 +87,6 @@ class StimMetaImpl  implements StimMeta {
     _preset = _StimMetaPresetScopeImpl();
     _value = _StimMetaValueScopeImpl();
     _metaXTypeXPreset = StimMetaXTypeXPreset();
-    _kindXMetaPreset = StimMetaXKindXMetaPreset();
   }
 
 
@@ -101,7 +98,6 @@ class StimMetaImpl  implements StimMeta {
     _preset.init();
     _value.init();
     _metaXTypeXPreset.init(stimpack.meta.type);
-    _kindXMetaPreset.init(_kind);
     _buildMeta();
     stimInitMetaPack(this);
   }
@@ -109,24 +105,23 @@ class StimMetaImpl  implements StimMeta {
   void _buildMeta() {
     final meta = this;
     final pack = meta.pack.of('meta');
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
-    final setKind = meta.kind.forMeta.set;
+    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value, k = meta.kind;
 
     t.forMeta.type.fields = f.noneSet +
-        f.of('fields', kind: setKind, type: t.forMeta.field) + 
+        f.of('fields', kind: k.set, type: t.forMeta.field) + 
         f.of('pack', type: t.forMeta.pack) + 
-        f.of('values', kind: setKind, type: t.forMeta.value);
+        f.of('values', kind: k.set, type: t.forMeta.value);
 
     t.forMeta.field.fields = f.noneSet +
         f.of('kind', type: t.forMeta.kind) + 
         f.of('type', type: t.forMeta.type);
 
     t.forMeta.pack.fields = f.noneSet +
-        f.of('types', kind: setKind, type: t.forMeta.type) + 
-        f.of('presets', kind: setKind, type: t.forMeta.preset);
+        f.of('types', kind: k.set, type: t.forMeta.type) + 
+        f.of('presets', kind: k.set, type: t.forMeta.preset);
 
     t.forMeta.preset.fields = f.noneSet +
-        f.of('values', kind: setKind, type: t.forMeta.value) + 
+        f.of('values', kind: k.set, type: t.forMeta.value) + 
         f.of('type', type: t.forMeta.type);
 
     pack.presets = p.noneSet +
@@ -136,10 +131,7 @@ class StimMetaImpl  implements StimMeta {
               v.of('field') + 
               v.of('pack') + 
               v.of('preset') + 
-              v.of('value'),)
-         + 
-        p.of('meta', type: t.forMeta.kind, values: 
-              v.of('set'),);
+              v.of('value'),);
 
     pack.types = t.forMeta.all;
     pack.types.pack.set(pack);

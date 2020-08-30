@@ -28,30 +28,10 @@ class StimMetaXTypeXPreset {
     all += value = scope.of('value');
   }
 }
-
-
-class StimMetaXKindXMetaPreset {
-  StimMetaKindSet all;
-
-  StimMetaKind set;
-
-
-  void init(StimMetaKindScope scope) {
-    all = scope.noneSet;
-    all += set = scope.of('set');
-  }
-}
 extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
   StimMetaXTypeXPreset get forMeta {
     final impl = stimpack.meta as StimMetaImpl;
     return impl._metaXTypeXPreset; 
-  }
-}
-    
-extension StimMetaXKindXMetaPresetExtension on StimMetaKindScope {
-  StimMetaXKindXMetaPreset get forMeta {
-    final impl = stimpack.meta as StimMetaImpl;
-    return impl._kindXMetaPreset; 
   }
 }
     

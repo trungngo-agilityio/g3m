@@ -65,6 +65,8 @@ abstract class StimModelRuleScope extends StimScope<StimModelRule, StimModelRule
   StimModelRule get desc;
   StimModelRule get longText;
   StimModelRule get shortText;
+  StimModelRule get humanName;
+  StimModelRule get birthDay;
 
   StimModelRule of(name, {dynamic range, dynamic patterns});
 }
@@ -106,6 +108,10 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
   StimModelRule _longText;
 
   StimModelRule _shortText;
+
+  StimModelRule _humanName;
+
+  StimModelRule _birthDay;
 
   StimModelRangeSet range;
 
@@ -182,6 +188,14 @@ class _StimModelRuleScopeImpl extends StimScopeImpl<StimModelRule, StimModelRule
   @override
   StimModelRule get shortText {
     return _shortText ??= of('short text');
+  }
+  @override
+  StimModelRule get humanName {
+    return _humanName ??= of('human name');
+  }
+  @override
+  StimModelRule get birthDay {
+    return _birthDay ??= of('birth day');
   }
   _StimModelRuleScopeImpl():
       super();

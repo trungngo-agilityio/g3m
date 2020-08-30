@@ -5,6 +5,7 @@ import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_meta.dart';
 part 'grpc_presets.dart';
+part '../grpc_init.dart';
 part 'grpc__package.dart';
 part 'grpc__package__messages.dart';
 part 'grpc__package__services.dart';
@@ -97,18 +98,17 @@ class StimGrpcImpl  implements StimGrpc {
     _service.init();
     _metaXTypeXPreset.init(stimpack.meta.type);
     _buildMeta();
-    _buildValues();
+    stimInitGrpcPack(this);
   }
 
   void _buildMeta() {
     final meta = stimpack.meta;
     final pack = meta.pack.of('grpc');
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value;
-    final setKind = meta.kind.forMeta.set;
+    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value, k = meta.kind;
 
     t.forGrpc.package.fields = f.noneSet +
-        f.of('messages', kind: setKind, type: t.forGrpc.message) + 
-        f.of('services', kind: setKind, type: t.forGrpc.service);
+        f.of('messages', kind: k.set, type: t.forGrpc.message) + 
+        f.of('services', kind: k.set, type: t.forGrpc.service);
 
     t.forGrpc.message.fields = f.noneSet +
         f.of('type', type: t.forModel.type);
@@ -118,7 +118,7 @@ class StimGrpcImpl  implements StimGrpc {
         f.of('response', type: t.forGrpc.methodResponse);
 
     t.forGrpc.service.fields = f.noneSet +
-        f.of('methods', kind: setKind, type: t.forGrpc.method);
+        f.of('methods', kind: k.set, type: t.forGrpc.method);
 
     pack.presets = p.noneSet +
         p.of('', type: t.forMeta.type, values: 
@@ -133,14 +133,6 @@ class StimGrpcImpl  implements StimGrpc {
     pack.types.pack.set(pack);
     _meta = pack;
   }
-  // region custom code of grpc stimpack
-
-  /// This function shall be call during the init process.
-  void _buildValues() {
-    /// build all preset values here
-  }
-
-  // endregion custom code of grpc stimpack
 }
 StimGrpc  _stimGrpc;
 

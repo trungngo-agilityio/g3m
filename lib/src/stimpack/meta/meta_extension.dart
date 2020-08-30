@@ -27,7 +27,7 @@ extension StimMetaFieldScopeExtension on StimMetaFieldScope {
   StimMetaField listOf(dynamic name, {dynamic type}) {
     final f = stimpack.meta.field;
     final k = stimpack.meta.kind;
-    return f.of(name, type: type, kind: k.forMeta.set);
+    return f.of(name, type: type, kind: k.set);
   }
 }
 
