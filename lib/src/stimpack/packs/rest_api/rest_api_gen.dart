@@ -40,7 +40,7 @@ void main() {
   final fModelApis = f.listOf('model apis', type: tModelApi);
   final fApis = f.listOf('apis', type: tApi);
   final fModel = f.of('model', type: t.forModel.type);
-  final fRequest = f.listOf('request', type: t.forModel.type);
+  final fRequest = f.listOf('request', type: t.forModel.field);
   final fResponse = f.listOf('response', type: t.forModel.field);
   final fId = f.of('id field', type: t.forModel.field);
   final fRequiredGrants = f.of('required', type: t.forRbac.accessGrant);
