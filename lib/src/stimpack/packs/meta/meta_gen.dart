@@ -19,7 +19,28 @@ StimMetaPack _buildMeta() {
   final kSet = k.of('set');
 
   final tKind = t.of('kind', values: v.of('set'));
-  final tType = t.of('type');
+
+  // See: https://api.dart.dev/stable/2.9.2/dart-core/dart-core-library.html
+  final primitiveTypes = [
+    String,
+    num,
+    int,
+    double,
+    bool,
+    // List,
+    // Map,
+    // Set,
+    Duration,
+    Uri,
+    DateTime,
+    Type,
+  ];
+
+  final tType = t.of('type',
+      values: v.ofNames(
+        primitiveTypes.map((e) => '$e'),
+      ));
+
   final tField = t.of('field');
   final tPack = t.of('pack');
   final tPreset = t.of('preset');

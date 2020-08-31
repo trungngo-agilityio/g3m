@@ -20,7 +20,26 @@ extension StimMetaPresetScopeExtension on StimMetaPresetScope {
   }
 }
 
-extension StimMetaTypeScopeExtension on StimMetaTypeScope {}
+StimMetaTypeSet _primitiveTypes;
+
+extension StimMetaTypeScopeExtension on StimMetaTypeScope {
+
+  /// Determines if the current type is a primitive type or not.
+  bool get isPrimitive {
+    final t = stimpack.meta.type;
+    _primitiveTypes ??= t.string +
+        t.num +
+        t.int +
+        t.double +
+        t.bool +
+        t.duration +
+        t.uri +
+        t.dateTime +
+        t.type;
+
+    return _primitiveTypes.contains(this);
+  }
+}
 
 extension StimMetaFieldScopeExtension on StimMetaFieldScope {
   /// Creates a field which is a list of a [type].
@@ -34,6 +53,11 @@ extension StimMetaFieldScopeExtension on StimMetaFieldScope {
 extension StimMetaFieldExtension on StimMetaField {
   // Determines if the current meta field is a set field.
   bool get isSet {
+    // Important to note here that during code generation, this value
+    // kind name is used a lot. In most case, it is ok to refer to an
+    // existing in-memory value [stimpack.meta.kind.set]; however, only
+    // the case that the meta pack re-generate itself, the object instance
+    // might be different where the generator recreate the kind.set object.
     return kind?.name?.toString() == 'set';
   }
 }

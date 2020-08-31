@@ -59,17 +59,81 @@ class StimMetaTypeSet extends StimSymbolSet<StimMetaType, StimMetaTypeSet> {
 
 
 abstract class StimMetaTypeScope extends StimScope<StimMetaType, StimMetaTypeSet> {
+  StimMetaType get string;
+  StimMetaType get num;
+  StimMetaType get int;
+  StimMetaType get double;
+  StimMetaType get bool;
+  StimMetaType get duration;
+  StimMetaType get uri;
+  StimMetaType get dateTime;
+  StimMetaType get type;
+
   StimMetaType of(name, {dynamic fields, dynamic pack, dynamic values});
 }
 
 
 class _StimMetaTypeScopeImpl extends StimScopeImpl<StimMetaType, StimMetaTypeSet> implements StimMetaTypeScope {
+  StimMetaType _string;
+
+  StimMetaType _num;
+
+  StimMetaType _int;
+
+  StimMetaType _double;
+
+  StimMetaType _bool;
+
+  StimMetaType _duration;
+
+  StimMetaType _uri;
+
+  StimMetaType _dateTime;
+
+  StimMetaType _type;
+
   StimMetaFieldSet fields;
 
   StimMetaPack pack;
 
   StimMetaValueSet values;
 
+  @override
+  StimMetaType get string {
+    return _string ??= of('String');
+  }
+  @override
+  StimMetaType get num {
+    return _num ??= of('num');
+  }
+  @override
+  StimMetaType get int {
+    return _int ??= of('int');
+  }
+  @override
+  StimMetaType get double {
+    return _double ??= of('double');
+  }
+  @override
+  StimMetaType get bool {
+    return _bool ??= of('bool');
+  }
+  @override
+  StimMetaType get duration {
+    return _duration ??= of('Duration');
+  }
+  @override
+  StimMetaType get uri {
+    return _uri ??= of('Uri');
+  }
+  @override
+  StimMetaType get dateTime {
+    return _dateTime ??= of('DateTime');
+  }
+  @override
+  StimMetaType get type {
+    return _type ??= of('Type');
+  }
   _StimMetaTypeScopeImpl():
       super();
 

@@ -31,6 +31,11 @@ abstract class StimSymbol<T extends StimSymbol<T, S>,
   /// The symbol name
   Name name;
 
+  Map _data;
+
+  /// Gets the data map attached to this node.
+  Map get data => _data ??= {};
+
   /// The scope that the symbol is created from.
   final StimScopeImpl<T, S> _scope;
 
@@ -40,7 +45,9 @@ abstract class StimSymbol<T extends StimSymbol<T, S>,
   /// function let custom implementation on how the symbol's fields
   /// should be clone.
   T clone() {
-    return _scope.createAndClear(name);
+    final res = _scope.createAndClear(name);
+    if (_data != null) res._data = Map.of(data);
+    return res;
   }
 
   @override

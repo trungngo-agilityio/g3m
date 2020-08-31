@@ -23,7 +23,8 @@ void main() {
   final tResource = t.of('resource',
       values: v.ofNames([
         'database',
-        'table',
+        'data table',
+        'api',
         'feature',
       ]));
 
@@ -59,8 +60,8 @@ void main() {
   tPermission.fields +=
       f.of('resource', type: tResource) + f.of('action', type: tAction);
 
-  // A role grant consists of permissions
-  tRole.fields += fPermissions;
+  // A role grant consists of permissions, and sub roles
+  tRole.fields += fPermissions + fRoles;
 
   // A package consists of role & permissions
   tGrant.fields += fRoles + fPermissions;
