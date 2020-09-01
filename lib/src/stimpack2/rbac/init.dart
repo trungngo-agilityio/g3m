@@ -41,7 +41,8 @@ class StimRbac extends StimPack {
     resource
       ..any = resource.of(name: 'any')
       ..database = resource.of(name: 'database')
-      ..dataTable = resource.of(name: 'data table')
+      ..table = resource.of(name: 'table')
+      ..field = resource.of(name: 'field')
       ..api = resource.of(name: 'api')
       ..app = resource.of(name: 'app')
       ..feature = resource.of(name: 'feature');

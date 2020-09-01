@@ -19,6 +19,8 @@ part 'src/stimpack2/model/pattern.dart';
 
 part 'src/stimpack2/model/range.dart';
 
+part 'src/stimpack2/model/filter.dart';
+
 part 'src/stimpack2/model/rule.dart';
 
 part 'src/stimpack2/model/symbol.dart';

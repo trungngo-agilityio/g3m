@@ -13,6 +13,7 @@ class StimModel extends StimPack {
   final StimModelTagScope tag;
   final StimModelTypeScope type;
   final StimModelFieldScope field;
+  final StimModelFieldFilterScope filter;
   final StimModelFieldRuleScope rule;
   final StimModelPatternScope pattern;
   final StimModelRangeScope range;
@@ -24,6 +25,7 @@ class StimModel extends StimPack {
         tag = StimModelTagScope(),
         type = StimModelTypeScope(),
         field = StimModelFieldScope(),
+        filter = StimModelFieldFilterScope(),
         rule = StimModelFieldRuleScope(),
         pattern = StimModelPatternScope(),
         range = StimModelRangeScope(),
@@ -35,6 +37,7 @@ class StimModel extends StimPack {
     _patterns();
     _ranges();
     _rules();
+    _filters();
     _packages();
     _primitiveTypes();
     _collectionTypes();
@@ -162,7 +165,35 @@ class StimModel extends StimPack {
   // Patterns
   // ===========================================================================
 
-  void _patterns() {}
+  void _patterns() {
+    final p = pattern;
+    p.id = p.of(name: 'id');
+    p.uuidV4 = p.of(name: 'uuid v4');
+    p.slug = p.of(name: 'slug');
+
+    p.ipv4 = p.of(name: 'ipv4');
+    p.ipv6 = p.of(name: 'ipv6');
+    p.ip = p.of(name: 'ip');
+
+    p.url = p.of(name: 'url');
+    p.email = p.of(name: 'email');
+    p.username = p.of(name: 'username');
+    p.password = p.of(name: 'password');
+    p.phone = p.of(name: 'phone');
+    p.zipCode = p.of(name: 'zip code');
+
+    // data type pattern
+    p.string = p.of(name: 'string');
+    p.num = p.of(name: 'num');
+    p.int = p.of(name: 'int');
+    p.double = p.of(name: 'double');
+    p.bool = p.of(name: 'bool');
+    p.duration = p.of(name: 'duration');
+    p.uri = p.of(name: 'uri');
+    p.date = p.of(name: 'date');
+    p.dateTime = p.of(name: 'date time');
+    p.time = p.of(name: 'time');
+  }
 
   // ===========================================================================
   // Ranges
@@ -172,15 +203,134 @@ class StimModel extends StimPack {
   // ===========================================================================
   // Rules
   // ===========================================================================
+
   void _rules() {
     rule
       ..required = rule.of(name: 'required')
-      ..unique = rule.of(name: 'unique');
+      ..unique = rule.of(name: 'unique')
+      ..indexed = rule.of(name: 'indexed')
+      ..authorized = rule.of(name: 'authorized')
+      ..readOnly = rule.of(name: 'read only')
+      ..writeOnly = rule.of(name: 'write only')
+      ..systemOnly = rule.of(name: 'system only')
+      ..autoIncreased = rule.of(name: 'auto increased')
+      ..transient = rule.of(name: 'transient');
+
+    // pattern based fields
+    final p = pattern;
+    rule
+      ..id = _patternRule(p.id)
+      ..uuidV4 = _patternRule(p.uuidV4)
+      ..slug = _patternRule(p.slug)
+      ..ipv4 = _patternRule(p.ipv4)
+      ..ipv6 = _patternRule(p.ipv6)
+      ..ip = _patternRule(p.url)
+      ..email = _patternRule(p.email)
+      ..username = _patternRule(p.username)
+      ..password = _patternRule(p.password)
+      ..phone = _patternRule(p.phone)
+      ..zipCode = _patternRule(p.zipCode);
+
+    // pattern based - data type
+    rule
+      ..string = _patternRule(p.string)
+      ..num = _patternRule(p.num)
+      ..bool = _patternRule(p.bool)
+      ..duration = _patternRule(p.duration)
+      ..uri = _patternRule(p.uri)
+      ..date = _patternRule(p.date)
+      ..dateTime = _patternRule(p.dateTime)
+      ..time = _patternRule(p.time);
   }
+
+  StimModelFieldRule _patternRule(StimModelPattern pattern) {
+    return rule.of(name: pattern.name, patterns: {pattern});
+  }
+
+  // ===========================================================================
+  // Filters
+  // ===========================================================================
+
+  void _filters() {
+    final f = filter;
+
+    f.isNull = _filter('null');
+    f.isIn = _filter('is in');
+    f.exact = _filter('exact');
+
+    f.stringFilters = {
+      f.isNull,
+      f.isIn,
+      f.exact,
+      f.iExact = _filter('i exact'),
+      f.startsWith = _filter('starts with'),
+      f.iStartsWith = _filter('i starts with'),
+      f.endsWith = _filter('ends with'),
+      f.iEndsWith = _filter('i ends with'),
+      f.contains = _filter('contains'),
+      f.iContains = _filter('i contains'),
+      f.iExact = _filter('i exact'),
+      f.regex = _filter('i regex'),
+    };
+
+    f.rangeFilters = {
+      f.gt = _filter('gt'),
+      f.gte = _filter('gte'),
+      f.lt = _filter('lt'),
+      f.lte = _filter('lte'),
+      f.range = _filter('range'),
+    };
+
+    f.numberFilters = {
+      f.isNull,
+      f.exact,
+      f.isIn,
+      ...f.rangeFilters,
+    };
+
+    f.ago = _filter('ago');
+    f.dateFilters = {
+      f.isNull,
+      f.exact,
+      f.isIn,
+      ...f.rangeFilters,
+      f.ago,
+      f.date = _filter('date'),
+      f.year = _filter('year'),
+      f.month = _filter('month'),
+      f.day = _filter('day'),
+      f.week = _filter('week'),
+      f.weekDay = _filter('week day'),
+      f.quarter = _filter('quarter'),
+    };
+
+    f.timeFilters = {
+      f.isNull,
+      f.exact,
+      f.isIn,
+      f.ago,
+      f.time = _filter('time'),
+      f.hour = _filter('hour'),
+      f.minute = _filter('minute'),
+      f.second = _filter('second'),
+    };
+
+    f.dateTimeFilters = f.dateFilters + f.timeFilters;
+  }
+
+  StimModelFieldFilter _filter(String name) => filter.of(name: name);
+
+  // ===========================================================================
+  // Packages
+  // ===========================================================================
 
   void _packages() {
     package..dart = package.of(name: 'dart');
   }
+
+  // ===========================================================================
+  // Types
+  // ===========================================================================
 
   void _primitiveTypes() {
     final t = type;

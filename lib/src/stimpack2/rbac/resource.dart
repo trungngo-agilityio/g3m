@@ -1,7 +1,28 @@
 part of g3.stimpack2.rbac;
 
 class StimRbacResourceScope {
-  StimRbacResource any, database, dataTable, api, app, feature;
+  StimRbacResource
+
+      /// This match any resource in the system
+      any,
+
+      /// This match a database resource
+      database,
+
+      /// This match a database table
+      table,
+
+      /// This match a data field
+      field,
+
+      /// This match an api
+      api,
+
+      /// This match an application
+      app,
+
+      /// This match a feature
+      feature;
 
   StimRbacResource of({
     @required dynamic name,

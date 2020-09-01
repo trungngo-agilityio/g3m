@@ -26,6 +26,11 @@ class StimRestCrudApiScope {
     dynamic name,
     Set<StimModelTag> tags,
     StimModelType model,
+    StimModelField idField,
+    Set<StimModelField> requiredFields,
+    Set<StimModelField> writeOnlyFields,
+    Set<StimModelField> readOnlyFields,
+    Set<StimModelField> systemFields,
   }) {}
 }
 
