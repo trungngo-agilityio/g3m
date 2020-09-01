@@ -21,7 +21,6 @@ abstract class StimSymbolOp<
     S extends StimSymbolSet<T, S>,
     FT extends StimSymbol<FT, FS>,
     FS extends StimSymbolSet<FT, FS>> {
-
   void set(dynamic value);
 
   StimSymbolOp<T, S, FT, FS> operator ^(dynamic value);
