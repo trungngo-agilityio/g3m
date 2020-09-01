@@ -18,6 +18,11 @@ class StimModelFieldRuleScope {
 }
 
 class StimModelFieldRule extends StimModelSymbol<StimModelFieldRule> {
+  /// The error to be thrown when the rule failed.
+  /// This error shall encapsulate related grpc and http status code
+  /// if needed.
+  StimModelError error;
+
   /// The list of validation patterns applied to this data field.
   Set<StimModelPattern> patterns;
 
