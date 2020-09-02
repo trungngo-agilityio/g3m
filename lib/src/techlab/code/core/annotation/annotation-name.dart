@@ -12,6 +12,9 @@ class CodeAnnotationNameConfig extends CodeConfigNode<CodeAnnotationName> {
   /// For java like language, annotation name is pascal case.
   factory CodeAnnotationNameConfig.forJavaLike(Node child) =>
       CodeAnnotationNameConfig.of(StringFuncs.pascal, child);
+
+  factory CodeAnnotationNameConfig.forDartLike(Node child) =>
+      CodeAnnotationNameConfig.of(StringFuncs.noop, child);
 }
 
 class CodeAnnotationName extends CodeConfigProxyNode<CodeAnnotationName>

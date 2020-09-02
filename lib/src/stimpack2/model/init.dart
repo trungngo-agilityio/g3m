@@ -1,13 +1,5 @@
 part of g3.stimpack2.model;
 
-StimModel _model;
-
-extension StimModelExtension on Stimpack {
-  StimModel get model {
-    return _model ??= StimModel();
-  }
-}
-
 class StimModel extends StimPack {
   final StimModelPackageScope package;
   final StimModelTagScope tag;
@@ -41,6 +33,7 @@ class StimModel extends StimPack {
     _packages();
     _primitiveTypes();
     _collectionTypes();
+    _buildMeta();
   }
 
   // ===========================================================================
@@ -356,4 +349,26 @@ class StimModel extends StimPack {
 
   StimModelType _t(String name) =>
       type.primitiveOf(name: name, package: package.dart);
+
+  void _buildMeta() {
+    final p = package.model = package.of(name: 'model');
+    final xt = type.model = StimModelTypes();
+    xt.tag = _symbolOf('tag');
+    xt.tagSet = _symbolSetOf(xt.tag);
+  }
+
+  StimModelType _symbolOf(String name) {
+    return type.of(
+        name: 'stim model $name', package: package.model, fields: null);
+  }
+
+  StimModelType _symbolSetOf(StimModelType item) {
+    return type.collectionOf(
+      name: item.name << 'set<' >> '>',
+      package: package.model,
+      fields: null,
+      collection: type.set,
+      item: item,
+    );
+  }
 }

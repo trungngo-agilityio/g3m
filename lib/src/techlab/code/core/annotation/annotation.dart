@@ -7,19 +7,28 @@ class CodeAnnotationConfig extends CodeConfigNode<CodeAnnotation> {
   factory CodeAnnotationConfig.forJavaLike(
     Node child, {
     annotationKeyword = '@',
-  }) =>
-      CodeAnnotationConfig((context, annotation) {
-        return CodeExpr.closed(
-          Container([
-            annotation.comment,
-            annotationKeyword,
-            annotation.name,
-            '(',
-            Join.commaSeparated(annotation.args),
-            ')\n',
-          ]),
-        );
-      }, child);
+  }) {
+    return CodeAnnotationConfig((context, annotation) {
+      Node args;
+      if (annotation.args?.isNotEmpty == true) {
+        args = Container([
+          '(',
+          Join.commaSeparated(annotation.args),
+          ')\n',
+        ]);
+      } else {
+        args = Text.of(' ');
+      }
+      return CodeExpr.closed(
+        Container([
+          annotation.comment,
+          annotationKeyword,
+          annotation.name,
+          args,
+        ]),
+      );
+    }, child);
+  }
 }
 
 class CodeAnnotation extends CodeConfigProxyNode<CodeAnnotation>

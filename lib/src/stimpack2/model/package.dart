@@ -2,6 +2,7 @@ part of g3.stimpack2.model;
 
 class StimModelPackageScope {
   StimModelPackage dart;
+  StimModelPackage model;
 
   StimModelPackage of({@meta.required dynamic name, Set<StimModelTag> tags}) {
     return StimModelPackage()

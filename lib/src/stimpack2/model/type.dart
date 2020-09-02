@@ -1,5 +1,10 @@
 part of g3.stimpack2.model;
 
+class StimModelTypes {
+  StimModelType tag, tagSet;
+
+}
+
 class StimModelTypeScope {
   StimModelType string,
       num,
@@ -16,6 +21,10 @@ class StimModelTypeScope {
 
   Set<StimModelType> primitiveTypes;
   Set<StimModelType> collectionTypes;
+
+  // Provides meta information for the model package.
+  StimModelTypes model;
+
 
   StimModelType of({
     @meta.required dynamic name,
@@ -68,16 +77,15 @@ class StimModelTypeScope {
   StimModelType listOf({
     dynamic name,
     Set<StimModelTag> tags,
-    @meta.required StimModelPackage package,
-    @meta.required Set<StimModelField> fields,
     @meta.required StimModelType item,
     Set<StimModelType> mixins,
   }) {
+    final list = stimpack.model.type.list;
     return collectionOf(
-      name: name,
-      package: package,
-      fields: fields,
-      collection: stimpack.model.type.list,
+      name: name ?? list.name >> '<' >> item.name >> '>',
+      package: list.package,
+      fields: list.fields,
+      collection: list,
       item: item,
     );
   }
@@ -85,16 +93,15 @@ class StimModelTypeScope {
   StimModelType setOf({
     dynamic name,
     Set<StimModelTag> tags,
-    @meta.required StimModelPackage package,
-    @meta.required Set<StimModelField> fields,
     @meta.required StimModelType item,
     Set<StimModelType> mixins,
   }) {
+    final set = stimpack.model.type.set;
     return collectionOf(
-      name: name,
-      package: package,
-      fields: fields,
-      collection: stimpack.model.type.set,
+      name: name ?? set.name >> '<' >> item.name >> '>',
+      package: set.package,
+      fields: set.fields,
+      collection: set,
       item: item,
     );
   }

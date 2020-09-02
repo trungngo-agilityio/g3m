@@ -5,6 +5,7 @@ import 'package:meta/meta.dart' as meta;
 
 part 'src/stimpack2/model/error.dart';
 part 'src/stimpack2/model/field.dart';
+part 'src/stimpack2/model/extensions.dart';
 part 'src/stimpack2/model/filter.dart';
 part 'src/stimpack2/model/grpc-status.dart';
 part 'src/stimpack2/model/http-status.dart';

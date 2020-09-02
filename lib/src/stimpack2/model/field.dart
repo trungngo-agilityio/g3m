@@ -25,7 +25,7 @@ class StimModelFieldScope {
     return of(
       name: name,
       tags: tags,
-      type: stimpack.model.type.listOf(package: null, fields: null, item: type),
+      type: stimpack.model.type.listOf(item: type),
       rules: rules,
     );
   }
@@ -39,7 +39,7 @@ class StimModelFieldScope {
     return of(
       name: name,
       tags: tags,
-      type: stimpack.model.type.setOf(package: null, fields: null, item: type),
+      type: stimpack.model.type.setOf(item: type),
       rules: rules,
     );
   }
@@ -52,13 +52,14 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   /// The list of validation rules applied to this data field.
   Set<StimModelFieldRule> rules;
 
-  bool get isRequired => rules?.contains(stimpack.model.rule.required);
+  bool get isRequired => rules?.contains(stimpack.model.rule.required) == true;
 
-  bool get isUnique => rules?.contains(stimpack.model.rule.unique);
+  bool get isUnique => rules?.contains(stimpack.model.rule.unique) == true;
 
-  bool get isReadOnly => rules?.contains(stimpack.model.rule.readOnly);
+  bool get isReadOnly => rules?.contains(stimpack.model.rule.readOnly) == true;
 
-  bool get isWriteOnly => rules?.contains(stimpack.model.rule.writeOnly);
+  bool get isWriteOnly =>
+      rules?.contains(stimpack.model.rule.writeOnly) == true;
 
   StimModelField required() => clone()..rules += stimpack.model.rule.required;
 

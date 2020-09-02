@@ -74,7 +74,12 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
         init = Container([' = ', arg.init]);
       }
 
-      return Container([modifier, typeAndName, init]);
+      return Container([
+        arg.annotations,
+        modifier,
+        typeAndName,
+        init,
+      ]);
     }, child);
   }
 }
@@ -99,6 +104,8 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
 
   final bool isOptional;
 
+  final CodeAnnotationList annotations;
+
   CodeArg._({
     @required this.name,
     @required this.type,
@@ -106,6 +113,7 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
     @required this.isPrivate,
     @required this.isFinal,
     @required this.isOptional,
+    @required this.annotations,
   });
 
   /// Try parse a dynamic value to an argument object.
@@ -146,6 +154,7 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
     bool isFinal,
     bool isOptional,
     dynamic init,
+    dynamic annotations,
   }) {
     return CodeArg._(
       name: CodeArgName.of(
@@ -158,6 +167,9 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
       isPrivate: isPrivate,
       isFinal: isFinal,
       isOptional: isOptional,
+      annotations: CodeAnnotationList._parse(annotations, error: () {
+        throw '$annotations is not a valid annotation list';
+      }),
     );
   }
 

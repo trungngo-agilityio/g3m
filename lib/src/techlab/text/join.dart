@@ -9,6 +9,9 @@ class Join implements Node {
   factory Join.newLineSeparated(Iterable<Node> children) =>
       Join.of('\n', children);
 
+  factory Join.commaNewLineSeparated(Iterable<Node> children) =>
+      Join.of(',\n', children);
+
   factory Join.notSeparated(Iterable<Node> children) => Join.of('', children);
 
   factory Join.commaSeparated(Iterable<Node> children) =>

@@ -202,7 +202,8 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           constructorCallConfig: (_, child) =>
               CodeConstructorCallConfig.forDartLike(child),
 
-          annotationNameConfig: null,
+          annotationNameConfig: (_, child) =>
+              CodeAnnotationNameConfig.forDartLike(child),
           annotationListConfig: null,
           annotationConfig: null,
 
