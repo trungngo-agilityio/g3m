@@ -8,3 +8,4 @@ import 'dart:mirrors';
 part 'src/stimpack2/core/name.dart';
 part 'src/stimpack2/core/pack.dart';
 part 'src/stimpack2/core/symbol.dart';
+part 'src/stimpack2/core/symbol_ref.dart';

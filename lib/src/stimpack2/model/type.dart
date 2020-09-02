@@ -100,6 +100,7 @@ class StimModelTypeScope {
   }
 }
 
+
 class StimModelType extends StimModelSymbol<StimModelType> {
   /// A model might belong to a package.
   StimModelPackage package;
@@ -122,5 +123,13 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// True indicates that this is a collection type.
   bool get isCollection => collection != null;
 
+  StimModelTypeRef _ref;
+
+  /// Gets the reference to this model.
+  StimModelType get ref => _ref ??= StimModelTypeRef()..symbol = this;
+
   StimModelType();
 }
+
+class StimModelTypeRef extends StimSymbolRef<StimModelType>
+    implements StimModelType {}

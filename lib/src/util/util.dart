@@ -1,12 +1,13 @@
 part of g3.util;
 
 mixin Proxy {
-  Object _internal;
+  Object internal;
   InstanceMirror _im;
 
   @override
   dynamic noSuchMethod(Invocation invocation) {
-    _im ??= reflect(_internal);
+    assert(internal != null, 'internal must be set up');
+    _im ??= reflect(internal);
     return _im.delegate(invocation);
   }
 }

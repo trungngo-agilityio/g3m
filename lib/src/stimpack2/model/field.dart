@@ -68,5 +68,13 @@ class StimModelField extends StimModelSymbol<StimModelField> {
 
   StimModelField readOnly() => clone()..rules += stimpack.model.rule.readOnly;
 
+  StimModelFieldRef _ref;
+
+  /// Gets the reference to this model.
+  StimModelField get ref => _ref ??= StimModelFieldRef()..symbol = this;
+
   StimModelField();
 }
+
+class StimModelFieldRef extends StimSymbolRef<StimModelField>
+    implements StimModelField {}
