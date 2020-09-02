@@ -47,5 +47,13 @@ class StimRbacResource extends StimModelSymbol<StimRbacResource> {
   /// The parent resource.
   StimRbacResource parent;
 
+  StimRbacResourceRef _ref;
+
+  /// Gets the reference to this model.
+  StimRbacResource get ref => _ref ??= StimRbacResourceRef()..symbol = this;
+
   StimRbacResource();
 }
+
+class StimRbacResourceRef extends StimSymbolRef<StimRbacResource>
+    implements StimRbacResource {}

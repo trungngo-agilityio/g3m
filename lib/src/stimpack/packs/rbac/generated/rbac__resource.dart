@@ -1,11 +1,8 @@
 part of g3.stimpack.rbac.generated;
 
-
-
-class StimRbacResource extends StimSymbol<StimRbacResource, StimRbacResourceSet> {
-  StimRbacResource(_StimRbacResourceScopeImpl scope):
-      super(scope);
-
+class StimRbacResource
+    extends StimSymbol<StimRbacResource, StimRbacResourceSet> {
+  StimRbacResource(_StimRbacResourceScopeImpl scope) : super(scope);
 
   @override
   StimRbacResource clone() {
@@ -13,25 +10,28 @@ class StimRbacResource extends StimSymbol<StimRbacResource, StimRbacResourceSet>
   }
 }
 
-
-class StimRbacResourceSet extends StimSymbolSet<StimRbacResource, StimRbacResourceSet> {
+class StimRbacResourceSet
+    extends StimSymbolSet<StimRbacResource, StimRbacResourceSet> {
   final _StimRbacResourceScopeImpl _scope;
 
-  StimRbacResourceSet(this._scope, List<StimRbacResource> items):
-      super(_scope, items);
+  StimRbacResourceSet(this._scope, List<StimRbacResource> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimRbacResourceScope extends StimScope<StimRbacResource, StimRbacResourceSet> {
+abstract class StimRbacResourceScope
+    extends StimScope<StimRbacResource, StimRbacResourceSet> {
   StimRbacResource get database;
+
   StimRbacResource get table;
+
   StimRbacResource get feature;
 
   StimRbacResource of(name);
 }
 
-
-class _StimRbacResourceScopeImpl extends StimScopeImpl<StimRbacResource, StimRbacResourceSet> implements StimRbacResourceScope {
+class _StimRbacResourceScopeImpl
+    extends StimScopeImpl<StimRbacResource, StimRbacResourceSet>
+    implements StimRbacResourceScope {
   StimRbacResource _database;
 
   StimRbacResource _table;
@@ -42,17 +42,18 @@ class _StimRbacResourceScopeImpl extends StimScopeImpl<StimRbacResource, StimRba
   StimRbacResource get database {
     return _database ??= of('database');
   }
+
   @override
   StimRbacResource get table {
     return _table ??= of('table');
   }
+
   @override
   StimRbacResource get feature {
     return _feature ??= of('feature');
   }
-  _StimRbacResourceScopeImpl():
-      super();
 
+  _StimRbacResourceScopeImpl() : super();
 
   @override
   StimRbacResource of(name) {

@@ -13,5 +13,13 @@ class StimRbacRoleScope {
 }
 
 class StimRbacRole extends StimModelSymbol<StimRbacRole> {
+  StimRbacRoleRef _ref;
+
+  /// Gets the reference to this model.
+  StimRbacRole get ref => _ref ??= StimRbacRoleRef()..symbol = this;
+
   StimRbacRole();
 }
+
+class StimRbacRoleRef extends StimSymbolRef<StimRbacRole>
+    implements StimRbacRole {}

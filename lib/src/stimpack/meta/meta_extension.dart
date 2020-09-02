@@ -23,7 +23,6 @@ extension StimMetaPresetScopeExtension on StimMetaPresetScope {
 StimMetaTypeSet _primitiveTypes;
 
 extension StimMetaTypeScopeExtension on StimMetaTypeScope {
-
   /// Determines if the current type is a primitive type or not.
   bool get isPrimitive {
     final t = stimpack.meta.type;

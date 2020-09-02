@@ -13,5 +13,13 @@ class StimRbacActionScope {
 }
 
 class StimRbacAction extends StimModelSymbol<StimRbacAction> {
+  StimRbacActionRef _ref;
+
+  /// Gets the reference to this model.
+  StimRbacAction get ref => _ref ??= StimRbacActionRef()..symbol = this;
+
   StimRbacAction();
 }
+
+class StimRbacActionRef extends StimSymbolRef<StimRbacAction>
+    implements StimRbacAction {}

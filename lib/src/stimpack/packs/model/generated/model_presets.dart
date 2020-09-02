@@ -1,7 +1,5 @@
 part of g3.stimpack.model.generated;
 
-
-
 class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
@@ -17,7 +15,6 @@ class StimMetaXTypeXPreset {
 
   StimMetaType range;
 
-
   void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
     all += package = scope.of('package');
@@ -28,10 +25,10 @@ class StimMetaXTypeXPreset {
     all += range = scope.of('range');
   }
 }
+
 extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
   StimMetaXTypeXPreset get forModel {
     final impl = stimpack.model as StimModelImpl;
-    return impl._metaXTypeXPreset; 
+    return impl._metaXTypeXPreset;
   }
 }
-    

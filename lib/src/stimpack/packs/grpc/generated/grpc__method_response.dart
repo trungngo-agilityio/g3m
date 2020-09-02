@@ -1,11 +1,8 @@
 part of g3.stimpack.grpc.generated;
 
-
-
-class StimGrpcMethodResponse extends StimSymbol<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
-  StimGrpcMethodResponse(_StimGrpcMethodResponseScopeImpl scope):
-      super(scope);
-
+class StimGrpcMethodResponse
+    extends StimSymbol<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
+  StimGrpcMethodResponse(_StimGrpcMethodResponseScopeImpl scope) : super(scope);
 
   @override
   StimGrpcMethodResponse clone() {
@@ -13,24 +10,23 @@ class StimGrpcMethodResponse extends StimSymbol<StimGrpcMethodResponse, StimGrpc
   }
 }
 
-
-class StimGrpcMethodResponseSet extends StimSymbolSet<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
+class StimGrpcMethodResponseSet
+    extends StimSymbolSet<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
   final _StimGrpcMethodResponseScopeImpl _scope;
 
-  StimGrpcMethodResponseSet(this._scope, List<StimGrpcMethodResponse> items):
-      super(_scope, items);
+  StimGrpcMethodResponseSet(this._scope, List<StimGrpcMethodResponse> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimGrpcMethodResponseScope extends StimScope<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
+abstract class StimGrpcMethodResponseScope
+    extends StimScope<StimGrpcMethodResponse, StimGrpcMethodResponseSet> {
   StimGrpcMethodResponse of(name);
 }
 
-
-class _StimGrpcMethodResponseScopeImpl extends StimScopeImpl<StimGrpcMethodResponse, StimGrpcMethodResponseSet> implements StimGrpcMethodResponseScope {
-  _StimGrpcMethodResponseScopeImpl():
-      super();
-
+class _StimGrpcMethodResponseScopeImpl
+    extends StimScopeImpl<StimGrpcMethodResponse, StimGrpcMethodResponseSet>
+    implements StimGrpcMethodResponseScope {
+  _StimGrpcMethodResponseScopeImpl() : super();
 
   @override
   StimGrpcMethodResponse of(name) {

@@ -1,7 +1,5 @@
 part of g3.stimpack.rest_api.generated;
 
-
-
 class StimRestApiApi extends StimSymbol<StimRestApiApi, StimRestApiApiSet> {
   StimModelTypeSet request;
 
@@ -9,21 +7,19 @@ class StimRestApiApi extends StimSymbol<StimRestApiApi, StimRestApiApiSet> {
 
   StimRbacAccessGrant required;
 
-  StimRestApiApi(_StimRestApiApiScopeImpl scope):
-      super(scope);
-
+  StimRestApiApi(_StimRestApiApiScopeImpl scope) : super(scope);
 
   @override
   StimRestApiApi clone() {
     return super.clone()
-        ..request = request.clone()
-        ..response = response.clone()
-        ..required = required.clone();
+      ..request = request.clone()
+      ..response = response.clone()
+      ..required = required.clone();
   }
 }
 
-
-class StimRestApiApiSet extends StimSymbolSet<StimRestApiApi, StimRestApiApiSet> {
+class StimRestApiApiSet
+    extends StimSymbolSet<StimRestApiApi, StimRestApiApiSet> {
   final _StimRestApiApiScopeImpl _scope;
 
   StimRestApiApiXRequestSetOp _request;
@@ -39,55 +35,61 @@ class StimRestApiApiSet extends StimSymbolSet<StimRestApiApi, StimRestApiApiSet>
   set request(StimRestApiApiXRequestSetOp value) {
     _request = value;
   }
+
   StimRestApiApiXResponseSetOp get response {
-    return _response ??= StimRestApiApiXResponseSetOp(this, stimpack.model.field);
+    return _response ??=
+        StimRestApiApiXResponseSetOp(this, stimpack.model.field);
   }
 
   set response(StimRestApiApiXResponseSetOp value) {
     _response = value;
   }
+
   StimRestApiApiXRequiredOp get required {
-    return _required ??= StimRestApiApiXRequiredOp(this, stimpack.rbac.accessGrant);
+    return _required ??=
+        StimRestApiApiXRequiredOp(this, stimpack.rbac.accessGrant);
   }
 
   set required(StimRestApiApiXRequiredOp value) {
     _required = value;
   }
-  StimRestApiApiSet(this._scope, List<StimRestApiApi> items):
-      super(_scope, items);
+
+  StimRestApiApiSet(this._scope, List<StimRestApiApi> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimRestApiApiScope extends StimScope<StimRestApiApi, StimRestApiApiSet> {
-  StimRestApiApi of(name, {dynamic request, dynamic response, dynamic required});
+abstract class StimRestApiApiScope
+    extends StimScope<StimRestApiApi, StimRestApiApiSet> {
+  StimRestApiApi of(name,
+      {dynamic request, dynamic response, dynamic required});
 }
 
-
-class _StimRestApiApiScopeImpl extends StimScopeImpl<StimRestApiApi, StimRestApiApiSet> implements StimRestApiApiScope {
+class _StimRestApiApiScopeImpl
+    extends StimScopeImpl<StimRestApiApi, StimRestApiApiSet>
+    implements StimRestApiApiScope {
   StimModelTypeSet request;
 
   StimModelFieldSet response;
 
   StimRbacAccessGrant required;
 
-  _StimRestApiApiScopeImpl():
-      super();
-
+  _StimRestApiApiScopeImpl() : super();
 
   @override
-  StimRestApiApi of(name, {dynamic request, dynamic response, dynamic required}) {
+  StimRestApiApi of(name,
+      {dynamic request, dynamic response, dynamic required}) {
     return createAndClear(name)
-        ..request += request ?? stimpack.model.type.noneSet
-        ..response += response ?? stimpack.model.field.noneSet
-        ..required = required ?? stimpack.rbac.accessGrant.none;
+      ..request += request ?? stimpack.model.type.noneSet
+      ..response += response ?? stimpack.model.field.noneSet
+      ..required = required ?? stimpack.rbac.accessGrant.none;
   }
 
   @override
   void clear(StimRestApiApi symbol) {
     symbol
-        ..request = stimpack.model.type.noneSet
-        ..response = stimpack.model.field.noneSet
-        ..required = stimpack.rbac.accessGrant.none;
+      ..request = stimpack.model.type.noneSet
+      ..response = stimpack.model.field.noneSet
+      ..required = stimpack.rbac.accessGrant.none;
   }
 
   @override

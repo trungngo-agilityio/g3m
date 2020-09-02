@@ -3,32 +3,35 @@ library g3.stimpack.rbac.generated;
 
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
-part 'rbac_presets.dart';
+
 part '../rbac_init.dart';
 part 'rbac__access_grant.dart';
-part 'rbac__access_grant__roles.dart';
 part 'rbac__access_grant__permissions.dart';
+part 'rbac__access_grant__roles.dart';
+part 'rbac__access_permission.dart';
+part 'rbac__access_permission__action.dart';
+part 'rbac__access_permission__resource.dart';
 part 'rbac__access_role.dart';
 part 'rbac__access_role__permissions.dart';
-part 'rbac__access_permission.dart';
-part 'rbac__access_permission__resource.dart';
-part 'rbac__access_permission__action.dart';
-part 'rbac__resource.dart';
 part 'rbac__action.dart';
-
-
+part 'rbac__resource.dart';
+part 'rbac_presetsdart';
 
 abstract class StimRbac {
   StimMetaPack get meta;
+
   StimRbacAccessGrantScope get accessGrant;
+
   StimRbacAccessRoleScope get accessRole;
+
   StimRbacAccessPermissionScope get accessPermission;
+
   StimRbacResourceScope get resource;
+
   StimRbacActionScope get action;
 }
 
-
-class StimRbacImpl  implements StimRbac {
+class StimRbacImpl implements StimRbac {
   StimMetaPack _meta;
 
   _StimRbacAccessGrantScopeImpl _accessGrant;
@@ -47,22 +50,27 @@ class StimRbacImpl  implements StimRbac {
   StimMetaPack get meta {
     return _meta;
   }
+
   @override
   _StimRbacAccessGrantScopeImpl get accessGrant {
     return _accessGrant;
   }
+
   @override
   _StimRbacAccessRoleScopeImpl get accessRole {
     return _accessRole;
   }
+
   @override
   _StimRbacAccessPermissionScopeImpl get accessPermission {
     return _accessPermission;
   }
+
   @override
   _StimRbacResourceScopeImpl get resource {
     return _resource;
   }
+
   @override
   _StimRbacActionScopeImpl get action {
     return _action;
@@ -76,7 +84,6 @@ class StimRbacImpl  implements StimRbac {
     _action = _StimRbacActionScopeImpl();
     _metaXTypeXPreset = StimMetaXTypeXPreset();
   }
-
 
   void init() {
     _accessGrant.init();
@@ -92,33 +99,41 @@ class StimRbacImpl  implements StimRbac {
   void _buildMeta() {
     final meta = stimpack.meta;
     final pack = meta.pack.of('rbac');
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value, k = meta.kind;
+    final f = meta.field,
+        t = meta.type,
+        p = meta.preset,
+        v = meta.value,
+        k = meta.kind;
 
     t.forRbac.accessGrant.fields = f.noneSet +
-        f.of('roles', kind: k.set, type: t.forRbac.accessRole) + 
+        f.of('roles', kind: k.set, type: t.forRbac.accessRole) +
         f.of('permissions', kind: k.set, type: t.forRbac.accessPermission);
 
     t.forRbac.accessRole.fields = f.noneSet +
         f.of('permissions', kind: k.set, type: t.forRbac.accessPermission);
 
     t.forRbac.accessPermission.fields = f.noneSet +
-        f.of('resource', type: t.forRbac.resource) + 
+        f.of('resource', type: t.forRbac.resource) +
         f.of('action', type: t.forRbac.action);
 
     pack.presets = p.noneSet +
-        p.of('', type: t.forMeta.type, values: 
-              v.of('accessGrant') + 
-              v.of('accessRole') + 
-              v.of('accessPermission') + 
-              v.of('resource') + 
-              v.of('action'),);
+        p.of(
+          '',
+          type: t.forMeta.type,
+          values: v.of('accessGrant') +
+              v.of('accessRole') +
+              v.of('accessPermission') +
+              v.of('resource') +
+              v.of('action'),
+        );
 
     pack.types = t.forRbac.all;
     pack.types.pack.set(pack);
     _meta = pack;
   }
 }
-StimRbac  _stimRbac;
+
+StimRbac _stimRbac;
 
 extension StimRbacStimpackExtension on Stimpack {
   StimRbac get rbac {
@@ -127,8 +142,7 @@ extension StimRbacStimpackExtension on Stimpack {
       impl.init();
       return _stimRbac;
     }
-    
+
     return _stimRbac;
   }
 }
-    

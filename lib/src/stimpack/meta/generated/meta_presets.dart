@@ -1,7 +1,5 @@
 part of g3.stimpack.meta.generated;
 
-
-
 class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
@@ -17,7 +15,6 @@ class StimMetaXTypeXPreset {
 
   StimMetaType value;
 
-
   void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
     all += kind = scope.of('kind');
@@ -28,10 +25,10 @@ class StimMetaXTypeXPreset {
     all += value = scope.of('value');
   }
 }
+
 extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
   StimMetaXTypeXPreset get forMeta {
     final impl = stimpack.meta as StimMetaImpl;
-    return impl._metaXTypeXPreset; 
+    return impl._metaXTypeXPreset;
   }
 }
-    

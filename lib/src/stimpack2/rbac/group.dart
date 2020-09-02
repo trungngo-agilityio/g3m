@@ -14,5 +14,13 @@ class StimRbacGroup extends StimModelSymbol<StimRbacGroup> {
   Set<StimRbacGroup> groups;
   Set<StimRbacRole> roles;
 
+  StimRbacGroupRef _ref;
+
+  /// Gets the reference to this model.
+  StimRbacGroup get ref => _ref ??= StimRbacGroupRef()..symbol = this;
+
   StimRbacGroup();
 }
+
+class StimRbacGroupRef extends StimSymbolRef<StimRbacGroup>
+    implements StimRbacGroup {}

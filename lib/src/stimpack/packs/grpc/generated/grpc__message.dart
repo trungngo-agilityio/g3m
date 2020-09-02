@@ -1,23 +1,18 @@
 part of g3.stimpack.grpc.generated;
 
-
-
 class StimGrpcMessage extends StimSymbol<StimGrpcMessage, StimGrpcMessageSet> {
   StimModelType type;
 
-  StimGrpcMessage(_StimGrpcMessageScopeImpl scope):
-      super(scope);
-
+  StimGrpcMessage(_StimGrpcMessageScopeImpl scope) : super(scope);
 
   @override
   StimGrpcMessage clone() {
-    return super.clone()
-        ..type = type.clone();
+    return super.clone()..type = type.clone();
   }
 }
 
-
-class StimGrpcMessageSet extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageSet> {
+class StimGrpcMessageSet
+    extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageSet> {
   final _StimGrpcMessageScopeImpl _scope;
 
   StimGrpcMessageXTypeOp _type;
@@ -29,33 +24,31 @@ class StimGrpcMessageSet extends StimSymbolSet<StimGrpcMessage, StimGrpcMessageS
   set type(StimGrpcMessageXTypeOp value) {
     _type = value;
   }
-  StimGrpcMessageSet(this._scope, List<StimGrpcMessage> items):
-      super(_scope, items);
+
+  StimGrpcMessageSet(this._scope, List<StimGrpcMessage> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimGrpcMessageScope extends StimScope<StimGrpcMessage, StimGrpcMessageSet> {
+abstract class StimGrpcMessageScope
+    extends StimScope<StimGrpcMessage, StimGrpcMessageSet> {
   StimGrpcMessage of(name, {dynamic type});
 }
 
-
-class _StimGrpcMessageScopeImpl extends StimScopeImpl<StimGrpcMessage, StimGrpcMessageSet> implements StimGrpcMessageScope {
+class _StimGrpcMessageScopeImpl
+    extends StimScopeImpl<StimGrpcMessage, StimGrpcMessageSet>
+    implements StimGrpcMessageScope {
   StimModelType type;
 
-  _StimGrpcMessageScopeImpl():
-      super();
-
+  _StimGrpcMessageScopeImpl() : super();
 
   @override
   StimGrpcMessage of(name, {dynamic type}) {
-    return createAndClear(name)
-        ..type = type ?? stimpack.model.type.none;
+    return createAndClear(name)..type = type ?? stimpack.model.type.none;
   }
 
   @override
   void clear(StimGrpcMessage symbol) {
-    symbol
-        ..type = stimpack.model.type.none;
+    symbol..type = stimpack.model.type.none;
   }
 
   @override

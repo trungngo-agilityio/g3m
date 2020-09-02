@@ -1,11 +1,14 @@
 part of g3.stimpack.rbac.generated;
 
-
-
-class StimRbacAccessRoleXPermissionsSetOp extends StimSymbolSetOpImpl<StimRbacAccessRole, StimRbacAccessRoleSet, StimRbacAccessPermission, StimRbacAccessPermissionSet> {
-  StimRbacAccessRoleXPermissionsSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols, StimRbacAccessPermissionScope scope):
-      super(symbols, scope);
-
+class StimRbacAccessRoleXPermissionsSetOp extends StimSymbolSetOpImpl<
+    StimRbacAccessRole,
+    StimRbacAccessRoleSet,
+    StimRbacAccessPermission,
+    StimRbacAccessPermissionSet> {
+  StimRbacAccessRoleXPermissionsSetOp(
+      StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
+      StimRbacAccessPermissionScope scope)
+      : super(symbols, scope);
 
   @override
   void onSet(StimRbacAccessRole child, StimRbacAccessPermissionSet values) {

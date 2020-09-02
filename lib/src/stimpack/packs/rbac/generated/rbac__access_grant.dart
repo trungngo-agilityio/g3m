@@ -1,26 +1,23 @@
 part of g3.stimpack.rbac.generated;
 
-
-
-class StimRbacAccessGrant extends StimSymbol<StimRbacAccessGrant, StimRbacAccessGrantSet> {
+class StimRbacAccessGrant
+    extends StimSymbol<StimRbacAccessGrant, StimRbacAccessGrantSet> {
   StimRbacAccessRoleSet roles;
 
   StimRbacAccessPermissionSet permissions;
 
-  StimRbacAccessGrant(_StimRbacAccessGrantScopeImpl scope):
-      super(scope);
-
+  StimRbacAccessGrant(_StimRbacAccessGrantScopeImpl scope) : super(scope);
 
   @override
   StimRbacAccessGrant clone() {
     return super.clone()
-        ..roles = roles.clone()
-        ..permissions = permissions.clone();
+      ..roles = roles.clone()
+      ..permissions = permissions.clone();
   }
 }
 
-
-class StimRbacAccessGrantSet extends StimSymbolSet<StimRbacAccessGrant, StimRbacAccessGrantSet> {
+class StimRbacAccessGrantSet
+    extends StimSymbolSet<StimRbacAccessGrant, StimRbacAccessGrantSet> {
   final _StimRbacAccessGrantScopeImpl _scope;
 
   StimRbacAccessGrantXRolesSetOp _roles;
@@ -28,32 +25,37 @@ class StimRbacAccessGrantSet extends StimSymbolSet<StimRbacAccessGrant, StimRbac
   StimRbacAccessGrantXPermissionsSetOp _permissions;
 
   StimRbacAccessGrantXRolesSetOp get roles {
-    return _roles ??= StimRbacAccessGrantXRolesSetOp(this, stimpack.rbac.accessRole);
+    return _roles ??=
+        StimRbacAccessGrantXRolesSetOp(this, stimpack.rbac.accessRole);
   }
 
   set roles(StimRbacAccessGrantXRolesSetOp value) {
     _roles = value;
   }
+
   StimRbacAccessGrantXPermissionsSetOp get permissions {
-    return _permissions ??= StimRbacAccessGrantXPermissionsSetOp(this, stimpack.rbac.accessPermission);
+    return _permissions ??= StimRbacAccessGrantXPermissionsSetOp(
+        this, stimpack.rbac.accessPermission);
   }
 
   set permissions(StimRbacAccessGrantXPermissionsSetOp value) {
     _permissions = value;
   }
-  StimRbacAccessGrantSet(this._scope, List<StimRbacAccessGrant> items):
-      super(_scope, items);
+
+  StimRbacAccessGrantSet(this._scope, List<StimRbacAccessGrant> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimRbacAccessGrantScope extends StimScope<StimRbacAccessGrant, StimRbacAccessGrantSet> {
+abstract class StimRbacAccessGrantScope
+    extends StimScope<StimRbacAccessGrant, StimRbacAccessGrantSet> {
   StimRbacAccessGrant get full;
 
   StimRbacAccessGrant of(name, {dynamic roles, dynamic permissions});
 }
 
-
-class _StimRbacAccessGrantScopeImpl extends StimScopeImpl<StimRbacAccessGrant, StimRbacAccessGrantSet> implements StimRbacAccessGrantScope {
+class _StimRbacAccessGrantScopeImpl
+    extends StimScopeImpl<StimRbacAccessGrant, StimRbacAccessGrantSet>
+    implements StimRbacAccessGrantScope {
   StimRbacAccessGrant _full;
 
   StimRbacAccessRoleSet roles;
@@ -64,22 +66,21 @@ class _StimRbacAccessGrantScopeImpl extends StimScopeImpl<StimRbacAccessGrant, S
   StimRbacAccessGrant get full {
     return _full ??= of('full');
   }
-  _StimRbacAccessGrantScopeImpl():
-      super();
 
+  _StimRbacAccessGrantScopeImpl() : super();
 
   @override
   StimRbacAccessGrant of(name, {dynamic roles, dynamic permissions}) {
     return createAndClear(name)
-        ..roles += roles ?? stimpack.rbac.accessRole.noneSet
-        ..permissions += permissions ?? stimpack.rbac.accessPermission.noneSet;
+      ..roles += roles ?? stimpack.rbac.accessRole.noneSet
+      ..permissions += permissions ?? stimpack.rbac.accessPermission.noneSet;
   }
 
   @override
   void clear(StimRbacAccessGrant symbol) {
     symbol
-        ..roles = stimpack.rbac.accessRole.noneSet
-        ..permissions = stimpack.rbac.accessPermission.noneSet;
+      ..roles = stimpack.rbac.accessRole.noneSet
+      ..permissions = stimpack.rbac.accessPermission.noneSet;
   }
 
   @override

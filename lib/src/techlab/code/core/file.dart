@@ -34,7 +34,8 @@ class CodeFile implements Node, _NamedNode {
 
     final fileName = '${name}.${extension}';
     if (placeHolderConfig == null) {
-      return CodeSyntax(syntax, File.of(fileName, source, overwriteIfExists: overwriteIfExists));
+      return CodeSyntax(syntax,
+          File.of(fileName, source, overwriteIfExists: overwriteIfExists));
     }
 
     var path = ioPath.join(context.dir, fileName);

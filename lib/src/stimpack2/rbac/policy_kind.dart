@@ -13,5 +13,13 @@ class StimRbacPolicyKindScope {
 }
 
 class StimRbacPolicyKind extends StimModelSymbol<StimRbacPolicyKind> {
+  StimRbacPolicyKindRef _ref;
+
+  /// Gets the reference to this model.
+  StimRbacPolicyKind get ref => _ref ??= StimRbacPolicyKindRef()..symbol = this;
+
   StimRbacPolicyKind();
 }
+
+class StimRbacPolicyKindRef extends StimSymbolRef<StimRbacPolicyKind>
+    implements StimRbacPolicyKind {}

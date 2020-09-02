@@ -22,5 +22,15 @@ class StimRestCrudCreateOneApi
   /// create api success.
   Set<StimModelField> responseFields;
 
+  StimRestCrudCreateOneApiRef _ref;
+
+  /// Gets the reference to this model.
+  StimRestCrudCreateOneApi get ref =>
+      _ref ??= StimRestCrudCreateOneApiRef()..symbol = this;
+
   StimRestCrudCreateOneApi();
 }
+
+class StimRestCrudCreateOneApiRef
+    extends StimSymbolRef<StimRestCrudCreateOneApi>
+    implements StimRestCrudCreateOneApi {}

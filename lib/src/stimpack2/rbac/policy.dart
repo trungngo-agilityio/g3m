@@ -24,5 +24,13 @@ class StimRbacPolicy extends StimModelSymbol<StimRbacPolicy> {
   /// The actions that can be performed on the resource
   Set<StimRbacAction> actions;
 
+  StimRbacPolicyRef _ref;
+
+  /// Gets the reference to this model.
+  StimRbacPolicy get ref => _ref ??= StimRbacPolicyRef()..symbol = this;
+
   StimRbacPolicy();
 }
+
+class StimRbacPolicyRef extends StimSymbolRef<StimRbacPolicy>
+    implements StimRbacPolicy {}

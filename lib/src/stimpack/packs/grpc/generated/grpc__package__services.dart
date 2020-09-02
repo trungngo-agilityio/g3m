@@ -1,11 +1,11 @@
 part of g3.stimpack.grpc.generated;
 
-
-
-class StimGrpcPackageXServicesSetOp extends StimSymbolSetOpImpl<StimGrpcPackage, StimGrpcPackageSet, StimGrpcService, StimGrpcServiceSet> {
-  StimGrpcPackageXServicesSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols, StimGrpcServiceScope scope):
-      super(symbols, scope);
-
+class StimGrpcPackageXServicesSetOp extends StimSymbolSetOpImpl<StimGrpcPackage,
+    StimGrpcPackageSet, StimGrpcService, StimGrpcServiceSet> {
+  StimGrpcPackageXServicesSetOp(
+      StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
+      StimGrpcServiceScope scope)
+      : super(symbols, scope);
 
   @override
   void onSet(StimGrpcPackage child, StimGrpcServiceSet values) {

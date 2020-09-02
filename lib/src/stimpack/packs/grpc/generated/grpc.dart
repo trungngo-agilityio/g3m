@@ -2,13 +2,10 @@ library g3.stimpack.grpc.generated;
 
 
 import 'package:g3m/stimpack_base.dart';
-import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_meta.dart';
-part 'grpc_presets.dart';
+import 'package:g3m/stimpack_model.dart';
+
 part '../grpc_init.dart';
-part 'grpc__package.dart';
-part 'grpc__package__messages.dart';
-part 'grpc__package__services.dart';
 part 'grpc__message.dart';
 part 'grpc__message__type.dart';
 part 'grpc__method.dart';
@@ -16,23 +13,30 @@ part 'grpc__method__request.dart';
 part 'grpc__method__response.dart';
 part 'grpc__method_request.dart';
 part 'grpc__method_response.dart';
+part 'grpc__package.dart';
+part 'grpc__package__messages.dart';
+part 'grpc__package__services.dart';
 part 'grpc__service.dart';
 part 'grpc__service__methods.dart';
-
-
+part 'grpc_preset.dart';
 
 abstract class StimGrpc {
   StimMetaPack get meta;
+
   StimGrpcPackageScope get package;
+
   StimGrpcMessageScope get message;
+
   StimGrpcMethodScope get method;
+
   StimGrpcMethodRequestScope get methodRequest;
+
   StimGrpcMethodResponseScope get methodResponse;
+
   StimGrpcServiceScope get service;
 }
 
-
-class StimGrpcImpl  implements StimGrpc {
+class StimGrpcImpl implements StimGrpc {
   StimMetaPack _meta;
 
   _StimGrpcPackageScopeImpl _package;
@@ -53,26 +57,32 @@ class StimGrpcImpl  implements StimGrpc {
   StimMetaPack get meta {
     return _meta;
   }
+
   @override
   _StimGrpcPackageScopeImpl get package {
     return _package;
   }
+
   @override
   _StimGrpcMessageScopeImpl get message {
     return _message;
   }
+
   @override
   _StimGrpcMethodScopeImpl get method {
     return _method;
   }
+
   @override
   _StimGrpcMethodRequestScopeImpl get methodRequest {
     return _methodRequest;
   }
+
   @override
   _StimGrpcMethodResponseScopeImpl get methodResponse {
     return _methodResponse;
   }
+
   @override
   _StimGrpcServiceScopeImpl get service {
     return _service;
@@ -87,7 +97,6 @@ class StimGrpcImpl  implements StimGrpc {
     _service = _StimGrpcServiceScopeImpl();
     _metaXTypeXPreset = StimMetaXTypeXPreset();
   }
-
 
   void init() {
     _package.init();
@@ -104,37 +113,44 @@ class StimGrpcImpl  implements StimGrpc {
   void _buildMeta() {
     final meta = stimpack.meta;
     final pack = meta.pack.of('grpc');
-    final f = meta.field, t = meta.type, p = meta.preset, v = meta.value, k = meta.kind;
+    final f = meta.field,
+        t = meta.type,
+        p = meta.preset,
+        v = meta.value,
+        k = meta.kind;
 
     t.forGrpc.package.fields = f.noneSet +
-        f.of('messages', kind: k.set, type: t.forGrpc.message) + 
+        f.of('messages', kind: k.set, type: t.forGrpc.message) +
         f.of('services', kind: k.set, type: t.forGrpc.service);
 
-    t.forGrpc.message.fields = f.noneSet +
-        f.of('type', type: t.forModel.type);
+    t.forGrpc.message.fields = f.noneSet + f.of('type', type: t.forModel.type);
 
     t.forGrpc.method.fields = f.noneSet +
-        f.of('request', type: t.forGrpc.methodRequest) + 
+        f.of('request', type: t.forGrpc.methodRequest) +
         f.of('response', type: t.forGrpc.methodResponse);
 
-    t.forGrpc.service.fields = f.noneSet +
-        f.of('methods', kind: k.set, type: t.forGrpc.method);
+    t.forGrpc.service.fields =
+        f.noneSet + f.of('methods', kind: k.set, type: t.forGrpc.method);
 
     pack.presets = p.noneSet +
-        p.of('', type: t.forMeta.type, values: 
-              v.of('package') + 
-              v.of('message') + 
-              v.of('method') + 
-              v.of('methodRequest') + 
-              v.of('methodResponse') + 
-              v.of('service'),);
+        p.of(
+          '',
+          type: t.forMeta.type,
+          values: v.of('package') +
+              v.of('message') +
+              v.of('method') +
+              v.of('methodRequest') +
+              v.of('methodResponse') +
+              v.of('service'),
+        );
 
     pack.types = t.forGrpc.all;
     pack.types.pack.set(pack);
     _meta = pack;
   }
 }
-StimGrpc  _stimGrpc;
+
+StimGrpc _stimGrpc;
 
 extension StimGrpcStimpackExtension on Stimpack {
   StimGrpc get grpc {
@@ -143,8 +159,7 @@ extension StimGrpcStimpackExtension on Stimpack {
       impl.init();
       return _stimGrpc;
     }
-    
+
     return _stimGrpc;
   }
 }
-    

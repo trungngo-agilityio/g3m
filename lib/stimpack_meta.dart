@@ -6,8 +6,8 @@ import 'package:g3m/techlab_core.dart';
 import 'package:meta/meta.dart';
 
 import 'src/stimpack/meta/generated/meta.dart';
+
 export 'src/stimpack/meta/generated/meta.dart';
 
 part 'src/stimpack/meta/meta_extension.dart';
-
 part 'src/stimpack/meta/meta_gen.dart';

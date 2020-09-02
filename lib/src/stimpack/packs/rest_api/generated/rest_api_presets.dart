@@ -1,7 +1,5 @@
 part of g3.stimpack.rest_api.generated;
 
-
-
 class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
@@ -13,7 +11,6 @@ class StimMetaXTypeXPreset {
 
   StimMetaType modelApiKind;
 
-
   void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
     all += package = scope.of('package');
@@ -22,10 +19,10 @@ class StimMetaXTypeXPreset {
     all += modelApiKind = scope.of('modelApiKind');
   }
 }
+
 extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
   StimMetaXTypeXPreset get forRestApi {
     final impl = stimpack.restApi as StimRestApiImpl;
-    return impl._metaXTypeXPreset; 
+    return impl._metaXTypeXPreset;
   }
 }
-    

@@ -1,7 +1,6 @@
 import 'package:g3m/stimpack_base.dart';
 import 'package:g3m/stimpack_meta.dart';
 import 'package:g3m/stimpack_model.dart';
-import 'package:g3m/stimpack_rbac.dart';
 
 /// TODO
 /// ============================================================================

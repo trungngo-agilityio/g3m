@@ -21,5 +21,13 @@ class StimRestResponse extends StimModelSymbol<StimRestResponse> {
   /// True indicates that the response should be streamed.
   bool streamed;
 
+  StimRestResponseRef _ref;
+
+  /// Gets the reference to this model.
+  StimRestResponse get ref => _ref ??= StimRestResponseRef()..symbol = this;
+
   StimRestResponse();
 }
+
+class StimRestResponseRef extends StimSymbolRef<StimRestResponse>
+    implements StimRestResponse {}

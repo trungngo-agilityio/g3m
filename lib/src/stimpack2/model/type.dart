@@ -100,7 +100,6 @@ class StimModelTypeScope {
   }
 }
 
-
 class StimModelType extends StimModelSymbol<StimModelType> {
   /// A model might belong to a package.
   StimModelPackage package;

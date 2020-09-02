@@ -1,11 +1,10 @@
 part of g3.stimpack.model.generated;
 
-
-
-class StimModelRuleXRangeSetOp extends StimSymbolSetOpImpl<StimModelRule, StimModelRuleSet, StimModelRange, StimModelRangeSet> {
-  StimModelRuleXRangeSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols, StimModelRangeScope scope):
-      super(symbols, scope);
-
+class StimModelRuleXRangeSetOp extends StimSymbolSetOpImpl<StimModelRule,
+    StimModelRuleSet, StimModelRange, StimModelRangeSet> {
+  StimModelRuleXRangeSetOp(StimSymbolSet<StimSymbol, StimSymbolSet> symbols,
+      StimModelRangeScope scope)
+      : super(symbols, scope);
 
   @override
   void onSet(StimModelRule child, StimModelRangeSet values) {

@@ -1,11 +1,7 @@
 part of g3.stimpack.meta.generated;
 
-
-
 class StimMetaKind extends StimSymbol<StimMetaKind, StimMetaKindSet> {
-  StimMetaKind(_StimMetaKindScopeImpl scope):
-      super(scope);
-
+  StimMetaKind(_StimMetaKindScopeImpl scope) : super(scope);
 
   @override
   StimMetaKind clone() {
@@ -13,32 +9,30 @@ class StimMetaKind extends StimSymbol<StimMetaKind, StimMetaKindSet> {
   }
 }
 
-
 class StimMetaKindSet extends StimSymbolSet<StimMetaKind, StimMetaKindSet> {
   final _StimMetaKindScopeImpl _scope;
 
-  StimMetaKindSet(this._scope, List<StimMetaKind> items):
-      super(_scope, items);
+  StimMetaKindSet(this._scope, List<StimMetaKind> items) : super(_scope, items);
 }
 
-
-abstract class StimMetaKindScope extends StimScope<StimMetaKind, StimMetaKindSet> {
+abstract class StimMetaKindScope
+    extends StimScope<StimMetaKind, StimMetaKindSet> {
   StimMetaKind get set;
 
   StimMetaKind of(name);
 }
 
-
-class _StimMetaKindScopeImpl extends StimScopeImpl<StimMetaKind, StimMetaKindSet> implements StimMetaKindScope {
+class _StimMetaKindScopeImpl
+    extends StimScopeImpl<StimMetaKind, StimMetaKindSet>
+    implements StimMetaKindScope {
   StimMetaKind _set;
 
   @override
   StimMetaKind get set {
     return _set ??= of('set');
   }
-  _StimMetaKindScopeImpl():
-      super();
 
+  _StimMetaKindScopeImpl() : super();
 
   @override
   StimMetaKind of(name) {

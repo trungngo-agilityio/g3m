@@ -53,5 +53,13 @@ class StimRestCrudApi extends StimModelSymbol<StimRestCrudApi> {
   /// Delete multiple records api.
   StimRestApi delete;
 
+  StimRestCrudApiRef _ref;
+
+  /// Gets the reference to this model.
+  StimRestCrudApi get ref => _ref ??= StimRestCrudApiRef()..symbol = this;
+
   StimRestCrudApi();
 }
+
+class StimRestCrudApiRef extends StimSymbolRef<StimRestCrudApi>
+    implements StimRestCrudApi {}

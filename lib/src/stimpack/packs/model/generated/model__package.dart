@@ -1,23 +1,19 @@
 part of g3.stimpack.model.generated;
 
-
-
-class StimModelPackage extends StimSymbol<StimModelPackage, StimModelPackageSet> {
+class StimModelPackage
+    extends StimSymbol<StimModelPackage, StimModelPackageSet> {
   StimModelTypeSet types;
 
-  StimModelPackage(_StimModelPackageScopeImpl scope):
-      super(scope);
-
+  StimModelPackage(_StimModelPackageScopeImpl scope) : super(scope);
 
   @override
   StimModelPackage clone() {
-    return super.clone()
-        ..types = types.clone();
+    return super.clone()..types = types.clone();
   }
 }
 
-
-class StimModelPackageSet extends StimSymbolSet<StimModelPackage, StimModelPackageSet> {
+class StimModelPackageSet
+    extends StimSymbolSet<StimModelPackage, StimModelPackageSet> {
   final _StimModelPackageScopeImpl _scope;
 
   StimModelPackageXTypesSetOp _types;
@@ -29,19 +25,21 @@ class StimModelPackageSet extends StimSymbolSet<StimModelPackage, StimModelPacka
   set types(StimModelPackageXTypesSetOp value) {
     _types = value;
   }
-  StimModelPackageSet(this._scope, List<StimModelPackage> items):
-      super(_scope, items);
+
+  StimModelPackageSet(this._scope, List<StimModelPackage> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimModelPackageScope extends StimScope<StimModelPackage, StimModelPackageSet> {
+abstract class StimModelPackageScope
+    extends StimScope<StimModelPackage, StimModelPackageSet> {
   StimModelPackage get primitive;
 
   StimModelPackage of(name, {dynamic types});
 }
 
-
-class _StimModelPackageScopeImpl extends StimScopeImpl<StimModelPackage, StimModelPackageSet> implements StimModelPackageScope {
+class _StimModelPackageScopeImpl
+    extends StimScopeImpl<StimModelPackage, StimModelPackageSet>
+    implements StimModelPackageScope {
   StimModelPackage _primitive;
 
   StimModelTypeSet types;
@@ -50,20 +48,17 @@ class _StimModelPackageScopeImpl extends StimScopeImpl<StimModelPackage, StimMod
   StimModelPackage get primitive {
     return _primitive ??= of('primitive');
   }
-  _StimModelPackageScopeImpl():
-      super();
 
+  _StimModelPackageScopeImpl() : super();
 
   @override
   StimModelPackage of(name, {dynamic types}) {
-    return createAndClear(name)
-        ..types += types ?? stimpack.model.type.noneSet;
+    return createAndClear(name)..types += types ?? stimpack.model.type.noneSet;
   }
 
   @override
   void clear(StimModelPackage symbol) {
-    symbol
-        ..types = stimpack.model.type.noneSet;
+    symbol..types = stimpack.model.type.noneSet;
   }
 
   @override

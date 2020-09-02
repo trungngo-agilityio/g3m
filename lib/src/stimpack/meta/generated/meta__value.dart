@@ -1,11 +1,7 @@
 part of g3.stimpack.meta.generated;
 
-
-
 class StimMetaValue extends StimSymbol<StimMetaValue, StimMetaValueSet> {
-  StimMetaValue(_StimMetaValueScopeImpl scope):
-      super(scope);
-
+  StimMetaValue(_StimMetaValueScopeImpl scope) : super(scope);
 
   @override
   StimMetaValue clone() {
@@ -13,24 +9,22 @@ class StimMetaValue extends StimSymbol<StimMetaValue, StimMetaValueSet> {
   }
 }
 
-
 class StimMetaValueSet extends StimSymbolSet<StimMetaValue, StimMetaValueSet> {
   final _StimMetaValueScopeImpl _scope;
 
-  StimMetaValueSet(this._scope, List<StimMetaValue> items):
-      super(_scope, items);
+  StimMetaValueSet(this._scope, List<StimMetaValue> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimMetaValueScope extends StimScope<StimMetaValue, StimMetaValueSet> {
+abstract class StimMetaValueScope
+    extends StimScope<StimMetaValue, StimMetaValueSet> {
   StimMetaValue of(name);
 }
 
-
-class _StimMetaValueScopeImpl extends StimScopeImpl<StimMetaValue, StimMetaValueSet> implements StimMetaValueScope {
-  _StimMetaValueScopeImpl():
-      super();
-
+class _StimMetaValueScopeImpl
+    extends StimScopeImpl<StimMetaValue, StimMetaValueSet>
+    implements StimMetaValueScope {
+  _StimMetaValueScopeImpl() : super();
 
   @override
   StimMetaValue of(name) {

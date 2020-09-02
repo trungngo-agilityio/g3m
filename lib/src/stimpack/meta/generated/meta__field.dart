@@ -1,24 +1,19 @@
 part of g3.stimpack.meta.generated;
 
-
-
 class StimMetaField extends StimSymbol<StimMetaField, StimMetaFieldSet> {
   StimMetaKind kind;
 
   StimMetaType type;
 
-  StimMetaField(_StimMetaFieldScopeImpl scope):
-      super(scope);
-
+  StimMetaField(_StimMetaFieldScopeImpl scope) : super(scope);
 
   @override
   StimMetaField clone() {
     return super.clone()
-        ..kind = kind.clone()
-        ..type = type.clone();
+      ..kind = kind.clone()
+      ..type = type.clone();
   }
 }
-
 
 class StimMetaFieldSet extends StimSymbolSet<StimMetaField, StimMetaFieldSet> {
   final _StimMetaFieldScopeImpl _scope;
@@ -34,6 +29,7 @@ class StimMetaFieldSet extends StimSymbolSet<StimMetaField, StimMetaFieldSet> {
   set kind(StimMetaFieldXKindOp value) {
     _kind = value;
   }
+
   StimMetaFieldXTypeOp get type {
     return _type ??= StimMetaFieldXTypeOp(this, stimpack.meta.type);
   }
@@ -41,37 +37,37 @@ class StimMetaFieldSet extends StimSymbolSet<StimMetaField, StimMetaFieldSet> {
   set type(StimMetaFieldXTypeOp value) {
     _type = value;
   }
-  StimMetaFieldSet(this._scope, List<StimMetaField> items):
-      super(_scope, items);
+
+  StimMetaFieldSet(this._scope, List<StimMetaField> items)
+      : super(_scope, items);
 }
 
-
-abstract class StimMetaFieldScope extends StimScope<StimMetaField, StimMetaFieldSet> {
+abstract class StimMetaFieldScope
+    extends StimScope<StimMetaField, StimMetaFieldSet> {
   StimMetaField of(name, {dynamic kind, dynamic type});
 }
 
-
-class _StimMetaFieldScopeImpl extends StimScopeImpl<StimMetaField, StimMetaFieldSet> implements StimMetaFieldScope {
+class _StimMetaFieldScopeImpl
+    extends StimScopeImpl<StimMetaField, StimMetaFieldSet>
+    implements StimMetaFieldScope {
   StimMetaKind kind;
 
   StimMetaType type;
 
-  _StimMetaFieldScopeImpl():
-      super();
-
+  _StimMetaFieldScopeImpl() : super();
 
   @override
   StimMetaField of(name, {dynamic kind, dynamic type}) {
     return createAndClear(name)
-        ..kind = kind ?? stimpack.meta.kind.none
-        ..type = type ?? stimpack.meta.type.none;
+      ..kind = kind ?? stimpack.meta.kind.none
+      ..type = type ?? stimpack.meta.type.none;
   }
 
   @override
   void clear(StimMetaField symbol) {
     symbol
-        ..kind = stimpack.meta.kind.none
-        ..type = stimpack.meta.type.none;
+      ..kind = stimpack.meta.kind.none
+      ..type = stimpack.meta.type.none;
   }
 
   @override

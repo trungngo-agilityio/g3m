@@ -1,7 +1,5 @@
 part of g3.stimpack.grpc.generated;
 
-
-
 class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
@@ -17,7 +15,6 @@ class StimMetaXTypeXPreset {
 
   StimMetaType service;
 
-
   void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
     all += package = scope.of('package');
@@ -28,10 +25,10 @@ class StimMetaXTypeXPreset {
     all += service = scope.of('service');
   }
 }
+
 extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
   StimMetaXTypeXPreset get forGrpc {
     final impl = stimpack.grpc as StimGrpcImpl;
-    return impl._metaXTypeXPreset; 
+    return impl._metaXTypeXPreset;
   }
 }
-    

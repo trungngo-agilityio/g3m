@@ -1,7 +1,5 @@
 part of g3.stimpack.rbac.generated;
 
-
-
 class StimMetaXTypeXPreset {
   StimMetaTypeSet all;
 
@@ -15,7 +13,6 @@ class StimMetaXTypeXPreset {
 
   StimMetaType action;
 
-
   void init(StimMetaTypeScope scope) {
     all = scope.noneSet;
     all += accessGrant = scope.of('accessGrant');
@@ -25,10 +22,10 @@ class StimMetaXTypeXPreset {
     all += action = scope.of('action');
   }
 }
+
 extension StimMetaXTypeXPresetExtension on StimMetaTypeScope {
   StimMetaXTypeXPreset get forRbac {
     final impl = stimpack.rbac as StimRbacImpl;
-    return impl._metaXTypeXPreset; 
+    return impl._metaXTypeXPreset;
   }
 }
-    

@@ -23,6 +23,13 @@ class StimRestApi extends StimModelSymbol<StimRestApi> {
 
   // The api response object
   StimRestResponse response;
+  StimRestApiRef _ref;
+
+  /// Gets the reference to this model.
+  StimRestApi get ref => _ref ??= StimRestApiRef()..symbol = this;
 
   StimRestApi();
+}
+
+class StimRestApiRef extends StimSymbolRef<StimRestApi> implements StimRestApi {
 }
