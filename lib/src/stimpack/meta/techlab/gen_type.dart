@@ -165,7 +165,7 @@ class StimGenMetaType implements Node {
       CodeArg.of(name: 'name', type: 'dynamic'),
     ];
     for (final i in _metaFields) {
-      final required = i.isRequired ? CodeAnnotation.of('required') : null;
+      final required = i.isRequired ? CodeAnnotation.required() : null;
 
       ofFunctionArgs.add(
         CodeArg.of(

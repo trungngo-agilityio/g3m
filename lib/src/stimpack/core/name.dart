@@ -188,7 +188,7 @@ class StimName {
       return l;
     } else {
       if (l.startsWith(r)) {
-        l.substring(r.length);
+        l = l.substring(r.length);
       }
       return _normalized(l);
     }
@@ -201,7 +201,7 @@ class StimName {
       return l;
     } else {
       if (l.endsWith(r)) {
-        l.substring(0, l.length - r.length);
+        l = l.substring(0, l.length - r.length);
       }
       return _normalized(l);
     }
