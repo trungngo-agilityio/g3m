@@ -1,8 +1,8 @@
 part of g3.techlab;
 
-
 class CodeExtensionListConfig extends CodeConfigNode<CodeExtensionList> {
-  CodeExtensionListConfig(NodeBuildFunc<CodeExtensionList> buildFunc, Node child)
+  CodeExtensionListConfig(
+      NodeBuildFunc<CodeExtensionList> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeExtensionListConfig.forDartLike(Node child) =>

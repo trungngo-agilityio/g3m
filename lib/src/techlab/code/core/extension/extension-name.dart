@@ -1,13 +1,13 @@
 part of g3.techlab;
 
-
 class CodeExtensionNameConfig extends CodeConfigNode<CodeExtensionName> {
-  CodeExtensionNameConfig(NodeBuildFunc<CodeExtensionName> buildFunc, Node child)
+  CodeExtensionNameConfig(
+      NodeBuildFunc<CodeExtensionName> buildFunc, Node child)
       : super(buildFunc, child);
 
   factory CodeExtensionNameConfig.of(StringFunc func, Node child) =>
       CodeExtensionNameConfig(
-              (context, name) => TextTransform(name.name, func), child);
+          (context, name) => TextTransform(name.name, func), child);
 
   factory CodeExtensionNameConfig.forDartLike(Node child) =>
       CodeExtensionNameConfig((context, name) {

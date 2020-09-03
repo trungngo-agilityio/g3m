@@ -8,6 +8,8 @@ enum _NameOp {
   addRight,
   addLeft,
   remove,
+  removeIfStartsWith,
+  removeIfEndsWith,
   reset,
 
   // unary
@@ -28,112 +30,122 @@ enum _NameOp {
 
 /// This class provides dynamic string definition and processing.
 ///
-class Name {
-  String text;
+class StimName {
+  final String _text;
 
   final _NameOp _op;
   final Object _left;
 
   final Object _right;
 
-  Name(String value)
-      : text = _normalized(value),
-        _op = null,
-        _left = null,
-        _right = null;
+  StimName._(this._op, this._left, this._right, this._text);
 
-  Name._(this._op, this._left, this._right) : text = null;
+  factory StimName.of(dynamic value) {
+    if (value is StimName) {
+      return value;
+    } else {
+      return StimName._(null, null, null, _normalized(value));
+    }
+  }
 
-  Name operator ^(Object another) {
+  StimName operator ^(Object another) {
     return reset(another);
   }
 
-  Name reset(Object another) {
-    return Name._(_NameOp.reset, this, another);
+  StimName reset(Object another) {
+    return StimName._(_NameOp.reset, this, another, null);
   }
 
-  Name operator &(Object another) {
+  StimName operator &(Object another) {
     return addRight(another);
   }
 
-  Name operator +(Object another) {
+  StimName operator +(Object another) {
     return addRight(another);
   }
 
-  Name operator <<(Object another) {
+  StimName operator <<(Object another) {
     return addLeft(another);
   }
 
-  Name addRight(Object another) {
-    return Name._(_NameOp.addRight, this, another);
+  StimName addRight(Object another) {
+    return StimName._(_NameOp.addRight, this, another, null);
   }
 
-  Name operator >>(Object another) {
+  StimName operator >>(Object another) {
     return addRight(another);
   }
 
-  Name addLeft(Object another) {
-    return Name._(_NameOp.addLeft, this, another);
+  StimName addLeft(Object another) {
+    return StimName._(_NameOp.addLeft, this, another, null);
   }
 
-  Name operator -(Object another) {
+  StimName operator -(Object another) {
     return remove(another);
   }
 
-  Name remove(Object another) {
-    return Name._(_NameOp.remove, this, another);
+  StimName remove(Object another) {
+    return StimName._(_NameOp.remove, this, another, null);
   }
 
-  Name ref() {
-    return Name._(_NameOp.ref, this, null);
+  StimName removeIfStartsWith(Object another) {
+    return StimName._(_NameOp.removeIfStartsWith, this, another, null);
   }
 
-  Name upper() {
-    return Name._(_NameOp.upper, this, null);
+  StimName removeIfEndsWith(Object another) {
+    return StimName._(_NameOp.removeIfEndsWith, this, another, null);
   }
 
-  Name lower() {
-    return Name._(_NameOp.lower, this, null);
+  StimName ref() {
+    return StimName._(_NameOp.ref, this, null, null);
   }
 
-  Name camel() {
-    return Name._(_NameOp.camel, this, null);
+  StimName upper() {
+    return StimName._(_NameOp.upper, this, null, null);
   }
 
-  Name pascal() {
-    return Name._(_NameOp.pascal, this, null);
+  StimName lower() {
+    return StimName._(_NameOp.lower, this, null, null);
   }
 
-  Name snake() {
-    return Name._(_NameOp.snake, this, null);
+  StimName camel() {
+    return StimName._(_NameOp.camel, this, null, null);
   }
 
-  Name dot() {
-    return Name._(_NameOp.dot, this, null);
+  StimName pascal() {
+    return StimName._(_NameOp.pascal, this, null, null);
   }
 
-  Name path() {
-    return Name._(_NameOp.path, this, null);
+  StimName snake() {
+    return StimName._(_NameOp.snake, this, null, null);
   }
 
-  Name param() {
-    return Name._(_NameOp.param, this, null);
+  StimName dot() {
+    return StimName._(_NameOp.dot, this, null, null);
   }
 
-  Name header() {
-    return Name._(_NameOp.header, this, null);
+  StimName path() {
+    return StimName._(_NameOp.path, this, null, null);
   }
 
-  Name title() {
-    return Name._(_NameOp.title, this, null);
+  StimName param() {
+    return StimName._(_NameOp.param, this, null, null);
   }
 
-  Name constant() {
-    return Name._(_NameOp.constant, this, null);
+  StimName header() {
+    return StimName._(_NameOp.header, this, null, null);
   }
 
-  Name sentence() {
-    return Name._(_NameOp.sentence, this, null);
+  StimName title() {
+    return StimName._(_NameOp.title, this, null, null);
+  }
+
+  StimName constant() {
+    return StimName._(_NameOp.constant, this, null, null);
+  }
+
+  StimName sentence() {
+    return StimName._(_NameOp.sentence, this, null, null);
   }
 
   /// Normalizes an input object to a name string that.
@@ -143,7 +155,7 @@ class Name {
   ///
   static String _normalized(Object s) {
     if (s == null) return s;
-    if (s is Name) return s.toString();
+    if (s is StimName) return s.toString();
     return s.toString().trim().replaceAll('  ', ' ');
   }
 
@@ -169,6 +181,32 @@ class Name {
     }
   }
 
+  static String _removeIfStartsWith(String l, String r) {
+    if (l == '') {
+      return '';
+    } else if (r == '') {
+      return l;
+    } else {
+      if (l.startsWith(r)) {
+        l.substring(r.length);
+      }
+      return _normalized(l);
+    }
+  }
+
+  static String _removeIfEndsWith(String l, String r) {
+    if (l == '') {
+      return '';
+    } else if (r == '') {
+      return l;
+    } else {
+      if (l.endsWith(r)) {
+        l.substring(0, l.length - r.length);
+      }
+      return _normalized(l);
+    }
+  }
+
   @override
   String toString() {
     var l = _normalized(_left);
@@ -186,6 +224,12 @@ class Name {
 
       case _NameOp.remove:
         return _remove(l, r);
+
+      case _NameOp.removeIfStartsWith:
+        return _removeIfStartsWith(l, r);
+
+      case _NameOp.removeIfEndsWith:
+        return _removeIfEndsWith(l, r);
 
       case _NameOp.reset:
         // This is the special operation. Ignore the current one and
@@ -229,12 +273,20 @@ class Name {
         return ReCase.forCode(l).sentenceCase;
 
       default:
-        if (text != null) {
-          return text;
+        if (_text != null) {
+          return _text;
         } else {
           return l;
         }
     }
+  }
+
+  bool get isEmpty {
+    return toString().isEmpty;
+  }
+
+  bool get isNotEmpty {
+    return toString().isNotEmpty;
   }
 
   @override
@@ -243,7 +295,7 @@ class Name {
   }
 
   bool isEquals(other) {
-    return text == other?.toString();
+    return _text == other?.toString();
   }
 }
 
@@ -251,20 +303,20 @@ class Name {
 /// and a name operation.
 ///
 extension StringNameExtension on String {
-  Name operator &(Name another) {
-    return Name(this) & another;
+  StimName operator &(StimName another) {
+    return StimName.of(this) & another;
   }
 
-  Name operator >>(Name another) {
-    return Name(this) >> another;
+  StimName operator >>(StimName another) {
+    return StimName.of(this) >> another;
   }
 
-  Name operator <<(Name another) {
-    return Name(this) << another;
+  StimName operator <<(StimName another) {
+    return StimName.of(this) << another;
   }
 
-  Name operator +(Name another) {
-    return Name(this) + another;
+  StimName operator +(StimName another) {
+    return StimName.of(this) + another;
   }
 }
 
