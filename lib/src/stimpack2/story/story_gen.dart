@@ -8,7 +8,7 @@ void main() {
   final t = m.type, f = m.field;
   final meta = m.package.of(name: 'story');
 
-  final tStory = t.symbolOf(name: 'epic', package: meta);
+  final tStory = t.symbolOf(name: 'story', package: meta);
   final tAction = t.symbolOf(name: 'action', package: meta);
   final tActor = t.symbolOf(name: 'actor', package: meta);
 

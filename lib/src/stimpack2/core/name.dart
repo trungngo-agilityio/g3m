@@ -8,6 +8,8 @@ enum _NameOp {
   addRight,
   addLeft,
   remove,
+  removeIfStartsWith,
+  removeIfEndsWith,
   reset,
 
   // unary
@@ -84,6 +86,14 @@ class StimName {
 
   StimName remove(Object another) {
     return StimName._(_NameOp.remove, this, another, null);
+  }
+
+  StimName removeIfStartsWith(Object another) {
+    return StimName._(_NameOp.removeIfStartsWith, this, another, null);
+  }
+
+  StimName removeIfEndsWith(Object another) {
+    return StimName._(_NameOp.removeIfEndsWith, this, another, null);
   }
 
   StimName ref() {
@@ -171,6 +181,32 @@ class StimName {
     }
   }
 
+  static String _removeIfStartsWith(String l, String r) {
+    if (l == '') {
+      return '';
+    } else if (r == '') {
+      return l;
+    } else {
+      if (l.startsWith(r)) {
+        l.substring(r.length);
+      }
+      return _normalized(l);
+    }
+  }
+
+  static String _removeIfEndsWith(String l, String r) {
+    if (l == '') {
+      return '';
+    } else if (r == '') {
+      return l;
+    } else {
+      if (l.endsWith(r)) {
+        l.substring(0, l.length - r.length);
+      }
+      return _normalized(l);
+    }
+  }
+
   @override
   String toString() {
     var l = _normalized(_left);
@@ -188,6 +224,12 @@ class StimName {
 
       case _NameOp.remove:
         return _remove(l, r);
+
+      case _NameOp.removeIfStartsWith:
+        return _removeIfStartsWith(l, r);
+
+      case _NameOp.removeIfEndsWith:
+        return _removeIfEndsWith(l, r);
 
       case _NameOp.reset:
         // This is the special operation. Ignore the current one and

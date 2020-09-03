@@ -6,7 +6,7 @@ import 'package:g3m/stimpack2_meta.dart';
 import 'package:meta/meta.dart';
 import 'package:g3m/stimpack2_model.dart';
 part '../story_init.dart';
-part 'story__epic.dart';
+part 'story__story.dart';
 part 'story__action.dart';
 part 'story__actor.dart';
 
@@ -21,24 +21,24 @@ class StimStory extends StimPack {
 
   StimModelPackage _metaPackage;
 
-  /// Scope class for constructing all "epic" symbols, 
-  /// typed of [StimStoryEpic]."
-  final StimStoryEpicScope epic;
+  /// Scope class for constructing all "stimStoryStory" symbols, 
+  /// typed of [StimStoryStory]."
+  final StimStoryStoryScope stimStoryStory;
 
-  /// Scope class for constructing all "action" symbols, 
+  /// Scope class for constructing all "stimStoryAction" symbols, 
   /// typed of [StimStoryAction]."
-  final StimStoryActionScope action;
+  final StimStoryActionScope stimStoryAction;
 
-  /// Scope class for constructing all "actor" symbols, 
+  /// Scope class for constructing all "stimStoryActor" symbols, 
   /// typed of [StimStoryActor]."
-  final StimStoryActorScope actor;
+  final StimStoryActorScope stimStoryActor;
 
 
   StimStory(StimModel model):
       meta = StimStoryTypeMeta(),
-      epic = StimStoryEpicScope(),
-      action = StimStoryActionScope(),
-      actor = StimStoryActorScope(),
+      stimStoryStory = StimStoryStoryScope(),
+      stimStoryAction = StimStoryActionScope(),
+      stimStoryActor = StimStoryActorScope(),
       super('story') {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
@@ -55,35 +55,35 @@ class StimStory extends StimPack {
     final f = m.field, t = m.type;
 
 
-    /// Builds type "epic"
-    meta.epic = t.symbolOf(name: 'epic', package: mp);
+    /// Builds type "stimStoryStory"
+    meta.stimStoryStory = t.symbolOf(name: 'stimStoryStory', package: mp);
 
-    /// Builds type "action"
-    meta.action = t.symbolOf(name: 'action', package: mp);
+    /// Builds type "stimStoryAction"
+    meta.stimStoryAction = t.symbolOf(name: 'stimStoryAction', package: mp);
 
-    /// Builds type "actor"
-    meta.actor = t.symbolOf(name: 'actor', package: mp);
-
-
-    /// Builds fields for type "epic"
-    meta.epic.fields = {
-      /// field "epic"
-      f.of(name: 'actor', type: meta.actor).required(),
+    /// Builds type "stimStoryActor"
+    meta.stimStoryActor = t.symbolOf(name: 'stimStoryActor', package: mp);
 
 
-      /// field "epic"
-      f.of(name: 'action', type: meta.action).required()
+    /// Builds fields for type "stimStoryStory"
+    meta.stimStoryStory.fields = {
+      /// field "stimStoryStory"
+      f.of(name: 'actor', type: meta.stimStoryActor).required(),
+
+
+      /// field "stimStoryStory"
+      f.of(name: 'action', type: meta.stimStoryAction).required()
     };
   }
 }
 
 
 class StimStoryTypeMeta {
-  StimModelType epic;
+  StimModelType stimStoryStory;
 
-  StimModelType action;
+  StimModelType stimStoryAction;
 
-  StimModelType actor;
+  StimModelType stimStoryActor;
 }
 
 

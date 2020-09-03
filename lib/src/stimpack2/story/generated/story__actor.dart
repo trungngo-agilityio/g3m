@@ -20,7 +20,7 @@ class StimStoryActorRef extends StimSymbolRef<StimStoryActor> implements StimSto
 
 
 class StimStoryActorScope {
-  /// Creates a new "actor" of [StimStoryActor] type.
+  /// Creates a new "stimStoryActor" of [StimStoryActor] type.
   StimStoryActor of({dynamic name, Set<StimModelTag> tags}) {
     return StimStoryActor()
         ..name = StimName.of(name)

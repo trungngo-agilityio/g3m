@@ -81,7 +81,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   }
 
   StimName fieldNameSimplified(StimModelPackage pack, StimName name) {
-    return name.remove('stim').remove(pack.name).camel();
+    return name.removeIfStartsWith('stim ${pack.name}').camel();
   }
 
   String publicTypeScopeOf(StimModelPackage pack, StimModelType type) {
