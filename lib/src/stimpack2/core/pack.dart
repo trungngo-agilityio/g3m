@@ -1,6 +1,6 @@
 part of g3.stimpack2.core;
 
-final Stimpack stimpack = Stimpack();
+final StimpackRoot stimpack = StimpackRoot();
 
 class StimPack {
   final String name;
@@ -12,6 +12,6 @@ class StimPack {
   }
 }
 
-class Stimpack extends StimPack {
-  Stimpack() : super('core');
+class StimpackRoot extends StimPack {
+  StimpackRoot() : super('core');
 }

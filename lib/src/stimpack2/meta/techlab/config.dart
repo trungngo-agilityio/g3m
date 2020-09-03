@@ -45,7 +45,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   /// For example if the [pack] is 'grpc' and the [type] is 'message' then
   /// the class name is 'StimGrpcMessage'.
   ///
-  StimName symbolClassNameOf(StimModelPackage pack, StimModelType type) {
+  StimName symbolClassNameOf(StimModelType type) {
     return type.name.pascal();
   }
 
@@ -57,12 +57,20 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // Scope
   // ===========================================================================
 
-  /// Gets an abstract class name that inherits from [StimScope].
-  /// For example if the [pack] is 'grpc' and the [type] is 'message' then
-  /// the class name is 'StimGrpcMessageScope'.
-  ///
-  StimName scopeClassNameOf(StimModelPackage pack, StimModelType type) {
+  StimName scopeClassNameOf(StimModelType type) {
     return (type.name >> 'scope').pascal();
+  }
+
+  // ===========================================================================
+  // Meta
+  // ===========================================================================
+
+  StimName metaTypesClassNameOf(StimModelPackage package) {
+    return ('stim' >> package.name >> 'type meta').pascal();
+  }
+
+  StimName metaTypesExtensionClassNameOf(StimModelPackage package) {
+    return (metaTypesClassNameOf(package) >> 'extension').pascal();
   }
 
   // ===========================================================================
@@ -100,7 +108,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
 
   CodeImport codePackImportOf(StimModelPackage pack) {
     return CodeImport.of(
-        path: 'package:g3m/stimpack_${pack.name.camel()}.dart');
+        path: 'package:g3m/stimpack2_${pack.name.camel()}.dart');
   }
 
   @override

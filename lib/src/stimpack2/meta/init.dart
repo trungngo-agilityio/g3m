@@ -2,7 +2,7 @@ part of g3.stimpack2.meta;
 
 StimMeta _meta;
 
-extension StimMetaExtension on Stimpack {
+extension StimMetaExtension on StimpackRoot {
   StimMeta get meta {
     return _meta ??= StimMeta();
   }

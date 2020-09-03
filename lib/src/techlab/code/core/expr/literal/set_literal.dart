@@ -65,4 +65,6 @@ class CodeSetLiteral extends CodeConfigProxyNode<CodeSetLiteral> {
 
     return CodeSetLiteral._(values);
   }
+
+  factory CodeSetLiteral.empty() => CodeSetLiteral._([]);
 }

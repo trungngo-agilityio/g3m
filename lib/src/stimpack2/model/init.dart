@@ -351,10 +351,15 @@ class StimModel extends StimPack {
       type.primitiveOf(name: name, package: package.dart);
 
   void _buildMeta() {
-    final p = package.model = package.of(name: 'model');
+    package.model = package.of(name: 'model');
     final xt = type.model = StimModelTypes();
     xt.tag = _symbolOf('tag');
     xt.tagSet = _symbolSetOf(xt.tag);
+
+    xt.package = _symbolOf('package');
+
+    xt.type = _symbolOf('type');
+    xt.typeSet = _symbolSetOf(xt.type);
   }
 
   StimModelType _symbolOf(String name) {

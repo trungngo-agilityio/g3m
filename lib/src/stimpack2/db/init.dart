@@ -26,7 +26,7 @@ class StimDb extends StimPack {
 
 StimDb _db;
 
-extension StimDbExtension on Stimpack {
+extension StimDbExtension on StimpackRoot {
   StimDb get db {
     return _db ??= StimDb(stimpack.model);
   }

@@ -1,7 +1,7 @@
 part of g3.stimpack2.model;
 
 class StimModelTypes {
-  StimModelType tag, tagSet;
+  StimModelType tag, tagSet, type, typeSet, package;
 }
 
 class StimModelTypeScope {

@@ -2,7 +2,7 @@ part of g3.stimpack2.rest;
 
 StimRest _rest;
 
-extension StimModelExtension on Stimpack {
+extension StimModelExtension on StimpackRoot {
   StimRest get rest {
     return _rest ??= StimRest(stimpack.model);
   }

@@ -7,7 +7,11 @@ class StimGenMetaType implements Node {
   Set<StimModelField> _metaFields;
   Set<StimModelTag> _metaTags;
 
-  StimName _symbolClassName, _symbolRefClassName, _scopeClassName;
+  StimName _stimNameClass,
+      _symbolClassName,
+      _symbolRefClassName,
+      _scopeClassName,
+      _simplifiedSymbolName;
 
   StimpackCodeConfig _config;
 
@@ -38,13 +42,15 @@ class StimGenMetaType implements Node {
 
     _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
 
-    _symbolClassName = _config.symbolClassNameOf(pack, type);
+    _stimNameClass = StimName.of('stim name').pascal();
+    _symbolClassName = _config.symbolClassNameOf(type);
     _symbolRefClassName = _config.symbolRefClassNameOf(pack, type);
-    _scopeClassName = _config.scopeClassNameOf(pack, type);
+    _scopeClassName = _config.scopeClassNameOf(type);
+    _simplifiedSymbolName = _config.fieldNameSimplified(pack, type.name);
   }
 
   CodeClass _symbolClassDef() {
-    final baseSymbolClass = CodeType.of(name: 'stim symbol', generic: [
+    final baseSymbolClass = CodeType.of(name: 'stim model symbol', generic: [
       _symbolClassName,
     ]);
 
@@ -100,19 +106,52 @@ class StimGenMetaType implements Node {
     }
 
     final nameRef = CodeRef.of('name');
+
+    // Copy the dynamic input name, and covert it to a stim name.
+    final nameAssign = CodeAssignExpr.of(
+        nameRef,
+        CodeConstructorCall.of(
+            className: _stimNameClass, name: 'of', args: nameRef));
+
+    // Copies all input arguments to the symbol.
+    final argsAssign = <Node>[];
+
+    for (final field in _metaFields) {
+      final name = field.name;
+
+      // This is the value assigned to the field.
+      // In the case of dart set and list data type, we inits
+      // the field with empty set/list to avoid null check.
+      Node value = CodeRef.of(name);
+      if (field.type.isCollection) {
+        Node empty;
+        if (field.type.isDartSet) {
+          empty = CodeSetLiteral.empty();
+        } else if (field.type.isDartList) {
+          empty = CodeArrayLiteral.empty();
+        }
+
+        if (empty != null) {
+          value = CodeConditionalNullExpr.of(value, empty);
+        }
+      }
+
+      argsAssign.add(CodeAssignExpr.of(name, value));
+    }
+
     final assignList = [
-      CodeAssignExpr.of(
-          nameRef,
-          CodeConstructorCall.of(
-              className: 'stim name', name: 'of', args: nameRef)),
-      ..._metaFields.map((e) => CodeAssignExpr.of(e.name, e.name)),
+      nameAssign,
+      ...argsAssign,
     ];
 
     final ofFunction = _scopeClassOfFunction(
-        body: CodeReturn.of(_cascadeMultiCodeLine(
-      CodeConstructorCall.of(className: _symbolClassName),
-      assignList,
-    )));
+      body: CodeReturn.of(
+        _cascadeMultiCodeLine(
+          CodeConstructorCall.of(className: _symbolClassName),
+          assignList,
+        ),
+      ),
+    );
 
     return CodeClass.of(
       name: _scopeClassName,
@@ -130,7 +169,10 @@ class StimGenMetaType implements Node {
 
       ofFunctionArgs.add(
         CodeArg.of(
-            name: i.name.camel(), type: i.type.name, annotations: required),
+          name: i.name.camel(),
+          type: i.type.name,
+          annotations: required,
+        ),
       );
     }
 
@@ -138,8 +180,9 @@ class StimGenMetaType implements Node {
       name: 'of',
       returns: _symbolClassName,
       namedArgs: ofFunctionArgs,
-      isOverride: body != null,
       body: body,
+      comment:
+          '''Creates a new "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
     );
   }
 }

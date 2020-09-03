@@ -65,4 +65,8 @@ class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral> {
 
     return CodeArrayLiteral._(values);
   }
+
+  factory CodeArrayLiteral.empty() {
+    return CodeArrayLiteral._([]);
+  }
 }

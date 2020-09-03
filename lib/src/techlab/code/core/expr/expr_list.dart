@@ -423,7 +423,7 @@ class CodeAssignIfNullExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.assignIfNullOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -610,7 +610,7 @@ class CodeAccessExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.accessOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));

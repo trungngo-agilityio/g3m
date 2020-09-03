@@ -32,9 +32,12 @@ class DartCodeFile implements Node {
     CodeComment comment,
     List<CodeImport> imports,
     List<String> parts,
+    List<CodeField> fields,
     List<CodeEnum> enums,
     List<CodeFunction> functions,
     List<CodeClass> classes,
+    List<CodeExtension> extensions,
+    List<CodeMixin> mixins,
     Node body,
   }) {
     // Node that java code expect the file name to be class name.
@@ -46,9 +49,12 @@ class DartCodeFile implements Node {
           comment: comment,
           imports: imports,
           parts: parts,
+          fields: fields,
           enums: enums,
           functions: functions,
           classes: classes,
+          extensions: extensions,
+          mixins: mixins,
           body: body),
     );
   }
@@ -73,11 +79,13 @@ class DartCode extends SingleChildNode {
   factory DartCode.of({
     dynamic package,
     dynamic comment,
-    dynamic enums,
     dynamic imports,
     List<String> parts,
+    dynamic fields,
+    dynamic enums,
     dynamic functions,
     dynamic classes,
+    dynamic extensions,
     dynamic mixins,
     dynamic body,
   }) {
@@ -113,9 +121,11 @@ class DartCode extends SingleChildNode {
           package,
           CodeImportList.of(imports),
           partsNode,
+          CodeFieldList.of(fields),
           CodeEnumList.of(enums),
           CodeFunctionList.of(functions),
           CodeClassList.of(classes),
+          CodeExtensionList.of(extensions),
           CodeMixinList.of(mixins),
         ]),
       ),

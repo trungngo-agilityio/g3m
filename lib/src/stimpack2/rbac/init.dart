@@ -2,7 +2,7 @@ part of g3.stimpack2.rbac;
 
 StimRbac _rbac;
 
-extension StimRbacExtension on Stimpack {
+extension StimRbacExtension on StimpackRoot {
   StimRbac get rbac {
     return _rbac ??= StimRbac();
   }

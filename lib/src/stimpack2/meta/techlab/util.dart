@@ -1,13 +1,17 @@
 part of g3.stimpack2.meta.techlab;
 
-CodeProperty _lazyInitCodeProperty(CodeField field) {
+CodeProperty _lazyInitCodeProperty(CodeField field, {CodeRef instance}) {
+  Node fieldRef = CodeRef.of(field);
+  if (instance != null) {
+    fieldRef = CodeAccessExpr.of(instance, fieldRef);
+  }
   return CodeProperty.of(
     name: field.name,
     type: field.type,
     getter: CodePropertyGetter.of(
       body: CodeReturn.of(
         CodeAssignIfNullExpr.of(
-          CodeRef.of(field),
+          fieldRef,
           CodeConstructorCall.of(
             className: field.type.name,
           ),
