@@ -2,6 +2,7 @@ import 'package:g3m/stimpack_core.dart';
 import 'package:g3m/stimpack_meta.dart';
 import 'package:g3m/stimpack_meta_techlab.dart';
 import 'package:g3m/stimpack_model.dart';
+import 'package:g3m/stimpack_rbac.dart';
 
 void main() {
   final m = stimpack.model;
@@ -26,6 +27,15 @@ void main() {
     f.of(name: 'action', type: tAction).required(),
   };
 
+  tActor.fields = {
+    f.setOf(name: 'roles', type: t.rbac.role),
+  };
+
+  tAction.fields = {
+    // An action can be a combination of other actions.
+    f.setOf(name: 'actions', type: tAction),
+  };
+
   stimpack.meta.validate(meta);
   stimpackGen(meta, 'lib/src/stimpack/${meta.name.snake()}');
 }
@@ -48,7 +58,7 @@ const _authActions = {
 
 const _reversibleActions = {
   'star',
-  'un star',
+  'unstar',
   'like',
   'unlike',
   'send',
@@ -59,6 +69,7 @@ const _reversibleActions = {
   'unshare',
   'start',
   'stop',
+  'play',
   'pause',
   'resume',
   'enter',
@@ -67,15 +78,15 @@ const _reversibleActions = {
   'download',
 };
 
-const _miscActions = {
-  'request',
-  'reset',
-  'see',
-};
-
 const _flowActions = {
   'invite',
   'suggest',
   'accept',
   'deny',
+};
+
+const _miscActions = {
+  'request',
+  'reset',
+  'see',
 };

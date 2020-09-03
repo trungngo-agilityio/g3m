@@ -1,7 +1,28 @@
 part of g3.stimpack.model;
 
 class StimModelTypes {
-  StimModelType tag, tagSet, type, typeSet, package;
+  StimModelType tag,
+      tagSet,
+      type,
+      typeSet,
+      package,
+      packageSet,
+      field,
+      fieldSet,
+      filter,
+      filterSet,
+      pattern,
+      patternSet,
+      range,
+      rangeSet,
+      rule,
+      ruleSet,
+      error,
+      errorSet,
+      httpStatus,
+      httpStatusSet,
+      grpcStatus,
+      grpcStatusSet;
 }
 
 class StimModelTypeScope {
@@ -130,6 +151,9 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   bool get isDartSet => collection == stimpack.model.type.set;
 
   bool get isDartList => collection == stimpack.model.type.list;
+
+  /// Determines if this is a primitive dart type.
+  bool get isDartPrimitive => stimpack.model.type.primitiveTypes.contains(this);
 
   StimModelTypeRef _ref;
 

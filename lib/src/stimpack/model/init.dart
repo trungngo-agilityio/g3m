@@ -352,14 +352,51 @@ class StimModel extends StimPack {
 
   void _buildMeta() {
     package.model = package.of(name: 'model');
-    final xt = type.model = StimModelTypes();
-    xt.tag = _symbolOf('tag');
-    xt.tagSet = _symbolSetOf(xt.tag);
 
-    xt.package = _symbolOf('package');
+    final mt = type.model = StimModelTypes();
+    // tag
+    mt.tag = _symbolOf('tag');
+    mt.tagSet = _symbolSetOf(mt.tag);
 
-    xt.type = _symbolOf('type');
-    xt.typeSet = _symbolSetOf(xt.type);
+    // package
+    mt.package = _symbolOf('package');
+    mt.typeSet = _symbolSetOf(mt.package);
+
+    // type
+    mt.type = _symbolOf('type');
+    mt.typeSet = _symbolSetOf(mt.type);
+
+    // field
+    mt.field = _symbolOf('field');
+    mt.fieldSet = _symbolSetOf(mt.field);
+
+    // filter
+    mt.filter = _symbolOf('filter');
+    mt.filterSet = _symbolSetOf(mt.filter);
+
+    // pattern
+    mt.pattern = _symbolOf('pattern');
+    mt.patternSet = _symbolSetOf(mt.pattern);
+
+    // range
+    mt.range = _symbolOf('range');
+    mt.rangeSet = _symbolSetOf(mt.range);
+
+    // rule
+    mt.rule = _symbolOf('rule');
+    mt.ruleSet = _symbolSetOf(mt.rule);
+
+    // error
+    mt.error = _symbolOf('error');
+    mt.errorSet = _symbolSetOf(mt.error);
+
+    // http status
+    mt.httpStatus = _symbolOf('http status');
+    mt.httpStatusSet = _symbolSetOf(mt.httpStatus);
+
+    // grpc status
+    mt.grpcStatus = _symbolOf('grpc status');
+    mt.grpcStatusSet = _symbolSetOf(mt.grpcStatus);
   }
 
   StimModelType _symbolOf(String name) {

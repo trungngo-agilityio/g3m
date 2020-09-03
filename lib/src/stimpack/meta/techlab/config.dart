@@ -14,7 +14,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   ) {
     final p = pack.name.snake();
     final t = type.name.snake().toString().removeIfStartsWith('stim_${p}_');
-    return '${p}__${t}';
+    return '${p}_${t}';
   }
 
   StimName initPackFileNameOf(StimModelPackage pack) {

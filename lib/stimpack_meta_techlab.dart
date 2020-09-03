@@ -1,5 +1,8 @@
 library g3.stimpack.meta.techlab;
 
+import 'dart:collection';
+import 'dart:ffi';
+
 import 'package:g3m/stimpack_core.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/techlab_core.dart';

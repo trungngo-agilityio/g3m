@@ -4,6 +4,7 @@ class StimGenMetaType implements Node {
   final StimModelPackage pack;
   final StimModelType type;
 
+  StimModelField _tagSetField;
   Set<StimModelField> _metaFields;
   Set<StimModelTag> _metaTags;
 
@@ -37,7 +38,8 @@ class StimGenMetaType implements Node {
   void _initCommonFields(BuildContext context) {
     final t = stimpack.model.type.model, f = stimpack.model.field;
 
-    _metaFields = type.fields + f.of(name: 'tags', type: t.tagSet);
+    _metaFields = type.fields ?? {};
+    _tagSetField = f.of(name: 'tags', type: t.tagSet);
     _metaTags = type.tags ?? {};
 
     _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
@@ -116,8 +118,8 @@ class StimGenMetaType implements Node {
     // Copies all input arguments to the symbol.
     final argsAssign = <Node>[];
 
-    for (final field in _metaFields) {
-      final name = field.name;
+    for (final field in _metaFields + _tagSetField) {
+      final name = field.name.camel();
 
       // This is the value assigned to the field.
       // In the case of dart set and list data type, we inits
@@ -164,7 +166,8 @@ class StimGenMetaType implements Node {
     final ofFunctionArgs = <CodeArg>[
       CodeArg.of(name: 'name', type: 'dynamic'),
     ];
-    for (final i in _metaFields) {
+
+    for (final i in _metaFields + _tagSetField) {
       final required = i.isRequired ? CodeAnnotation.required() : null;
 
       ofFunctionArgs.add(

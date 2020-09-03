@@ -76,17 +76,27 @@ class StimGenMetaPack implements Node {
 
     /// Makes every pack depends on the model pack.
     _externalPacks = <StimModelPackage>{p.model};
-    _externalTypes = <StimModelType>{};
 
     // Finds all external packs that this pack depends on.
-    for (final type in pack.types) {
-      if (type.fields == null) continue;
+    final processed = <StimModelType>{};
+    final queue = Queue.of(pack.types);
 
-      for (final field in type.fields) {
-        final fieldTypePack = field.type?.package;
-        if (fieldTypePack != pack && !systemPackages.contains(fieldTypePack)) {
-          _externalPacks.add(fieldTypePack);
-          _externalTypes.add(field.type);
+    while (queue.isNotEmpty) {
+      final t = queue.removeFirst();
+      if (processed.contains(t)) continue;
+      processed.add(t);
+
+      var tPackage = t.package;
+      if (tPackage != pack && !systemPackages.contains(tPackage)) {
+        _externalPacks.add(tPackage);
+      }
+
+      if (t.collection != null) queue.add(t.collection);
+      if (t.item != null) queue.add(t.item);
+
+      if (t.fields != null) {
+        for (final field in t.fields) {
+          queue.add(field.type);
         }
       }
     }
@@ -344,26 +354,34 @@ not overwritten during pack re-generation. ''',
   }
 
   Node _buildTypeName(StimModelType type, [Set<StimModelType> processing]) {
+    assert(processing?.contains(type) != true,
+        'Error. recursive type definition found.');
+    processing = Set.of(processing ?? {})..add(type);
+
     if (type.isCollection) {
       if (type.isDartSet) {
         return Container([
           't.setOf(item: ',
-          _buildTypeName(type.item),
+          _buildTypeName(type.item, processing),
           ')',
         ]);
       } else if (type.isDartList) {
         return Container([
           't.listOf(item: ',
-          _buildTypeName(type.item),
+          _buildTypeName(type.item, processing),
           ')',
         ]);
       } else {
         throw 'Do not support custom collection type ${type.collection}';
       }
+    } else if (type.isDartPrimitive) {
+      // This type come from outside.
+      final name = _config.fieldNameOfType(type);
+      return Text.of('t.${name}');
     } else if (type.package.name != pack.name) {
       // This type come from outside.
       final name = _config.fieldNameOfType(type);
-      return Text.of('stimpack.${type.package.name}.${name}');
+      return Text.of('t.${type.package.name}.${name}');
     } else {
       // This type is defined in the package.
       final name = _config.fieldNameOfType(type);
