@@ -76,6 +76,7 @@ class CodeOps {
   // Access or call operators
   static const CodeOp accessOp = CodeOp.exprOpExpr('.');
   static const CodeOp cascadeOp = CodeOp.opExpr('..');
+  static const CodeOp annotationOp = CodeOp.opExpr('@');
   static const CodeOp conditionalAccessOp = CodeOp.exprOpExpr('?.');
   static const CodeOp listAccessOp = CodeOp.exprOpExpr('[]');
   static const CodeOp arrowOp = CodeOp.opExpr(' => ');
@@ -248,8 +249,8 @@ class CodeAsExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.asOp,
-            expr1: e1,
-            expr2: e2,
+            expr1: CodeRef.of(e1),
+            expr2: CodeRef.of(e2),
           ),
         ));
 }
@@ -259,8 +260,8 @@ class CodeIsExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.isOp,
-            expr1: e1,
-            expr2: e2,
+            expr1: CodeRef.of(e1),
+            expr2: CodeRef.of(e2),
           ),
         ));
 }
@@ -270,8 +271,8 @@ class CodeIsNotExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.isNotOp,
-            expr1: e1,
-            expr2: e2,
+            expr1: CodeRef.of(e1),
+            expr2: CodeRef.of(e2),
           ),
         ));
 }
@@ -434,7 +435,7 @@ class CodePlusAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.plusAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -445,7 +446,7 @@ class CodeMinusAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.minusAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -456,7 +457,7 @@ class CodeMultiplyAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.multiplyAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -478,7 +479,7 @@ class CodeModAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.modAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -489,7 +490,7 @@ class CodeBitShiftLeftAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.bitShiftLeftAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -500,7 +501,7 @@ class CodeBitShiftRightAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.bitShiftRightAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -511,7 +512,7 @@ class CodeBitAndAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.bitAndAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -522,7 +523,7 @@ class CodeBitOrAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.bitOrAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -533,7 +534,7 @@ class CodeBitXorAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.bitXorAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -544,7 +545,7 @@ class CodeBitNegateAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.bitNegateAssignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -611,7 +612,7 @@ class CodeAccessExpr extends SingleChildNode {
           CodeExprList.of(
             op: CodeOps.accessOp,
             expr1: CodeRef.of(e1),
-            expr2: e2,
+            expr2: CodeRef.of(e2),
           ),
         ));
 }
@@ -621,9 +622,49 @@ class CodeCascadeExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.cascadeOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
           ),
         ));
+}
+
+class CodeAnnotation extends SingleChildNode {
+  CodeAnnotation.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.annotationOp,
+            expr1: CodeRef.of(e1),
+          ),
+        ));
+
+  factory CodeAnnotation.required() => CodeAnnotation.of('required');
+
+  factory CodeAnnotation.override() => CodeAnnotation.of('override');
+
+  factory CodeAnnotation.functionCall({
+    @required dynamic name,
+    dynamic args,
+  }) {
+    return CodeAnnotation.of(
+      CodeFunctionCall.of(
+        name: name,
+        args: args,
+      ),
+    );
+  }
+
+  factory CodeAnnotation.constructorCall({
+    @required dynamic className,
+    dynamic name,
+    dynamic args,
+  }) {
+    return CodeAnnotation.of(
+      CodeConstructorCall.of(
+        className: className,
+        name: name,
+        args: args,
+      ),
+    );
+  }
 }
 
 class CodeConditionalAccessExpr extends SingleChildNode {
@@ -631,8 +672,8 @@ class CodeConditionalAccessExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.conditionalAccessOp,
-            expr1: e1,
-            expr2: e2,
+            expr1: CodeRef.of(e1),
+            expr2: CodeRef.of(e2),
           ),
         ));
 }
@@ -663,7 +704,7 @@ class CodeListAccessExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.listAccessOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));

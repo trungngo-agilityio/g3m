@@ -66,11 +66,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeWhileConfig> whileConfig;
   CodeConfigBuildFunc<CodeFunctionCallConfig> functionCallConfig;
   CodeConfigBuildFunc<CodeConstructorCallConfig> constructorCallConfig;
-
-  // annotation configs
-  CodeConfigBuildFunc<CodeAnnotationNameConfig> annotationNameConfig;
   CodeConfigBuildFunc<CodeAnnotationListConfig> annotationListConfig;
-  CodeConfigBuildFunc<CodeAnnotationConfig> annotationConfig;
 
   // Generic configs
   CodeConfigBuildFunc<CodeGenericParamConfig> genericParamConfig;
@@ -188,11 +184,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.whileConfig,
     @required this.functionCallConfig,
     @required this.constructorCallConfig,
-
-    // Annotation configs
-    @required this.annotationNameConfig,
     @required this.annotationListConfig,
-    @required this.annotationConfig,
 
     // Generic configs
     @required this.genericParamConfig,
@@ -322,12 +314,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     constructorCallConfig ??=
         (_, child) => CodeConstructorCallConfig.forJavaLike(child);
 
-    // Annotation configs
-    annotationNameConfig ??=
-        (_, child) => CodeAnnotationNameConfig.forJavaLike(child);
     annotationListConfig ??=
         (_, child) => CodeAnnotationListConfig.forJavaLike(child);
-    annotationConfig ??= (_, child) => CodeAnnotationConfig.forJavaLike(child);
 
     // Generic configs
     genericParamConfig ??=
@@ -459,11 +447,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       whileConfig,
       functionCallConfig,
       constructorCallConfig,
-
-      // Annotation configs,
-      annotationNameConfig,
       annotationListConfig,
-      annotationConfig,
 
       // Generic configs
       genericParamConfig,

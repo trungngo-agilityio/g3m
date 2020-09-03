@@ -49,19 +49,19 @@ void main() {
   test('CodeAsExpr', () {
     run(
       CodeAsExpr.of('a', 'b'),
-      '"a" as "b"',
+      'a as b',
     );
   });
   test('CodeIsExpr', () {
     run(
       CodeIsExpr.of('a', 'b'),
-      '"a" is "b"',
+      'a is b',
     );
   });
   test('CodeIsNotExpr', () {
     run(
       CodeIsNotExpr.of('a', 'b'),
-      '"a" is! "b"',
+      'a is! b',
     );
   });
   test('CodePlusExpr', () {
@@ -139,31 +139,31 @@ void main() {
   test('CodeAssignExpr', () {
     run(
       CodeAssignExpr.of('a', 'b'),
-      '"a" = "b"',
+      'a = "b"',
     );
   });
   test('CodeAssignIfNullExpr', () {
     run(
       CodeAssignIfNullExpr.of('a', 'b'),
-      '"a" ??= "b"',
+      'a ??= "b"',
     );
   });
   test('CodePlusAssignExpr', () {
     run(
       CodePlusAssignExpr.of('a', 'b'),
-      '"a" += "b"',
+      'a += "b"',
     );
   });
   test('CodeMinusAssignExpr', () {
     run(
       CodeMinusAssignExpr.of('a', 'b'),
-      '"a" -= "b"',
+      'a -= "b"',
     );
   });
   test('CodeMultiplyAssignExpr', () {
     run(
       CodeMultiplyAssignExpr.of('a', 'b'),
-      '"a" *= "b"',
+      'a *= "b"',
     );
   });
   test('CodeDivideAssignExpr', () {
@@ -175,43 +175,43 @@ void main() {
   test('CodeModAssignExpr', () {
     run(
       CodeModAssignExpr.of('a', 'b'),
-      '"a" %= "b"',
+      'a %= "b"',
     );
   });
   test('CodeBitShiftLeftAssignExpr', () {
     run(
       CodeBitShiftLeftAssignExpr.of('a', 'b'),
-      '"a" <<= "b"',
+      'a <<= "b"',
     );
   });
   test('CodeBitShiftRightAssignExpr', () {
     run(
       CodeBitShiftRightAssignExpr.of('a', 'b'),
-      '"a" >>= "b"',
+      'a >>= "b"',
     );
   });
   test('CodeBitAndAssignExpr', () {
     run(
       CodeBitAndAssignExpr.of('a', 'b'),
-      '"a" &= "b"',
+      'a &= "b"',
     );
   });
   test('CodeBitOrAssignExpr', () {
     run(
       CodeBitOrAssignExpr.of('a', 'b'),
-      '"a" |= "b"',
+      'a |= "b"',
     );
   });
   test('CodeBitXorAssignExpr', () {
     run(
       CodeBitXorAssignExpr.of('a', 'b'),
-      '"a" ^= "b"',
+      'a ^= "b"',
     );
   });
   test('CodeBitNegateAssignExpr', () {
     run(
       CodeBitNegateAssignExpr.of('a', 'b'),
-      '"a" ~= "b"',
+      'a ~= "b"',
     );
   });
   test('CodeLogicalNotExpr', () {
@@ -247,26 +247,26 @@ void main() {
   test('CodeAccessExpr', () {
     run(
       CodeAccessExpr.of('a', 'b'),
-      '"a"."b"',
+      'a.b',
     );
   });
   test('CodeCascadeExpr', () {
     run(
       CodeCascadeExpr.of('a'),
-      '.."a"',
+      '..a',
     );
   });
   test('CodeConditionalAccessExpr', () {
     run(
       CodeConditionalAccessExpr.of('a', 'b'),
-      '"a"?."b"',
+      'a?.b',
     );
   });
 
   test('CodeListAccessExpr', () {
     run(
       CodeListAccessExpr.of('a', 'b'),
-      '"a"["b"]',
+      'a["b"]',
     );
   });
 

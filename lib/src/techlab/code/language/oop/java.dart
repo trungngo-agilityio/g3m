@@ -163,10 +163,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           forEachConfig: null,
           functionCallConfig: null,
           constructorCallConfig: null,
-
-          annotationNameConfig: null,
           annotationListConfig: null,
-          annotationConfig: null,
 
           // Generic configs
           genericParamConfig: null,

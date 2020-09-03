@@ -53,8 +53,9 @@ void main() {
         CodeFunction.of(
           name: 'hello',
           annotations: [
-            CodeAnnotation.of('repository'),
-            CodeAnnotation.of('repository', args: [1, false]),
+            CodeAnnotation.constructorCall(className: 'repository'),
+            CodeAnnotation.constructorCall(
+                className: 'repository', args: [1, false]),
           ],
         ),
       );
@@ -121,8 +122,9 @@ void main() {
           name: 'hello',
           returns: ['string'],
           annotations: [
-            CodeAnnotation.of('repository'),
-            CodeAnnotation.of('repository', args: [1, false]),
+            CodeAnnotation.constructorCall(className: 'repository'),
+            CodeAnnotation.constructorCall(
+                className: 'repository', args: [1, false]),
           ],
           generic: ['t'],
           requiredArgs: {

@@ -170,10 +170,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           whileConfig: null,
           functionCallConfig: null,
           constructorCallConfig: null,
-
-          annotationNameConfig: null,
           annotationListConfig: null,
-          annotationConfig: null,
 
           // Generic configs
           genericParamConfig: null,

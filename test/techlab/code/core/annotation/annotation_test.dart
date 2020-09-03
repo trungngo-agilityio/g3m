@@ -10,26 +10,33 @@ void main() {
   }
 
   test('no args', () {
-    final code = CodeAnnotation.of('hello world');
+    final code = CodeAnnotation.of('required');
+    run(code, '@required');
+  });
 
-    run(
-      code,
-      '@HelloWorld()\n',
-    );
+  test('no args - required', () {
+    final code = CodeAnnotation.required();
+    run(code, '@required');
+  });
+
+  test('no args - override', () {
+    final code = CodeAnnotation.override();
+    run(code, '@override');
   });
 
   test('one arg', () {
-    final code = CodeAnnotation.of('hello world', args: ['john doe']);
+    final code = CodeAnnotation.constructorCall(
+        className: 'hello world', args: ['john doe']);
 
     run(
       code,
-      '@HelloWorld("john doe")\n',
+      '@HelloWorld("john doe")',
     );
   });
 
   test('more than one', () {
-    final code = CodeAnnotation.of(
-      'hello world',
+    final code = CodeAnnotation.constructorCall(
+      className: 'hello world',
       args: [
         'john doe',
         true,
@@ -39,7 +46,7 @@ void main() {
 
     run(
       code,
-      '@HelloWorld("john doe", true, 1)\n',
+      '@HelloWorld("john doe", true, 1)',
     );
   });
 }

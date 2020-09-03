@@ -10,10 +10,6 @@ import 'package:prompts/prompts.dart' as prompts;
 
 part 'src/techlab/code/core/annotation/annotation-list.dart';
 
-part 'src/techlab/code/core/annotation/annotation-name.dart';
-
-part 'src/techlab/code/core/annotation/annotation.dart';
-
 part 'src/techlab/code/core/arg/arg.dart';
 
 part 'src/techlab/code/core/arg/arg_list.dart';
