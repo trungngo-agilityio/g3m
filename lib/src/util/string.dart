@@ -115,9 +115,7 @@ class MarkdownFunc {
   MarkdownFunc._();
 }
 
-
 extension G3StringExtension on String {
-
   String removeIfStartsWith(String prefix) {
     if (startsWith(prefix)) {
       return substring(prefix.length);

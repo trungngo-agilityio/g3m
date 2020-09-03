@@ -40,6 +40,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeStringLiteralConfig> stringLiteralConfig;
   CodeConfigBuildFunc<CodeNumericLiteralConfig> numericLiteralConfig;
   CodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
+  CodeConfigBuildFunc<CodeSetLiteralConfig> setLiteralConfig;
   CodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
   CodeConfigBuildFunc<CodeCascadeConfig> cascadeConfig;
   CodeConfigBuildFunc<CodeSpreadConfig> spreadConfig;
@@ -121,9 +122,16 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeConstructorNameConfig> classConstructorNameConfig;
   CodeConfigBuildFunc<CodeConstructorListConfig> classConstructorListConfig;
   CodeConfigBuildFunc<CodeConstructorConfig> classConstructorConfig;
+
+  // Mixin configs
   CodeConfigBuildFunc<CodeMixinNameConfig> mixinNameConfig;
   CodeConfigBuildFunc<CodeMixinListConfig> mixinListConfig;
   CodeConfigBuildFunc<CodeMixinConfig> mixinConfig;
+
+  // Extension configs
+  CodeConfigBuildFunc<CodeExtensionNameConfig> extensionNameConfig;
+  CodeConfigBuildFunc<CodeExtensionListConfig> extensionListConfig;
+  CodeConfigBuildFunc<CodeExtensionConfig> extensionConfig;
 
   OopCodeConfig(
     Node child, {
@@ -155,6 +163,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.stringLiteralConfig,
     @required this.numericLiteralConfig,
     @required this.arrayLiteralConfig,
+    @required this.setLiteralConfig,
     @required this.mapLiteralConfig,
     @required this.cascadeConfig,
     @required this.spreadConfig,
@@ -235,9 +244,16 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.classConstructorNameConfig,
     @required this.classConstructorListConfig,
     @required this.classConstructorConfig,
+
+    // Mixin configs
     @required this.mixinNameConfig,
     @required this.mixinListConfig,
     @required this.mixinConfig,
+
+    // Extension configs
+    @required this.extensionNameConfig,
+    @required this.extensionListConfig,
+    @required this.extensionConfig,
   }) : super(child) {
     indentConfig = (_, child) => IndentConfig.useSpace2(child);
     blockConfig ??= (_, child) => CodeBlockConfig.curlyBracketSameLine(child);
@@ -275,6 +291,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
         (_, child) => CodeNumericLiteralConfig.forJavaLike(child);
     arrayLiteralConfig ??=
         (_, child) => CodeArrayLiteralConfig.forJavaLike(child);
+    setLiteralConfig ??= (_, child) => CodeSetLiteralConfig.forJavaLike(child);
     mapLiteralConfig ??= (_, child) => CodeMapLiteralConfig.forJavaLike(child);
     cascadeConfig ??= (_, child) => CodeCascadeConfig.noSupport(child);
     spreadConfig ??= (_, child) => CodeSpreadConfig.noSupport(child);
@@ -380,6 +397,9 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
         (_, child) => CodeConstructorListConfig.forJavaLike(child);
     classConstructorConfig ??=
         (_, child) => CodeConstructorConfig.forJavaLike(child);
+
+    // Mixin & Extension configs
+    // No support by default
   }
 
   @override
@@ -414,6 +434,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       stringLiteralConfig,
       numericLiteralConfig,
       arrayLiteralConfig,
+      setLiteralConfig,
       mapLiteralConfig,
       cascadeConfig,
       spreadConfig,
@@ -488,16 +509,22 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       interfaceConfig,
 
       // Class configs
-
       classNameConfig,
       classListConfig,
       classConfig,
       classConstructorNameConfig,
       classConstructorListConfig,
       classConstructorConfig,
+
+      // Mixin configs
       mixinNameConfig,
       mixinListConfig,
       mixinConfig,
+
+      // Extension configs
+      extensionNameConfig,
+      extensionListConfig,
+      extensionConfig,
     ];
 
     for (final i in configs.reversed) {

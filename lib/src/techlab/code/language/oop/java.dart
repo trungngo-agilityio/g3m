@@ -138,6 +138,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           stringLiteralConfig: null,
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
+          setLiteralConfig: null,
           mapLiteralConfig: null,
           cascadeConfig: null,
           spreadConfig: null,
@@ -218,8 +219,15 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           classConstructorNameConfig: null,
           classConstructorListConfig: null,
           classConstructorConfig: null,
+
+          // Mixin configs
           mixinNameConfig: null,
           mixinListConfig: null,
           mixinConfig: null,
+
+          // Extension config
+          extensionNameConfig: null,
+          extensionListConfig: null,
+          extensionConfig: null,
         );
 }

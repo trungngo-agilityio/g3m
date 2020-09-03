@@ -2,7 +2,7 @@ part of g3.stimpack2.meta.techlab;
 
 CodeProperty _lazyInitCodeProperty(CodeField field) {
   return CodeProperty.of(
-    name: 'ref',
+    name: field.name,
     type: field.type,
     getter: CodePropertyGetter.of(
       body: CodeReturn.of(

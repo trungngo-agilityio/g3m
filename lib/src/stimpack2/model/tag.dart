@@ -26,7 +26,6 @@ class StimModelTag extends StimModelSymbol<StimModelTag> {
 
   /// Gets the reference to this model.
   StimModelTag get ref => _ref ??= StimModelTagRef()..symbol = this;
-
 }
 
 class StimModelTagRef extends StimSymbolRef<StimModelTag>

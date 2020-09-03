@@ -143,6 +143,7 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
         isPrivate: false,
         isFinal: false,
         isOptional: null,
+        annotations: null,
       );
     }, error: error);
   }

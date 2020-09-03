@@ -79,6 +79,7 @@ class CodeOps {
   static const CodeOp conditionalAccessOp = CodeOp.exprOpExpr('?.');
   static const CodeOp listAccessOp = CodeOp.exprOpExpr('[]');
   static const CodeOp arrowOp = CodeOp.opExpr(' => ');
+  static const CodeOp nameArgOp = CodeOp.exprOpExpr(':');
 }
 
 class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
@@ -106,6 +107,8 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
               child = Container([e1, '.', e2]);
             } else if (op == CodeOps.conditionalAccessOp) {
               child = Container([e1, '?.', e2]);
+            } else if (op == CodeOps.nameArgOp) {
+              child = Container([e1, ': ', e2]);
             } else {
               child = Container([e1, ' ', name, ' ', e2]);
             }
@@ -409,7 +412,7 @@ class CodeAssignExpr extends SingleChildNode {
       : super(CodeExpr.open(
           CodeExprList.of(
             op: CodeOps.assignOp,
-            expr1: e1,
+            expr1: CodeRef.of(e1),
             expr2: e2,
           ),
         ));
@@ -640,6 +643,17 @@ class CodeArrowExpr extends SingleChildNode {
           CodeExprList.of(
             op: CodeOps.arrowOp,
             expr1: e1,
+          ),
+        ));
+}
+
+class CodeNameArgExpr extends SingleChildNode {
+  CodeNameArgExpr.of(dynamic e1, dynamic e2)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.nameArgOp,
+            expr1: CodeRef.of(e1),
+            expr2: e2,
           ),
         ));
 }

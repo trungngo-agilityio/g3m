@@ -10,18 +10,25 @@ void main() {
 
   test('gen', () {
     final meta = model.package.of(name: 'db');
-    final tTable =
-        t.symbolOf(name: 'table', package: meta, fields: null, values: {
+    final tTable = t.symbolOf(name: 'table', package: meta, values: {
       'user',
       'group',
     });
 
-    final tDatabase = t.symbolOf(name: 'database', package: meta, fields: null);
+    final tDatabase = t.symbolOf(name: 'database', package: meta);
+    final tColumn = t.symbolOf(name: 'column', package: meta);
+    final tIndex = t.symbolOf(name: 'index', package: meta);
+
     tDatabase.fields = {
       f.of(name: 'tables', type: t.setOf(item: tTable)).required(),
     };
 
-    expect(meta.types.length, equals(2));
+    tTable.fields = {
+      f.of(name: 'columns', type: t.setOf(item: tColumn)).required(),
+      f.of(name: 'indices', type: t.setOf(item: tIndex)),
+    };
+
+    expect(meta.types.length, equals(4));
     stimpackGen(meta, '/tmp/meta-test');
   });
 }

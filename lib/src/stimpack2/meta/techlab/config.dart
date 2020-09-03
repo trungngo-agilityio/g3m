@@ -33,6 +33,10 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return ('stim' >> pack.name).pascal();
   }
 
+  StimName packExtensionClassNameOf(StimModelPackage pack) {
+    return ('stim' >> pack.name >> 'pack extension').pascal();
+  }
+
   // ===========================================================================
   // Symbol
   // ===========================================================================
@@ -64,6 +68,13 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // ===========================================================================
   // Code
   // ===========================================================================
+  StimName fieldNameOfType(StimModelType type) {
+    return fieldNameSimplified(type.package, type.name);
+  }
+
+  StimName fieldNameSimplified(StimModelPackage pack, StimName name) {
+    return name.remove('stim').remove(pack.name).camel();
+  }
 
   String publicTypeScopeOf(StimModelPackage pack, StimModelType type) {
     final typePack = type?.package ?? pack;

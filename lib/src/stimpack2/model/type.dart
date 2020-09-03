@@ -2,7 +2,6 @@ part of g3.stimpack2.model;
 
 class StimModelTypes {
   StimModelType tag, tagSet;
-
 }
 
 class StimModelTypeScope {
@@ -25,13 +24,12 @@ class StimModelTypeScope {
   // Provides meta information for the model package.
   StimModelTypes model;
 
-
   StimModelType of({
     @meta.required dynamic name,
     Set<StimModelTag> tags,
     @meta.required StimModelPackage package,
     Set<StimModelType> mixins,
-    @meta.required Set<StimModelField> fields,
+    Set<StimModelField> fields,
   }) {
     final res = StimModelType()
       ..name = StimName.of(name)
@@ -128,6 +126,10 @@ class StimModelType extends StimModelSymbol<StimModelType> {
 
   /// True indicates that this is a collection type.
   bool get isCollection => collection != null;
+
+  bool get isDartSet => collection == stimpack.model.type.set;
+
+  bool get isDartList => collection == stimpack.model.type.list;
 
   StimModelTypeRef _ref;
 

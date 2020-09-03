@@ -176,6 +176,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
               CodeStringLiteralConfig.forDartLike(child),
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
+          setLiteralConfig: null,
           mapLiteralConfig: null,
           cascadeConfig: (_, child) => CodeCascadeConfig.forDartLike(child),
           spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
@@ -269,8 +270,16 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           classConstructorConfig: (_, child) =>
               CodeConstructorConfig.forDartLike(child),
 
+          // Mixin configs
           mixinNameConfig: (_, child) => CodeMixinNameConfig.forDartLike(child),
           mixinListConfig: (_, child) => CodeMixinListConfig.forDartLike(child),
           mixinConfig: (_, child) => CodeMixinConfig.forDartLike(child),
+
+          // Extension configs
+          extensionNameConfig: (_, child) =>
+              CodeExtensionNameConfig.forDartLike(child),
+          extensionListConfig: (_, child) =>
+              CodeExtensionListConfig.forDartLike(child),
+          extensionConfig: (_, child) => CodeExtensionConfig.forDartLike(child),
         );
 }

@@ -145,6 +145,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
               CodeStringLiteralConfig.forDartLike(child),
           numericLiteralConfig: null,
           arrayLiteralConfig: null,
+          setLiteralConfig: null,
           mapLiteralConfig: null,
           cascadeConfig: (_, child) => CodeCascadeConfig.noSupport(child),
           spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
@@ -233,8 +234,15 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           classConstructorListConfig: null,
           classConstructorConfig: (_, child) =>
               CodeConstructorConfig.forTypescriptLike(child),
+
+          // Mixin configs
           mixinNameConfig: null,
           mixinListConfig: null,
           mixinConfig: null,
+
+          // Extension config
+          extensionNameConfig: null,
+          extensionListConfig: null,
+          extensionConfig: null,
         );
 }

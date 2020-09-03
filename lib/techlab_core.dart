@@ -66,6 +66,8 @@ part 'src/techlab/code/core/expr/group_expr.dart';
 
 part 'src/techlab/code/core/expr/literal/array-literal.dart';
 
+part 'src/techlab/code/core/expr/literal/set_literal.dart';
+
 part 'src/techlab/code/core/expr/literal/boolean-literal.dart';
 
 part 'src/techlab/code/core/expr/literal/char-literal.dart';
@@ -125,6 +127,12 @@ part 'src/techlab/code/core/mixin/mixin-list.dart';
 part 'src/techlab/code/core/mixin/mixin-name.dart';
 
 part 'src/techlab/code/core/mixin/mixin.dart';
+
+part 'src/techlab/code/core/extension/extension-list.dart';
+
+part 'src/techlab/code/core/extension/extension-name.dart';
+
+part 'src/techlab/code/core/extension/extension.dart';
 
 part 'src/techlab/code/core/modifier.dart';
 

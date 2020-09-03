@@ -1,6 +1,5 @@
 part of g3.stimpack2.model;
 
-
 StimModel _model;
 
 extension StimModelExtension on Stimpack {
@@ -8,5 +7,3 @@ extension StimModelExtension on Stimpack {
     return _model ??= StimModel();
   }
 }
-
-

@@ -1,24 +1,24 @@
 part of g3.techlab;
 
-class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
-  CodeArrayLiteralConfig(NodeBuildFunc<CodeArrayLiteral> buildFunc, Node child)
+class CodeSetLiteralConfig extends CodeConfigNode<CodeSetLiteral> {
+  CodeSetLiteralConfig(NodeBuildFunc<CodeSetLiteral> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeArrayLiteralConfig.forJavaLike(
+  factory CodeSetLiteralConfig.forJavaLike(
     Node child, {
-    String emptyArray = '[]',
-    String openBracket = '[\n',
-    String closeBracket = '\n]',
+    String emptySet = '{}',
+    String openBracket = '{\n',
+    String closeBracket = '\n}',
     String separator = ',\n',
     String prefix,
     bool indent = true,
   }) =>
-      CodeArrayLiteralConfig((context, literal) {
+      CodeSetLiteralConfig((context, literal) {
         var values = literal.values;
         if (values == null) {
           return CodeNullLiteral();
         } else if (values.isNotEmpty != true) {
-          return Text.of(emptyArray);
+          return Text.of(emptySet);
         }
 
         var body = Join.of(
@@ -36,10 +36,10 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
         ]);
       }, child);
 
-  factory CodeArrayLiteralConfig.forYmlLike(Node child) =>
-      CodeArrayLiteralConfig.forJavaLike(
+  factory CodeSetLiteralConfig.forYmlLike(Node child) =>
+      CodeSetLiteralConfig.forJavaLike(
         child,
-        emptyArray: '',
+        emptySet: '',
         openBracket: '',
         closeBracket: '\n',
         separator: '\n',
@@ -47,12 +47,12 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
       );
 }
 
-class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral> {
+class CodeSetLiteral extends CodeConfigProxyNode<CodeSetLiteral> {
   final Iterable<CodeExpr> values;
 
-  CodeArrayLiteral._(this.values);
+  CodeSetLiteral._(this.values);
 
-  factory CodeArrayLiteral.of(Iterable<dynamic> value) {
+  factory CodeSetLiteral.of(Iterable<dynamic> value) {
     Iterable<CodeExpr> values;
 
     if (value == null) {
@@ -63,6 +63,6 @@ class CodeArrayLiteral extends CodeConfigProxyNode<CodeArrayLiteral> {
       values = [];
     }
 
-    return CodeArrayLiteral._(values);
+    return CodeSetLiteral._(values);
   }
 }
