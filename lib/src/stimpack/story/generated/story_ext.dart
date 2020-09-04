@@ -10,11 +10,8 @@ class StimStoryOnStimModelType {
   StimModelType action;
 
   StimModelType actor;
-}
 
-
-class StimStoryOnStimRbacResource {
-  StimRbacResource manageFeature;
+  StimModelType test;
 }
 
 
@@ -23,13 +20,5 @@ extension StimStoryOnStimModelTypeExtension on StimModelTypeScope {
   StimStoryOnStimModelType get story {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return stimpack.story.onStimModelType;
-  }
-}
-
-
-extension StimStoryOnStimRbacResourceExtension on StimRbacResourceScope {
-  StimStoryOnStimRbacResource get story {
-    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
-    return stimpack.story.onStimRbacResource;
   }
 }

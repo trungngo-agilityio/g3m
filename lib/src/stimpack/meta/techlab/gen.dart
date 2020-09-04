@@ -97,12 +97,20 @@ class StimGenMeta implements Node {
 
     for (final e in values.entries) {
       final type = e.key;
+      final values = e.value;
+      if (values == null) continue;
+
       if (type.package == pack) {
         // this is an internal package.
-        _internalValues[type] = e.value;
+        _internalValues[type] = values;
       } else {
         // this is an external package.
-        _externalValues[type] = e.value;
+        final current = _externalValues[type];
+        if (current == null) {
+          _externalValues[type] = values;
+        } else {
+          _externalValues[type] += values;
+        }
 
         // Adds the external pack to make sure it will
         // be loaded before this pack is loaded.

@@ -27,8 +27,6 @@ class StimStory extends StimPack {
 
   final StimStoryOnStimModelType onStimModelType;
 
-  final StimStoryOnStimRbacResource onStimRbacResource;
-
 
   StimStory(StimModel model, StimRbac rbac):
       epic = StimStoryEpicScope(),
@@ -36,7 +34,6 @@ class StimStory extends StimPack {
       action = StimStoryActionScope(),
       actor = StimStoryActorScope(),
       onStimModelType = StimStoryOnStimModelType(),
-      onStimRbacResource = StimStoryOnStimRbacResource(),
       super('story') {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
