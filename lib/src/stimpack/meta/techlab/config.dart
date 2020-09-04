@@ -5,6 +5,16 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
 
   String packFileNameOf(StimModelPackage pack) {
     var p = pack.name.snake();
+    return '${p}_pack';
+  }
+
+  String packExtFileNameOf(StimModelPackage pack) {
+    var p = pack.name.snake();
+    return '${p}_ext';
+  }
+
+  String libFileNameOf(StimModelPackage pack) {
+    var p = pack.name.snake();
     return '${p}';
   }
 
@@ -71,6 +81,29 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
 
   StimName metaTypesExtensionClassNameOf(StimModelPackage package) {
     return (metaTypesClassNameOf(package) >> 'extension').pascal();
+  }
+
+  // ===========================================================================
+  // External type extension
+  // ===========================================================================
+
+  StimName valueExtClassName(StimModelPackage package, StimModelType type) {
+    return ('stim' >> package.name >> 'on' >> type.name)
+        .pascal();
+  }
+
+  StimName valueExtFieldName(StimModelPackage package, StimModelType type) {
+    return ('on' >> type.name).camel();
+  }
+
+  StimName valueExtExtensionName(
+      StimModelPackage package, StimModelType type) {
+    return ('stim' >>
+            package.name >>
+            'on' >>
+            type.name >>
+            'extension')
+        .pascal();
   }
 
   // ===========================================================================

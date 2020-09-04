@@ -116,6 +116,5 @@ void main() {
     f.of(name: 'delete', type: tCrudDeleteApi),
   };
 
-  stimpack.meta.validate(meta);
-  stimpackGen(meta, 'lib/src/stimpack/${meta.name.snake()}');
+  stimpackGen(meta, 'lib/src/stimpack');
 }

@@ -9,20 +9,12 @@ void main() {
   final meta = m.package.of(name: 'rbac');
 
   final tAction = t.symbolOf(name: 'action', package: meta);
-  final tResource = t.symbolOf(
-    name: 'resource',
-    package: meta,
-    values: _resources,
-  );
+  final tResource = t.symbolOf(name: 'resource', package: meta);
 
   final tGroup = t.symbolOf(name: 'group', package: meta);
-  final tRole = t.symbolOf(name: 'role', package: meta, values: _roles);
+  final tRole = t.symbolOf(name: 'role', package: meta);
   final tPolicy = t.symbolOf(name: 'policy', package: meta);
-  final tPolicyKind = t.symbolOf(
-    name: 'policy kind',
-    package: meta,
-    values: {'allow', 'deny'},
-  );
+  final tPolicyKind = t.symbolOf(name: 'policy kind', package: meta);
 
   tGroup.fields = {
     // group can have multiple sub groups
@@ -54,8 +46,11 @@ void main() {
     f.setOf(name: 'roles', type: tRole),
   };
 
-  stimpack.meta.validate(meta);
-  stimpackGen(meta, 'lib/src/stimpack/${meta.name.snake()}');
+  stimpackGen(meta, 'lib/src/stimpack', values: {
+    tPolicyKind: {'allow', 'deny'},
+    tResource: _resources,
+    tRole: _roles,
+  });
 }
 
 final _resources = {

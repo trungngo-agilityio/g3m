@@ -2,11 +2,14 @@ part of g3.stimpack.meta.techlab;
 
 class StimGenMetaType implements Node {
   final StimModelPackage pack;
+
   final StimModelType type;
+
+  /// The values attached to the type via a meta tag.
+  final Set<String> metaValues;
 
   StimModelField _tagSetField;
   Set<StimModelField> _metaFields;
-  Set<StimModelTag> _metaTags;
 
   StimName _stimNameClass,
       _symbolClassName,
@@ -16,7 +19,7 @@ class StimGenMetaType implements Node {
 
   StimpackCodeConfig _config;
 
-  StimGenMetaType(this.pack, this.type);
+  StimGenMetaType(this.pack, this.type, this.metaValues);
 
   @override
   Node build(BuildContext context) {
@@ -40,7 +43,6 @@ class StimGenMetaType implements Node {
 
     _metaFields = type.fields ?? {};
     _tagSetField = f.of(name: 'tags', type: t.tagSet);
-    _metaTags = type.tags ?? {};
 
     _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
 
@@ -96,11 +98,10 @@ class StimGenMetaType implements Node {
   CodeClass _symbolScopeClassDef() {
     final fields = <CodeField>[];
 
-    if (type.tags != null) {
-      for (final value in _metaTags) {
-        // TODO: Support 1 type, multiple names
+    if (metaValues?.isNotEmpty == true) {
+      for (final value in metaValues) {
         final field = CodeField.of(
-          name: value.name,
+          name: value,
           type: _symbolClassName,
         );
         fields.add(field);

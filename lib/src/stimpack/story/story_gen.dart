@@ -11,14 +11,7 @@ void main() {
 
   final tStory = t.symbolOf(name: 'story', package: meta);
 
-  final tAction = t.symbolOf(
-      name: 'action',
-      package: meta,
-      values: _crudActions +
-          _authActions +
-          _reversibleActions +
-          _flowActions +
-          _miscActions);
+  final tAction = t.symbolOf(name: 'action', package: meta);
 
   final tActor = t.symbolOf(name: 'actor', package: meta);
 
@@ -37,7 +30,13 @@ void main() {
   };
 
   stimpack.meta.validate(meta);
-  stimpackGen(meta, 'lib/src/stimpack/${meta.name.snake()}');
+  stimpackGen(meta, 'lib/src/stimpack', values: {
+    tAction: _crudActions +
+        _authActions +
+        _reversibleActions +
+        _flowActions +
+        _miscActions
+  });
 }
 
 const _crudActions = {

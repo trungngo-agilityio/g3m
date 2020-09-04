@@ -305,7 +305,7 @@ class StimName {
   }
 
   bool isEquals(other) {
-    return _text == other?.toString();
+    return toString() == other?.toString();
   }
 }
 
