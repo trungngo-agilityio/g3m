@@ -328,6 +328,7 @@ class StimModel extends StimPack {
   void _primitiveTypes() {
     final t = type;
     t.primitiveTypes = {
+      t.string = _t('string'),
       t.num = _t('num'),
       t.int = _t('int'),
       t.double = _t('double'),

@@ -34,6 +34,7 @@ void main() {
   // object should be streamed. This is for grpc api.
   final fStreamed = f.of(name: 'streamed', type: t.bool);
   final fIdField = f.of(name: 'id field', type: t.model.field);
+  final fRequiredIdField = fIdField.clone().required();
 
   // A data model that can be associated to an api.
   final fModel = f.of(name: 'model', type: t.model.type);
@@ -83,29 +84,31 @@ void main() {
   // Crud API field definitions
   // ---------------------------------------------------------------------------
 
-  final oneApis = {
+  final crudOneApis = {
     tCrudCreateOneApi,
     tCrudUpdateOneApi,
     tCrudFindOneApi,
     tCrudDeleteOneApi
   };
 
-  for (final api in oneApis) {
-    api.fields += {
-      // The security policy applied to this api.
-      fRbacPolicy,
+  final allCrudApis = crudOneApis + tCrudDeleteApi + tCrudFindApi;
 
-      // The model id fields
-      fIdField,
+  /// All crud one apis should have an optional id field.
+  for (final api in crudOneApis) {
+    api.fields += fIdField;
+  }
 
-      // The sub set of model fields to return
-      fResponseFieldSet,
-    };
+  /// All crud apis should have security policy and a response.
+  for (final api in allCrudApis) {
+    api.fields += fRbacPolicy + fResponseFieldSet;
   }
 
   tCrudApi.fields = {
     // The data model affected by these apis.
     fModel,
+
+    // Marks which field in the data model is the id field.
+    fRequiredIdField,
 
     // sub apis
     f.of(name: 'create one', type: tCrudCreateOneApi),

@@ -9,11 +9,14 @@ void main() {
   final t = m.type, f = m.field;
   final meta = m.package.of(name: 'story');
 
+  final tEpic = t.symbolOf(name: 'epic', package: meta);
   final tStory = t.symbolOf(name: 'story', package: meta);
-
   final tAction = t.symbolOf(name: 'action', package: meta);
-
   final tActor = t.symbolOf(name: 'actor', package: meta);
+
+  tEpic.fields = {
+    f.setOf(name: 'stories', type: tStory).required(),
+  };
 
   tStory.fields = {
     f.of(name: 'actor', type: tActor).required(),
@@ -29,7 +32,6 @@ void main() {
     f.setOf(name: 'actions', type: tAction),
   };
 
-  stimpack.meta.validate(meta);
   stimpackGen(meta, 'lib/src/stimpack', values: {
     tAction: _crudActions +
         _authActions +

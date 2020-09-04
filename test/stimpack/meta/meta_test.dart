@@ -10,10 +10,7 @@ void main() {
 
   test('gen', () {
     final meta = model.package.of(name: 'db');
-    final tTable = t.symbolOf(name: 'table', package: meta, values: {
-      'user',
-      'group',
-    });
+    final tTable = t.symbolOf(name: 'table', package: meta);
 
     final tDatabase = t.symbolOf(name: 'database', package: meta);
     final tColumn = t.symbolOf(name: 'column', package: meta);
@@ -29,6 +26,8 @@ void main() {
     };
 
     expect(meta.types.length, equals(4));
-    stimpackGen(meta, '/tmp/meta-test');
+    stimpackGen(meta, '/tmp/meta-test', values: {
+      tTable: {'user', 'group'},
+    });
   });
 }
