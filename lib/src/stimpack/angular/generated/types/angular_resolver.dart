@@ -3,12 +3,24 @@ part of g3.stimpack.angular.generated;
 
 
 class StimAngularResolver extends StimModelSymbol<StimAngularResolver> {
-  StimAngularResolverRef _ref;
-
-  StimAngularResolverRef get ref {
-    return _ref ??= StimAngularResolverRef();
-  }
   StimAngularResolver();
+
+
+  StimAngularResolver ref() {
+    return StimAngularResolverRef()..symbol = this;
+  }
+
+  /// Creates a new "resolver" of [StimAngularResolver] type.
+  StimAngularResolver refWith({dynamic name, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

@@ -9,6 +9,10 @@ StimStory _story;
 class StimStory extends StimPack {
   StimModelPackage _metaPackage;
 
+  /// Scope class for constructing all "epic" symbols, 
+  /// typed of [StimStoryEpic]."
+  final StimStoryEpicScope epic;
+
   /// Scope class for constructing all "story" symbols, 
   /// typed of [StimStoryStory]."
   final StimStoryStoryScope story;
@@ -25,6 +29,7 @@ class StimStory extends StimPack {
 
 
   StimStory(StimModel model, StimRbac rbac):
+      epic = StimStoryEpicScope(),
       story = StimStoryStoryScope(),
       action = StimStoryActionScope(),
       actor = StimStoryActorScope(),
@@ -43,6 +48,9 @@ class StimStory extends StimPack {
     final m = stimpack.model, f = m.field, t = m.type;
     final mp = _metaPackage = m.package.of(name: 'story');
     final mt = onStimModelType;
+    /// Builds type "epic"
+    mt.epic = t.symbolOf(name: 'epic', package: mp);
+
     /// Builds type "story"
     mt.story = t.symbolOf(name: 'story', package: mp);
 
@@ -51,6 +59,12 @@ class StimStory extends StimPack {
 
     /// Builds type "actor"
     mt.actor = t.symbolOf(name: 'actor', package: mp);
+
+    /// Builds fields for type "epic"
+    mt.epic.fields = {
+      /// field "epic"
+      f.of(name: 'stories', type: t.setOf(item: mt.story)).required()
+    };
 
     /// Builds fields for type "story"
     mt.story.fields = {

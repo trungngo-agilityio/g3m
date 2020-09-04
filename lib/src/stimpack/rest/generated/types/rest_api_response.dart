@@ -7,12 +7,30 @@ class StimRestApiResponse extends StimModelSymbol<StimRestApiResponse> {
 
   Set<StimModelField> fields;
 
-  StimRestApiResponseRef _ref;
-
-  StimRestApiResponseRef get ref {
-    return _ref ??= StimRestApiResponseRef();
-  }
   StimRestApiResponse();
+
+
+  StimRestApiResponse ref() {
+    return StimRestApiResponseRef()..symbol = this;
+  }
+
+  /// Creates a new "apiResponse" of [StimRestApiResponse] type.
+  StimRestApiResponse refWith({dynamic name, bool streamed, Set<StimModelField> fields, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (streamed != null) {
+      res.streamed = streamed;
+    }
+    if (fields != null) {
+      res.fields = fields;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

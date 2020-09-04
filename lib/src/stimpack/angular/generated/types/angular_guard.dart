@@ -3,12 +3,24 @@ part of g3.stimpack.angular.generated;
 
 
 class StimAngularGuard extends StimModelSymbol<StimAngularGuard> {
-  StimAngularGuardRef _ref;
-
-  StimAngularGuardRef get ref {
-    return _ref ??= StimAngularGuardRef();
-  }
   StimAngularGuard();
+
+
+  StimAngularGuard ref() {
+    return StimAngularGuardRef()..symbol = this;
+  }
+
+  /// Creates a new "guard" of [StimAngularGuard] type.
+  StimAngularGuard refWith({dynamic name, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

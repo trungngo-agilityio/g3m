@@ -7,12 +7,30 @@ class StimAngularComponent extends StimModelSymbol<StimAngularComponent> {
 
   StimAngularComponentStyle style;
 
-  StimAngularComponentRef _ref;
-
-  StimAngularComponentRef get ref {
-    return _ref ??= StimAngularComponentRef();
-  }
   StimAngularComponent();
+
+
+  StimAngularComponent ref() {
+    return StimAngularComponentRef()..symbol = this;
+  }
+
+  /// Creates a new "component" of [StimAngularComponent] type.
+  StimAngularComponent refWith({dynamic name, StimAngularComponentTemplate template, StimAngularComponentStyle style, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (template != null) {
+      res.template = template;
+    }
+    if (style != null) {
+      res.style = style;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

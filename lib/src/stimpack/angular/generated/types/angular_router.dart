@@ -7,12 +7,30 @@ class StimAngularRouter extends StimModelSymbol<StimAngularRouter> {
 
   Set<StimAngularRouterRedirect> redirects;
 
-  StimAngularRouterRef _ref;
-
-  StimAngularRouterRef get ref {
-    return _ref ??= StimAngularRouterRef();
-  }
   StimAngularRouter();
+
+
+  StimAngularRouter ref() {
+    return StimAngularRouterRef()..symbol = this;
+  }
+
+  /// Creates a new "router" of [StimAngularRouter] type.
+  StimAngularRouter refWith({dynamic name, Set<StimAngularRouter> entries, Set<StimAngularRouterRedirect> redirects, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (entries != null) {
+      res.entries = entries;
+    }
+    if (redirects != null) {
+      res.redirects = redirects;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

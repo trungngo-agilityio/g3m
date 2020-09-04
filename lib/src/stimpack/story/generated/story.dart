@@ -9,6 +9,7 @@ import 'package:g3m/stimpack_rbac.dart';
 part '../story_init.dart';
 part 'story_pack.dart';
 part 'story_ext.dart';
+part 'types/story_epic.dart';
 part 'types/story_story.dart';
 part 'types/story_action.dart';
 part 'types/story_actor.dart';

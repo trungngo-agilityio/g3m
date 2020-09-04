@@ -5,6 +5,10 @@ import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_rbac.dart';
 
 void main() {
+  genRestPack();
+}
+
+void genRestPack() {
   final m = stimpack.model;
   final t = m.type, f = m.field;
   final meta = m.package.of(name: 'rest');

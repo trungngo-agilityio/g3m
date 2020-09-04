@@ -7,12 +7,30 @@ class StimAngularApp extends StimModelSymbol<StimAngularApp> {
 
   Set<StimAngularFeature> features;
 
-  StimAngularAppRef _ref;
-
-  StimAngularAppRef get ref {
-    return _ref ??= StimAngularAppRef();
-  }
   StimAngularApp();
+
+
+  StimAngularApp ref() {
+    return StimAngularAppRef()..symbol = this;
+  }
+
+  /// Creates a new "app" of [StimAngularApp] type.
+  StimAngularApp refWith({dynamic name, StimIoDir featureDir, Set<StimAngularFeature> features, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (featureDir != null) {
+      res.featureDir = featureDir;
+    }
+    if (features != null) {
+      res.features = features;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

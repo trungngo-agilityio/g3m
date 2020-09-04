@@ -144,6 +144,9 @@ class StimRest extends StimPack {
       f.of(name: 'model', type: t.model.type),
 
       /// field "crudApi"
+      f.of(name: 'id field', type: t.model.field).required(),
+
+      /// field "crudApi"
       f.of(name: 'create one', type: mt.crudCreateOneApi),
 
       /// field "crudApi"
@@ -165,10 +168,10 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudCreateOneApi"
     mt.crudCreateOneApi.fields = {
       /// field "crudCreateOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudCreateOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'policy', type: t.rbac.policy),
 
       /// field "crudCreateOneApi"
       f.of(name: 'response', type: t.setOf(item: t.model.field))
@@ -177,10 +180,10 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudUpdateOneApi"
     mt.crudUpdateOneApi.fields = {
       /// field "crudUpdateOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudUpdateOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'policy', type: t.rbac.policy),
 
       /// field "crudUpdateOneApi"
       f.of(name: 'response', type: t.setOf(item: t.model.field))
@@ -189,10 +192,10 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudFindOneApi"
     mt.crudFindOneApi.fields = {
       /// field "crudFindOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudFindOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'policy', type: t.rbac.policy),
 
       /// field "crudFindOneApi"
       f.of(name: 'response', type: t.setOf(item: t.model.field))
@@ -201,12 +204,30 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudDeleteOneApi"
     mt.crudDeleteOneApi.fields = {
       /// field "crudDeleteOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudDeleteOneApi"
       f.of(name: 'id field', type: t.model.field),
 
       /// field "crudDeleteOneApi"
+      f.of(name: 'policy', type: t.rbac.policy),
+
+      /// field "crudDeleteOneApi"
+      f.of(name: 'response', type: t.setOf(item: t.model.field))
+    };
+
+    /// Builds fields for type "crudFindApi"
+    mt.crudFindApi.fields = {
+      /// field "crudFindApi"
+      f.of(name: 'policy', type: t.rbac.policy),
+
+      /// field "crudFindApi"
+      f.of(name: 'response', type: t.setOf(item: t.model.field))
+    };
+
+    /// Builds fields for type "crudDeleteApi"
+    mt.crudDeleteApi.fields = {
+      /// field "crudDeleteApi"
+      f.of(name: 'policy', type: t.rbac.policy),
+
+      /// field "crudDeleteApi"
       f.of(name: 'response', type: t.setOf(item: t.model.field))
     };
   }

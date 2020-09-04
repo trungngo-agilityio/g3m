@@ -11,12 +11,36 @@ class StimIoDir extends StimModelSymbol<StimIoDir> {
 
   Set<StimIoDir> dirs;
 
-  StimIoDirRef _ref;
-
-  StimIoDirRef get ref {
-    return _ref ??= StimIoDirRef();
-  }
   StimIoDir();
+
+
+  StimIoDir ref() {
+    return StimIoDirRef()..symbol = this;
+  }
+
+  /// Creates a new "dir" of [StimIoDir] type.
+  StimIoDir refWith({dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (path != null) {
+      res.path = path;
+    }
+    if (absolutePath != null) {
+      res.absolutePath = absolutePath;
+    }
+    if (files != null) {
+      res.files = files;
+    }
+    if (dirs != null) {
+      res.dirs = dirs;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

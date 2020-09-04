@@ -3,12 +3,24 @@ part of g3.stimpack.rbac.generated;
 
 
 class StimRbacAction extends StimModelSymbol<StimRbacAction> {
-  StimRbacActionRef _ref;
-
-  StimRbacActionRef get ref {
-    return _ref ??= StimRbacActionRef();
-  }
   StimRbacAction();
+
+
+  StimRbacAction ref() {
+    return StimRbacActionRef()..symbol = this;
+  }
+
+  /// Creates a new "action" of [StimRbacAction] type.
+  StimRbacAction refWith({dynamic name, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

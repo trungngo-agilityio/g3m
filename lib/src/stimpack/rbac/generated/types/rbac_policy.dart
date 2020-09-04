@@ -9,12 +9,36 @@ class StimRbacPolicy extends StimModelSymbol<StimRbacPolicy> {
 
   Set<StimRbacAction> actions;
 
-  StimRbacPolicyRef _ref;
-
-  StimRbacPolicyRef get ref {
-    return _ref ??= StimRbacPolicyRef();
-  }
   StimRbacPolicy();
+
+
+  StimRbacPolicy ref() {
+    return StimRbacPolicyRef()..symbol = this;
+  }
+
+  /// Creates a new "policy" of [StimRbacPolicy] type.
+  StimRbacPolicy refWith({dynamic name, @required
+  StimRbacPolicyKind kind, @required
+  Set<StimRbacResource> resources, @required
+  Set<StimRbacAction> actions, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (kind != null) {
+      res.kind = kind;
+    }
+    if (resources != null) {
+      res.resources = resources;
+    }
+    if (actions != null) {
+      res.actions = actions;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

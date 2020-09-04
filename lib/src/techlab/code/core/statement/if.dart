@@ -10,23 +10,25 @@ class CodeIfConfig extends CodeConfigNode<CodeIf> {
     String elseKeyword = 'else',
   }) {
     return CodeIfConfig((context, expr) {
-      return Container([
-        expr.comment,
-        ifKeyword,
-        ' (',
-        expr.condition,
-        ') ',
-        CodeBlock.of(expr.then),
-        Container(expr.elseIfs),
-        expr.orElse != null
-            ? Container([
-                ' ',
-                elseKeyword,
-                ' ',
-                CodeBlock.of(expr.orElse),
-              ])
-            : null,
-      ]);
+      return CodeExpr.closed(
+        Container([
+          expr.comment,
+          ifKeyword,
+          ' (',
+          expr.condition,
+          ') ',
+          CodeBlock.of(expr.then),
+          Container(expr.elseIfs),
+          expr.orElse != null
+              ? Container([
+                  ' ',
+                  elseKeyword,
+                  ' ',
+                  CodeBlock.of(expr.orElse),
+                ])
+              : null,
+        ]),
+      );
     }, child);
   }
 }

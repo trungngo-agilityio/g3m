@@ -5,12 +5,27 @@ part of g3.stimpack.angular.generated;
 class StimAngularRouterRedirect extends StimModelSymbol<StimAngularRouterRedirect> {
   StimAngularRouterPath path;
 
-  StimAngularRouterRedirectRef _ref;
-
-  StimAngularRouterRedirectRef get ref {
-    return _ref ??= StimAngularRouterRedirectRef();
-  }
   StimAngularRouterRedirect();
+
+
+  StimAngularRouterRedirect ref() {
+    return StimAngularRouterRedirectRef()..symbol = this;
+  }
+
+  /// Creates a new "routerRedirect" of [StimAngularRouterRedirect] type.
+  StimAngularRouterRedirect refWith({dynamic name, StimAngularRouterPath path, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (path != null) {
+      res.path = path;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

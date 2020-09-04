@@ -3,6 +3,8 @@ part of g3.stimpack.story.generated;
 
 
 class StimStoryOnStimModelType {
+  StimModelType epic;
+
   StimModelType story;
 
   StimModelType action;

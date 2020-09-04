@@ -68,19 +68,79 @@ class StimGenMetaType implements Node {
       );
     }
 
-    final refField =
-        CodeField.of(name: 'ref', type: _symbolRefClassName, isPrivate: true);
-    fields.add(refField);
-
-    final refProperty = _lazyInitCodeProperty(refField);
+    final refClass = _config.symbolRefClassNameOf(pack, type);
+    final refFunction = CodeFunction.of(
+      name: 'ref',
+      returns: _symbolClassName,
+      body: CodeReturn.of(
+        Container([
+          CodeConstructorCall.of(className: refClass),
+          CodeCascadeExpr.of(CodeAssignExpr.of('symbol', CodeRef.ofThis())),
+        ]),
+      ),
+    );
 
     return CodeClass.of(
       name: _symbolClassName,
       extend: baseSymbolClass,
       fields: fields.toList(),
-      properties: [refProperty],
+      functions: [
+        refFunction,
+        _symbolClassRefWithFunction(),
+      ],
       constructors: CodeConstructor.of(),
     );
+  }
+
+  Node _ifNullThenAssignStatement(StimName name, [Node value]) {
+    // This is the value assigned to the field.
+    // In the case of dart set and list data type, we inits
+    // the field with empty set/list to avoid null check.
+    value ??= CodeRef.of(name);
+    Node expr = CodeAssignExpr.of(CodeAccessExpr.of('res', name), value);
+    expr = CodeIf.of(
+        condition: CodeNotEqualExpr.of(name, CodeNullLiteral()), then: expr);
+    expr = Container([expr, '\n']);
+    return expr;
+  }
+
+  CodeFunction _symbolClassRefWithFunction() {
+    // Copies all input arguments to the symbol.
+    final assignList = <Node>[];
+
+    final nameRef = CodeRef.of('name');
+
+    // Copy the dynamic input name, and covert it to a stim name.
+
+    final createName = CodeConstructorCall.of(
+        className: _stimNameClass, name: 'of', args: nameRef);
+    assignList.add(_ifNullThenAssignStatement(
+      StimName.of('name'),
+      createName,
+    ));
+
+    for (final field in _metaFields + _tagSetField) {
+      final name = field.name.camel();
+      assignList.add(_ifNullThenAssignStatement(name));
+    }
+
+    final resVar = CodeVar.of(
+        name: 'res', isFinal: true, init: CodeFunctionCall.of(name: 'ref'));
+
+    final resVarRef = CodeRef.of(resVar);
+    final body = <Node>[
+      resVar,
+      ...assignList,
+      CodeReturn.of(resVarRef),
+    ];
+
+    final ofFunction = _createSymbolFunction(
+      'refWith',
+      comment:
+          '''Creates a reference to the current symbol "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
+      body: Container(body),
+    );
+    return ofFunction;
   }
 
   CodeClass _symbolRefClassDef() {
@@ -108,6 +168,14 @@ class StimGenMetaType implements Node {
       }
     }
 
+    return CodeClass.of(
+      name: _scopeClassName,
+      fields: fields,
+      functions: [_scopeClassOfFunction()],
+    );
+  }
+
+  CodeFunction _scopeClassOfFunction() {
     final nameRef = CodeRef.of('name');
 
     // Copy the dynamic input name, and covert it to a stim name.
@@ -147,7 +215,10 @@ class StimGenMetaType implements Node {
       ...argsAssign,
     ];
 
-    final ofFunction = _scopeClassOfFunction(
+    final ofFunction = _createSymbolFunction(
+      'of',
+      comment:
+          '''Creates a new "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
       body: CodeReturn.of(
         _cascadeMultiCodeLine(
           CodeConstructorCall.of(className: _symbolClassName),
@@ -155,15 +226,14 @@ class StimGenMetaType implements Node {
         ),
       ),
     );
-
-    return CodeClass.of(
-      name: _scopeClassName,
-      fields: fields,
-      functions: [ofFunction],
-    );
+    return ofFunction;
   }
 
-  CodeFunction _scopeClassOfFunction({Node body}) {
+  CodeFunction _createSymbolFunction(
+    String functionName, {
+    Node body,
+    String comment,
+  }) {
     final ofFunctionArgs = <CodeArg>[
       CodeArg.of(name: 'name', type: 'dynamic'),
     ];
@@ -181,7 +251,7 @@ class StimGenMetaType implements Node {
     }
 
     return CodeFunction.of(
-      name: 'of',
+      name: functionName,
       returns: _symbolClassName,
       namedArgs: ofFunctionArgs,
       body: body,

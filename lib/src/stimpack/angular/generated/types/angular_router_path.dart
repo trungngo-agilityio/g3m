@@ -9,12 +9,33 @@ class StimAngularRouterPath extends StimModelSymbol<StimAngularRouterPath> {
 
   Set<StimAngularRouterParam> params;
 
-  StimAngularRouterPathRef _ref;
-
-  StimAngularRouterPathRef get ref {
-    return _ref ??= StimAngularRouterPathRef();
-  }
   StimAngularRouterPath();
+
+
+  StimAngularRouterPath ref() {
+    return StimAngularRouterPathRef()..symbol = this;
+  }
+
+  /// Creates a new "routerPath" of [StimAngularRouterPath] type.
+  StimAngularRouterPath refWith({dynamic name, String path, StimAngularRouterPath parent, Set<StimAngularRouterParam> params, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (path != null) {
+      res.path = path;
+    }
+    if (parent != null) {
+      res.parent = parent;
+    }
+    if (params != null) {
+      res.params = params;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

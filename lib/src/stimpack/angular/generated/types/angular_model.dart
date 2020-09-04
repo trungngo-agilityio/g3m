@@ -3,12 +3,24 @@ part of g3.stimpack.angular.generated;
 
 
 class StimAngularModel extends StimModelSymbol<StimAngularModel> {
-  StimAngularModelRef _ref;
-
-  StimAngularModelRef get ref {
-    return _ref ??= StimAngularModelRef();
-  }
   StimAngularModel();
+
+
+  StimAngularModel ref() {
+    return StimAngularModelRef()..symbol = this;
+  }
+
+  /// Creates a new "model" of [StimAngularModel] type.
+  StimAngularModel refWith({dynamic name, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

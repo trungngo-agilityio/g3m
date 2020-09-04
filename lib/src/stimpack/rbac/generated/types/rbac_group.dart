@@ -7,12 +7,30 @@ class StimRbacGroup extends StimModelSymbol<StimRbacGroup> {
 
   Set<StimRbacRole> roles;
 
-  StimRbacGroupRef _ref;
-
-  StimRbacGroupRef get ref {
-    return _ref ??= StimRbacGroupRef();
-  }
   StimRbacGroup();
+
+
+  StimRbacGroup ref() {
+    return StimRbacGroupRef()..symbol = this;
+  }
+
+  /// Creates a new "group" of [StimRbacGroup] type.
+  StimRbacGroup refWith({dynamic name, Set<StimRbacGroup> groups, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (groups != null) {
+      res.groups = groups;
+    }
+    if (roles != null) {
+      res.roles = roles;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

@@ -3,12 +3,24 @@ part of g3.stimpack.angular.generated;
 
 
 class StimAngularComponentTemplate extends StimModelSymbol<StimAngularComponentTemplate> {
-  StimAngularComponentTemplateRef _ref;
-
-  StimAngularComponentTemplateRef get ref {
-    return _ref ??= StimAngularComponentTemplateRef();
-  }
   StimAngularComponentTemplate();
+
+
+  StimAngularComponentTemplate ref() {
+    return StimAngularComponentTemplateRef()..symbol = this;
+  }
+
+  /// Creates a new "componentTemplate" of [StimAngularComponentTemplate] type.
+  StimAngularComponentTemplate refWith({dynamic name, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

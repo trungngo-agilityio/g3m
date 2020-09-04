@@ -7,12 +7,30 @@ class StimAngularFeature extends StimModelSymbol<StimAngularFeature> {
 
   StimAngularModule module;
 
-  StimAngularFeatureRef _ref;
-
-  StimAngularFeatureRef get ref {
-    return _ref ??= StimAngularFeatureRef();
-  }
   StimAngularFeature();
+
+
+  StimAngularFeature ref() {
+    return StimAngularFeatureRef()..symbol = this;
+  }
+
+  /// Creates a new "feature" of [StimAngularFeature] type.
+  StimAngularFeature refWith({dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (features != null) {
+      res.features = features;
+    }
+    if (module != null) {
+      res.module = module;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

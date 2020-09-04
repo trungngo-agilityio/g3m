@@ -4,6 +4,10 @@ import 'package:g3m/stimpack_meta_techlab.dart';
 import 'package:g3m/stimpack_model.dart';
 
 void main() {
+  genRbacPack();
+}
+
+void genRbacPack() {
   final m = stimpack.model;
   final t = m.type, f = m.field;
   final meta = m.package.of(name: 'rbac');

@@ -3,12 +3,24 @@ part of g3.stimpack.angular.generated;
 
 
 class StimAngularRouterParam extends StimModelSymbol<StimAngularRouterParam> {
-  StimAngularRouterParamRef _ref;
-
-  StimAngularRouterParamRef get ref {
-    return _ref ??= StimAngularRouterParamRef();
-  }
   StimAngularRouterParam();
+
+
+  StimAngularRouterParam ref() {
+    return StimAngularRouterParamRef()..symbol = this;
+  }
+
+  /// Creates a new "routerParam" of [StimAngularRouterParam] type.
+  StimAngularRouterParam refWith({dynamic name, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 

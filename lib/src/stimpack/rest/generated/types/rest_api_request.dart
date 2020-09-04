@@ -7,12 +7,30 @@ class StimRestApiRequest extends StimModelSymbol<StimRestApiRequest> {
 
   Set<StimModelField> fields;
 
-  StimRestApiRequestRef _ref;
-
-  StimRestApiRequestRef get ref {
-    return _ref ??= StimRestApiRequestRef();
-  }
   StimRestApiRequest();
+
+
+  StimRestApiRequest ref() {
+    return StimRestApiRequestRef()..symbol = this;
+  }
+
+  /// Creates a new "apiRequest" of [StimRestApiRequest] type.
+  StimRestApiRequest refWith({dynamic name, bool streamed, Set<StimModelField> fields, Set<StimModelTag> tags}) {
+    final res = ref();
+    if (name != null) {
+      res.name = StimName.of(name);
+    }
+    if (streamed != null) {
+      res.streamed = streamed;
+    }
+    if (fields != null) {
+      res.fields = fields;
+    }
+    if (tags != null) {
+      res.tags = tags;
+    }
+    return res;
+  }
 }
 
 
