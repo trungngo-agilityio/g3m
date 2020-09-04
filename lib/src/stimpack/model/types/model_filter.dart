@@ -44,11 +44,8 @@ class StimModelFieldFilterScope {
 }
 
 class StimModelFieldFilter extends StimModelSymbol<StimModelFieldFilter> {
-  StimModelFieldFilterRef _ref;
-
   /// Gets the reference to this model.
-  StimModelFieldFilter get ref =>
-      _ref ??= StimModelFieldFilterRef()..symbol = this;
+  StimModelFieldFilter ref() => StimModelFieldFilterRef()..symbol = this;
 
   StimModelFieldFilter();
 }

@@ -1,7 +1,5 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularRouter extends StimModelSymbol<StimAngularRouter> {
   Set<StimAngularRouter> entries;
 
@@ -9,13 +7,16 @@ class StimAngularRouter extends StimModelSymbol<StimAngularRouter> {
 
   StimAngularRouter();
 
-
   StimAngularRouter ref() {
     return StimAngularRouterRef()..symbol = this;
   }
 
   /// Creates a new "router" of [StimAngularRouter] type.
-  StimAngularRouter refWith({dynamic name, Set<StimAngularRouter> entries, Set<StimAngularRouterRedirect> redirects, Set<StimModelTag> tags}) {
+  StimAngularRouter refWith(
+      {dynamic name,
+      Set<StimAngularRouter> entries,
+      Set<StimAngularRouterRedirect> redirects,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -33,19 +34,20 @@ class StimAngularRouter extends StimModelSymbol<StimAngularRouter> {
   }
 }
 
-
-class StimAngularRouterRef extends StimSymbolRef<StimAngularRouter> implements StimAngularRouter {
-
-}
-
+class StimAngularRouterRef extends StimSymbolRef<StimAngularRouter>
+    implements StimAngularRouter {}
 
 class StimAngularRouterScope {
   /// Creates a new "router" of [StimAngularRouter] type.
-  StimAngularRouter of({dynamic name, Set<StimAngularRouter> entries, Set<StimAngularRouterRedirect> redirects, Set<StimModelTag> tags}) {
+  StimAngularRouter of(
+      {dynamic name,
+      Set<StimAngularRouter> entries,
+      Set<StimAngularRouterRedirect> redirects,
+      Set<StimModelTag> tags}) {
     return StimAngularRouter()
-        ..name = StimName.of(name)
-        ..entries = entries ?? {}
-        ..redirects = redirects ?? {}
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..entries = entries ?? {}
+      ..redirects = redirects ?? {}
+      ..tags = tags ?? {};
   }
 }

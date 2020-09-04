@@ -1,19 +1,17 @@
 part of g3.stimpack.rbac.generated;
 
-
-
 class StimRbacRole extends StimModelSymbol<StimRbacRole> {
   Set<StimRbacRole> roles;
 
   StimRbacRole();
-
 
   StimRbacRole ref() {
     return StimRbacRoleRef()..symbol = this;
   }
 
   /// Creates a new "role" of [StimRbacRole] type.
-  StimRbacRole refWith({dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+  StimRbacRole refWith(
+      {dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -28,11 +26,8 @@ class StimRbacRole extends StimModelSymbol<StimRbacRole> {
   }
 }
 
-
-class StimRbacRoleRef extends StimSymbolRef<StimRbacRole> implements StimRbacRole {
-
-}
-
+class StimRbacRoleRef extends StimSymbolRef<StimRbacRole>
+    implements StimRbacRole {}
 
 class StimRbacRoleScope {
   StimRbacRole superAdmin;
@@ -43,12 +38,12 @@ class StimRbacRoleScope {
 
   StimRbacRole guest;
 
-
   /// Creates a new "role" of [StimRbacRole] type.
-  StimRbacRole of({dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+  StimRbacRole of(
+      {dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
     return StimRbacRole()
-        ..name = StimName.of(name)
-        ..roles = roles ?? {}
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..roles = roles ?? {}
+      ..tags = tags ?? {};
   }
 }

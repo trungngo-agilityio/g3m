@@ -1,19 +1,17 @@
 part of g3.stimpack.io.generated;
 
-
-
 class StimIoFile extends StimModelSymbol<StimIoFile> {
   StimIoFileType type;
 
   StimIoFile();
-
 
   StimIoFile ref() {
     return StimIoFileRef()..symbol = this;
   }
 
   /// Creates a new "file" of [StimIoFile] type.
-  StimIoFile refWith({dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
+  StimIoFile refWith(
+      {dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -28,18 +26,14 @@ class StimIoFile extends StimModelSymbol<StimIoFile> {
   }
 }
 
-
-class StimIoFileRef extends StimSymbolRef<StimIoFile> implements StimIoFile {
-
-}
-
+class StimIoFileRef extends StimSymbolRef<StimIoFile> implements StimIoFile {}
 
 class StimIoFileScope {
   /// Creates a new "file" of [StimIoFile] type.
   StimIoFile of({dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
     return StimIoFile()
-        ..name = StimName.of(name)
-        ..type = type
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..type = type
+      ..tags = tags ?? {};
   }
 }

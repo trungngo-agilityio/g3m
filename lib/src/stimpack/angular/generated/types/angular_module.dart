@@ -1,13 +1,15 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularModule extends StimModelSymbol<StimAngularModule> {
   Set<StimAngularService> services;
 
   Set<StimAngularModel> models;
 
+  Set<StimAngularComponent> declarations;
+
   Set<StimAngularComponent> entryComponents;
+
+  Set<StimAngularModule> imports;
 
   Set<StimAngularModule> exports;
 
@@ -17,13 +19,22 @@ class StimAngularModule extends StimModelSymbol<StimAngularModule> {
 
   StimAngularModule();
 
-
   StimAngularModule ref() {
     return StimAngularModuleRef()..symbol = this;
   }
 
   /// Creates a new "module" of [StimAngularModule] type.
-  StimAngularModule refWith({dynamic name, Set<StimAngularService> services, Set<StimAngularModel> models, Set<StimAngularComponent> entryComponents, Set<StimAngularModule> exports, StimAngularRouter router, StimAngularResolver resolver, Set<StimModelTag> tags}) {
+  StimAngularModule refWith(
+      {dynamic name,
+      Set<StimAngularService> services,
+      Set<StimAngularModel> models,
+      Set<StimAngularComponent> declarations,
+      Set<StimAngularComponent> entryComponents,
+      Set<StimAngularModule> imports,
+      Set<StimAngularModule> exports,
+      StimAngularRouter router,
+      StimAngularResolver resolver,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -34,8 +45,14 @@ class StimAngularModule extends StimModelSymbol<StimAngularModule> {
     if (models != null) {
       res.models = models;
     }
+    if (declarations != null) {
+      res.declarations = declarations;
+    }
     if (entryComponents != null) {
       res.entryComponents = entryComponents;
+    }
+    if (imports != null) {
+      res.imports = imports;
     }
     if (exports != null) {
       res.exports = exports;
@@ -53,23 +70,32 @@ class StimAngularModule extends StimModelSymbol<StimAngularModule> {
   }
 }
 
-
-class StimAngularModuleRef extends StimSymbolRef<StimAngularModule> implements StimAngularModule {
-
-}
-
+class StimAngularModuleRef extends StimSymbolRef<StimAngularModule>
+    implements StimAngularModule {}
 
 class StimAngularModuleScope {
   /// Creates a new "module" of [StimAngularModule] type.
-  StimAngularModule of({dynamic name, Set<StimAngularService> services, Set<StimAngularModel> models, Set<StimAngularComponent> entryComponents, Set<StimAngularModule> exports, StimAngularRouter router, StimAngularResolver resolver, Set<StimModelTag> tags}) {
+  StimAngularModule of(
+      {dynamic name,
+      Set<StimAngularService> services,
+      Set<StimAngularModel> models,
+      Set<StimAngularComponent> declarations,
+      Set<StimAngularComponent> entryComponents,
+      Set<StimAngularModule> imports,
+      Set<StimAngularModule> exports,
+      StimAngularRouter router,
+      StimAngularResolver resolver,
+      Set<StimModelTag> tags}) {
     return StimAngularModule()
-        ..name = StimName.of(name)
-        ..services = services ?? {}
-        ..models = models ?? {}
-        ..entryComponents = entryComponents ?? {}
-        ..exports = exports ?? {}
-        ..router = router
-        ..resolver = resolver
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..services = services ?? {}
+      ..models = models ?? {}
+      ..declarations = declarations ?? {}
+      ..entryComponents = entryComponents ?? {}
+      ..imports = imports ?? {}
+      ..exports = exports ?? {}
+      ..router = router
+      ..resolver = resolver
+      ..tags = tags ?? {};
   }
 }

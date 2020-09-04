@@ -1,7 +1,5 @@
 part of g3.stimpack.rest.generated;
 
-
-
 class StimRestApi extends StimModelSymbol<StimRestApi> {
   StimRbacPolicy policy;
 
@@ -11,13 +9,17 @@ class StimRestApi extends StimModelSymbol<StimRestApi> {
 
   StimRestApi();
 
-
   StimRestApi ref() {
     return StimRestApiRef()..symbol = this;
   }
 
   /// Creates a new "api" of [StimRestApi] type.
-  StimRestApi refWith({dynamic name, StimRbacPolicy policy, StimRestApiRequest request, StimRestApiResponse response, Set<StimModelTag> tags}) {
+  StimRestApi refWith(
+      {dynamic name,
+      StimRbacPolicy policy,
+      StimRestApiRequest request,
+      StimRestApiResponse response,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -38,20 +40,22 @@ class StimRestApi extends StimModelSymbol<StimRestApi> {
   }
 }
 
-
 class StimRestApiRef extends StimSymbolRef<StimRestApi> implements StimRestApi {
-
 }
-
 
 class StimRestApiScope {
   /// Creates a new "api" of [StimRestApi] type.
-  StimRestApi of({dynamic name, StimRbacPolicy policy, StimRestApiRequest request, StimRestApiResponse response, Set<StimModelTag> tags}) {
+  StimRestApi of(
+      {dynamic name,
+      StimRbacPolicy policy,
+      StimRestApiRequest request,
+      StimRestApiResponse response,
+      Set<StimModelTag> tags}) {
     return StimRestApi()
-        ..name = StimName.of(name)
-        ..policy = policy
-        ..request = request
-        ..response = response
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..policy = policy
+      ..request = request
+      ..response = response
+      ..tags = tags ?? {};
   }
 }

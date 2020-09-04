@@ -1,10 +1,7 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularService extends StimModelSymbol<StimAngularService> {
   StimAngularService();
-
 
   StimAngularService ref() {
     return StimAngularServiceRef()..symbol = this;
@@ -23,17 +20,14 @@ class StimAngularService extends StimModelSymbol<StimAngularService> {
   }
 }
 
-
-class StimAngularServiceRef extends StimSymbolRef<StimAngularService> implements StimAngularService {
-
-}
-
+class StimAngularServiceRef extends StimSymbolRef<StimAngularService>
+    implements StimAngularService {}
 
 class StimAngularServiceScope {
   /// Creates a new "service" of [StimAngularService] type.
   StimAngularService of({dynamic name, Set<StimModelTag> tags}) {
     return StimAngularService()
-        ..name = StimName.of(name)
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..tags = tags ?? {};
   }
 }

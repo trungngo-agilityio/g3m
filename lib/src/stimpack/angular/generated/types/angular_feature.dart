@@ -1,7 +1,5 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularFeature extends StimModelSymbol<StimAngularFeature> {
   Set<StimAngularFeature> features;
 
@@ -9,13 +7,16 @@ class StimAngularFeature extends StimModelSymbol<StimAngularFeature> {
 
   StimAngularFeature();
 
-
   StimAngularFeature ref() {
     return StimAngularFeatureRef()..symbol = this;
   }
 
   /// Creates a new "feature" of [StimAngularFeature] type.
-  StimAngularFeature refWith({dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
+  StimAngularFeature refWith(
+      {dynamic name,
+      Set<StimAngularFeature> features,
+      StimAngularModule module,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -33,19 +34,20 @@ class StimAngularFeature extends StimModelSymbol<StimAngularFeature> {
   }
 }
 
-
-class StimAngularFeatureRef extends StimSymbolRef<StimAngularFeature> implements StimAngularFeature {
-
-}
-
+class StimAngularFeatureRef extends StimSymbolRef<StimAngularFeature>
+    implements StimAngularFeature {}
 
 class StimAngularFeatureScope {
   /// Creates a new "feature" of [StimAngularFeature] type.
-  StimAngularFeature of({dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
+  StimAngularFeature of(
+      {dynamic name,
+      Set<StimAngularFeature> features,
+      StimAngularModule module,
+      Set<StimModelTag> tags}) {
     return StimAngularFeature()
-        ..name = StimName.of(name)
-        ..features = features ?? {}
-        ..module = module
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..features = features ?? {}
+      ..module = module
+      ..tags = tags ?? {};
   }
 }

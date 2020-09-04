@@ -1,7 +1,5 @@
 part of g3.stimpack.ngxs.generated;
 
-
-
 class StimNgxsOnStimModelType {
   StimModelType feature;
 
@@ -11,8 +9,6 @@ class StimNgxsOnStimModelType {
 
   StimModelType select;
 }
-
-
 
 extension StimNgxsOnStimModelTypeExtension on StimModelTypeScope {
   StimNgxsOnStimModelType get ngxs {

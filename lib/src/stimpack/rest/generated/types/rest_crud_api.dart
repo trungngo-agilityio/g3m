@@ -1,7 +1,5 @@
 part of g3.stimpack.rest.generated;
 
-
-
 class StimRestCrudApi extends StimModelSymbol<StimRestCrudApi> {
   StimModelType model;
 
@@ -21,14 +19,22 @@ class StimRestCrudApi extends StimModelSymbol<StimRestCrudApi> {
 
   StimRestCrudApi();
 
-
   StimRestCrudApi ref() {
     return StimRestCrudApiRef()..symbol = this;
   }
 
   /// Creates a new "crudApi" of [StimRestCrudApi] type.
-  StimRestCrudApi refWith({dynamic name, StimModelType model, @required
-  StimModelField idField, StimRestCrudCreateOneApi createOne, StimRestCrudUpdateOneApi updateOne, StimRestCrudFindOneApi findOne, StimRestCrudDeleteOneApi deleteOne, StimRestCrudFindApi find, StimRestCrudDeleteApi delete, Set<StimModelTag> tags}) {
+  StimRestCrudApi refWith(
+      {dynamic name,
+      StimModelType model,
+      StimModelField idField,
+      StimRestCrudCreateOneApi createOne,
+      StimRestCrudUpdateOneApi updateOne,
+      StimRestCrudFindOneApi findOne,
+      StimRestCrudDeleteOneApi deleteOne,
+      StimRestCrudFindApi find,
+      StimRestCrudDeleteApi delete,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -64,26 +70,32 @@ class StimRestCrudApi extends StimModelSymbol<StimRestCrudApi> {
   }
 }
 
-
-class StimRestCrudApiRef extends StimSymbolRef<StimRestCrudApi> implements StimRestCrudApi {
-
-}
-
+class StimRestCrudApiRef extends StimSymbolRef<StimRestCrudApi>
+    implements StimRestCrudApi {}
 
 class StimRestCrudApiScope {
   /// Creates a new "crudApi" of [StimRestCrudApi] type.
-  StimRestCrudApi of({dynamic name, StimModelType model, @required
-  StimModelField idField, StimRestCrudCreateOneApi createOne, StimRestCrudUpdateOneApi updateOne, StimRestCrudFindOneApi findOne, StimRestCrudDeleteOneApi deleteOne, StimRestCrudFindApi find, StimRestCrudDeleteApi delete, Set<StimModelTag> tags}) {
+  StimRestCrudApi of(
+      {dynamic name,
+      StimModelType model,
+      @required StimModelField idField,
+      StimRestCrudCreateOneApi createOne,
+      StimRestCrudUpdateOneApi updateOne,
+      StimRestCrudFindOneApi findOne,
+      StimRestCrudDeleteOneApi deleteOne,
+      StimRestCrudFindApi find,
+      StimRestCrudDeleteApi delete,
+      Set<StimModelTag> tags}) {
     return StimRestCrudApi()
-        ..name = StimName.of(name)
-        ..model = model
-        ..idField = idField
-        ..createOne = createOne
-        ..updateOne = updateOne
-        ..findOne = findOne
-        ..deleteOne = deleteOne
-        ..find = find
-        ..delete = delete
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..model = model
+      ..idField = idField
+      ..createOne = createOne
+      ..updateOne = updateOne
+      ..findOne = findOne
+      ..deleteOne = deleteOne
+      ..find = find
+      ..delete = delete
+      ..tags = tags ?? {};
   }
 }

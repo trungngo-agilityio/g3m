@@ -69,10 +69,22 @@ class StimModelField extends StimModelSymbol<StimModelField> {
 
   StimModelField readOnly() => this..rules += stimpack.model.rule.readOnly;
 
-  StimModelFieldRef _ref;
-
   /// Gets the reference to this model.
-  StimModelField get ref => _ref ??= StimModelFieldRef()..symbol = this;
+  StimModelField ref() => StimModelFieldRef()..symbol = this;
+
+  StimModelField refWith({
+    dynamic name,
+    Set<StimModelTag> tags,
+    StimModelType type,
+    Set<StimModelFieldRule> rules,
+  }) {
+    final res = ref();
+    if (name != null) res.name = StimName.of(name);
+    if (tags != null) res.tags = tags;
+    if (type != null) res.type = type;
+    if (rules != null) res.rules = rules;
+    return res;
+  }
 
   StimModelField();
 }

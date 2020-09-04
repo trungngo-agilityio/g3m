@@ -1,7 +1,5 @@
 part of g3.stimpack.story.generated;
 
-
-
 class StimStoryOnStimModelType {
   StimModelType epic;
 
@@ -11,8 +9,6 @@ class StimStoryOnStimModelType {
 
   StimModelType actor;
 }
-
-
 
 extension StimStoryOnStimModelTypeExtension on StimModelTypeScope {
   StimStoryOnStimModelType get story {

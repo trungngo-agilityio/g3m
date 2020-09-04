@@ -88,21 +88,15 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // ===========================================================================
 
   StimName valueExtClassName(StimModelPackage package, StimModelType type) {
-    return ('stim' >> package.name >> 'on' >> type.name)
-        .pascal();
+    return ('stim' >> package.name >> 'on' >> type.name).pascal();
   }
 
   StimName valueExtFieldName(StimModelPackage package, StimModelType type) {
     return ('on' >> type.name).camel();
   }
 
-  StimName valueExtExtensionName(
-      StimModelPackage package, StimModelType type) {
-    return ('stim' >>
-            package.name >>
-            'on' >>
-            type.name >>
-            'extension')
+  StimName valueExtExtensionName(StimModelPackage package, StimModelType type) {
+    return ('stim' >> package.name >> 'on' >> type.name >> 'extension')
         .pascal();
   }
 

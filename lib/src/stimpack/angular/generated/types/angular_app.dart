@@ -1,24 +1,31 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularApp extends StimModelSymbol<StimAngularApp> {
+  StimIoDir rootDir;
+
   StimIoDir featureDir;
 
   Set<StimAngularFeature> features;
 
   StimAngularApp();
 
-
   StimAngularApp ref() {
     return StimAngularAppRef()..symbol = this;
   }
 
   /// Creates a new "app" of [StimAngularApp] type.
-  StimAngularApp refWith({dynamic name, StimIoDir featureDir, Set<StimAngularFeature> features, Set<StimModelTag> tags}) {
+  StimAngularApp refWith(
+      {dynamic name,
+      StimIoDir rootDir,
+      StimIoDir featureDir,
+      Set<StimAngularFeature> features,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
+    }
+    if (rootDir != null) {
+      res.rootDir = rootDir;
     }
     if (featureDir != null) {
       res.featureDir = featureDir;
@@ -33,19 +40,22 @@ class StimAngularApp extends StimModelSymbol<StimAngularApp> {
   }
 }
 
-
-class StimAngularAppRef extends StimSymbolRef<StimAngularApp> implements StimAngularApp {
-
-}
-
+class StimAngularAppRef extends StimSymbolRef<StimAngularApp>
+    implements StimAngularApp {}
 
 class StimAngularAppScope {
   /// Creates a new "app" of [StimAngularApp] type.
-  StimAngularApp of({dynamic name, StimIoDir featureDir, Set<StimAngularFeature> features, Set<StimModelTag> tags}) {
+  StimAngularApp of(
+      {dynamic name,
+      StimIoDir rootDir,
+      StimIoDir featureDir,
+      Set<StimAngularFeature> features,
+      Set<StimModelTag> tags}) {
     return StimAngularApp()
-        ..name = StimName.of(name)
-        ..featureDir = featureDir
-        ..features = features ?? {}
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..rootDir = rootDir
+      ..featureDir = featureDir
+      ..features = features ?? {}
+      ..tags = tags ?? {};
   }
 }

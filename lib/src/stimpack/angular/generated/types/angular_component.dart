@@ -1,7 +1,5 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularComponent extends StimModelSymbol<StimAngularComponent> {
   StimAngularComponentTemplate template;
 
@@ -9,13 +7,16 @@ class StimAngularComponent extends StimModelSymbol<StimAngularComponent> {
 
   StimAngularComponent();
 
-
   StimAngularComponent ref() {
     return StimAngularComponentRef()..symbol = this;
   }
 
   /// Creates a new "component" of [StimAngularComponent] type.
-  StimAngularComponent refWith({dynamic name, StimAngularComponentTemplate template, StimAngularComponentStyle style, Set<StimModelTag> tags}) {
+  StimAngularComponent refWith(
+      {dynamic name,
+      StimAngularComponentTemplate template,
+      StimAngularComponentStyle style,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -33,19 +34,20 @@ class StimAngularComponent extends StimModelSymbol<StimAngularComponent> {
   }
 }
 
-
-class StimAngularComponentRef extends StimSymbolRef<StimAngularComponent> implements StimAngularComponent {
-
-}
-
+class StimAngularComponentRef extends StimSymbolRef<StimAngularComponent>
+    implements StimAngularComponent {}
 
 class StimAngularComponentScope {
   /// Creates a new "component" of [StimAngularComponent] type.
-  StimAngularComponent of({dynamic name, StimAngularComponentTemplate template, StimAngularComponentStyle style, Set<StimModelTag> tags}) {
+  StimAngularComponent of(
+      {dynamic name,
+      StimAngularComponentTemplate template,
+      StimAngularComponentStyle style,
+      Set<StimModelTag> tags}) {
     return StimAngularComponent()
-        ..name = StimName.of(name)
-        ..template = template
-        ..style = style
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..template = template
+      ..style = style
+      ..tags = tags ?? {};
   }
 }

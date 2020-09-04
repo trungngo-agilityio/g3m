@@ -1,63 +1,59 @@
 part of g3.stimpack.rbac.generated;
 
-
 /// The only instance of the [StimRbac] pack.
 StimRbac _rbac;
-
-
 
 class StimRbac extends StimPack {
   StimModelPackage _metaPackage;
 
-  /// Scope class for constructing all "action" symbols, 
+  /// Scope class for constructing all "action" symbols,
   /// typed of [StimRbacAction]."
   final StimRbacActionScope action;
 
-  /// Scope class for constructing all "resource" symbols, 
+  /// Scope class for constructing all "resource" symbols,
   /// typed of [StimRbacResource]."
   final StimRbacResourceScope resource;
 
-  /// Scope class for constructing all "group" symbols, 
+  /// Scope class for constructing all "group" symbols,
   /// typed of [StimRbacGroup]."
   final StimRbacGroupScope group;
 
-  /// Scope class for constructing all "role" symbols, 
+  /// Scope class for constructing all "role" symbols,
   /// typed of [StimRbacRole]."
   final StimRbacRoleScope role;
 
-  /// Scope class for constructing all "policy" symbols, 
+  /// Scope class for constructing all "policy" symbols,
   /// typed of [StimRbacPolicy]."
   final StimRbacPolicyScope policy;
 
-  /// Scope class for constructing all "policyKind" symbols, 
+  /// Scope class for constructing all "policyKind" symbols,
   /// typed of [StimRbacPolicyKind]."
   final StimRbacPolicyKindScope policyKind;
 
   final StimRbacOnStimModelType onStimModelType;
 
-
-  StimRbac(StimModel model):
-      action = StimRbacActionScope(),
-      resource = StimRbacResourceScope(),
-      group = StimRbacGroupScope(),
-      role = StimRbacRoleScope(),
-      policy = StimRbacPolicyScope(),
-      policyKind = StimRbacPolicyKindScope(),
-      onStimModelType = StimRbacOnStimModelType(),
-      super('rbac') {
+  StimRbac(StimModel model)
+      : action = StimRbacActionScope(),
+        resource = StimRbacResourceScope(),
+        group = StimRbacGroupScope(),
+        role = StimRbacRoleScope(),
+        policy = StimRbacPolicyScope(),
+        policyKind = StimRbacPolicyKindScope(),
+        onStimModelType = StimRbacOnStimModelType(),
+        super('rbac') {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
 
     /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
+    /// not overwritten during pack re-generation.
     stimInitRbacPack(this);
   }
-
 
   void _buildMeta() {
     final m = stimpack.model, f = m.field, t = m.type;
     final mp = _metaPackage = m.package.of(name: 'rbac');
     final mt = onStimModelType;
+
     /// Builds type "action"
     mt.action = t.symbolOf(name: 'action', package: mp);
 
@@ -111,12 +107,10 @@ class StimRbac extends StimPack {
   }
 }
 
-
-
-// Provides global access to the "rbac" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
+// Provides global access to the "rbac" pack. Only one instance of the pack
+// is created. During the creation, other packs that this pack depends on might
 // be created as well.
-//  
+//
 extension StimRbacPackExtension on StimpackRoot {
   StimRbac get rbac {
     return _rbac ??= StimRbac(stimpack.model);

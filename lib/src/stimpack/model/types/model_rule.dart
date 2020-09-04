@@ -82,10 +82,8 @@ class StimModelFieldRule extends StimModelSymbol<StimModelFieldRule> {
   /// The list of validation data ranges applied to this data field.
   Set<StimModelRange> ranges;
 
-  StimModelFieldRuleRef _ref;
-
   /// Gets the reference to this model.
-  StimModelFieldRule get ref => _ref ??= StimModelFieldRuleRef()..symbol = this;
+  StimModelFieldRule ref() => StimModelFieldRuleRef()..symbol = this;
 
   StimModelFieldRule();
 }

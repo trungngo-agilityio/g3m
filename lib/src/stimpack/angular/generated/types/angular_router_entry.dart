@@ -1,7 +1,5 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularRouterEntry extends StimModelSymbol<StimAngularRouterEntry> {
   StimAngularRouterPath path;
 
@@ -15,13 +13,19 @@ class StimAngularRouterEntry extends StimModelSymbol<StimAngularRouterEntry> {
 
   StimAngularRouterEntry();
 
-
   StimAngularRouterEntry ref() {
     return StimAngularRouterEntryRef()..symbol = this;
   }
 
   /// Creates a new "routerEntry" of [StimAngularRouterEntry] type.
-  StimAngularRouterEntry refWith({dynamic name, StimAngularRouterPath path, StimAngularComponent component, StimAngularResolver resolver, Set<StimAngularGuard> guards, StimAngularModule lazyModule, Set<StimModelTag> tags}) {
+  StimAngularRouterEntry refWith(
+      {dynamic name,
+      StimAngularRouterPath path,
+      StimAngularComponent component,
+      StimAngularResolver resolver,
+      Set<StimAngularGuard> guards,
+      StimAngularModule lazyModule,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -48,22 +52,26 @@ class StimAngularRouterEntry extends StimModelSymbol<StimAngularRouterEntry> {
   }
 }
 
-
-class StimAngularRouterEntryRef extends StimSymbolRef<StimAngularRouterEntry> implements StimAngularRouterEntry {
-
-}
-
+class StimAngularRouterEntryRef extends StimSymbolRef<StimAngularRouterEntry>
+    implements StimAngularRouterEntry {}
 
 class StimAngularRouterEntryScope {
   /// Creates a new "routerEntry" of [StimAngularRouterEntry] type.
-  StimAngularRouterEntry of({dynamic name, StimAngularRouterPath path, StimAngularComponent component, StimAngularResolver resolver, Set<StimAngularGuard> guards, StimAngularModule lazyModule, Set<StimModelTag> tags}) {
+  StimAngularRouterEntry of(
+      {dynamic name,
+      StimAngularRouterPath path,
+      StimAngularComponent component,
+      StimAngularResolver resolver,
+      Set<StimAngularGuard> guards,
+      StimAngularModule lazyModule,
+      Set<StimModelTag> tags}) {
     return StimAngularRouterEntry()
-        ..name = StimName.of(name)
-        ..path = path
-        ..component = component
-        ..resolver = resolver
-        ..guards = guards ?? {}
-        ..lazyModule = lazyModule
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..path = path
+      ..component = component
+      ..resolver = resolver
+      ..guards = guards ?? {}
+      ..lazyModule = lazyModule
+      ..tags = tags ?? {};
   }
 }

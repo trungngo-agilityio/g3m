@@ -155,10 +155,25 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// Determines if this is a primitive dart type.
   bool get isDartPrimitive => stimpack.model.type.primitiveTypes.contains(this);
 
-  StimModelTypeRef _ref;
-
   /// Gets the reference to this model.
-  StimModelType get ref => _ref ??= StimModelTypeRef()..symbol = this;
+  StimModelType ref() => StimModelTypeRef()..symbol = this;
+
+  StimModelType refWith({
+    dynamic name,
+    Set<StimModelTag> tags,
+    StimModelPackage package,
+    Set<StimModelType> mixins,
+    Set<StimModelField> fields,
+  }) {
+    final res = ref();
+    if (name != null) res.name = StimName.of(name);
+    if (tags != null) res.tags = tags;
+    if (package != null) res.package = package;
+    if (mixins != null) res.mixins = mixins;
+    if (fields != null) res.fields = fields;
+    package?.types += res;
+    return res;
+  }
 
   StimModelType();
 }

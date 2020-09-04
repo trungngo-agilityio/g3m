@@ -1,19 +1,17 @@
 part of g3.stimpack.story.generated;
 
-
-
 class StimStoryActor extends StimModelSymbol<StimStoryActor> {
   Set<StimRbacRole> roles;
 
   StimStoryActor();
-
 
   StimStoryActor ref() {
     return StimStoryActorRef()..symbol = this;
   }
 
   /// Creates a new "actor" of [StimStoryActor] type.
-  StimStoryActor refWith({dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+  StimStoryActor refWith(
+      {dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -28,18 +26,16 @@ class StimStoryActor extends StimModelSymbol<StimStoryActor> {
   }
 }
 
-
-class StimStoryActorRef extends StimSymbolRef<StimStoryActor> implements StimStoryActor {
-
-}
-
+class StimStoryActorRef extends StimSymbolRef<StimStoryActor>
+    implements StimStoryActor {}
 
 class StimStoryActorScope {
   /// Creates a new "actor" of [StimStoryActor] type.
-  StimStoryActor of({dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+  StimStoryActor of(
+      {dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
     return StimStoryActor()
-        ..name = StimName.of(name)
-        ..roles = roles ?? {}
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..roles = roles ?? {}
+      ..tags = tags ?? {};
   }
 }

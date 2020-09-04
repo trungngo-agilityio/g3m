@@ -1,10 +1,7 @@
 part of g3.stimpack.rbac.generated;
 
-
-
 class StimRbacAction extends StimModelSymbol<StimRbacAction> {
   StimRbacAction();
-
 
   StimRbacAction ref() {
     return StimRbacActionRef()..symbol = this;
@@ -23,17 +20,14 @@ class StimRbacAction extends StimModelSymbol<StimRbacAction> {
   }
 }
 
-
-class StimRbacActionRef extends StimSymbolRef<StimRbacAction> implements StimRbacAction {
-
-}
-
+class StimRbacActionRef extends StimSymbolRef<StimRbacAction>
+    implements StimRbacAction {}
 
 class StimRbacActionScope {
   /// Creates a new "action" of [StimRbacAction] type.
   StimRbacAction of({dynamic name, Set<StimModelTag> tags}) {
     return StimRbacAction()
-        ..name = StimName.of(name)
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..tags = tags ?? {};
   }
 }

@@ -1,7 +1,5 @@
 part of g3.stimpack.rest.generated;
 
-
-
 class StimRestOnStimModelType {
   StimModelType api;
 
@@ -23,8 +21,6 @@ class StimRestOnStimModelType {
 
   StimModelType crudDeleteApi;
 }
-
-
 
 extension StimRestOnStimModelTypeExtension on StimModelTypeScope {
   StimRestOnStimModelType get rest {

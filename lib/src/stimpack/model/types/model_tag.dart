@@ -22,10 +22,20 @@ class StimModelTag extends StimModelSymbol<StimModelTag> {
 
   StimModelTag();
 
-  StimModelTagRef _ref;
-
   /// Gets the reference to this model.
-  StimModelTag get ref => _ref ??= StimModelTagRef()..symbol = this;
+  StimModelTag ref() => StimModelTagRef()..symbol = this;
+
+  StimModelTag refWith({
+    dynamic name,
+    dynamic value,
+    Iterable<StimModelTag> tags,
+  }) {
+    final res = ref();
+    if (name != null) res.name = StimName.of(name);
+    if (value != null) res.value = value;
+    if (tags != null) res.tags = tags;
+    return res;
+  }
 }
 
 class StimModelTagRef extends StimSymbolRef<StimModelTag>

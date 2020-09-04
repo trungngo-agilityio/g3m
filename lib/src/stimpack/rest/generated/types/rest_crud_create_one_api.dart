@@ -1,8 +1,7 @@
 part of g3.stimpack.rest.generated;
 
-
-
-class StimRestCrudCreateOneApi extends StimModelSymbol<StimRestCrudCreateOneApi> {
+class StimRestCrudCreateOneApi
+    extends StimModelSymbol<StimRestCrudCreateOneApi> {
   StimModelField idField;
 
   StimRbacPolicy policy;
@@ -11,13 +10,17 @@ class StimRestCrudCreateOneApi extends StimModelSymbol<StimRestCrudCreateOneApi>
 
   StimRestCrudCreateOneApi();
 
-
   StimRestCrudCreateOneApi ref() {
     return StimRestCrudCreateOneApiRef()..symbol = this;
   }
 
   /// Creates a new "crudCreateOneApi" of [StimRestCrudCreateOneApi] type.
-  StimRestCrudCreateOneApi refWith({dynamic name, StimModelField idField, StimRbacPolicy policy, Set<StimModelField> response, Set<StimModelTag> tags}) {
+  StimRestCrudCreateOneApi refWith(
+      {dynamic name,
+      StimModelField idField,
+      StimRbacPolicy policy,
+      Set<StimModelField> response,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -38,20 +41,23 @@ class StimRestCrudCreateOneApi extends StimModelSymbol<StimRestCrudCreateOneApi>
   }
 }
 
-
-class StimRestCrudCreateOneApiRef extends StimSymbolRef<StimRestCrudCreateOneApi> implements StimRestCrudCreateOneApi {
-
-}
-
+class StimRestCrudCreateOneApiRef
+    extends StimSymbolRef<StimRestCrudCreateOneApi>
+    implements StimRestCrudCreateOneApi {}
 
 class StimRestCrudCreateOneApiScope {
   /// Creates a new "crudCreateOneApi" of [StimRestCrudCreateOneApi] type.
-  StimRestCrudCreateOneApi of({dynamic name, StimModelField idField, StimRbacPolicy policy, Set<StimModelField> response, Set<StimModelTag> tags}) {
+  StimRestCrudCreateOneApi of(
+      {dynamic name,
+      StimModelField idField,
+      StimRbacPolicy policy,
+      Set<StimModelField> response,
+      Set<StimModelTag> tags}) {
     return StimRestCrudCreateOneApi()
-        ..name = StimName.of(name)
-        ..idField = idField
-        ..policy = policy
-        ..response = response ?? {}
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..idField = idField
+      ..policy = policy
+      ..response = response ?? {}
+      ..tags = tags ?? {};
   }
 }

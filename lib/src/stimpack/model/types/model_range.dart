@@ -6,10 +6,8 @@ class StimModelRange extends StimModelSymbol<StimModelRange> {
   num min;
   num max;
 
-  StimModelRangeRef _ref;
-
   /// Gets the reference to this model.
-  StimModelRange get ref => _ref ??= StimModelRangeRef()..symbol = this;
+  StimModelRange ref() => StimModelRangeRef()..symbol = this;
 
   StimModelRange();
 }

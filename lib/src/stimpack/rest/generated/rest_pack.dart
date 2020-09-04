@@ -1,83 +1,79 @@
 part of g3.stimpack.rest.generated;
 
-
 /// The only instance of the [StimRest] pack.
 StimRest _rest;
-
-
 
 class StimRest extends StimPack {
   StimModelPackage _metaPackage;
 
-  /// Scope class for constructing all "api" symbols, 
+  /// Scope class for constructing all "api" symbols,
   /// typed of [StimRestApi]."
   final StimRestApiScope api;
 
-  /// Scope class for constructing all "apiRequest" symbols, 
+  /// Scope class for constructing all "apiRequest" symbols,
   /// typed of [StimRestApiRequest]."
   final StimRestApiRequestScope apiRequest;
 
-  /// Scope class for constructing all "apiResponse" symbols, 
+  /// Scope class for constructing all "apiResponse" symbols,
   /// typed of [StimRestApiResponse]."
   final StimRestApiResponseScope apiResponse;
 
-  /// Scope class for constructing all "crudApi" symbols, 
+  /// Scope class for constructing all "crudApi" symbols,
   /// typed of [StimRestCrudApi]."
   final StimRestCrudApiScope crudApi;
 
-  /// Scope class for constructing all "crudCreateOneApi" symbols, 
+  /// Scope class for constructing all "crudCreateOneApi" symbols,
   /// typed of [StimRestCrudCreateOneApi]."
   final StimRestCrudCreateOneApiScope crudCreateOneApi;
 
-  /// Scope class for constructing all "crudUpdateOneApi" symbols, 
+  /// Scope class for constructing all "crudUpdateOneApi" symbols,
   /// typed of [StimRestCrudUpdateOneApi]."
   final StimRestCrudUpdateOneApiScope crudUpdateOneApi;
 
-  /// Scope class for constructing all "crudFindOneApi" symbols, 
+  /// Scope class for constructing all "crudFindOneApi" symbols,
   /// typed of [StimRestCrudFindOneApi]."
   final StimRestCrudFindOneApiScope crudFindOneApi;
 
-  /// Scope class for constructing all "crudDeleteOneApi" symbols, 
+  /// Scope class for constructing all "crudDeleteOneApi" symbols,
   /// typed of [StimRestCrudDeleteOneApi]."
   final StimRestCrudDeleteOneApiScope crudDeleteOneApi;
 
-  /// Scope class for constructing all "crudFindApi" symbols, 
+  /// Scope class for constructing all "crudFindApi" symbols,
   /// typed of [StimRestCrudFindApi]."
   final StimRestCrudFindApiScope crudFindApi;
 
-  /// Scope class for constructing all "crudDeleteApi" symbols, 
+  /// Scope class for constructing all "crudDeleteApi" symbols,
   /// typed of [StimRestCrudDeleteApi]."
   final StimRestCrudDeleteApiScope crudDeleteApi;
 
   final StimRestOnStimModelType onStimModelType;
 
-
-  StimRest(StimModel model, StimRbac rbac):
-      api = StimRestApiScope(),
-      apiRequest = StimRestApiRequestScope(),
-      apiResponse = StimRestApiResponseScope(),
-      crudApi = StimRestCrudApiScope(),
-      crudCreateOneApi = StimRestCrudCreateOneApiScope(),
-      crudUpdateOneApi = StimRestCrudUpdateOneApiScope(),
-      crudFindOneApi = StimRestCrudFindOneApiScope(),
-      crudDeleteOneApi = StimRestCrudDeleteOneApiScope(),
-      crudFindApi = StimRestCrudFindApiScope(),
-      crudDeleteApi = StimRestCrudDeleteApiScope(),
-      onStimModelType = StimRestOnStimModelType(),
-      super('rest') {
+  StimRest(StimModel model, StimRbac rbac)
+      : api = StimRestApiScope(),
+        apiRequest = StimRestApiRequestScope(),
+        apiResponse = StimRestApiResponseScope(),
+        crudApi = StimRestCrudApiScope(),
+        crudCreateOneApi = StimRestCrudCreateOneApiScope(),
+        crudUpdateOneApi = StimRestCrudUpdateOneApiScope(),
+        crudFindOneApi = StimRestCrudFindOneApiScope(),
+        crudDeleteOneApi = StimRestCrudDeleteOneApiScope(),
+        crudFindApi = StimRestCrudFindApiScope(),
+        crudDeleteApi = StimRestCrudDeleteApiScope(),
+        onStimModelType = StimRestOnStimModelType(),
+        super('rest') {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
 
     /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
+    /// not overwritten during pack re-generation.
     stimInitRestPack(this);
   }
-
 
   void _buildMeta() {
     final m = stimpack.model, f = m.field, t = m.type;
     final mp = _metaPackage = m.package.of(name: 'rest');
     final mt = onStimModelType;
+
     /// Builds type "api"
     mt.api = t.symbolOf(name: 'api', package: mp);
 
@@ -233,12 +229,10 @@ class StimRest extends StimPack {
   }
 }
 
-
-
-// Provides global access to the "rest" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
+// Provides global access to the "rest" pack. Only one instance of the pack
+// is created. During the creation, other packs that this pack depends on might
 // be created as well.
-//  
+//
 extension StimRestPackExtension on StimpackRoot {
   StimRest get rest {
     return _rest ??= StimRest(stimpack.model, stimpack.rbac);

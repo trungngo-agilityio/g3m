@@ -1,71 +1,68 @@
 part of g3.stimpack.angular.generated;
 
-
 /// The only instance of the [StimAngular] pack.
 StimAngular _angular;
-
-
 
 class StimAngular extends StimPack {
   StimModelPackage _metaPackage;
 
-  /// Scope class for constructing all "app" symbols, 
+  /// Scope class for constructing all "app" symbols,
   /// typed of [StimAngularApp]."
   final StimAngularAppScope app;
 
-  /// Scope class for constructing all "feature" symbols, 
+  /// Scope class for constructing all "feature" symbols,
   /// typed of [StimAngularFeature]."
   final StimAngularFeatureScope feature;
 
-  /// Scope class for constructing all "module" symbols, 
+  /// Scope class for constructing all "module" symbols,
   /// typed of [StimAngularModule]."
   final StimAngularModuleScope module;
 
-  /// Scope class for constructing all "service" symbols, 
+  /// Scope class for constructing all "service" symbols,
   /// typed of [StimAngularService]."
   final StimAngularServiceScope service;
 
-  /// Scope class for constructing all "model" symbols, 
+  /// Scope class for constructing all "model" symbols,
   /// typed of [StimAngularModel]."
   final StimAngularModelScope model;
 
-  /// Scope class for constructing all "resolver" symbols, 
+  /// Scope class for constructing all "resolver" symbols,
   /// typed of [StimAngularResolver]."
   final StimAngularResolverScope resolver;
 
-  /// Scope class for constructing all "router" symbols, 
+  /// Scope class for constructing all "router" symbols,
   /// typed of [StimAngularRouter]."
   final StimAngularRouterScope router;
 
-  /// Scope class for constructing all "routerPath" symbols, 
+  /// Scope class for constructing all "routerPath" symbols,
   /// typed of [StimAngularRouterPath]."
   final StimAngularRouterPathScope routerPath;
 
-  /// Scope class for constructing all "routerParam" symbols, 
+  /// Scope class for constructing all "routerParam" symbols,
   /// typed of [StimAngularRouterParam]."
   final StimAngularRouterParamScope routerParam;
 
-  /// Scope class for constructing all "routerEntry" symbols, 
+  /// Scope class for constructing all "routerEntry" symbols,
   /// typed of [StimAngularRouterEntry]."
   final StimAngularRouterEntryScope routerEntry;
 
-  /// Scope class for constructing all "routerRedirect" symbols, 
+  /// Scope class for constructing all "routerRedirect" symbols,
   /// typed of [StimAngularRouterRedirect]."
   final StimAngularRouterRedirectScope routerRedirect;
 
-  /// Scope class for constructing all "guard" symbols, 
+  /// Scope class for constructing all "guard" symbols,
   /// typed of [StimAngularGuard]."
   final StimAngularGuardScope guard;
 
-  /// Scope class for constructing all "component" symbols, 
+  /// Scope class for constructing all "component" symbols,
   /// typed of [StimAngularComponent]."
   final StimAngularComponentScope component;
 
-  /// Scope class for constructing all "componentTemplate" symbols, 
+  /// Scope class for constructing all "componentTemplate" symbols,
   /// typed of [StimAngularComponentTemplate]."
   final StimAngularComponentTemplateScope componentTemplate;
 
-  /// Scope class for constructing all "componentStyle" symbols, 
+  /// Scope class for constructing all "componentStyle" symbols,
   /// typed of [StimAngularComponentStyle]."
   final StimAngularComponentStyleScope componentStyle;
 
@@ -73,39 +70,38 @@ class StimAngular extends StimPack {
 
   final StimAngularOnStimIoDir onStimIoDir;
 
-
-  StimAngular(StimModel model, StimIo io):
-      app = StimAngularAppScope(),
-      feature = StimAngularFeatureScope(),
-      module = StimAngularModuleScope(),
-      service = StimAngularServiceScope(),
-      model = StimAngularModelScope(),
-      resolver = StimAngularResolverScope(),
-      router = StimAngularRouterScope(),
-      routerPath = StimAngularRouterPathScope(),
-      routerParam = StimAngularRouterParamScope(),
-      routerEntry = StimAngularRouterEntryScope(),
-      routerRedirect = StimAngularRouterRedirectScope(),
-      guard = StimAngularGuardScope(),
-      component = StimAngularComponentScope(),
-      componentTemplate = StimAngularComponentTemplateScope(),
-      componentStyle = StimAngularComponentStyleScope(),
-      onStimModelType = StimAngularOnStimModelType(),
-      onStimIoDir = StimAngularOnStimIoDir(),
-      super('angular') {
+  StimAngular(StimModel model, StimIo io)
+      : app = StimAngularAppScope(),
+        feature = StimAngularFeatureScope(),
+        module = StimAngularModuleScope(),
+        service = StimAngularServiceScope(),
+        model = StimAngularModelScope(),
+        resolver = StimAngularResolverScope(),
+        router = StimAngularRouterScope(),
+        routerPath = StimAngularRouterPathScope(),
+        routerParam = StimAngularRouterParamScope(),
+        routerEntry = StimAngularRouterEntryScope(),
+        routerRedirect = StimAngularRouterRedirectScope(),
+        guard = StimAngularGuardScope(),
+        component = StimAngularComponentScope(),
+        componentTemplate = StimAngularComponentTemplateScope(),
+        componentStyle = StimAngularComponentStyleScope(),
+        onStimModelType = StimAngularOnStimModelType(),
+        onStimIoDir = StimAngularOnStimIoDir(),
+        super('angular') {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
 
     /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
+    /// not overwritten during pack re-generation.
     stimInitAngularPack(this);
   }
-
 
   void _buildMeta() {
     final m = stimpack.model, f = m.field, t = m.type;
     final mp = _metaPackage = m.package.of(name: 'angular');
     final mt = onStimModelType;
+
     /// Builds type "app"
     mt.app = t.symbolOf(name: 'app', package: mp);
 
@@ -154,6 +150,9 @@ class StimAngular extends StimPack {
     /// Builds fields for type "app"
     mt.app.fields = {
       /// field "app"
+      f.of(name: 'root dir', type: t.io.dir),
+
+      /// field "app"
       f.of(name: 'feature dir', type: t.io.dir),
 
       /// field "app"
@@ -178,7 +177,13 @@ class StimAngular extends StimPack {
       f.of(name: 'models', type: t.setOf(item: mt.model)),
 
       /// field "module"
+      f.of(name: 'declarations', type: t.setOf(item: mt.component)),
+
+      /// field "module"
       f.of(name: 'entry components', type: t.setOf(item: mt.component)),
+
+      /// field "module"
+      f.of(name: 'imports', type: t.setOf(item: mt.module)),
 
       /// field "module"
       f.of(name: 'exports', type: t.setOf(item: mt.module)),
@@ -246,12 +251,10 @@ class StimAngular extends StimPack {
   }
 }
 
-
-
-// Provides global access to the "angular" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
+// Provides global access to the "angular" pack. Only one instance of the pack
+// is created. During the creation, other packs that this pack depends on might
 // be created as well.
-//  
+//
 extension StimAngularPackExtension on StimpackRoot {
   StimAngular get angular {
     return _angular ??= StimAngular(stimpack.model, stimpack.io);

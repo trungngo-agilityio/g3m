@@ -1,48 +1,44 @@
 part of g3.stimpack.io.generated;
 
-
 /// The only instance of the [StimIo] pack.
 StimIo _io;
-
-
 
 class StimIo extends StimPack {
   StimModelPackage _metaPackage;
 
-  /// Scope class for constructing all "file" symbols, 
+  /// Scope class for constructing all "file" symbols,
   /// typed of [StimIoFile]."
   final StimIoFileScope file;
 
-  /// Scope class for constructing all "fileType" symbols, 
+  /// Scope class for constructing all "fileType" symbols,
   /// typed of [StimIoFileType]."
   final StimIoFileTypeScope fileType;
 
-  /// Scope class for constructing all "dir" symbols, 
+  /// Scope class for constructing all "dir" symbols,
   /// typed of [StimIoDir]."
   final StimIoDirScope dir;
 
   final StimIoOnStimModelType onStimModelType;
 
-
-  StimIo(StimModel model):
-      file = StimIoFileScope(),
-      fileType = StimIoFileTypeScope(),
-      dir = StimIoDirScope(),
-      onStimModelType = StimIoOnStimModelType(),
-      super('io') {
+  StimIo(StimModel model)
+      : file = StimIoFileScope(),
+        fileType = StimIoFileTypeScope(),
+        dir = StimIoDirScope(),
+        onStimModelType = StimIoOnStimModelType(),
+        super('io') {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
 
     /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
+    /// not overwritten during pack re-generation.
     stimInitIoPack(this);
   }
-
 
   void _buildMeta() {
     final m = stimpack.model, f = m.field, t = m.type;
     final mp = _metaPackage = m.package.of(name: 'io');
     final mt = onStimModelType;
+
     /// Builds type "file"
     mt.file = t.symbolOf(name: 'file', package: mp);
 
@@ -81,12 +77,10 @@ class StimIo extends StimPack {
   }
 }
 
-
-
-// Provides global access to the "io" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
+// Provides global access to the "io" pack. Only one instance of the pack
+// is created. During the creation, other packs that this pack depends on might
 // be created as well.
-//  
+//
 extension StimIoPackExtension on StimpackRoot {
   StimIo get io {
     return _io ??= StimIo(stimpack.model);

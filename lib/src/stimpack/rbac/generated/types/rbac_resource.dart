@@ -1,19 +1,17 @@
 part of g3.stimpack.rbac.generated;
 
-
-
 class StimRbacResource extends StimModelSymbol<StimRbacResource> {
   StimRbacResource parent;
 
   StimRbacResource();
-
 
   StimRbacResource ref() {
     return StimRbacResourceRef()..symbol = this;
   }
 
   /// Creates a new "resource" of [StimRbacResource] type.
-  StimRbacResource refWith({dynamic name, StimRbacResource parent, Set<StimModelTag> tags}) {
+  StimRbacResource refWith(
+      {dynamic name, StimRbacResource parent, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -28,11 +26,8 @@ class StimRbacResource extends StimModelSymbol<StimRbacResource> {
   }
 }
 
-
-class StimRbacResourceRef extends StimSymbolRef<StimRbacResource> implements StimRbacResource {
-
-}
-
+class StimRbacResourceRef extends StimSymbolRef<StimRbacResource>
+    implements StimRbacResource {}
 
 class StimRbacResourceScope {
   StimRbacResource any;
@@ -49,12 +44,12 @@ class StimRbacResourceScope {
 
   StimRbacResource feature;
 
-
   /// Creates a new "resource" of [StimRbacResource] type.
-  StimRbacResource of({dynamic name, StimRbacResource parent, Set<StimModelTag> tags}) {
+  StimRbacResource of(
+      {dynamic name, StimRbacResource parent, Set<StimModelTag> tags}) {
     return StimRbacResource()
-        ..name = StimName.of(name)
-        ..parent = parent
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..parent = parent
+      ..tags = tags ?? {};
   }
 }

@@ -136,6 +136,7 @@ class StimGenMetaType implements Node {
 
     final ofFunction = _createSymbolFunction(
       'refWith',
+      addRequired: false,
       comment:
           '''Creates a reference to the current symbol "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
       body: Container(body),
@@ -217,6 +218,7 @@ class StimGenMetaType implements Node {
 
     final ofFunction = _createSymbolFunction(
       'of',
+      addRequired: true,
       comment:
           '''Creates a new "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
       body: CodeReturn.of(
@@ -229,17 +231,16 @@ class StimGenMetaType implements Node {
     return ofFunction;
   }
 
-  CodeFunction _createSymbolFunction(
-    String functionName, {
-    Node body,
-    String comment,
-  }) {
+  CodeFunction _createSymbolFunction(String functionName,
+      {Node body, String comment, bool addRequired}) {
     final ofFunctionArgs = <CodeArg>[
       CodeArg.of(name: 'name', type: 'dynamic'),
     ];
 
     for (final i in _metaFields + _tagSetField) {
-      final required = i.isRequired ? CodeAnnotation.required() : null;
+      final required = addRequired == true && i.isRequired
+          ? CodeAnnotation.required()
+          : null;
 
       ofFunctionArgs.add(
         CodeArg.of(

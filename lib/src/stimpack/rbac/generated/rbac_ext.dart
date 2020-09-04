@@ -1,7 +1,5 @@
 part of g3.stimpack.rbac.generated;
 
-
-
 class StimRbacOnStimModelType {
   StimModelType action;
 
@@ -15,8 +13,6 @@ class StimRbacOnStimModelType {
 
   StimModelType policyKind;
 }
-
-
 
 extension StimRbacOnStimModelTypeExtension on StimModelTypeScope {
   StimRbacOnStimModelType get rbac {

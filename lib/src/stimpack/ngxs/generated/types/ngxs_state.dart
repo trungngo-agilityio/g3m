@@ -1,7 +1,5 @@
 part of g3.stimpack.ngxs.generated;
 
-
-
 class StimNgxsState extends StimModelSymbol<StimNgxsState> {
   StimModelType model;
 
@@ -11,13 +9,17 @@ class StimNgxsState extends StimModelSymbol<StimNgxsState> {
 
   StimNgxsState();
 
-
   StimNgxsState ref() {
     return StimNgxsStateRef()..symbol = this;
   }
 
   /// Creates a new "state" of [StimNgxsState] type.
-  StimNgxsState refWith({dynamic name, StimModelType model, Set<StimNgxsAction> actions, Set<StimNgxsSelect> selects, Set<StimModelTag> tags}) {
+  StimNgxsState refWith(
+      {dynamic name,
+      StimModelType model,
+      Set<StimNgxsAction> actions,
+      Set<StimNgxsSelect> selects,
+      Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -38,20 +40,22 @@ class StimNgxsState extends StimModelSymbol<StimNgxsState> {
   }
 }
 
-
-class StimNgxsStateRef extends StimSymbolRef<StimNgxsState> implements StimNgxsState {
-
-}
-
+class StimNgxsStateRef extends StimSymbolRef<StimNgxsState>
+    implements StimNgxsState {}
 
 class StimNgxsStateScope {
   /// Creates a new "state" of [StimNgxsState] type.
-  StimNgxsState of({dynamic name, StimModelType model, Set<StimNgxsAction> actions, Set<StimNgxsSelect> selects, Set<StimModelTag> tags}) {
+  StimNgxsState of(
+      {dynamic name,
+      StimModelType model,
+      Set<StimNgxsAction> actions,
+      Set<StimNgxsSelect> selects,
+      Set<StimModelTag> tags}) {
     return StimNgxsState()
-        ..name = StimName.of(name)
-        ..model = model
-        ..actions = actions ?? {}
-        ..selects = selects ?? {}
-        ..tags = tags ?? {};
+      ..name = StimName.of(name)
+      ..model = model
+      ..actions = actions ?? {}
+      ..selects = selects ?? {}
+      ..tags = tags ?? {};
   }
 }

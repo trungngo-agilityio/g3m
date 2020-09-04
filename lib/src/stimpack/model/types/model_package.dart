@@ -15,10 +15,8 @@ class StimModelPackageScope {
 class StimModelPackage extends StimModelSymbol<StimModelPackage> {
   Set<StimModelType> types;
 
-  StimModelPackageRef _ref;
-
   /// Gets the reference to this model.
-  StimModelPackage get ref => _ref ??= StimModelPackageRef()..symbol = this;
+  StimModelPackage ref() => StimModelPackageRef()..symbol = this;
 
   StimModelPackage();
 }

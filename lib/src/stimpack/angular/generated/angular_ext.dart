@@ -1,7 +1,5 @@
 part of g3.stimpack.angular.generated;
 
-
-
 class StimAngularOnStimModelType {
   StimModelType app;
 
@@ -34,7 +32,6 @@ class StimAngularOnStimModelType {
   StimModelType componentStyle;
 }
 
-
 class StimAngularOnStimIoDir {
   StimIoDir repoRoot;
 
@@ -49,15 +46,12 @@ class StimAngularOnStimIoDir {
   StimIoDir repoApp;
 }
 
-
-
 extension StimAngularOnStimModelTypeExtension on StimModelTypeScope {
   StimAngularOnStimModelType get angular {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return stimpack.angular.onStimModelType;
   }
 }
-
 
 extension StimAngularOnStimIoDirExtension on StimIoDirScope {
   StimAngularOnStimIoDir get angular {
