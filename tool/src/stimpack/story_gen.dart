@@ -41,7 +41,7 @@ void genStoryPack() {
         _authActions +
         _reversibleActions +
         _flowActions +
-        _miscActions
+        _miscActions,
   });
 }
 

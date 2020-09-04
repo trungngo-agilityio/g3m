@@ -1,5 +1,7 @@
 part of g3.stimpack.story.generated;
 
+
+
 class StimStoryStory extends StimModelSymbol<StimStoryStory> {
   StimStoryActor actor;
 
@@ -7,16 +9,13 @@ class StimStoryStory extends StimModelSymbol<StimStoryStory> {
 
   StimStoryStory();
 
+
   StimStoryStory ref() {
     return StimStoryStoryRef()..symbol = this;
   }
 
   /// Creates a new "story" of [StimStoryStory] type.
-  StimStoryStory refWith(
-      {dynamic name,
-      StimStoryActor actor,
-      StimStoryAction action,
-      Set<StimModelTag> tags}) {
+  StimStoryStory refWith({dynamic name, StimStoryActor actor, StimStoryAction action, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -34,20 +33,21 @@ class StimStoryStory extends StimModelSymbol<StimStoryStory> {
   }
 }
 
-class StimStoryStoryRef extends StimSymbolRef<StimStoryStory>
-    implements StimStoryStory {}
+
+class StimStoryStoryRef extends StimSymbolRef<StimStoryStory> implements StimStoryStory {
+
+}
+
 
 class StimStoryStoryScope {
   /// Creates a new "story" of [StimStoryStory] type.
-  StimStoryStory of(
-      {dynamic name,
-      @required StimStoryActor actor,
-      @required StimStoryAction action,
-      Set<StimModelTag> tags}) {
+  StimStoryStory of({dynamic name, @required
+  StimStoryActor actor, @required
+  StimStoryAction action, Set<StimModelTag> tags}) {
     return StimStoryStory()
-      ..name = StimName.of(name)
-      ..actor = actor
-      ..action = action
-      ..tags = tags ?? {};
+        ..name = StimName.of(name)
+        ..actor = actor
+        ..action = action
+        ..tags = tags ?? {};
   }
 }

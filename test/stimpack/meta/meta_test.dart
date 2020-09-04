@@ -2,6 +2,7 @@ import 'package:g3m/stimpack_core.dart';
 import 'package:g3m/stimpack_meta.dart';
 import 'package:g3m/stimpack_meta_techlab.dart';
 import 'package:g3m/stimpack_model.dart';
+import 'package:g3m/stimpack_story.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -28,6 +29,7 @@ void main() {
     expect(meta.types.length, equals(4));
     stimpackGen(meta, '/tmp/meta-test', values: {
       tTable: {'user', 'group'},
+      t.story.actor: {'new actor'},
     });
   });
 }

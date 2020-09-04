@@ -1,17 +1,19 @@
 part of g3.stimpack.story.generated;
 
+
+
 class StimStoryAction extends StimModelSymbol<StimStoryAction> {
   Set<StimStoryAction> actions;
 
   StimStoryAction();
+
 
   StimStoryAction ref() {
     return StimStoryActionRef()..symbol = this;
   }
 
   /// Creates a new "action" of [StimStoryAction] type.
-  StimStoryAction refWith(
-      {dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
+  StimStoryAction refWith({dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -26,8 +28,11 @@ class StimStoryAction extends StimModelSymbol<StimStoryAction> {
   }
 }
 
-class StimStoryActionRef extends StimSymbolRef<StimStoryAction>
-    implements StimStoryAction {}
+
+class StimStoryActionRef extends StimSymbolRef<StimStoryAction> implements StimStoryAction {
+
+}
+
 
 class StimStoryActionScope {
   StimStoryAction create;
@@ -102,12 +107,12 @@ class StimStoryActionScope {
 
   StimStoryAction see;
 
+
   /// Creates a new "action" of [StimStoryAction] type.
-  StimStoryAction of(
-      {dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
+  StimStoryAction of({dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
     return StimStoryAction()
-      ..name = StimName.of(name)
-      ..actions = actions ?? {}
-      ..tags = tags ?? {};
+        ..name = StimName.of(name)
+        ..actions = actions ?? {}
+        ..tags = tags ?? {};
   }
 }
