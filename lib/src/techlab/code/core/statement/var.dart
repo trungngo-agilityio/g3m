@@ -55,12 +55,21 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
           s2 = tmp;
         }
 
+        Node typeAndName;
+        if (s1 != null && s2 != null) {
+          typeAndName = Container([
+            s1,
+            typeNameSeparator,
+            s2,
+          ]);
+        } else {
+          typeAndName = Container([s1, s2]);
+        }
+
         return Container([
           expr.comment,
           expr.isFinal == true ? finalKeyword : varKeyword,
-          s1,
-          typeNameSeparator,
-          s2,
+          typeAndName,
           expr.init != null ? Container([' = ', expr.init]) : null,
         ]);
       }, child);

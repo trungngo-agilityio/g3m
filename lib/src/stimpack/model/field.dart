@@ -61,13 +61,13 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   bool get isWriteOnly =>
       rules?.contains(stimpack.model.rule.writeOnly) == true;
 
-  StimModelField required() => clone()..rules += stimpack.model.rule.required;
+  StimModelField required() => this..rules += stimpack.model.rule.required;
 
-  StimModelField unique() => clone()..rules += stimpack.model.rule.unique;
+  StimModelField unique() => this..rules += stimpack.model.rule.unique;
 
-  StimModelField writeOnly() => clone()..rules += stimpack.model.rule.writeOnly;
+  StimModelField writeOnly() => this..rules += stimpack.model.rule.writeOnly;
 
-  StimModelField readOnly() => clone()..rules += stimpack.model.rule.readOnly;
+  StimModelField readOnly() => this..rules += stimpack.model.rule.readOnly;
 
   StimModelFieldRef _ref;
 

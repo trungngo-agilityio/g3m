@@ -28,6 +28,10 @@ enum _NameOp {
   sentence
 }
 
+abstract class StimNamed {
+  StimName get name;
+}
+
 /// This class provides dynamic string definition and processing.
 ///
 class StimName {
@@ -43,9 +47,15 @@ class StimName {
   factory StimName.of(dynamic value) {
     if (value is StimName) {
       return value;
+    } else if (value is StimNamed) {
+      return StimName.refOf(value);
     } else {
       return StimName._(null, null, null, _normalized(value));
     }
+  }
+
+  factory StimName.refOf(StimNamed value) {
+    return StimName._(_NameOp.ref, value, null, null);
   }
 
   StimName operator ^(Object another) {
@@ -94,10 +104,6 @@ class StimName {
 
   StimName removeIfEndsWith(Object another) {
     return StimName._(_NameOp.removeIfEndsWith, this, another, null);
-  }
-
-  StimName ref() {
-    return StimName._(_NameOp.ref, this, null, null);
   }
 
   StimName upper() {
@@ -156,6 +162,10 @@ class StimName {
   static String _normalized(Object s) {
     if (s == null) return s;
     if (s is StimName) return s.toString();
+    if (s is StimNamed) {
+      final lName = s as StimNamed;
+      s = lName.name.toString();
+    }
     return s.toString().trim().replaceAll('  ', ' ');
   }
 

@@ -7,7 +7,8 @@ class StimModelPackageScope {
   StimModelPackage of({@meta.required dynamic name, Set<StimModelTag> tags}) {
     return StimModelPackage()
       ..name = StimName.of(name)
-      ..tags = tags;
+      ..types = {}
+      ..tags = tags ?? {};
   }
 }
 

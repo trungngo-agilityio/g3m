@@ -1,27 +1,27 @@
 import 'package:g3m/stimpack_core.dart';
 import 'package:test/test.dart';
 
-class FakeSymbol extends StimSymbol<FakeSymbol> {
+class _FakeSymbol extends StimSymbol<_FakeSymbol> {
   String stringField;
   int intField;
   double doubleField;
   num numField;
-  FakeSymbol fakeSymbol;
+  _FakeSymbol fakeSymbol;
   Set<String> stringSet;
   List<int> intList;
-  Set<FakeSymbol> fakeSymbolSet;
-  List<FakeSymbol> fakeSymbolList;
+  Set<_FakeSymbol> fakeSymbolSet;
+  List<_FakeSymbol> fakeSymbolList;
 }
 
 void main() {
   test('clone', () {
-    final s1 = FakeSymbol()
+    final s1 = _FakeSymbol()
       ..stringField = 'x'
       ..intField = 5
       ..doubleField = 10
       ..numField = 15;
 
-    final symbolField = FakeSymbol()..stringField = 'y';
+    final symbolField = _FakeSymbol()..stringField = 'y';
     s1.fakeSymbol = symbolField;
 
     final stringSet1 = {'z'};
@@ -48,9 +48,9 @@ void main() {
   });
 
   test('deep clone', () {
-    final s1 = FakeSymbol()..stringField = 'x';
+    final s1 = _FakeSymbol()..stringField = 'x';
 
-    final symbolField1 = FakeSymbol()..stringField = 'y';
+    final symbolField1 = _FakeSymbol()..stringField = 'y';
     s1.fakeSymbol = symbolField1;
 
     final stringSet1 = {'z'};
@@ -59,7 +59,7 @@ void main() {
     final intList1 = [15];
     s1.intList = intList1;
 
-    final symbolField2 = FakeSymbol()..stringField = 'y';
+    final symbolField2 = _FakeSymbol()..stringField = 'y';
     final symbolSet1 = {symbolField1, symbolField2};
 //    s1.fakeSymbolSet = symbolSet1;
 
@@ -73,42 +73,44 @@ void main() {
 //    assert(s1.fakeSymbol.stringField == s2.fakeSymbol.stringField);
   });
 
-  group('+ operator', () {
-    Set<FakeSymbol> noneSet;
-    FakeSymbol none;
-    final empty = <FakeSymbol>{};
+  group('set operations', () {
+    group('+ operator', () {
+      Set<_FakeSymbol> noneSet;
+      _FakeSymbol none;
+      final empty = <_FakeSymbol>{};
 
-    final s1 = FakeSymbol();
-    final set1 = {s1};
+      final s1 = _FakeSymbol();
+      final set1 = {s1};
 
-    final s2 = FakeSymbol();
-    final set2 = {s2};
+      final s2 = _FakeSymbol();
+      final set2 = {s2};
 
-    test('none set goes first', () {
-      assert(noneSet == noneSet + none);
-      assert(noneSet == noneSet + noneSet);
+      test('none set goes first', () {
+        assert(noneSet == noneSet + none);
+        assert(noneSet == noneSet + noneSet);
 
-      final noneSetPlusEmpty = noneSet + empty;
-      assert(empty != noneSetPlusEmpty && noneSetPlusEmpty.isEmpty);
+        final noneSetPlusEmpty = noneSet + empty;
+        assert(empty != noneSetPlusEmpty && noneSetPlusEmpty.isEmpty);
 
-      final noneSetPlusSet = noneSet + set1;
-      assert(set1 != noneSetPlusSet && noneSetPlusSet.first == s1);
-    });
+        final noneSetPlusSet = noneSet + set1;
+        assert(set1 != noneSetPlusSet && noneSetPlusSet.first == s1);
+      });
 
-    test('none goes first', () {
-      assert(noneSet == none + none);
-      final nonePlusEmpty = none + empty;
+      test('none goes first', () {
+        assert(noneSet == none + none);
+        final nonePlusEmpty = none + empty;
 
-      assert(empty != nonePlusEmpty && nonePlusEmpty.isEmpty);
-      assert(noneSet == none + noneSet);
+        assert(empty != nonePlusEmpty && nonePlusEmpty.isEmpty);
+        assert(noneSet == none + noneSet);
 
-      final nonePlusSet = none + set1;
-      assert(set1 != nonePlusSet && nonePlusSet.first == s1);
-    });
+        final nonePlusSet = none + set1;
+        assert(set1 != nonePlusSet && nonePlusSet.first == s1);
+      });
 
-    test('set + set', () {
-      final setPlusSet = set1 + set2;
-      assert(setPlusSet.contains(s1) && setPlusSet.contains(s2));
+      test('set + set', () {
+        final setPlusSet = set1 + set2;
+        assert(setPlusSet.contains(s1) && setPlusSet.contains(s2));
+      });
     });
   });
 }
