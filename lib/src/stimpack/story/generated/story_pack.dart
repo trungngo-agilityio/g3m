@@ -27,14 +27,16 @@ class StimStory extends StimPack {
 
   final StimStoryOnStimModelType onStimModelType;
 
-
   StimStory(StimModel model, StimRbac rbac):
       epic = StimStoryEpicScope(),
       story = StimStoryStoryScope(),
       action = StimStoryActionScope(),
       actor = StimStoryActorScope(),
       onStimModelType = StimStoryOnStimModelType(),
-      super('story') {
+      super('story');
+
+
+  void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
 
@@ -42,7 +44,6 @@ class StimStory extends StimPack {
     /// not overwritten during pack re-generation. 
     stimInitStoryPack(this);
   }
-
 
   void _buildMeta() {
     final m = stimpack.model, f = m.field, t = m.type;
@@ -97,6 +98,10 @@ class StimStory extends StimPack {
 //  
 extension StimStoryPackExtension on StimpackRoot {
   StimStory get story {
-    return _story ??= StimStory(stimpack.model, stimpack.rbac);
+    if (_story == null) {
+      _story = StimStory(stimpack.model, stimpack.rbac);
+      _story._init();
+    }
+    return _story;
   }
 }

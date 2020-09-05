@@ -18,12 +18,15 @@ class StimStoryActor extends StimModelSymbol<StimStoryActor> {
     if (name != null) {
       res.name = StimName.of(name);
     }
+
     if (roles != null) {
       res.roles = roles;
     }
+
     if (tags != null) {
       res.tags = tags;
     }
+
     return res;
   }
 }

@@ -18,12 +18,15 @@ class StimStoryEpic extends StimModelSymbol<StimStoryEpic> {
     if (name != null) {
       res.name = StimName.of(name);
     }
+
     if (stories != null) {
       res.stories = stories;
     }
+
     if (tags != null) {
       res.tags = tags;
     }
+
     return res;
   }
 }

@@ -26,7 +26,7 @@ class CodeIfConfig extends CodeConfigNode<CodeIf> {
                   ' ',
                   CodeBlock.of(expr.orElse),
                 ])
-              : null,
+              : '\n',
         ]),
       );
     }, child);

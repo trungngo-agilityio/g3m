@@ -20,15 +20,19 @@ class StimStoryStory extends StimModelSymbol<StimStoryStory> {
     if (name != null) {
       res.name = StimName.of(name);
     }
+
     if (actor != null) {
       res.actor = actor;
     }
+
     if (action != null) {
       res.action = action;
     }
+
     if (tags != null) {
       res.tags = tags;
     }
+
     return res;
   }
 }

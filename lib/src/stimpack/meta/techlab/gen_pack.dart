@@ -15,6 +15,7 @@ class StimGenMetaPack implements Node {
 
   CodeField _packInstanceField;
   CodeField _metaPackageField;
+  CodeFunction _initFunctionOfPackClass;
 
   StimGenMetaPack(
     this.pack,
@@ -160,6 +161,12 @@ typed of [$symbolClassName]."''',
           args: CodeStringLiteral.of(pack.name),
         ),
       ],
+    );
+
+    _initFunctionOfPackClass = CodeFunction.of(
+      name: 'init',
+      returns: CodeType.ofVoid(),
+      isPrivate: true,
       body: [
         '\n',
         CodeFunctionCall.of(
@@ -188,6 +195,7 @@ not overwritten during pack re-generation. ''',
       properties: properties,
       constructors: constructor,
       functions: [
+        _initFunctionOfPackClass,
         buildMetaFunction,
       ],
     );
@@ -328,19 +336,33 @@ final mt = ${typeExtFieldName};''',
     for (final p in externalPacks) {
       constructorArgs.add(CodeRef.of('stimpack.${p.name.camel()}'));
     }
+
+    var packInstanceRef = CodeRef.of(_packInstanceField);
+    final createPackInstance = CodeAssignExpr.of(
+      packInstanceRef,
+      CodeConstructorCall.of(
+        className: _packClassName,
+        args: constructorArgs,
+      ),
+    );
+
+    final returnPackInstance = CodeReturn.of(
+      packInstanceRef,
+    );
+
+    final triggerInit =
+        CodeFunctionCall.of(instance: packInstanceRef, name: '_init');
+    var createInstanceIfNull = CodeIf.of(
+        condition: CodeEqualExpr.of(packInstanceRef, CodeNullLiteral()),
+        then: [
+          createPackInstance,
+          triggerInit,
+        ]);
     final lazyInitProp = CodeProperty.of(
       name: _packInstanceField.name,
       type: _packInstanceField.type,
       getter: CodePropertyGetter.of(
-        body: CodeReturn.of(
-          CodeAssignIfNullExpr.of(
-            _packInstanceField,
-            CodeConstructorCall.of(
-              className: _packInstanceField.type.name,
-              args: constructorArgs,
-            ),
-          ),
-        ),
+        body: [createInstanceIfNull, returnPackInstance],
       ),
     );
 

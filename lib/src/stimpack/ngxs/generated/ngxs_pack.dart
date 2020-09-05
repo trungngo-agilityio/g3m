@@ -1,41 +1,47 @@
 part of g3.stimpack.ngxs.generated;
 
+
 /// The only instance of the [StimNgxs] pack.
 StimNgxs _ngxs;
+
+
 
 class StimNgxs extends StimPack {
   StimModelPackage _metaPackage;
 
-  /// Scope class for constructing all "feature" symbols,
+  /// Scope class for constructing all "feature" symbols, 
   /// typed of [StimNgxsFeature]."
   final StimNgxsFeatureScope feature;
 
-  /// Scope class for constructing all "action" symbols,
+  /// Scope class for constructing all "action" symbols, 
   /// typed of [StimNgxsAction]."
   final StimNgxsActionScope action;
 
-  /// Scope class for constructing all "state" symbols,
+  /// Scope class for constructing all "state" symbols, 
   /// typed of [StimNgxsState]."
   final StimNgxsStateScope state;
 
-  /// Scope class for constructing all "select" symbols,
+  /// Scope class for constructing all "select" symbols, 
   /// typed of [StimNgxsSelect]."
   final StimNgxsSelectScope select;
 
   final StimNgxsOnStimModelType onStimModelType;
 
-  StimNgxs(StimModel model)
-      : feature = StimNgxsFeatureScope(),
-        action = StimNgxsActionScope(),
-        state = StimNgxsStateScope(),
-        select = StimNgxsSelectScope(),
-        onStimModelType = StimNgxsOnStimModelType(),
-        super('ngxs') {
+  StimNgxs(StimModel model):
+      feature = StimNgxsFeatureScope(),
+      action = StimNgxsActionScope(),
+      state = StimNgxsStateScope(),
+      select = StimNgxsSelectScope(),
+      onStimModelType = StimNgxsOnStimModelType(),
+      super('ngxs');
+
+
+  void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
 
     /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation.
+    /// not overwritten during pack re-generation. 
     stimInitNgxsPack(this);
   }
 
@@ -43,7 +49,6 @@ class StimNgxs extends StimPack {
     final m = stimpack.model, f = m.field, t = m.type;
     final mp = _metaPackage = m.package.of(name: 'ngxs');
     final mt = onStimModelType;
-
     /// Builds type "feature"
     mt.feature = t.symbolOf(name: 'feature', package: mp);
 
@@ -88,12 +93,18 @@ class StimNgxs extends StimPack {
   }
 }
 
-// Provides global access to the "ngxs" pack. Only one instance of the pack
-// is created. During the creation, other packs that this pack depends on might
+
+
+// Provides global access to the "ngxs" pack. Only one instance of the pack 
+// is created. During the creation, other packs that this pack depends on might 
 // be created as well.
-//
+//  
 extension StimNgxsPackExtension on StimpackRoot {
   StimNgxs get ngxs {
-    return _ngxs ??= StimNgxs(stimpack.model);
+    if (_ngxs == null) {
+      _ngxs = StimNgxs(stimpack.model);
+      _ngxs._init();
+    }
+    return _ngxs;
   }
 }

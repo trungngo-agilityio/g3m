@@ -1,5 +1,7 @@
 part of g3.stimpack.io.generated;
 
+
+
 class StimIoOnStimModelType {
   StimModelType file;
 
@@ -7,6 +9,8 @@ class StimIoOnStimModelType {
 
   StimModelType dir;
 }
+
+
 
 extension StimIoOnStimModelTypeExtension on StimModelTypeScope {
   StimIoOnStimModelType get io {

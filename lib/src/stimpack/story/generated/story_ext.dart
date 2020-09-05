@@ -10,8 +10,6 @@ class StimStoryOnStimModelType {
   StimModelType action;
 
   StimModelType actor;
-
-  StimModelType test;
 }
 
 

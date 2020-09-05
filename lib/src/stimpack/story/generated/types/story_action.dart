@@ -18,12 +18,15 @@ class StimStoryAction extends StimModelSymbol<StimStoryAction> {
     if (name != null) {
       res.name = StimName.of(name);
     }
+
     if (actions != null) {
       res.actions = actions;
     }
+
     if (tags != null) {
       res.tags = tags;
     }
+
     return res;
   }
 }
