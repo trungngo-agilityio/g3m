@@ -120,8 +120,20 @@ class StimModelTypeScope {
         if (matches.length > 2) {
           // now continue looking into it to see if the second part
           // is a pack.
-          final m2 = matches.elementAt(1);
-          final potentialPackName = typeName.substring(m2.start, m2.end);
+          final m1 = matches.elementAt(1);
+          final potentialPackName =
+              typeName.substring(m1.start, m1.end).toLowerCase();
+
+          // just get the remaining as a symbol
+          final m2 = matches.elementAt(2);
+          var potentialSymbolName = typeName.substring(m2.start);
+          potentialSymbolName = potentialSymbolName[0].toLowerCase() +
+              potentialSymbolName.substring(1);
+
+          final s =
+              'stimpack.model.type.${potentialPackName}.${potentialSymbolName}';
+
+          assert(false, 'Please use $s instead of a dart type name.');
         }
 
         // now just use magic symbol to figure out if possible

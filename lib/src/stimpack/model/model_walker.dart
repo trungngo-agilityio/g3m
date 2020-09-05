@@ -1,55 +1,98 @@
 part of g3.stimpack.model;
 
-typedef StimModelWalkerFunc<T extends StimSymbol<T>> = bool Function(
-    StimModelWalkContext context, T node);
+typedef StimModelWalkerFunc = bool Function(
+    StimModelWalkContext context, dynamic node);
 
 class StimModelWalkContext {
-  final Set processed;
+  /// The internal list of processed symbols.
+  /// This set helps to never visit a symbol twice.
+  final Set _processed;
 
-  StimModelWalkContext() : processed = {};
+  final Queue<StimModelSymbol> _stack;
+
+  /// The stack of visited symbols.
+  /// This help handler to discover all contextual data
+  /// related to the currently processed symbol.
+  ///
+  List<StimModelSymbol> get stack => List.unmodifiable(_stack);
+
+  T firstOfType<T>() {
+    return _stack.firstWhere(
+      (element) => element is T,
+      orElse: () => null,
+    ) as T;
+  }
+
+  StimModelWalkContext._([Queue stack, Set processed])
+      : _processed = processed ?? {},
+        _stack = stack ?? Queue();
 }
 
 class StimModelWalker {
   final Map<StimModelType, StimModelWalkerFunc> _handler;
 
-  StimModelWalker(this._handler) : assert(_handler != null);
+  StimModelWalker([Map<StimModelType, StimModelWalkerFunc> handler])
+      : _handler = handler ?? {};
 
-  // void on<T extends StimSymbol<T>>(StimModelWalkerFunc<T> handler) {
-  //   final type = reflectType(T).reflectedType;
-  //   final modelType = stimpack.model.type.fromDart(type);
-  //   _handler[modelType] = handler;
-  // }
+  StimModelWalker on({
+    @meta.required StimModelType type,
+    @meta.required StimModelWalkerFunc exec,
+  }) {
+    assert(type != null, 'on is required');
+    assert(exec != null, 'exec is required');
+    _handler[type] = exec;
+    return this;
+  }
 
-  void walk(StimModelType type, dynamic symbol) {
-    _doWalk(StimModelWalkContext(), type, symbol);
+  void walk({
+    @meta.required StimModelType type,
+    @meta.required dynamic instance,
+  }) {
+    assert(type != null, 'type is required');
+    final context = StimModelWalkContext._();
+    _doWalk(context, type, instance);
   }
 
   void _doWalk(
       StimModelWalkContext context, StimModelType type, dynamic symbol) {
-    if (symbol == null || context.processed.contains(symbol)) return;
-    context.processed.add(symbol);
+
+    // Quits if the symbol has been visited.
+    if (symbol == null || context._processed.contains(symbol)) return;
+
+    context._processed.add(symbol);
+
+    final r = reflect(symbol);
+
+    if (type.isCollection) {
+      // Special dart collection type that can be iterate through.
+      final iterable = symbol as Iterable;
+      for (final i in iterable) {
+        _doWalk(context, type.item, i);
+      }
+      return;
+    }
+
+    // Adds the symbol to the stack
+    context._stack.addFirst(symbol);
+
     final func = _handler[type];
     if (func != null) {
       // Done walking
       if (func.call(context, symbol) == true) return;
     }
 
-    final r = reflect(symbol);
-    final t = stimpack.model.type;
-
-    if (type == t.set || type == t.list) {
-      final iterable = symbol as Iterable;
-      for (final i in iterable) {
-        _doWalk(context, type.item, i);
-      }
-    } else if (type.fields?.isNotEmpty == true) {
+    if (type.fields?.isNotEmpty == true) {
       for (final f in type.fields) {
         var fieldName = Symbol(f.name.camel().toString());
         final fieldValue = r.getField(fieldName).reflectee;
+
         if (fieldValue != null) {
           _doWalk(context, f.type, fieldValue);
         }
       }
     }
+
+    // Removes the symbol from the stack
+    context._stack.removeFirst();
   }
 }

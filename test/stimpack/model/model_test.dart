@@ -1,6 +1,3 @@
-import 'dart:mirrors';
-
-import 'package:colorize/colorize.dart';
 import 'package:g3m/stimpack_core.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:test/test.dart';
@@ -43,29 +40,5 @@ void main() {
       assert(!ts.contains(t2));
       assert(ts.contains(t3));
     });
-  });
-
-  // Test fundamental support from dart.
-  group('design prototype',() {
-    var t = Colorize;
-    var rc = reflectClass(t);
-    var rt = reflectType(t);
-    var ms = currentMirrorSystem();
-    print(rc.owner);
-    var d = rc.owner as LibraryMirror;
-
-    print(rt);
-    print(ms);
-    print(rc);
-
-    print('${d.uri}, ${d.uri.scheme}');
-
-    var s = 'StimModelType';
-    var pattern = RegExp('[A-Z][^A-Z]*');
-
-    for (final math in pattern.allMatches(s)) {
-      print(s.substring(math.start, math.end));
-    }
-
   });
 }

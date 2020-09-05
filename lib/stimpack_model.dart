@@ -1,8 +1,10 @@
 library g3.stimpack.model;
 
+import 'dart:collection';
 import 'dart:mirrors';
 
 import 'package:g3m/stimpack_core.dart';
+import 'package:g3m/util.dart';
 import 'package:meta/meta.dart' as meta;
 
 part 'src/stimpack/model/model_extensions.dart';

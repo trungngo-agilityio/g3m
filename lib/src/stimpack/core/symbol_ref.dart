@@ -31,8 +31,6 @@ class StimSymbolRef<T> {
       return value;
     }
 
-    print('setter: ${invocation.isSetter}, getter: ${invocation.isGetter}'
-        ', method: ${invocation.isMethod}, accessor: ${invocation.isAccessor}');
     _im ??= reflect(symbol);
     final res = _im.delegate(invocation);
 

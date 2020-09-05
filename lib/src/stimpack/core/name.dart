@@ -160,7 +160,7 @@ class StimName {
   /// - no double space in the middle.
   ///
   static String _normalized(Object s) {
-    if (s == null) return s;
+    if (s == null) return '';
     if (s is StimName) return s.toString();
     if (s is StimNamed) {
       final lName = s as StimNamed;
