@@ -145,6 +145,7 @@ typed of [$symbolClassName]."''',
 
     final constructorArgs = <CodeArg>[];
     for (final p in externalPacks) {
+      if (p.isDart) continue;
       constructorArgs.add(
         CodeArg.of(
           name: p.name,
@@ -334,6 +335,7 @@ final mt = ${typeExtFieldName};''',
     final className = _config.packExtensionClassNameOf(pack);
     final constructorArgs = <Node>[];
     for (final p in externalPacks) {
+      if (p.isDart) continue;
       constructorArgs.add(CodeRef.of('stimpack.${p.name.camel()}'));
     }
 

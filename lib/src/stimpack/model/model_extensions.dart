@@ -4,7 +4,10 @@ StimModel _model;
 
 extension StimModelExtension on StimpackRoot {
   StimModel get model {
-    return _model ??= StimModel();
+    if (_model != null) return _model;
+    _model ??= StimModel();
+    _model.init();
+    return _model;
   }
 }
 

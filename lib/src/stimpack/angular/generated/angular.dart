@@ -6,6 +6,7 @@ import 'package:g3m/stimpack_meta.dart';
 import 'package:meta/meta.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_io.dart';
+import 'dart:core';
 part '../angular_init.dart';
 part 'angular_pack.dart';
 part 'angular_ext.dart';

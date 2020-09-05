@@ -1,8 +1,22 @@
 part of g3.stimpack.meta.techlab;
 
 class StimGenMeta implements Node {
+  /// The package that includes all types that we will need to generate code
+  /// for. Each type shall have fields, and those fields refer to more
+  /// types. Some of the referred types come from external stimpack
+  /// packages, or come from dart type system. The code generation
+  /// process shall need to import such dependencies.
+  ///
   final StimModelPackage pack;
 
+  /// The set of values to be defined for the current package and/or
+  /// external stimpack packages. Values provides an easy way to
+  /// refer to an instance of a type. For example, if we want
+  /// to refer to an action defined in a story package, we can
+  /// access [stimpack.story.action.manage], in which "story" is the story
+  /// package, and "action" is a type defined in that package, and "manage"
+  /// is a value defined for that type.
+  ///
   final Map<StimModelType, Set<String>> values;
 
   StimpackCodeConfig _config;
@@ -19,7 +33,16 @@ class StimGenMeta implements Node {
   @override
   Node build(BuildContext context) {
     _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
+
+    // Travels through all referred types to figure out any external
+    // packages we need to import into the generated libraries.
     _computeExternalPacks();
+
+    // Values are a map of type -> values. We will need to loop through
+    // the type list to figure out if any type coming from external
+    // packages. These external packages shall need to be a required
+    // field for the generated pack constructor so that it make sure
+    // the external package is loaded before the current one.
     _splitToInternalAndExternalValues();
 
     return Container([
@@ -39,40 +62,48 @@ class StimGenMeta implements Node {
     ]);
   }
 
-  Node _buildTypeFiles() {
-    final files = pack.types.map((type) {
-      final typeValues = values == null ? null : values[type];
-      return StimGenMetaType(pack, type, typeValues);
-    });
-
-    return Container(files);
-  }
-
+  /// This is breadth first search algorithm to go through all types
+  /// referred by the current package to figure out the external package.
   void _computeExternalPacks() {
     final p = stimpack.model.package;
-    final systemPackages = {p.dart, p.model};
+
+    final ignoredPackages = {p.dart, p.model};
 
     /// Makes every pack depends on the model pack.
     _externalPacks = <StimModelPackage>{p.model};
 
-    // Finds all external packs that this pack depends on.
+    // This is the set of already processed types.
+    // This is needed to make sure no type has been processed twice
+    // to avoid recursive structure.
     final processed = <StimModelType>{};
+
+    // This is the working queue, any newly discovered type should be
+    // added to this queue. The algorithm shall need to pick up
+    // on type at a time from this queue to process until the queue is empty.
     final queue = Queue.of(pack.types);
 
     while (queue.isNotEmpty) {
+      // Dequeue a type to process.
       final t = queue.removeFirst();
+
+      // Stop if that type is already processed.
       if (processed.contains(t)) continue;
+
+      // Marks that the type is processed.
       processed.add(t);
 
       var tPackage = t.package;
-      if (tPackage != pack && !systemPackages.contains(tPackage)) {
+
+      if (tPackage != pack && !ignoredPackages.contains(tPackage)) {
         _externalPacks.add(tPackage);
       }
 
+      // Found more types to process.
       if (t.collection != null) queue.add(t.collection);
       if (t.item != null) queue.add(t.item);
 
       if (t.fields != null) {
+        // Go into sub fields to find more types.
         for (final field in t.fields) {
           queue.add(field.type);
         }
@@ -117,6 +148,15 @@ class StimGenMeta implements Node {
         _externalPacks.add(type.package);
       }
     }
+  }
+
+  Node _buildTypeFiles() {
+    final files = pack.types.map((type) {
+      final typeValues = values == null ? null : values[type];
+      return StimGenMetaType(pack, type, typeValues);
+    });
+
+    return Container(files);
   }
 }
 

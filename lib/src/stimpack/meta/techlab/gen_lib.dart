@@ -10,9 +10,7 @@ class StimGenMetaLib implements Node {
 
   @override
   Node build(BuildContext context) {
-    // This file is rather complex. Before building anything,
-    // set up commonly access variables first.
-    _preBuild(context);
+    _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
 
     final fileName = _config.libFileNameOf(pack);
 
@@ -26,16 +24,11 @@ class StimGenMetaLib implements Node {
     );
   }
 
-  void _preBuild(BuildContext context) {
-    _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
-  }
-
   /// Builds the list of code imports.
   ///
   List<CodeImport> _buildImportList() {
     final imports = <CodeImport>[
       // imports the base stimpack
-      // TODO: Makes this a external package
       CodeImport.of(path: 'package:g3m/stimpack_core.dart'),
       CodeImport.of(path: 'package:g3m/stimpack_meta.dart'),
       CodeImport.of(path: 'package:meta/meta.dart'),

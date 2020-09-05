@@ -5,6 +5,8 @@ import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_story.dart';
 import 'package:test/test.dart';
 
+class _FakeDartType {}
+
 void main() {
   final model = stimpack.model;
   final t = model.type, f = model.field;
@@ -19,6 +21,12 @@ void main() {
 
     tDatabase.fields = {
       f.of(name: 'tables', type: t.setOf(item: tTable)).required(),
+      f.of(name: 'age', type: t.fromDart(int)),
+      // f.of(name: 'fake', type: t.fromDart(_FakeDartType)),
+      f.of(name: 'name', type: t.fromDart(StimName)),
+      f.of(name: 'set', type: t.fromDart(Set)),
+      f.of(name: 'list', type: t.fromDart(List)),
+      f.of(name: 'map', type: t.fromDart(Map)),
     };
 
     tTable.fields = {

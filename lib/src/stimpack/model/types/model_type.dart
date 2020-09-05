@@ -42,8 +42,11 @@ class StimModelTypeScope {
   Set<StimModelType> primitiveTypes;
   Set<StimModelType> collectionTypes;
 
-  // Provides meta information for the model package.
+  /// Provides meta information for the model package.
   StimModelTypes model;
+
+  /// The internal map of dart types created via the scope.
+  Map<TypeMirror, StimModelType> _dartTypes;
 
   StimModelType of({
     @meta.required dynamic name,
@@ -68,6 +71,40 @@ class StimModelTypeScope {
     @meta.required StimModelPackage package,
   }) {
     return of(name: name, package: package, fields: null);
+  }
+
+  StimModelType fromDart(Type type) {
+    final rt = reflectType(type);
+
+    _dartTypes ??= {};
+    var stimType = _dartTypes[type];
+
+    // Only creates one instance for a dart type.
+    if (stimType != null) return stimType;
+
+    // Figure out the packages own this type.
+    var library = rt.owner;
+    while (library != null && library is! LibraryMirror) {
+      library = library.owner;
+    }
+
+    assert(library != null, 'BUG. We need to be able to find the library');
+
+    final package = stimpack.model.package.fromDart(library);
+    var uri = package.dartLibrary.uri;
+    var scheme = uri?.scheme;
+    assert(
+      scheme == 'package' || scheme == 'dart',
+      'cannot import ${type} from "${scheme}" scheme, '
+      'with uri: ${uri}',
+    );
+
+    stimType = _dartTypes[rt] = StimModelType()
+      ..name = StimName.of(type.toString())
+      ..package = package
+      ..dartType = rt;
+
+    return stimType;
   }
 
   StimModelType collectionOf({
@@ -145,6 +182,11 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// This is only used for collection type.
   StimModelType item;
 
+  /// This field is only not null when the type is come from
+  /// a dart type. In this case, the [package] should points
+  /// to a [StimModelPackage] that is also from a dart library.
+  TypeMirror dartType;
+
   /// True indicates that this is a collection type.
   bool get isCollection => collection != null;
 
@@ -154,6 +196,10 @@ class StimModelType extends StimModelSymbol<StimModelType> {
 
   /// Determines if this is a primitive dart type.
   bool get isDartPrimitive => stimpack.model.type.primitiveTypes.contains(this);
+
+  /// True indicates that this type is from the dart type system.
+  /// It is a not a user-defined type.
+  bool get isDart => dartType != null;
 
   /// Gets the reference to this model.
   StimModelType ref() => StimModelTypeRef()..symbol = this;

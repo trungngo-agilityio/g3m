@@ -1,5 +1,7 @@
 library g3.stimpack.model;
 
+import 'dart:mirrors';
+
 import 'package:g3m/stimpack_core.dart';
 import 'package:meta/meta.dart' as meta;
 

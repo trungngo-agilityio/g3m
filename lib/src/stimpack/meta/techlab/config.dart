@@ -134,8 +134,14 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   }
 
   CodeImport codePackImportOf(StimModelPackage pack) {
-    return CodeImport.of(
-        path: 'package:g3m/stimpack_${pack.name.camel()}.dart');
+    if (pack.isDart) {
+      final uri = pack.dartLibrary.uri;
+      // Imports the dart package.
+      return CodeImport.of(path: uri.toString());
+    } else {
+      return CodeImport.of(
+          path: 'package:g3m/stimpack_${pack.name.camel()}.dart');
+    }
   }
 
   @override

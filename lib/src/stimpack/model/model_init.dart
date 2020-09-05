@@ -23,7 +23,9 @@ class StimModel extends StimPack {
         range = StimModelRangeScope(),
         httpStatus = StimModelHttpStatusScope(),
         grpcStatus = StimModelGrpcStatusScope(),
-        super('model') {
+        super('model');
+
+  void init() {
     _httpStatuses();
     _grpcStatuses();
     _patterns();
@@ -328,28 +330,25 @@ class StimModel extends StimPack {
   void _primitiveTypes() {
     final t = type;
     t.primitiveTypes = {
-      t.string = _t('string'),
-      t.num = _t('num'),
-      t.int = _t('int'),
-      t.double = _t('double'),
-      t.bool = _t('bool'),
-      t.duration = _t('duration'),
-      t.uri = _t('date time'),
-      t.type = _t('type'),
+      t.string = t.fromDart(String),
+      t.num = t.fromDart(num),
+      t.int = t.fromDart(int),
+      t.double = t.fromDart(double),
+      t.bool = t.fromDart(bool),
+      t.duration = t.fromDart(Duration),
+      t.uri = t.fromDart(Uri),
+      t.type = t.fromDart(Type),
     };
   }
 
   void _collectionTypes() {
     final t = type;
     t.collectionTypes = {
-      t.map = _t('map'),
-      t.list = _t('list'),
-      t.set = _t('set')
+      t.map = t.fromDart(Map)..name ^= 'map',
+      t.list = t.fromDart(List)..name ^= 'list',
+      t.set = t.fromDart(Set)..name ^= 'set',
     };
   }
-
-  StimModelType _t(String name) =>
-      type.primitiveOf(name: name, package: package.dart);
 
   void _buildMeta() {
     package.model = package.of(name: 'model');
