@@ -87,34 +87,34 @@ class ReCase {
   }
 
   /// camelCase
-  String get camelCase => _getCamelCase();
+  String get camel => _getCamelCase();
 
   /// CONSTANT_CASE
-  String get constantCase => _getConstantCase();
+  String get constant => _getConstantCase();
 
   /// Sentence case
-  String get sentenceCase => _getSentenceCase();
+  String get sentence => _getSentenceCase();
 
   /// snake_case
-  String get snakeCase => _getSnakeCase();
+  String get snake => _getSnakeCase();
 
   /// dot.case
-  String get dotCase => _getSnakeCase(separator: '.');
+  String get dot => _getSnakeCase(separator: '.');
 
   /// param-case
-  String get paramCase => _getSnakeCase(separator: '-');
+  String get param => _getSnakeCase(separator: '-');
 
   /// path/case
-  String get pathCase => _getSnakeCase(separator: '/');
+  String get path => _getSnakeCase(separator: '/');
 
   /// PascalCase
-  String get pascalCase => _getPascalCase();
+  String get pascal => _getPascalCase();
 
   /// Header-Case
-  String get headerCase => _getPascalCase(separator: '-');
+  String get header => _getPascalCase(separator: '-');
 
   /// Title Case
-  String get titleCase => _getPascalCase(separator: ' ');
+  String get title => _getPascalCase(separator: ' ');
 
   String _getCamelCase({String separator = ''}) {
     if (_words == null) return null;
@@ -169,23 +169,23 @@ class ReCase {
 }
 
 extension StringReCase on String {
-  String get camelCase => ReCase(this).camelCase;
+  String get camelCase => ReCase(this).camel;
 
-  String get constantCase => ReCase(this).constantCase;
+  String get constantCase => ReCase(this).constant;
 
-  String get sentenceCase => ReCase(this).sentenceCase;
+  String get sentenceCase => ReCase(this).sentence;
 
-  String get snakeCase => ReCase(this).snakeCase;
+  String get snakeCase => ReCase(this).snake;
 
-  String get dotCase => ReCase(this).dotCase;
+  String get dotCase => ReCase(this).dot;
 
-  String get paramCase => ReCase(this).paramCase;
+  String get paramCase => ReCase(this).param;
 
-  String get pathCase => ReCase(this).pathCase;
+  String get pathCase => ReCase(this).path;
 
-  String get pascalCase => ReCase(this).pascalCase;
+  String get pascalCase => ReCase(this).pascal;
 
-  String get headerCase => ReCase(this).headerCase;
+  String get headerCase => ReCase(this).header;
 
-  String get titleCase => ReCase(this).titleCase;
+  String get titleCase => ReCase(this).title;
 }

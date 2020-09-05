@@ -17,7 +17,7 @@ void main() {
       code,
       'if (true) {\n'
       '  hello();\n'
-      '}',
+      '}\n',
     );
   });
 

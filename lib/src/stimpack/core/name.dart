@@ -253,34 +253,34 @@ class StimName {
         return l.toLowerCase();
 
       case _NameOp.camel:
-        return ReCase.forCode(l).camelCase;
+        return ReCase.forCode(l).camel;
 
       case _NameOp.pascal:
-        return ReCase.forCode(l).pascalCase;
+        return ReCase.forCode(l).pascal;
 
       case _NameOp.snake:
-        return ReCase.forCode(l).snakeCase;
+        return ReCase.forCode(l).snake;
 
       case _NameOp.dot:
-        return ReCase.forCode(l).dotCase;
+        return ReCase.forCode(l).dot;
 
       case _NameOp.path:
-        return ReCase.forCode(l).pathCase;
+        return ReCase.forCode(l).path;
 
       case _NameOp.param:
-        return ReCase.forCode(l).paramCase;
+        return ReCase.forCode(l).param;
 
       case _NameOp.header:
-        return ReCase.forCode(l).headerCase;
+        return ReCase.forCode(l).header;
 
       case _NameOp.title:
-        return ReCase.forCode(l).titleCase;
+        return ReCase.forCode(l).title;
 
       case _NameOp.constant:
-        return ReCase.forCode(l).constantCase;
+        return ReCase.forCode(l).constant;
 
       case _NameOp.sentence:
-        return ReCase.forCode(l).sentenceCase;
+        return ReCase.forCode(l).sentence;
 
       default:
         if (_text != null) {

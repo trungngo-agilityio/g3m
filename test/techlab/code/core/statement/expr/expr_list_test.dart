@@ -29,7 +29,7 @@ void main() {
       code,
       'if (a >= this && a < this) {\n'
       '  hello();\n'
-      '}',
+      '}\n',
     );
   });
 }
