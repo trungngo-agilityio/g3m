@@ -46,4 +46,9 @@ class StimModelSymbol<T extends StimModelSymbol<T>> extends StimSymbol<T>
         ?.map((e) => e.value == null ? null : e.value as E)
         ?.toSet();
   }
+
+  @override
+  String toString() {
+    return '${runtimeType}{name: $name}';
+  }
 }

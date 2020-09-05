@@ -11,8 +11,6 @@ part 'src/stimpack/model/model_extensions.dart';
 
 part 'src/stimpack/model/model_init.dart';
 
-part 'src/stimpack/model/model_walker.dart';
-
 part 'src/stimpack/model/types/model_error.dart';
 
 part 'src/stimpack/model/types/model_field.dart';
