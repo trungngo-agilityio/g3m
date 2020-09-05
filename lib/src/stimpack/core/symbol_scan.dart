@@ -1,39 +1,41 @@
 part of g3.stimpack.core;
 
+typedef _StimSymbolScanCallback1<T1 extends StimSymbol> = Function(
+    _StimSymbolScanMatch match, T1 e1);
 
-typedef StimSymbolScanCallback1<T1 extends StimSymbol> = Function(
-    StimSymbolScanMatch match, T1 e1);
+typedef _StimSymbolScanCallback2<T1 extends StimSymbol, T2 extends StimSymbol>
+    = Function(_StimSymbolScanMatch match, T1 e1, T2 e2);
 
-typedef StimSymbolScanCallback2<T1 extends StimSymbol, T2 extends StimSymbol>
-    = Function(StimSymbolScanMatch match, T1 e1, T2 e2);
-
-typedef StimSymbolScanCallback3<T1 extends StimSymbol, T2 extends StimSymbol,
+typedef _StimSymbolScanCallback3<T1 extends StimSymbol, T2 extends StimSymbol,
         T3 extends StimSymbol>
-    = Function(StimSymbolScanMatch match, T1 e1, T2 e2, T3 e3);
+    = Function(_StimSymbolScanMatch match, T1 e1, T2 e2, T3 e3);
 
-typedef StimSymbolScanCallback4<T1 extends StimSymbol, T2 extends StimSymbol,
+typedef _StimSymbolScanCallback4<T1 extends StimSymbol, T2 extends StimSymbol,
         T3 extends StimSymbol, T4 extends StimSymbol>
-    = Function(StimSymbolScanMatch match, T1 e1, T2 e2, T3 e3, T4 e4);
+    = Function(_StimSymbolScanMatch match, T1 e1, T2 e2, T3 e3, T4 e4);
 
+typedef _StimSymbolScanCallback5<T1 extends StimSymbol, T2 extends StimSymbol,
+        T3 extends StimSymbol, T4 extends StimSymbol, T5 extends StimSymbol>
+    = Function(_StimSymbolScanMatch match, T1 e1, T2 e2, T3 e3, T4 e4, T5 e5);
 
-class StimSymbolScanMatch {
+class _StimSymbolScanMatch {
   /// This is the full path that leads to the result.
   final List<StimSymbol> path;
 
   /// This is the match sequence.
   final List<StimSymbol> match;
 
-  StimSymbolScanMatch._(this.path, this.match);
+  _StimSymbolScanMatch._(this.path, this.match);
 }
 
-class StimSymbolScanner {
-  final StimSymbol symbol;
+class _StimSymbolScanner {
+  final dynamic symbol;
 
-  StimSymbolScanner(this.symbol);
+  _StimSymbolScanner(this.symbol);
 
   // ---------------------------------------------------------------------------
 
-  bool scan1<T1 extends StimSymbol>(StimSymbolScanCallback1<T1> func) {
+  bool scan1<T1 extends StimSymbol>(_StimSymbolScanCallback1<T1> func) {
     return _doScan(
         query: [T1],
         callback: (context) {
@@ -45,7 +47,7 @@ class StimSymbolScanner {
   // ---------------------------------------------------------------------------
 
   bool scan2<T1 extends StimSymbol, T2 extends StimSymbol>(
-      StimSymbolScanCallback2<T1, T2> func) {
+      _StimSymbolScanCallback2<T1, T2> func) {
     return _doScan(
         query: [T1, T2],
         callback: (context) {
@@ -57,7 +59,7 @@ class StimSymbolScanner {
   // ---------------------------------------------------------------------------
 
   bool scan3<T1 extends StimSymbol, T2 extends StimSymbol,
-      T3 extends StimSymbol>(StimSymbolScanCallback3<T1, T2, T3> func) {
+      T3 extends StimSymbol>(_StimSymbolScanCallback3<T1, T2, T3> func) {
     return _doScan(
         query: [T1, T2, T3],
         callback: (context) {
@@ -72,7 +74,7 @@ class StimSymbolScanner {
       T1 extends StimSymbol,
       T2 extends StimSymbol,
       T3 extends StimSymbol,
-      T4 extends StimSymbol>(StimSymbolScanCallback4<T1, T2, T3, T4> func) {
+      T4 extends StimSymbol>(_StimSymbolScanCallback4<T1, T2, T3, T4> func) {
     return _doScan(
         query: [T1, T2, T3, T4],
         callback: (context) {
@@ -83,9 +85,26 @@ class StimSymbolScanner {
 
   // ---------------------------------------------------------------------------
 
+  bool scan5<
+      T1 extends StimSymbol,
+      T2 extends StimSymbol,
+      T3 extends StimSymbol,
+      T4 extends StimSymbol,
+      T5 extends StimSymbol>(_StimSymbolScanCallback5<T1, T2, T3, T4, T5> func) {
+    return _doScan(
+        query: [T1, T2, T3, T4, T5],
+        callback: (context) {
+          final m = context.match;
+          func.call(context, m[0] as T1, m[1] as T2, m[2] as T3, m[3] as T4,
+              m[4] as T5);
+        });
+  }
+
+  // ---------------------------------------------------------------------------
+
   bool _doScan({
     List<Type> query,
-    void Function(StimSymbolScanMatch) callback,
+    void Function(_StimSymbolScanMatch) callback,
   }) {
     // The original list of expected types, parent goes first.
     final expectedTypes = query.map((e) => reflectType(e)).toList();
@@ -121,7 +140,7 @@ class StimSymbolScanner {
     return found;
   }
 
-  StimSymbolScanMatch _buildResult(_ScanJob job) {
+  _StimSymbolScanMatch _buildResult(_ScanJob job) {
     // first need to collect the path.
     var path = <StimSymbol>[];
     var result = <StimSymbol>[];
@@ -138,7 +157,7 @@ class StimSymbolScanner {
     path = path.reversed.toList();
     result = result.reversed.toList();
 
-    return StimSymbolScanMatch._(path, result);
+    return _StimSymbolScanMatch._(path, result);
   }
 
   void _breadthFirstSearch(bool Function(_ScanJob job) handler) {

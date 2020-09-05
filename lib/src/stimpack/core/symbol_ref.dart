@@ -36,4 +36,9 @@ class StimSymbolRef<T> {
 
     return res;
   }
+
+  @override
+  String toString() {
+    return 'StimSymbolRef<$symbol>';
+  }
 }

@@ -1,6 +1,8 @@
 part of g3.stimpack.core;
 
-class StimSymbol<T> {}
+class StimSymbol<T> {
+  _StimSymbolScanner toScanner() => _StimSymbolScanner(this);
+}
 
 /// Deep clone a symbol to make a new one.
 T _cloneSymbol<T>(T s, bool deep, [Set processing, Map processed]) {
