@@ -306,7 +306,7 @@ final mt = ${typeExtFieldName};''',
       } else {
         throw 'Do not support custom collection type ${type.collection}';
       }
-    } else if (type.isDartPrimitive) {
+    } else if (type.isDart) {
       // This type come from outside.
       final name = _config.fieldNameOfType(type);
       return Text.of('t.${name}');

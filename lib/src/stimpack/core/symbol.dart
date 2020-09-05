@@ -2,6 +2,16 @@ part of g3.stimpack.core;
 
 class StimSymbol<T> {
   _StimSymbolScanner toScanner() => _StimSymbolScanner(this);
+
+  @override
+  String toString() {
+    if (this is StimNamed) {
+      final name = (this as StimNamed)?.name;
+      return '${runtimeType}{name: $name}';
+    } else {
+      return '${runtimeType}{}';
+    }
+  }
 }
 
 /// Deep clone a symbol to make a new one.

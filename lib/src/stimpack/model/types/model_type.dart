@@ -28,6 +28,7 @@ class StimModelTypes {
 // Reusable type mirror fo StimSymbol type.
 TypeMirror _stimSymbolType;
 
+// Pattern to split type name string to a bag of words.
 RegExp _splitTypeNameRegEx = RegExp('[A-Z][^A-Z]*');
 
 class StimModelTypeScope {
@@ -234,9 +235,6 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   bool get isDartSet => collection == stimpack.model.type.set;
 
   bool get isDartList => collection == stimpack.model.type.list;
-
-  /// Determines if this is a primitive dart type.
-  bool get isDartPrimitive => stimpack.model.type.primitiveTypes.contains(this);
 
   /// True indicates that this type is from the dart type system.
   /// It is a not a user-defined type.

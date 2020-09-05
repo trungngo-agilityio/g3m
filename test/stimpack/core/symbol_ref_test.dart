@@ -13,6 +13,14 @@ class _FakeSymbol extends StimSymbol<_FakeSymbol> {
 class _FakeSymbolRef extends StimSymbolRef<_FakeSymbol> implements _FakeSymbol {
 }
 
+class _FakeSymbolNamed extends StimSymbol<_FakeSymbol> implements StimNamed {
+  @override
+  StimName name;
+}
+
+class _FakeSymbolNamedRef extends StimSymbolRef<_FakeSymbolNamed>
+    implements _FakeSymbolNamed {}
+
 void main() {
   test('ref', () {
     final s1 = _FakeSymbol()..intField = 5;
@@ -35,5 +43,26 @@ void main() {
 
     // The ref field should not be clone.
     assert(s2.refField == s2);
+  });
+
+  test('toString - no name', () {
+    var ref1 = _FakeSymbolRef();
+    expect(ref1.toString(), equals('_FakeSymbolRef<null>'));
+
+    ref1.symbol = _FakeSymbol();
+    expect(ref1.toString(), equals('_FakeSymbolRef<_FakeSymbol{}>'));
+  });
+
+  test('toString - with name', () {
+    var ref1 = _FakeSymbolNamedRef();
+    expect(ref1.toString(), equals('_FakeSymbolNamedRef{name: null}<null>'));
+
+    // Test the ability to rename a ref
+    ref1.symbol = _FakeSymbolNamed()..name = StimName.of('hello');
+    ref1.name = StimName.of('world');
+    expect(
+        ref1.toString(),
+        equals(
+            '_FakeSymbolNamedRef{name: world}<_FakeSymbolNamed{name: hello}>'));
   });
 }

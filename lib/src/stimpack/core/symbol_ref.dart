@@ -39,6 +39,11 @@ class StimSymbolRef<T> {
 
   @override
   String toString() {
-    return 'StimSymbolRef<$symbol>';
+    if (this is StimNamed) {
+      final name = (this as StimNamed)?.name;
+      return '${runtimeType}{name: $name}<$symbol>';
+    } else {
+      return '${runtimeType}<$symbol>';
+    }
   }
 }
