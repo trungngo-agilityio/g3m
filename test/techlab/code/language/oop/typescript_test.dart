@@ -98,7 +98,7 @@ void main() {
       '  /**\n'
       '   * just a demo function\n'
       '   */\n'
-      '  void drive<T>(vehicle, car) {\n'
+      '  drive<T>(vehicle, car): void {\n'
       '    // Just any text\n'
       '  }\n'
       '  // just a free text class body \n'
