@@ -18,29 +18,29 @@ class StringFuncs {
   static final StringFunc lower =
       (s) => s != null && s.isNotEmpty ? s.toLowerCase() : s;
   static final StringFunc camel =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).camelCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).camel : s;
   static final StringFunc pascal =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).pascalCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).pascal : s;
   static final StringFunc snake =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).snakeCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).snake : s;
   static final StringFunc dot =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).dotCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).dot : s;
   static final StringFunc path =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).pathCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).path : s;
   static final StringFunc param =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).paramCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).param : s;
   static final StringFunc header =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).headerCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).header : s;
   static final StringFunc title =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).titleCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).title : s;
   static final StringFunc constant =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).constantCase : s;
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).constant : s;
 
   static final StringFunc sentence =
-      (s) => s != null && s.isNotEmpty ? ReCase(s).sentenceCase : s;
-  static final StringFunc quote = (s) =>
+      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).sentence : s;
+  static final StringFunc singleQuotes = (s) =>
       s != null && s.isNotEmpty ? '\'${s.replaceAll('\'', '\\\'')}\'' : s;
-  static final StringFunc doubleQuote =
+  static final StringFunc doubleQuotes =
       (s) => s != null && s.isNotEmpty ? '"${s.replaceAll('"', '\\"')}"' : s;
 
   /// Lazy init the code func.
@@ -113,4 +113,14 @@ class MarkdownFunc {
   final StringFunc email = (s) => '<$s>';
 
   MarkdownFunc._();
+}
+
+extension G3StringExtension on String {
+  String removeIfStartsWith(String prefix) {
+    if (startsWith(prefix)) {
+      return substring(prefix.length);
+    }
+
+    return this;
+  }
 }
