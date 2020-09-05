@@ -25,6 +25,11 @@ class StimModelTypes {
       grpcStatusSet;
 }
 
+// Reusable type mirror fo StimSymbol type.
+TypeMirror _stimSymbolType;
+
+RegExp _splitTypeNameRegEx = RegExp('[A-Z][^A-Z]*');
+
 class StimModelTypeScope {
   StimModelType string,
       num,
@@ -74,13 +79,13 @@ class StimModelTypeScope {
   }
 
   StimModelType fromDart(Type type) {
-    final rt = reflectType(type);
-
     _dartTypes ??= {};
     var stimType = _dartTypes[type];
 
     // Only creates one instance for a dart type.
     if (stimType != null) return stimType;
+
+    final rt = reflectType(type);
 
     // Figure out the packages own this type.
     var library = rt.owner;
@@ -99,12 +104,36 @@ class StimModelTypeScope {
       'with uri: ${uri}',
     );
 
-    stimType = _dartTypes[rt] = StimModelType()
-      ..name = StimName.of(type.toString())
+    final typeName = type.toString();
+
+    // Handles the edge case where the type is actually the
+    // dart version of a model type. In this case, we should not
+    // create a new instance,and reuse the existing model type
+    // instead. First check, if that has common prefix.
+    if (typeName.startsWith('Stim')) {
+      // Second potential match. The targeted type is a symbol.
+      // Let's check the dart package to see if that does come
+      // from the stimpack engine or not.
+      _stimSymbolType ??= reflectType(StimSymbol);
+      if (rt.isSubtypeOf(_stimSymbolType)) {
+        final matches = _splitTypeNameRegEx.allMatches(typeName);
+        if (matches.length > 2) {
+          // now continue looking into it to see if the second part
+          // is a pack.
+          final m2 = matches.elementAt(1);
+          final potentialPackName = typeName.substring(m2.start, m2.end);
+        }
+
+        // now just use magic symbol to figure out if possible
+      }
+    }
+
+    stimType ??= StimModelType()
+      ..name = StimName.of(typeName)
       ..package = package
       ..dartType = rt;
 
-    return stimType;
+    return _dartTypes[rt] = stimType;
   }
 
   StimModelType collectionOf({

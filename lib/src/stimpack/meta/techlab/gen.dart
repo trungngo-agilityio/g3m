@@ -67,7 +67,7 @@ class StimGenMeta implements Node {
   void _computeExternalPacks() {
     final p = stimpack.model.package;
 
-    final ignoredPackages = {p.dart, p.model};
+    final ignoredPackages = {p.model};
 
     /// Makes every pack depends on the model pack.
     _externalPacks = <StimModelPackage>{p.model};

@@ -1,7 +1,6 @@
 part of g3.stimpack.model;
 
 class StimModelPackageScope {
-  StimModelPackage dart;
   StimModelPackage model;
 
   Map<DeclarationMirror, StimModelPackage> _dartPackages;

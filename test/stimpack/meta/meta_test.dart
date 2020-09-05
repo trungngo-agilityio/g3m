@@ -3,6 +3,7 @@ import 'package:g3m/stimpack_meta.dart';
 import 'package:g3m/stimpack_meta_techlab.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_story.dart';
+import 'package:g3m/techlab.dart';
 import 'package:test/test.dart';
 
 class _FakeDartType {}
@@ -27,6 +28,7 @@ void main() {
       f.of(name: 'set', type: t.fromDart(Set)),
       f.of(name: 'list', type: t.fromDart(List)),
       f.of(name: 'map', type: t.fromDart(Map)),
+      f.of(name: 'builder', type: t.fromDart(NodeBuilder)),
     };
 
     tTable.fields = {

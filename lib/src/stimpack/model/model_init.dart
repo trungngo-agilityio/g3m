@@ -319,9 +319,7 @@ class StimModel extends StimPack {
   // Packages
   // ===========================================================================
 
-  void _packages() {
-    package..dart = package.of(name: 'dart');
-  }
+  void _packages() {}
 
   // ===========================================================================
   // Types

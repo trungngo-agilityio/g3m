@@ -59,5 +59,13 @@ void main() {
     print(rc);
 
     print('${d.uri}, ${d.uri.scheme}');
+
+    var s = 'StimModelType';
+    var pattern = RegExp('[A-Z][^A-Z]*');
+
+    for (final math in pattern.allMatches(s)) {
+      print(s.substring(math.start, math.end));
+    }
+
   });
 }
