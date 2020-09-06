@@ -629,7 +629,7 @@ class CodeCascadeExpr extends SingleChildNode {
 
 class CodeAnnotation extends SingleChildNode {
   CodeAnnotation.of(dynamic e1)
-      : super(CodeExpr.open(
+      : super(CodeExpr.closed(
           CodeExprList.of(
             op: CodeOps.annotationOp,
             expr1: CodeRef.of(e1),

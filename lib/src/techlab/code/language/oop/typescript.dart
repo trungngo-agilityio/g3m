@@ -132,6 +132,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
             'number': 'number',
             'bigint': 'bigint',
             'boolean': 'boolean',
+            'bool': 'boolean',
           }),
           typeNameConfig: null,
           typeConfig: null,
