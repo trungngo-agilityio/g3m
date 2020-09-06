@@ -37,4 +37,6 @@ class CodeReturn extends CodeConfigProxyNode<CodeReturn> {
         expr: CodeExpr.of(expr),
         comment: comment != null ? CodeComment.of(comment) : null,
       );
+
+  factory CodeReturn.ofNull() => CodeReturn.of(CodeNullLiteral());
 }

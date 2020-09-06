@@ -24,12 +24,17 @@ void main() {
         ),
       ],
       functions: [
-        CodeFunction.of(name: 'hello', requiredArgs: [
-          ['first name', 'string'],
-        ], body: [
-          Text.of('var name = "John";\n'
-              'print(name);\n'),
-        ]),
+        CodeFunction.of(
+          name: 'hello',
+          isAsync: true,
+          requiredArgs: [
+            ['first name', 'string'],
+          ],
+          body: [
+            Text.of('var name = "John";\n'
+                'print(name);\n'),
+          ],
+        ),
       ],
       interfaces: [
         CodeInterface.of(
@@ -66,13 +71,13 @@ void main() {
       '}\n'
       '\n'
       '\n'
-      'hello(firstName: string) {\n'
+      'async hello(firstName: string) {\n'
       '  var name = "John";\n'
       '  print(name);\n'
       '}\n'
       '\n'
       '\n'
-      'interface Car extends Vehicle {\n'
+      'private interface Car extends Vehicle {\n'
       '  name: string;\n'
       '\n'
       '  lastName?: string;\n'
