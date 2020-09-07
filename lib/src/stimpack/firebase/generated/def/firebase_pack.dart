@@ -55,7 +55,10 @@ class StimFirebase extends StimPack {
     /// Builds fields for type "firestore"
     mt.firestore.fields = {
       /// field "firestore"
-      f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection))
+      f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
+
+      /// field "firestore"
+      f.of(name: 'my name', type: t.fromDart(StimName))
     };
   }
 }

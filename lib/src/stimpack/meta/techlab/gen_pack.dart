@@ -133,9 +133,6 @@ typed of [$symbolClassName]."''',
       body: _buildMetaFunctionBody(_config),
     );
 
-    // The constructor just need to create all scopes.
-    final initPackFunctionName = _config.initPackFunctionNameOf(pack);
-
     // ------------------------------------------------------------------------
     // constructors
     // ------------------------------------------------------------------------
@@ -299,12 +296,13 @@ final mt = ${typeExtFieldName};''',
       }
     } else if (type.isDart) {
       // This type come from outside.
-      final name = _config.fieldNameOfType(type);
-      return Text.of('t.${name}');
+      return Text.of('t.fromDart(${type.dartType.reflectedType})');
+
     } else if (type.package.name != pack.name) {
       // This type come from outside.
       final name = _config.fieldNameOfType(type);
       return Text.of('t.${type.package.name}.${name}');
+
     } else {
       // This type is defined in the package.
       final name = _config.fieldNameOfType(type);
