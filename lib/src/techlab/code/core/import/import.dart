@@ -73,7 +73,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
         return CodeExpr.open(
           Container([
             import.isExported == true ? exportKeyword : importKeyword,
-            ' * ',
+            '* ',
             import.alias != null ? Container(['as ', import.alias, ' ']) : null,
             'from ',
             quoteNode,
