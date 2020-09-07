@@ -56,7 +56,7 @@ class StimRbacActionScope {
 
   StimRbacAction readWrite;
 
-  StimRbacAction access;
+  StimRbacAction readWriteDelete;
 
 
   /// Creates a new "action" of [StimRbacAction] type.

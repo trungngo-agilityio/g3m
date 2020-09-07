@@ -20,11 +20,22 @@ class StimModelSymbol<T extends StimModelSymbol<T>> extends StimSymbol<T>
       ..value = this;
   }
 
-  StimModelTag addSymbolAsTag(StimModelSymbol symbol) {
+  StimModelTag addSymbolAsTag<E>(StimModelSymbol symbol) {
     tags ??= {};
     final tag = symbol.toTag();
     tags.add(tag);
     return tag;
+  }
+
+  E lazyInitTaggedSymbolOfExactType<E extends StimModelSymbol<E>>(
+      E Function() build) {
+    var symbol = firstTaggedSymbolOfExactType<E>();
+    if (symbol == null) {
+      symbol = build();
+      addSymbolAsTag(symbol);
+    }
+
+    return symbol;
   }
 
   void removeTaggedSymbol(StimModelSymbol symbol) {

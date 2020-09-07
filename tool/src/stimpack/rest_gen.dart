@@ -123,5 +123,7 @@ void genRestPack() {
     f.of(name: 'delete', type: tCrudDeleteApi),
   };
 
-  stimpackGen(meta, 'lib/src/stimpack');
+  stimpackGen(meta, 'lib/src/stimpack', values: {
+    t.rbac.resource: {'rest api'},
+  });
 }

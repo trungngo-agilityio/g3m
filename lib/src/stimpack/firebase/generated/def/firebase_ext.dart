@@ -18,6 +18,17 @@ class StimFirebaseOnStimModelField {
 }
 
 
+class StimFirebaseOnStimRbacResource {
+  StimRbacResource firestore;
+
+  StimRbacResource firestoreCollection;
+
+  StimRbacResource firestoreDoc;
+
+  StimRbacResource firestoreField;
+}
+
+
 
 extension StimFirebaseOnStimModelTypeExtension on StimModelTypeScope {
   StimFirebaseOnStimModelType get firebase {
@@ -31,5 +42,13 @@ extension StimFirebaseOnStimModelFieldExtension on StimModelFieldScope {
   StimFirebaseOnStimModelField get firebase {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimFirebase.stimFirebaseInstance().onStimModelField;
+  }
+}
+
+
+extension StimFirebaseOnStimRbacResourceExtension on StimRbacResourceScope {
+  StimFirebaseOnStimRbacResource get firebase {
+    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
+    return StimFirebase.stimFirebaseInstance().onStimRbacResource;
   }
 }

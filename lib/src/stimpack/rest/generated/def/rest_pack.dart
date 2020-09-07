@@ -51,6 +51,8 @@ class StimRest extends StimPack {
 
   final StimRestOnStimModelType onStimModelType;
 
+  final StimRestOnStimRbacResource onStimRbacResource;
+
   StimRest(StimModel model, StimRbac rbac):
       api = StimRestApiScope(),
       apiRequest = StimRestApiRequestScope(),
@@ -63,6 +65,7 @@ class StimRest extends StimPack {
       crudFindApi = StimRestCrudFindApiScope(),
       crudDeleteApi = StimRestCrudDeleteApiScope(),
       onStimModelType = StimRestOnStimModelType(),
+      onStimRbacResource = StimRestOnStimRbacResource(),
       super('rest');
 
 

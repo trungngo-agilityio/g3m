@@ -25,12 +25,15 @@ class StimFirebase extends StimPack {
 
   final StimFirebaseOnStimModelField onStimModelField;
 
+  final StimFirebaseOnStimRbacResource onStimRbacResource;
+
   StimFirebase(StimModel model, StimRbac rbac):
       firestore = StimFirebaseFirestoreScope(),
       firestoreCollection = StimFirebaseFirestoreCollectionScope(),
       securityRule = StimFirebaseSecurityRuleScope(),
       onStimModelType = StimFirebaseOnStimModelType(),
       onStimModelField = StimFirebaseOnStimModelField(),
+      onStimRbacResource = StimFirebaseOnStimRbacResource(),
       super('firebase');
 
 
@@ -66,46 +69,49 @@ class StimFirebase extends StimPack {
     /// Builds fields for type "firestore"
     mt.firestore.fields = {
       /// field "firestore"
-      f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection))
+      f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
+
+      /// field "firestore"
+      f.of(name: 'resource', type: t.rbac.resource).required()
     };
 
     /// Builds fields for type "firestoreCollection"
     mt.firestoreCollection.fields = {
       /// field "firestoreCollection"
+      f.of(name: 'parent', type: mt.firestoreCollection),
+
+      /// field "firestoreCollection"
+      f.of(name: 'firestore', type: mt.firestore),
+
+      /// field "firestoreCollection"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
 
       /// field "firestoreCollection"
-      f.of(name: 'rule', type: mt.securityRule)
+      f.of(name: 'rule', type: mt.securityRule),
+
+      /// field "firestoreCollection"
+      f.of(name: 'resource', type: t.rbac.resource).required()
     };
 
     /// Builds fields for type "securityRule"
     mt.securityRule.fields = {
       /// field "securityRule"
-      f.of(name: 'create one', type: t.setOf(item: t.rbac.condition)),
+      f.of(name: 'create one', type: t.setOf(item: t.rbac.condition)).required(),
 
       /// field "securityRule"
-      f.of(name: 'update one', type: t.setOf(item: t.rbac.condition)),
+      f.of(name: 'update one', type: t.setOf(item: t.rbac.condition)).required(),
 
       /// field "securityRule"
-      f.of(name: 'find one', type: t.setOf(item: t.rbac.condition)),
+      f.of(name: 'find one', type: t.setOf(item: t.rbac.condition)).required(),
 
       /// field "securityRule"
-      f.of(name: 'delete one', type: t.setOf(item: t.rbac.condition)),
+      f.of(name: 'delete one', type: t.setOf(item: t.rbac.condition)).required(),
 
       /// field "securityRule"
-      f.of(name: 'find', type: t.setOf(item: t.rbac.condition)),
+      f.of(name: 'find', type: t.setOf(item: t.rbac.condition)).required(),
 
       /// field "securityRule"
-      f.of(name: 'delete', type: t.setOf(item: t.rbac.condition)),
-
-      /// field "securityRule"
-      f.of(name: 'read', type: t.setOf(item: t.rbac.condition)),
-
-      /// field "securityRule"
-      f.of(name: 'write', type: t.setOf(item: t.rbac.condition)),
-
-      /// field "securityRule"
-      f.of(name: 'read write', type: t.setOf(item: t.rbac.condition))
+      f.of(name: 'delete', type: t.setOf(item: t.rbac.condition)).required()
     };
   }
 }

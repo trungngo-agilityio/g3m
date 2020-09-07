@@ -105,7 +105,7 @@ final _fields = {
 
 final _resources = {
   /// This match any resource in the system
-  'any',
+  'root',
 
   /// This match a database resource
   'database',
@@ -148,7 +148,7 @@ final _actions = {
   'read',
   'write',
   'read write',
-  'access',
+  'read write delete',
 };
 
 final _conditions = {

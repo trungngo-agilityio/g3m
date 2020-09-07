@@ -15,12 +15,6 @@ class StimFirebaseSecurityRule extends StimModelSymbol<StimFirebaseSecurityRule>
 
   Set<StimRbacCondition> delete;
 
-  Set<StimRbacCondition> read;
-
-  Set<StimRbacCondition> write;
-
-  Set<StimRbacCondition> readWrite;
-
   StimFirebaseSecurityRule();
 
 
@@ -29,7 +23,7 @@ class StimFirebaseSecurityRule extends StimModelSymbol<StimFirebaseSecurityRule>
   }
 
   /// Creates a new "securityRule" of [StimFirebaseSecurityRule] type.
-  StimFirebaseSecurityRule refWith({dynamic name, Set<StimRbacCondition> createOne, Set<StimRbacCondition> updateOne, Set<StimRbacCondition> findOne, Set<StimRbacCondition> deleteOne, Set<StimRbacCondition> find, Set<StimRbacCondition> delete, Set<StimRbacCondition> read, Set<StimRbacCondition> write, Set<StimRbacCondition> readWrite, Set<StimModelTag> tags}) {
+  StimFirebaseSecurityRule refWith({dynamic name, Set<StimRbacCondition> createOne, Set<StimRbacCondition> updateOne, Set<StimRbacCondition> findOne, Set<StimRbacCondition> deleteOne, Set<StimRbacCondition> find, Set<StimRbacCondition> delete, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -59,18 +53,6 @@ class StimFirebaseSecurityRule extends StimModelSymbol<StimFirebaseSecurityRule>
       res.delete = delete;
     }
 
-    if (read != null) {
-      res.read = read;
-    }
-
-    if (write != null) {
-      res.write = write;
-    }
-
-    if (readWrite != null) {
-      res.readWrite = readWrite;
-    }
-
     if (tags != null) {
       res.tags = tags;
     }
@@ -87,7 +69,13 @@ class StimFirebaseSecurityRuleRef extends StimSymbolRef<StimFirebaseSecurityRule
 
 class StimFirebaseSecurityRuleScope {
   /// Creates a new "securityRule" of [StimFirebaseSecurityRule] type.
-  StimFirebaseSecurityRule of({dynamic name, Set<StimRbacCondition> createOne, Set<StimRbacCondition> updateOne, Set<StimRbacCondition> findOne, Set<StimRbacCondition> deleteOne, Set<StimRbacCondition> find, Set<StimRbacCondition> delete, Set<StimRbacCondition> read, Set<StimRbacCondition> write, Set<StimRbacCondition> readWrite, Set<StimModelTag> tags}) {
+  StimFirebaseSecurityRule of({dynamic name, @required
+  Set<StimRbacCondition> createOne, @required
+  Set<StimRbacCondition> updateOne, @required
+  Set<StimRbacCondition> findOne, @required
+  Set<StimRbacCondition> deleteOne, @required
+  Set<StimRbacCondition> find, @required
+  Set<StimRbacCondition> delete, Set<StimModelTag> tags}) {
     return StimFirebaseSecurityRule()
         ..name = StimName.of(name)
         ..createOne = createOne ?? {}
@@ -96,9 +84,6 @@ class StimFirebaseSecurityRuleScope {
         ..deleteOne = deleteOne ?? {}
         ..find = find ?? {}
         ..delete = delete ?? {}
-        ..read = read ?? {}
-        ..write = write ?? {}
-        ..readWrite = readWrite ?? {}
         ..tags = tags ?? {};
   }
 }

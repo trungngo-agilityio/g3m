@@ -44,7 +44,7 @@ class StimRbacResourceRef extends StimSymbolRef<StimRbacResource> implements Sti
 
 
 class StimRbacResourceScope {
-  StimRbacResource any;
+  StimRbacResource root;
 
   StimRbacResource database;
 

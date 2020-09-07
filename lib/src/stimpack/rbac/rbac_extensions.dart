@@ -37,6 +37,24 @@ extension StimRbacPolicyExtensions on StimRbacPolicyScope {
 }
 
 extension StimRbacResourceExtensions on StimRbacResourceScope {
+  /// Creates a managed resource at root.
+  /// The [StimRbacResource.parent] is [stimpack.rbac.resource.root].
+  /// The [id] field should be the name of the resource type, e.g.,
+  /// firestore, mongodb, etc.
+  ///
+  StimRbacResource managedResourceOf(
+      {@required dynamic id, Set<StimModelTag> tags}) {
+    id = stimpack.rbac.resourceId.of(name: id);
+    assert(id.name?.isNotEmpty == true, 'id name cannot be empty');
+
+    return of(
+      name: StimName.refOf(id),
+      id: id,
+      parent: stimpack.rbac.resource.root,
+      tags: tags,
+    );
+  }
+
   StimRbacResource databaseOf({@required dynamic id, Set<StimModelTag> tags}) {
     assert(id != null, 'id is required');
 

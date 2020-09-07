@@ -24,7 +24,7 @@ void main() {
 
     final pUserApi = p.allow(
       resources: {rUserApi},
-      actions: {a.access},
+      actions: {a.readWriteDelete},
       conditions: {c.isUser},
     );
 

@@ -25,10 +25,23 @@ class StimRestOnStimModelType {
 }
 
 
+class StimRestOnStimRbacResource {
+  StimRbacResource restApi;
+}
+
+
 
 extension StimRestOnStimModelTypeExtension on StimModelTypeScope {
   StimRestOnStimModelType get rest {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimRest.stimRestInstance().onStimModelType;
+  }
+}
+
+
+extension StimRestOnStimRbacResourceExtension on StimRbacResourceScope {
+  StimRestOnStimRbacResource get rest {
+    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
+    return StimRest.stimRestInstance().onStimRbacResource;
   }
 }

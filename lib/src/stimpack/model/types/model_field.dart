@@ -1,7 +1,13 @@
 part of g3.stimpack.model;
 
+class StimModelFields {
+  StimModelField fieldSet;
+}
+
 class StimModelFieldScope {
-  StimModelField length;
+
+  /// The model fields.
+  StimModelFields model;
 
   StimModelField of({
     @meta.required dynamic name,

@@ -10,6 +10,7 @@ void _stimInitRbacPack() {
   _buildConditions();
 }
 
+/// Builds common fields for other package to use.
 void _buildFields() {
   final t = stimpack.model.type,
       f = stimpack.model.field,
@@ -35,6 +36,7 @@ void _buildFields() {
   mf.conditionSet = f.setOf(name: 'conditions', type: mt.condition);
 }
 
+/// Builds common security roles for other package to use.
 void _buildRoles() {
   final r = _rbac.role;
 
@@ -43,14 +45,16 @@ void _buildRoles() {
     // admin has user permissions
     r.admin = r.of(name: 'admin', roles: {
       // user has limited permissions, including those from guest
-      r.user = r.of(name: 'user', roles: {r.guest = r.of(name: 'guest')}),
+      r.user = r.of(name: 'user', roles: {
+        r.guest = r.of(name: 'guest'),
+      }),
     }),
   });
 }
 
 void _buildResources() {
   final r = _rbac.resource;
-  r.any = r.of(name: 'any');
+  r.root = r.of(name: 'root');
   r.database = r.of(name: 'database');
   r.dataTable = r.of(name: 'data table');
   r.dataRecord = r.of(name: 'data record');
@@ -69,25 +73,35 @@ void _buildPolicyKind() {
 
 void _buildActions() {
   final a = _rbac.action;
-  a.createOne = a.of(name: 'create one');
-  a.findOne = a.of(name: 'find one');
-  a.updateOne = a.of(name: 'update one');
-  a.deleteOne = a.of(name: 'delete one');
+
+  // read action
   a.find = a.of(name: 'find');
+  a.findOne = a.of(name: 'find one');
+
+  // write action
+  a.createOne = a.of(name: 'create one');
+  a.updateOne = a.of(name: 'update one');
+
+  // delete action
+  a.deleteOne = a.of(name: 'delete one');
   a.delete = a.of(name: 'delete');
 
   a.read = a.of(name: 'read', actions: {a.findOne, a.find});
   a.write = a.of(name: 'write', actions: {
     a.createOne,
     a.updateOne,
-    a.deleteOne,
-    a.delete,
   });
+
   a.readWrite = a.of(name: 'read write', actions: {
     a.read,
     a.write,
   });
-  a.access = a.of(name: 'access');
+
+  a.readWriteDelete = a.of(name: 'read write delete', actions: {
+    a.readWrite,
+    a.deleteOne,
+    a.delete,
+  });
 }
 
 void _buildConditions() {

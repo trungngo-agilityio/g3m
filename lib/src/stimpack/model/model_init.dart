@@ -35,7 +35,8 @@ class StimModel extends StimPack {
     _packages();
     _primitiveTypes();
     _collectionTypes();
-    _buildMeta();
+    _metaTypes();
+    _fields();
   }
 
   // ===========================================================================
@@ -348,7 +349,7 @@ class StimModel extends StimPack {
     };
   }
 
-  void _buildMeta() {
+  void _metaTypes() {
     package.model = package.of(name: 'model');
 
     final mt = type.model = StimModelTypes();
@@ -395,6 +396,14 @@ class StimModel extends StimPack {
     // grpc status
     mt.grpcStatus = _symbolOf('grpc status');
     mt.grpcStatusSet = _symbolSetOf(mt.grpcStatus);
+  }
+
+  void _fields() {
+    final f = field, t = type;
+    final mf = f.model = StimModelFields();
+
+    // Sets of fields.
+    mf.fieldSet = f.of(name: 'fields', type: t.model.fieldSet);
   }
 
   StimModelType _symbolOf(String name) {

@@ -1,5 +1,6 @@
 part of g3.stimpack.model;
 
+/// The pre-defined set of types, commonly used for modeling.
 class StimModelTypes {
   StimModelType tag,
       tagSet,
