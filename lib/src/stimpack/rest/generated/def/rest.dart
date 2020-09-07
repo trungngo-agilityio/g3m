@@ -7,7 +7,6 @@ import 'package:meta/meta.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'package:g3m/stimpack_rbac.dart';
 import 'dart:core';
-part '../rest_init.dart';
 part 'rest_pack.dart';
 part 'rest_ext.dart';
 part 'types/rest_api.dart';

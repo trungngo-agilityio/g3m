@@ -36,13 +36,20 @@ class StimStory extends StimPack {
       super('story');
 
 
+  /// Provides global access to the "story" pack. Only one instance of the pack 
+  /// is created. During the creation, other packs that this pack depends on might 
+  /// be created as well.
+  static StimStory stimStoryInstance() {
+    if (_story == null) {
+      _story = StimStory(stimpack.model, stimpack.rbac);
+      _story._init();
+    }
+    return _story;
+  }
+
   void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
-
-    /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
-    stimInitStoryPack(this);
   }
 
   void _buildMeta() {
@@ -87,21 +94,5 @@ class StimStory extends StimPack {
       /// field "actor"
       f.of(name: 'roles', type: t.setOf(item: t.rbac.role))
     };
-  }
-}
-
-
-
-// Provides global access to the "story" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
-// be created as well.
-//  
-extension StimStoryPackExtension on StimpackRoot {
-  StimStory get story {
-    if (_story == null) {
-      _story = StimStory(stimpack.model, stimpack.rbac);
-      _story._init();
-    }
-    return _story;
   }
 }

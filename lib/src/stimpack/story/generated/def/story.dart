@@ -7,7 +7,6 @@ import 'package:meta/meta.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'dart:core';
 import 'package:g3m/stimpack_rbac.dart';
-part '../story_init.dart';
 part 'story_pack.dart';
 part 'story_ext.dart';
 part 'types/story_epic.dart';

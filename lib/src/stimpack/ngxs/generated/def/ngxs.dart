@@ -6,7 +6,6 @@ import 'package:g3m/stimpack_meta.dart';
 import 'package:meta/meta.dart';
 import 'package:g3m/stimpack_model.dart';
 import 'dart:core';
-part '../ngxs_init.dart';
 part 'ngxs_pack.dart';
 part 'ngxs_ext.dart';
 part 'types/ngxs_feature.dart';

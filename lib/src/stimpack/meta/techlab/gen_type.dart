@@ -29,7 +29,7 @@ class StimGenMetaType implements Node {
 
     return DartCodeFile.of(
       fileName,
-      package: _config.codePackageLibraryOf(pack, isPart: true),
+      package: _config.codeGeneratedPackageLibraryOf(pack, isPart: true),
       classes: [
         _symbolClassDef(),
         _symbolRefClassDef(),

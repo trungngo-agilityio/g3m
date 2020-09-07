@@ -3,6 +3,8 @@ part of g3.stimpack.rbac.generated;
 
 
 class StimRbacResource extends StimModelSymbol<StimRbacResource> {
+  StimRbacResourceId id;
+
   StimRbacResource parent;
 
   StimRbacResource();
@@ -13,10 +15,14 @@ class StimRbacResource extends StimModelSymbol<StimRbacResource> {
   }
 
   /// Creates a new "resource" of [StimRbacResource] type.
-  StimRbacResource refWith({dynamic name, StimRbacResource parent, Set<StimModelTag> tags}) {
+  StimRbacResource refWith({dynamic name, StimRbacResourceId id, StimRbacResource parent, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
+    }
+
+    if (id != null) {
+      res.id = id;
     }
 
     if (parent != null) {
@@ -42,21 +48,26 @@ class StimRbacResourceScope {
 
   StimRbacResource database;
 
-  StimRbacResource table;
+  StimRbacResource dataTable;
 
-  StimRbacResource field;
+  StimRbacResource dataRecord;
 
-  StimRbacResource api;
+  StimRbacResource dataField;
+
+  StimRbacResource service;
+
+  StimRbacResource serviceApi;
 
   StimRbacResource app;
 
-  StimRbacResource feature;
+  StimRbacResource appFeature;
 
 
   /// Creates a new "resource" of [StimRbacResource] type.
-  StimRbacResource of({dynamic name, StimRbacResource parent, Set<StimModelTag> tags}) {
+  StimRbacResource of({dynamic name, StimRbacResourceId id, StimRbacResource parent, Set<StimModelTag> tags}) {
     return StimRbacResource()
         ..name = StimName.of(name)
+        ..id = id
         ..parent = parent
         ..tags = tags ?? {};
   }

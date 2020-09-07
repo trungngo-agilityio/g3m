@@ -13,7 +13,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${p}_ext';
   }
 
-  String libFileNameOf(StimModelPackage pack) {
+  String generatedLibFileNameOf(StimModelPackage pack) {
     var p = pack.name.snake();
     return '${p}';
   }
@@ -27,8 +27,12 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${p}_${t}';
   }
 
-  StimName initPackFileNameOf(StimModelPackage pack) {
-    return (pack.name >> 'init').snake();
+  StimName libExtFileNameOf(StimModelPackage pack) {
+    return (pack.name >> 'ext').snake();
+  }
+
+  StimName libFileNameOf(StimModelPackage pack) {
+    return pack.name.snake();
   }
 
   StimName initPackFunctionNameOf(StimModelPackage pack) {
@@ -45,6 +49,10 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
 
   StimName packExtensionClassNameOf(StimModelPackage pack) {
     return ('stim' >> pack.name >> 'pack extension').pascal();
+  }
+
+  StimName packInstanceFactoryNameOf(StimModelPackage pack) {
+    return ('stim' >> pack.name >> 'instance').camel();
   }
 
   // ===========================================================================
@@ -123,9 +131,22 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return '${prefix}.${presetName}.${type.name.camel()}';
   }
 
-  CodePackage codePackageLibraryOf(StimModelPackage pack, {bool isPart}) {
-    final path = ['g3', 'stimpack', pack.name];
+  CodePackage codeGeneratedPackageLibraryOf(StimModelPackage pack,
+      {bool isPart}) {
+    final path = ['g3', 'stimpack', pack.name.snake()];
     final name = 'generated';
+
+    if (isPart == true) {
+      return CodePackage.partOf(name, path: path);
+    } else {
+      return CodePackage.of(name, path: path);
+    }
+  }
+
+  CodePackage codeInitPackageLibraryOf(StimModelPackage pack, {bool isPart}) {
+    final path = ['g3', 'stimpack', pack.name.snake()];
+    final name = 'init';
+
     if (isPart == true) {
       return CodePackage.partOf(name, path: path);
     } else {
@@ -142,6 +163,14 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
       return CodeImport.of(
           path: 'package:g3m/stimpack_${pack.name.camel()}.dart');
     }
+  }
+
+  CodeFunctionCall getPackInstance(StimModelPackage pack) {
+    /// The pack class className.
+    return CodeFunctionCall.of(
+      instance: packClassNameOf(pack),
+      name: packInstanceFactoryNameOf(pack),
+    );
   }
 
   @override

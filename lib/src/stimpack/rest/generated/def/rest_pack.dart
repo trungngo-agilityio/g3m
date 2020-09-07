@@ -66,13 +66,20 @@ class StimRest extends StimPack {
       super('rest');
 
 
+  /// Provides global access to the "rest" pack. Only one instance of the pack 
+  /// is created. During the creation, other packs that this pack depends on might 
+  /// be created as well.
+  static StimRest stimRestInstance() {
+    if (_rest == null) {
+      _rest = StimRest(stimpack.model, stimpack.rbac);
+      _rest._init();
+    }
+    return _rest;
+  }
+
   void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
-
-    /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
-    stimInitRestPack(this);
   }
 
   void _buildMeta() {
@@ -231,21 +238,5 @@ class StimRest extends StimPack {
       /// field "crudDeleteApi"
       f.of(name: 'response', type: t.setOf(item: t.model.field))
     };
-  }
-}
-
-
-
-// Provides global access to the "rest" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
-// be created as well.
-//  
-extension StimRestPackExtension on StimpackRoot {
-  StimRest get rest {
-    if (_rest == null) {
-      _rest = StimRest(stimpack.model, stimpack.rbac);
-      _rest._init();
-    }
-    return _rest;
   }
 }

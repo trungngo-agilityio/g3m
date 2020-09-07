@@ -1,22 +1,21 @@
-part of g3.stimpack.story.generated;
+part of g3.stimpack.story.init;
+
+
+/// The only instance of the [StimStory] pack.
+StimStory _story;
 
 
 
-class StimStoryOnStimModelType {
-  StimModelType epic;
-
-  StimModelType story;
-
-  StimModelType action;
-
-  StimModelType actor;
-}
-
-
-
-extension StimStoryOnStimModelTypeExtension on StimModelTypeScope {
-  StimStoryOnStimModelType get story {
-    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
-    return stimpack.story.onStimModelType;
+// Provides global access to the "story" pack. Only one instance of the pack 
+// is created. During the creation, other packs that this pack depends on might 
+// be created as well.
+//  
+extension StimStoryPackExtension on StimpackRoot {
+  StimStory get story {
+    if (_story == null) {
+      _story = StimStory.stimStoryInstance();
+      _stimInitStoryPack();
+    }
+    return _story;
   }
 }

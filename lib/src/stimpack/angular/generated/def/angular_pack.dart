@@ -94,13 +94,20 @@ class StimAngular extends StimPack {
       super('angular');
 
 
+  /// Provides global access to the "angular" pack. Only one instance of the pack 
+  /// is created. During the creation, other packs that this pack depends on might 
+  /// be created as well.
+  static StimAngular stimAngularInstance() {
+    if (_angular == null) {
+      _angular = StimAngular(stimpack.model, stimpack.io);
+      _angular._init();
+    }
+    return _angular;
+  }
+
   void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
-
-    /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
-    stimInitAngularPack(this);
   }
 
   void _buildMeta() {
@@ -253,21 +260,5 @@ class StimAngular extends StimPack {
       /// field "component"
       f.of(name: 'style', type: mt.componentStyle)
     };
-  }
-}
-
-
-
-// Provides global access to the "angular" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
-// be created as well.
-//  
-extension StimAngularPackExtension on StimpackRoot {
-  StimAngular get angular {
-    if (_angular == null) {
-      _angular = StimAngular(stimpack.model, stimpack.io);
-      _angular._init();
-    }
-    return _angular;
   }
 }

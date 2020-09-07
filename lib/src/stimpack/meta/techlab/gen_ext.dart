@@ -31,7 +31,7 @@ class StimGenMetaExt implements Node {
 
     return DartCodeFile.of(
       fileName,
-      package: _config.codePackageLibraryOf(pack, isPart: true),
+      package: _config.codeGeneratedPackageLibraryOf(pack, isPart: true),
       classes: classes,
       extensions: extensions,
     );
@@ -53,6 +53,10 @@ class StimGenMetaExt implements Node {
     final className = _config.valueExtClassName(pack, type);
     final fieldName = _config.valueExtFieldName(pack, type);
 
+    final packClassName = _config.packClassNameOf(pack);
+
+    final getInstanceCall = _config.getPackInstance(pack);
+
     final prop = CodeProperty.of(
       name: pack.name,
       type: className,
@@ -61,8 +65,7 @@ class StimGenMetaExt implements Node {
           CodeComment.of('Gets the type meta through stimpack public '
               'instance to trigger lazy init of the pack.'),
           CodeReturn.of(
-            CodeAccessExpr.of(
-                'stimpack.${pack.name.camel()}', CodeRef.of(fieldName)),
+            CodeAccessExpr.of(getInstanceCall, CodeRef.of(fieldName)),
           )
         ]),
       ),

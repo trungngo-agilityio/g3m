@@ -1,1 +1,1 @@
-part of g3.stimpack.rest;
+part of g3.stimpack.rest.init;

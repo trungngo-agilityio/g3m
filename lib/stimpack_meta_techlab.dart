@@ -1,6 +1,7 @@
 library g3.stimpack.meta.techlab;
 
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:g3m/stimpack_core.dart';
 import 'package:g3m/stimpack_meta.dart';
@@ -16,6 +17,8 @@ part 'src/stimpack/meta/techlab/gen.dart';
 part 'src/stimpack/meta/techlab/gen_ext.dart';
 
 part 'src/stimpack/meta/techlab/gen_init.dart';
+
+part 'src/stimpack/meta/techlab/gen_init_ext.dart';
 
 part 'src/stimpack/meta/techlab/gen_lib.dart';
 

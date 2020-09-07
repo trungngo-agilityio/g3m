@@ -49,12 +49,18 @@ class StimGenMeta implements Node {
       Directory.relative(
         'generated',
         Container([
-          StimGenMetaPack(pack, _externalPacks, _externalValues.keys),
-          StimGenMetaLib(pack, _externalPacks),
-          StimGenMetaExt(pack, _externalValues),
+          StimGenMetaInitExt(pack),
           Directory.relative(
-            'types',
-            _buildTypeFiles(),
+            'def',
+            Container([
+              StimGenMetaPack(pack, _externalPacks, _externalValues.keys),
+              StimGenMetaLib(pack, _externalPacks),
+              StimGenMetaExt(pack, _externalValues),
+              Directory.relative(
+                'types',
+                _buildTypeFiles(),
+              ),
+            ]),
           ),
         ]),
       ),

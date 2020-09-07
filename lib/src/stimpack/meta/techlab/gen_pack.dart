@@ -35,16 +35,13 @@ class StimGenMetaPack implements Node {
     // for the whole pack.
     return DartCodeFile.of(
       fileName,
-      package: _config.codePackageLibraryOf(pack, isPart: true),
+      package: _config.codeGeneratedPackageLibraryOf(pack, isPart: true),
       fields: [
         _buildPackInstanceField(),
       ],
       classes: [
         // The internal implementation.
         _buildPackClassDef(),
-      ],
-      extensions: [
-        _buildPackExtensionOnStimpack(),
       ],
     );
   }
@@ -175,13 +172,6 @@ typed of [$symbolClassName]."''',
           comment:
               '''Builds the meta definition that defines the structure of this pack.''',
         ),
-        '\n',
-        CodeFunctionCall.of(
-          name: initPackFunctionName,
-          args: CodeRef.ofThis(),
-          comment: '''Call custom pack initialization code, this code is
-not overwritten during pack re-generation. ''',
-        ),
       ],
     );
 
@@ -196,6 +186,7 @@ not overwritten during pack re-generation. ''',
       properties: properties,
       constructors: constructor,
       functions: [
+        _buildPackExtensionOnStimpack(),
         _initFunctionOfPackClass,
         buildMetaFunction,
       ],
@@ -330,9 +321,7 @@ final mt = ${typeExtFieldName};''',
     );
   }
 
-  CodeExtension _buildPackExtensionOnStimpack() {
-    /// The pack class className.
-    final className = _config.packExtensionClassNameOf(pack);
+  CodeFunction _buildPackExtensionOnStimpack() {
     final constructorArgs = <Node>[];
     for (final p in externalPacks) {
       if (p.isDart) continue;
@@ -354,29 +343,22 @@ final mt = ${typeExtFieldName};''',
 
     final triggerInit =
         CodeFunctionCall.of(instance: packInstanceRef, name: '_init');
+
     var createInstanceIfNull = CodeIf.of(
         condition: CodeEqualExpr.of(packInstanceRef, CodeNullLiteral()),
         then: [
           createPackInstance,
           triggerInit,
         ]);
-    final lazyInitProp = CodeProperty.of(
-      name: _packInstanceField.name,
-      type: _packInstanceField.type,
-      getter: CodePropertyGetter.of(
-        body: [createInstanceIfNull, returnPackInstance],
-      ),
-    );
 
-    return CodeExtension.of(
-      name: className,
-      on: 'stimpack root',
-      properties: [lazyInitProp],
-      comment: '''
+    return CodeFunction.of(
+        name: _config.packInstanceFactoryNameOf(pack),
+        isStatic: true,
+        returns: _packInstanceField.type,
+        body: [createInstanceIfNull, returnPackInstance],
+        comment: '''
 Provides global access to the "${pack.name}" pack. Only one instance of the pack 
 is created. During the creation, other packs that this pack depends on might 
-be created as well.
- ''',
-    );
+be created as well.''');
   }
 }

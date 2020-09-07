@@ -1,6 +1,6 @@
-part of g3.stimpack.angular.generated;
+part of g3.stimpack.angular.init;
 
 /// This function is called during the initialization of angular
-void stimInitAngularPack(StimAngular pack) {
+void _stimInitAngularPack() {
   /// init angular here
 }

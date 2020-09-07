@@ -47,8 +47,8 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
           overrideAsAnnotation == true && func.modifier?.isOverride == true
               ? '@override\n'
               : null,
-          if (returnsAfter == false) returnNode,
           func.modifier,
+          if (returnsAfter == false) returnNode,
           func.name,
           func.generic,
           '(',

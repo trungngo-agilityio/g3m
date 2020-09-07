@@ -31,13 +31,20 @@ class StimIo extends StimPack {
       super('io');
 
 
+  /// Provides global access to the "io" pack. Only one instance of the pack 
+  /// is created. During the creation, other packs that this pack depends on might 
+  /// be created as well.
+  static StimIo stimIoInstance() {
+    if (_io == null) {
+      _io = StimIo(stimpack.model);
+      _io._init();
+    }
+    return _io;
+  }
+
   void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
-
-    /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
-    stimInitIoPack(this);
   }
 
   void _buildMeta() {
@@ -79,21 +86,5 @@ class StimIo extends StimPack {
       /// field "dir"
       f.of(name: 'dirs', type: t.setOf(item: mt.dir))
     };
-  }
-}
-
-
-
-// Provides global access to the "io" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
-// be created as well.
-//  
-extension StimIoPackExtension on StimpackRoot {
-  StimIo get io {
-    if (_io == null) {
-      _io = StimIo(stimpack.model);
-      _io._init();
-    }
-    return _io;
   }
 }

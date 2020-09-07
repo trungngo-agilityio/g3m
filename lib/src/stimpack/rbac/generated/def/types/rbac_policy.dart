@@ -9,6 +9,8 @@ class StimRbacPolicy extends StimModelSymbol<StimRbacPolicy> {
 
   Set<StimRbacAction> actions;
 
+  Set<StimRbacCondition> conditions;
+
   StimRbacPolicy();
 
 
@@ -17,7 +19,7 @@ class StimRbacPolicy extends StimModelSymbol<StimRbacPolicy> {
   }
 
   /// Creates a new "policy" of [StimRbacPolicy] type.
-  StimRbacPolicy refWith({dynamic name, StimRbacPolicyKind kind, Set<StimRbacResource> resources, Set<StimRbacAction> actions, Set<StimModelTag> tags}) {
+  StimRbacPolicy refWith({dynamic name, StimRbacPolicyKind kind, Set<StimRbacResource> resources, Set<StimRbacAction> actions, Set<StimRbacCondition> conditions, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -33,6 +35,10 @@ class StimRbacPolicy extends StimModelSymbol<StimRbacPolicy> {
 
     if (actions != null) {
       res.actions = actions;
+    }
+
+    if (conditions != null) {
+      res.conditions = conditions;
     }
 
     if (tags != null) {
@@ -54,12 +60,14 @@ class StimRbacPolicyScope {
   StimRbacPolicy of({dynamic name, @required
   StimRbacPolicyKind kind, @required
   Set<StimRbacResource> resources, @required
-  Set<StimRbacAction> actions, Set<StimModelTag> tags}) {
+  Set<StimRbacAction> actions, @required
+  Set<StimRbacCondition> conditions, Set<StimModelTag> tags}) {
     return StimRbacPolicy()
         ..name = StimName.of(name)
         ..kind = kind
         ..resources = resources ?? {}
         ..actions = actions ?? {}
+        ..conditions = conditions ?? {}
         ..tags = tags ?? {};
   }
 }

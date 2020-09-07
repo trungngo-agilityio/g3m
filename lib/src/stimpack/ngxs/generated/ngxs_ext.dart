@@ -1,22 +1,21 @@
-part of g3.stimpack.ngxs.generated;
+part of g3.stimpack.ngxs.init;
+
+
+/// The only instance of the [StimNgxs] pack.
+StimNgxs _ngxs;
 
 
 
-class StimNgxsOnStimModelType {
-  StimModelType feature;
-
-  StimModelType action;
-
-  StimModelType state;
-
-  StimModelType select;
-}
-
-
-
-extension StimNgxsOnStimModelTypeExtension on StimModelTypeScope {
-  StimNgxsOnStimModelType get ngxs {
-    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
-    return stimpack.ngxs.onStimModelType;
+// Provides global access to the "ngxs" pack. Only one instance of the pack 
+// is created. During the creation, other packs that this pack depends on might 
+// be created as well.
+//  
+extension StimNgxsPackExtension on StimpackRoot {
+  StimNgxs get ngxs {
+    if (_ngxs == null) {
+      _ngxs = StimNgxs.stimNgxsInstance();
+      _stimInitNgxsPack();
+    }
+    return _ngxs;
   }
 }

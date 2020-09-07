@@ -36,13 +36,20 @@ class StimNgxs extends StimPack {
       super('ngxs');
 
 
+  /// Provides global access to the "ngxs" pack. Only one instance of the pack 
+  /// is created. During the creation, other packs that this pack depends on might 
+  /// be created as well.
+  static StimNgxs stimNgxsInstance() {
+    if (_ngxs == null) {
+      _ngxs = StimNgxs(stimpack.model);
+      _ngxs._init();
+    }
+    return _ngxs;
+  }
+
   void _init() {
     /// Builds the meta definition that defines the structure of this pack.
     _buildMeta();
-
-    /// Call custom pack initialization code, this code is
-    /// not overwritten during pack re-generation. 
-    stimInitNgxsPack(this);
   }
 
   void _buildMeta() {
@@ -90,21 +97,5 @@ class StimNgxs extends StimPack {
       /// field "select"
       f.of(name: 'field', type: t.model.field)
     };
-  }
-}
-
-
-
-// Provides global access to the "ngxs" pack. Only one instance of the pack 
-// is created. During the creation, other packs that this pack depends on might 
-// be created as well.
-//  
-extension StimNgxsPackExtension on StimpackRoot {
-  StimNgxs get ngxs {
-    if (_ngxs == null) {
-      _ngxs = StimNgxs(stimpack.model);
-      _ngxs._init();
-    }
-    return _ngxs;
   }
 }
