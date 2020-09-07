@@ -17,12 +17,20 @@ class StimFirebase extends StimPack {
   /// typed of [StimFirebaseFirestoreCollection]."
   final StimFirebaseFirestoreCollectionScope firestoreCollection;
 
+  /// Scope class for constructing all "securityRule" symbols, 
+  /// typed of [StimFirebaseSecurityRule]."
+  final StimFirebaseSecurityRuleScope securityRule;
+
   final StimFirebaseOnStimModelType onStimModelType;
 
-  StimFirebase(StimModel model):
+  final StimFirebaseOnStimModelField onStimModelField;
+
+  StimFirebase(StimModel model, StimRbac rbac):
       firestore = StimFirebaseFirestoreScope(),
       firestoreCollection = StimFirebaseFirestoreCollectionScope(),
+      securityRule = StimFirebaseSecurityRuleScope(),
       onStimModelType = StimFirebaseOnStimModelType(),
+      onStimModelField = StimFirebaseOnStimModelField(),
       super('firebase');
 
 
@@ -31,7 +39,7 @@ class StimFirebase extends StimPack {
   /// be created as well.
   static StimFirebase stimFirebaseInstance() {
     if (_firebase == null) {
-      _firebase = StimFirebase(stimpack.model);
+      _firebase = StimFirebase(stimpack.model, stimpack.rbac);
       _firebase._init();
     }
     return _firebase;
@@ -52,13 +60,52 @@ class StimFirebase extends StimPack {
     /// Builds type "firestoreCollection"
     mt.firestoreCollection = t.symbolOf(name: 'firestoreCollection', package: mp);
 
+    /// Builds type "securityRule"
+    mt.securityRule = t.symbolOf(name: 'securityRule', package: mp);
+
     /// Builds fields for type "firestore"
     mt.firestore.fields = {
       /// field "firestore"
+      f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection))
+    };
+
+    /// Builds fields for type "firestoreCollection"
+    mt.firestoreCollection.fields = {
+      /// field "firestoreCollection"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
 
-      /// field "firestore"
-      f.of(name: 'my name', type: t.fromDart(StimName))
+      /// field "firestoreCollection"
+      f.of(name: 'rule', type: mt.securityRule)
+    };
+
+    /// Builds fields for type "securityRule"
+    mt.securityRule.fields = {
+      /// field "securityRule"
+      f.of(name: 'create one', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'update one', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'find one', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'delete one', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'find', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'delete', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'read', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'write', type: t.setOf(item: t.rbac.condition)),
+
+      /// field "securityRule"
+      f.of(name: 'read write', type: t.setOf(item: t.rbac.condition))
     };
   }
 }

@@ -3,6 +3,10 @@ part of g3.stimpack.firebase.generated;
 
 
 class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirestoreCollection> {
+  Set<StimFirebaseFirestoreCollection> collections;
+
+  StimFirebaseSecurityRule rule;
+
   StimFirebaseFirestoreCollection();
 
 
@@ -11,10 +15,18 @@ class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirest
   }
 
   /// Creates a new "firestoreCollection" of [StimFirebaseFirestoreCollection] type.
-  StimFirebaseFirestoreCollection refWith({dynamic name, Set<StimModelTag> tags}) {
+  StimFirebaseFirestoreCollection refWith({dynamic name, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
+    }
+
+    if (collections != null) {
+      res.collections = collections;
+    }
+
+    if (rule != null) {
+      res.rule = rule;
     }
 
     if (tags != null) {
@@ -33,9 +45,11 @@ class StimFirebaseFirestoreCollectionRef extends StimSymbolRef<StimFirebaseFires
 
 class StimFirebaseFirestoreCollectionScope {
   /// Creates a new "firestoreCollection" of [StimFirebaseFirestoreCollection] type.
-  StimFirebaseFirestoreCollection of({dynamic name, Set<StimModelTag> tags}) {
+  StimFirebaseFirestoreCollection of({dynamic name, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, Set<StimModelTag> tags}) {
     return StimFirebaseFirestoreCollection()
         ..name = StimName.of(name)
+        ..collections = collections ?? {}
+        ..rule = rule
         ..tags = tags ?? {};
   }
 }

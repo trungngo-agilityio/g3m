@@ -85,6 +85,7 @@ void genRbacPack() {
   };
 
   stimpackGen(meta, 'lib/src/stimpack', values: {
+    t.model.field: _fields,
     tPolicyKind: {'allow', 'deny'},
     tResource: _resources,
     tRole: _roles,
@@ -92,6 +93,15 @@ void genRbacPack() {
     tCondition: _conditions,
   });
 }
+
+final _fields = {
+  'group', 'group set',
+  'policy', 'policy set',
+  'resource', 'resource set',
+  'role', 'role set',
+  'action', 'action set',
+  'condition', 'condition set',
+};
 
 final _resources = {
   /// This match any resource in the system

@@ -2,11 +2,37 @@ part of g3.stimpack.rbac.init;
 
 /// This function is called during the initialization of rbac
 void _stimInitRbacPack() {
+  _buildFields();
   _buildRoles();
   _buildResources();
   _buildPolicyKind();
   _buildActions();
   _buildConditions();
+}
+
+void _buildFields() {
+  final t = stimpack.model.type,
+      f = stimpack.model.field,
+      mf = f.rbac,
+      mt = t.rbac;
+
+  mf.group = f.of(name: 'group', type: mt.group);
+  mf.groupSet = f.setOf(name: 'groups', type: mt.group);
+
+  mf.policy = f.of(name: 'policy', type: mt.policy);
+  mf.policySet = f.setOf(name: 'policies', type: mt.policy);
+
+  mf.resource = f.of(name: 'resource', type: mt.resource);
+  mf.resourceSet = f.setOf(name: 'resources', type: mt.resource);
+
+  mf.role = f.of(name: 'role', type: mt.role);
+  mf.roleSet = f.setOf(name: 'roles', type: mt.role);
+
+  mf.action = f.of(name: 'action', type: mt.action);
+  mf.actionSet = f.setOf(name: 'actions', type: mt.action);
+
+  mf.condition = f.of(name: 'condition', type: mt.condition);
+  mf.conditionSet = f.setOf(name: 'conditions', type: mt.condition);
 }
 
 void _buildRoles() {
