@@ -1,10 +1,9 @@
 library g3.stimpack.model;
 
-import 'dart:collection';
 import 'dart:mirrors';
 
 import 'package:g3m/stimpack_core.dart';
-import 'package:g3m/util.dart';
+import 'package:g3m/techlab_core.dart';
 import 'package:meta/meta.dart' as meta;
 
 part 'src/stimpack/model/model_extensions.dart';
@@ -12,6 +11,8 @@ part 'src/stimpack/model/model_extensions.dart';
 part 'src/stimpack/model/model_init.dart';
 
 part 'src/stimpack/model/types/model_error.dart';
+
+part 'src/stimpack/model/types/model_func.dart';
 
 part 'src/stimpack/model/types/model_field.dart';
 

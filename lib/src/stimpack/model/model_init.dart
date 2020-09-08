@@ -7,6 +7,7 @@ class StimModel extends StimPack {
   final StimModelFieldScope field;
   final StimModelFieldFilterScope filter;
   final StimModelFieldRuleScope rule;
+  final StimModelFuncScope func;
   final StimModelPatternScope pattern;
   final StimModelRangeScope range;
   final StimModelHttpStatusScope httpStatus;
@@ -19,6 +20,7 @@ class StimModel extends StimPack {
         field = StimModelFieldScope(),
         filter = StimModelFieldFilterScope(),
         rule = StimModelFieldRuleScope(),
+        func = StimModelFuncScope(),
         pattern = StimModelPatternScope(),
         range = StimModelRangeScope(),
         httpStatus = StimModelHttpStatusScope(),
@@ -353,6 +355,14 @@ class StimModel extends StimPack {
     package.model = package.of(name: 'model');
 
     final mt = type.model = StimModelTypes();
+    // name
+    mt.name = type.fromDart(StimName);
+    mt.nameSet = type.setOf(name: 'name set', item: mt.name);
+
+    // func
+    mt.funcCode = type.fromDart(StimModelFuncCode);
+    mt.funcCodeSet = type.setOf(name: 'func set', item: mt.funcCode);
+
     // tag
     mt.tag = _symbolOf('tag');
     mt.tagSet = _symbolSetOf(mt.tag);
