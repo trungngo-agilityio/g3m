@@ -54,12 +54,15 @@ void genFirebasePack() {
   // A firestore collection has sub collections, an optional parent collection
   // It also refers to a rbac resource for security checking.
   tFirestoreCollection.fields = {
+    // The database instance that this collection belong to.
+    f.of(name: 'firestore', type: tFirestore).required(),
+
     f.of(name: 'parent', type: tFirestoreCollection),
 
-    // The database instance that this collection belong to.
-    f.of(name: 'firestore', type: tFirestore),
+    // The data model that defines this collection
+    f.of(name: 'model', type: t.model.type).required(),
 
-    // The sub collection
+    // The sub collections
     fFirestoreCollectionSet,
 
     // The security rule applied to the collection.

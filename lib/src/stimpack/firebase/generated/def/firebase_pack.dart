@@ -78,10 +78,13 @@ class StimFirebase extends StimPack {
     /// Builds fields for type "firestoreCollection"
     mt.firestoreCollection.fields = {
       /// field "firestoreCollection"
+      f.of(name: 'firestore', type: mt.firestore).required(),
+
+      /// field "firestoreCollection"
       f.of(name: 'parent', type: mt.firestoreCollection),
 
       /// field "firestoreCollection"
-      f.of(name: 'firestore', type: mt.firestore),
+      f.of(name: 'model', type: t.model.type).required(),
 
       /// field "firestoreCollection"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),

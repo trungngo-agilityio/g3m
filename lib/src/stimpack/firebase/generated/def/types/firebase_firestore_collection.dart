@@ -3,9 +3,11 @@ part of g3.stimpack.firebase.generated;
 
 
 class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirestoreCollection> {
+  StimFirebaseFirestore firestore;
+
   StimFirebaseFirestoreCollection parent;
 
-  StimFirebaseFirestore firestore;
+  StimModelType model;
 
   Set<StimFirebaseFirestoreCollection> collections;
 
@@ -21,18 +23,22 @@ class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirest
   }
 
   /// Creates a new "firestoreCollection" of [StimFirebaseFirestoreCollection] type.
-  StimFirebaseFirestoreCollection refWith({dynamic name, StimFirebaseFirestoreCollection parent, StimFirebaseFirestore firestore, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, StimRbacResource resource, Set<StimModelTag> tags}) {
+  StimFirebaseFirestoreCollection refWith({dynamic name, StimFirebaseFirestore firestore, StimFirebaseFirestoreCollection parent, StimModelType model, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, StimRbacResource resource, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
+    }
+
+    if (firestore != null) {
+      res.firestore = firestore;
     }
 
     if (parent != null) {
       res.parent = parent;
     }
 
-    if (firestore != null) {
-      res.firestore = firestore;
+    if (model != null) {
+      res.model = model;
     }
 
     if (collections != null) {
@@ -63,12 +69,15 @@ class StimFirebaseFirestoreCollectionRef extends StimSymbolRef<StimFirebaseFires
 
 class StimFirebaseFirestoreCollectionScope {
   /// Creates a new "firestoreCollection" of [StimFirebaseFirestoreCollection] type.
-  StimFirebaseFirestoreCollection of({dynamic name, StimFirebaseFirestoreCollection parent, StimFirebaseFirestore firestore, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
+  StimFirebaseFirestoreCollection of({dynamic name, @required
+  StimFirebaseFirestore firestore, StimFirebaseFirestoreCollection parent, @required
+  StimModelType model, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
   StimRbacResource resource, Set<StimModelTag> tags}) {
     return StimFirebaseFirestoreCollection()
         ..name = StimName.of(name)
-        ..parent = parent
         ..firestore = firestore
+        ..parent = parent
+        ..model = model
         ..collections = collections ?? {}
         ..rule = rule
         ..resource = resource
