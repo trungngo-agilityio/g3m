@@ -112,7 +112,8 @@ class StimStoryActionScope {
 
 
   /// Creates a new "action" of [StimStoryAction] type.
-  StimStoryAction of({dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
+  StimStoryAction of({@required
+  dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
     return StimStoryAction()
         ..name = StimName.of(name)
         ..actions = actions ?? {}

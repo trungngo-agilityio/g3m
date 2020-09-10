@@ -21,7 +21,7 @@ void main() {
     final tIndex = t.symbolOf(name: 'index', package: meta);
 
     tDatabase.fields = {
-      f.of(name: 'tables', type: t.setOf(item: tTable)).required(),
+      f.of(name: 'tables', type: t.setOf(item: tTable))..required(),
       f.of(name: 'age', type: t.fromDart(int)),
       // f.of(name: 'fake', type: t.fromDart(_FakeDartType)),
       f.of(name: 'name', type: t.fromDart(StimName)),
@@ -32,7 +32,7 @@ void main() {
     };
 
     tTable.fields = {
-      f.of(name: 'columns', type: t.setOf(item: tColumn)).required(),
+      f.of(name: 'columns', type: t.setOf(item: tColumn))..required(),
       f.of(name: 'indices', type: t.setOf(item: tIndex)),
     };
 

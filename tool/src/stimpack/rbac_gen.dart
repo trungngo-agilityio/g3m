@@ -14,7 +14,7 @@ void genRbacPack() {
 
   final tAction = t.symbolOf(name: 'action', package: meta);
   final tResource = t.symbolOf(name: 'resource', package: meta);
-  final tResourceId = t.symbolOf(name: 'resource id', package: meta);
+  final tResourceKind = t.symbolOf(name: 'resource kind', package: meta);
 
   final tGroup = t.symbolOf(name: 'group', package: meta);
   final tRole = t.symbolOf(name: 'role', package: meta);
@@ -32,26 +32,26 @@ void genRbacPack() {
 
   tPolicy.fields = {
     // A policy has a kind, could be accept or deny
-    f.of(name: 'kind', type: tPolicyKind).required(),
+    f.of(name: 'kind', type: tPolicyKind)..required(),
 
     // A policy can be applied to a set of resources
-    f.setOf(name: 'resources', type: tResource).required(),
+    f.setOf(name: 'resources', type: tResource)..required(),
 
     // A policy is applied to a set of actions that can
     // be performed on the resources
-    f.setOf(name: 'actions', type: tAction).required(),
+    f.setOf(name: 'actions', type: tAction)..required(),
 
     // The set of conditions applied to this policy.
     // If any of the condition is satisfied, then the
     // policy is applied.
-    f.setOf(name: 'conditions', type: tCondition).required(),
+    f.setOf(name: 'conditions', type: tCondition)..required(),
   };
 
   tResource.fields = {
     // If this field is specified then the resource is applied
     // to just a single instance. Other, it will applied to
     // all instances of a kind.
-    f.of(name: 'id', type: tResourceId),
+    f.of(name: 'kind', type: tResourceKind),
 
     // A resource might have a parent resource
     f.of(name: 'parent', type: tResource),
@@ -88,6 +88,7 @@ void genRbacPack() {
     t.model.field: _fields,
     tPolicyKind: {'allow', 'deny'},
     tResource: _resources,
+    tResourceKind: _resourceKinds,
     tRole: _roles,
     tAction: _actions,
     tCondition: _conditions,
@@ -95,40 +96,27 @@ void genRbacPack() {
 }
 
 final _fields = {
-  'group', 'group set',
-  'policy', 'policy set',
-  'resource', 'resource set',
-  'role', 'role set',
-  'action', 'action set',
-  'condition', 'condition set',
+  'group',
+  'group set',
+  'policy',
+  'policy set',
+  'resource',
+  'resource set',
+  'role',
+  'role set',
+  'action',
+  'action set',
+  'condition',
+  'condition set',
 };
 
 final _resources = {
   /// This match any resource in the system
   'root',
+};
 
-  /// This match a database resource
-  'database',
-
-  /// This match a database table, or firebase data collection.
-  'data table',
-
-  /// This match a database record, or firebase data document.
-  'data record',
-
-  /// This match a data field in a record, or document.
-  'data field',
-
-  'service',
-
-  /// This match an api
-  'service api',
-
-  /// This match an application
-  'app',
-
-  /// This match a feature
-  'app feature',
+final _resourceKinds = {
+  'root',
 };
 
 final _roles = {

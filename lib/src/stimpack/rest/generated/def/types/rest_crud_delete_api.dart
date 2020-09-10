@@ -3,9 +3,7 @@ part of g3.stimpack.rest.generated;
 
 
 class StimRestCrudDeleteApi extends StimModelSymbol<StimRestCrudDeleteApi> {
-  StimRbacPolicy policy;
-
-  Set<StimModelField> response;
+  StimRestApi api;
 
   StimRestCrudDeleteApi();
 
@@ -15,18 +13,14 @@ class StimRestCrudDeleteApi extends StimModelSymbol<StimRestCrudDeleteApi> {
   }
 
   /// Creates a new "crudDeleteApi" of [StimRestCrudDeleteApi] type.
-  StimRestCrudDeleteApi refWith({dynamic name, StimRbacPolicy policy, Set<StimModelField> response, Set<StimModelTag> tags}) {
+  StimRestCrudDeleteApi refWith({dynamic name, StimRestApi api, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
     }
 
-    if (policy != null) {
-      res.policy = policy;
-    }
-
-    if (response != null) {
-      res.response = response;
+    if (api != null) {
+      res.api = api;
     }
 
     if (tags != null) {
@@ -45,11 +39,12 @@ class StimRestCrudDeleteApiRef extends StimSymbolRef<StimRestCrudDeleteApi> impl
 
 class StimRestCrudDeleteApiScope {
   /// Creates a new "crudDeleteApi" of [StimRestCrudDeleteApi] type.
-  StimRestCrudDeleteApi of({dynamic name, StimRbacPolicy policy, Set<StimModelField> response, Set<StimModelTag> tags}) {
+  StimRestCrudDeleteApi of({@required
+  dynamic name, @required
+  StimRestApi api, Set<StimModelTag> tags}) {
     return StimRestCrudDeleteApi()
         ..name = StimName.of(name)
-        ..policy = policy
-        ..response = response ?? {}
+        ..api = api
         ..tags = tags ?? {};
   }
 }

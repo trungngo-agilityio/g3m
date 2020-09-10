@@ -17,9 +17,9 @@ class StimRbac extends StimPack {
   /// typed of [StimRbacResource]."
   final StimRbacResourceScope resource;
 
-  /// Scope class for constructing all "resourceId" symbols, 
-  /// typed of [StimRbacResourceId]."
-  final StimRbacResourceIdScope resourceId;
+  /// Scope class for constructing all "resourceKind" symbols, 
+  /// typed of [StimRbacResourceKind]."
+  final StimRbacResourceKindScope resourceKind;
 
   /// Scope class for constructing all "group" symbols, 
   /// typed of [StimRbacGroup]."
@@ -48,7 +48,7 @@ class StimRbac extends StimPack {
   StimRbac(StimModel model):
       action = StimRbacActionScope(),
       resource = StimRbacResourceScope(),
-      resourceId = StimRbacResourceIdScope(),
+      resourceKind = StimRbacResourceKindScope(),
       group = StimRbacGroupScope(),
       role = StimRbacRoleScope(),
       policy = StimRbacPolicyScope(),
@@ -85,8 +85,8 @@ class StimRbac extends StimPack {
     /// Builds type "resource"
     mt.resource = t.symbolOf(name: 'resource', package: mp);
 
-    /// Builds type "resourceId"
-    mt.resourceId = t.symbolOf(name: 'resourceId', package: mp);
+    /// Builds type "resourceKind"
+    mt.resourceKind = t.symbolOf(name: 'resourceKind', package: mp);
 
     /// Builds type "group"
     mt.group = t.symbolOf(name: 'group', package: mp);
@@ -112,7 +112,7 @@ class StimRbac extends StimPack {
     /// Builds fields for type "resource"
     mt.resource.fields = {
       /// field "resource"
-      f.of(name: 'id', type: mt.resourceId),
+      f.of(name: 'kind', type: mt.resourceKind),
 
       /// field "resource"
       f.of(name: 'parent', type: mt.resource)
@@ -136,16 +136,16 @@ class StimRbac extends StimPack {
     /// Builds fields for type "policy"
     mt.policy.fields = {
       /// field "policy"
-      f.of(name: 'kind', type: mt.policyKind).required(),
+      f.of(name: 'kind', type: mt.policyKind)..required(),
 
       /// field "policy"
-      f.of(name: 'resources', type: t.setOf(item: mt.resource)).required(),
+      f.of(name: 'resources', type: t.setOf(item: mt.resource))..required(),
 
       /// field "policy"
-      f.of(name: 'actions', type: t.setOf(item: mt.action)).required(),
+      f.of(name: 'actions', type: t.setOf(item: mt.action))..required(),
 
       /// field "policy"
-      f.of(name: 'conditions', type: t.setOf(item: mt.condition)).required()
+      f.of(name: 'conditions', type: t.setOf(item: mt.condition))..required()
     };
 
     /// Builds fields for type "condition"

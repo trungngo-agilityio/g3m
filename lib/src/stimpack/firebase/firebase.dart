@@ -10,13 +10,13 @@ import 'generated/def/firebase.dart';
 
 part 'firebase_ext.dart';
 
+part 'firebase_firestore_client_ext.dart';
+
 part 'firebase_firestore_collection_ext.dart';
 
 part 'firebase_firestore_ext.dart';
 
 part 'firebase_init.dart';
-
-part 'firebase_rest_ext.dart';
 
 part 'firebase_security_rule_ext.dart';
 

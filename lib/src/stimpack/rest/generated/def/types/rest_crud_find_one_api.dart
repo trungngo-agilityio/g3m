@@ -5,9 +5,7 @@ part of g3.stimpack.rest.generated;
 class StimRestCrudFindOneApi extends StimModelSymbol<StimRestCrudFindOneApi> {
   StimModelField idField;
 
-  StimRbacPolicy policy;
-
-  Set<StimModelField> response;
+  StimRestApi api;
 
   StimRestCrudFindOneApi();
 
@@ -17,7 +15,7 @@ class StimRestCrudFindOneApi extends StimModelSymbol<StimRestCrudFindOneApi> {
   }
 
   /// Creates a new "crudFindOneApi" of [StimRestCrudFindOneApi] type.
-  StimRestCrudFindOneApi refWith({dynamic name, StimModelField idField, StimRbacPolicy policy, Set<StimModelField> response, Set<StimModelTag> tags}) {
+  StimRestCrudFindOneApi refWith({dynamic name, StimModelField idField, StimRestApi api, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -27,12 +25,8 @@ class StimRestCrudFindOneApi extends StimModelSymbol<StimRestCrudFindOneApi> {
       res.idField = idField;
     }
 
-    if (policy != null) {
-      res.policy = policy;
-    }
-
-    if (response != null) {
-      res.response = response;
+    if (api != null) {
+      res.api = api;
     }
 
     if (tags != null) {
@@ -51,12 +45,14 @@ class StimRestCrudFindOneApiRef extends StimSymbolRef<StimRestCrudFindOneApi> im
 
 class StimRestCrudFindOneApiScope {
   /// Creates a new "crudFindOneApi" of [StimRestCrudFindOneApi] type.
-  StimRestCrudFindOneApi of({dynamic name, StimModelField idField, StimRbacPolicy policy, Set<StimModelField> response, Set<StimModelTag> tags}) {
+  StimRestCrudFindOneApi of({@required
+  dynamic name, @required
+  StimModelField idField, @required
+  StimRestApi api, Set<StimModelTag> tags}) {
     return StimRestCrudFindOneApi()
         ..name = StimName.of(name)
         ..idField = idField
-        ..policy = policy
-        ..response = response ?? {}
+        ..api = api
         ..tags = tags ?? {};
   }
 }

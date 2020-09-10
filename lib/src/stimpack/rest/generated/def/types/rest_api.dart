@@ -51,7 +51,10 @@ class StimRestApiRef extends StimSymbolRef<StimRestApi> implements StimRestApi {
 
 class StimRestApiScope {
   /// Creates a new "api" of [StimRestApi] type.
-  StimRestApi of({dynamic name, StimRbacPolicy policy, StimRestApiRequest request, StimRestApiResponse response, Set<StimModelTag> tags}) {
+  StimRestApi of({@required
+  dynamic name, StimRbacPolicy policy, @required
+  StimRestApiRequest request, @required
+  StimRestApiResponse response, Set<StimModelTag> tags}) {
     return StimRestApi()
         ..name = StimName.of(name)
         ..policy = policy

@@ -21,18 +21,36 @@ class StimFirebase extends StimPack {
   /// typed of [StimFirebaseSecurityRule]."
   final StimFirebaseSecurityRuleScope securityRule;
 
+  /// Scope class for constructing all "function" symbols, 
+  /// typed of [StimFirebaseFunction]."
+  final StimFirebaseFunctionScope function;
+
+  /// Scope class for constructing all "firestoreClient" symbols, 
+  /// typed of [StimFirebaseFirestoreClient]."
+  final StimFirebaseFirestoreClientScope firestoreClient;
+
+  /// Scope class for constructing all "functionClient" symbols, 
+  /// typed of [StimFirebaseFunctionClient]."
+  final StimFirebaseFunctionClientScope functionClient;
+
   final StimFirebaseOnStimModelType onStimModelType;
 
   final StimFirebaseOnStimModelField onStimModelField;
 
+  final StimFirebaseOnStimRbacResourceKind onStimRbacResourceKind;
+
   final StimFirebaseOnStimRbacResource onStimRbacResource;
 
-  StimFirebase(StimModel model, StimRbac rbac):
+  StimFirebase(StimModel model, StimRbac rbac, StimRest rest):
       firestore = StimFirebaseFirestoreScope(),
       firestoreCollection = StimFirebaseFirestoreCollectionScope(),
       securityRule = StimFirebaseSecurityRuleScope(),
+      function = StimFirebaseFunctionScope(),
+      firestoreClient = StimFirebaseFirestoreClientScope(),
+      functionClient = StimFirebaseFunctionClientScope(),
       onStimModelType = StimFirebaseOnStimModelType(),
       onStimModelField = StimFirebaseOnStimModelField(),
+      onStimRbacResourceKind = StimFirebaseOnStimRbacResourceKind(),
       onStimRbacResource = StimFirebaseOnStimRbacResource(),
       super('firebase');
 
@@ -42,7 +60,7 @@ class StimFirebase extends StimPack {
   /// be created as well.
   static StimFirebase stimFirebaseInstance() {
     if (_firebase == null) {
-      _firebase = StimFirebase(stimpack.model, stimpack.rbac);
+      _firebase = StimFirebase(stimpack.model, stimpack.rbac, stimpack.rest);
       _firebase._init();
     }
     return _firebase;
@@ -66,25 +84,37 @@ class StimFirebase extends StimPack {
     /// Builds type "securityRule"
     mt.securityRule = t.symbolOf(name: 'securityRule', package: mp);
 
+    /// Builds type "function"
+    mt.function = t.symbolOf(name: 'function', package: mp);
+
+    /// Builds type "firestoreClient"
+    mt.firestoreClient = t.symbolOf(name: 'firestoreClient', package: mp);
+
+    /// Builds type "functionClient"
+    mt.functionClient = t.symbolOf(name: 'functionClient', package: mp);
+
     /// Builds fields for type "firestore"
     mt.firestore.fields = {
       /// field "firestore"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
 
       /// field "firestore"
-      f.of(name: 'resource', type: t.rbac.resource).required()
+      f.of(name: 'resource', type: t.rbac.resource)..required()
     };
 
     /// Builds fields for type "firestoreCollection"
     mt.firestoreCollection.fields = {
       /// field "firestoreCollection"
-      f.of(name: 'firestore', type: mt.firestore).required(),
+      f.of(name: 'firestore', type: mt.firestore)..required(),
 
       /// field "firestoreCollection"
       f.of(name: 'parent', type: mt.firestoreCollection),
 
       /// field "firestoreCollection"
-      f.of(name: 'model', type: t.model.type).required(),
+      f.of(name: 'model', type: t.model.type)..required(),
+
+      /// field "firestoreCollection"
+      f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "firestoreCollection"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
@@ -93,28 +123,49 @@ class StimFirebase extends StimPack {
       f.of(name: 'rule', type: mt.securityRule),
 
       /// field "firestoreCollection"
-      f.of(name: 'resource', type: t.rbac.resource).required()
+      f.of(name: 'resource', type: t.rbac.resource)..required()
     };
 
     /// Builds fields for type "securityRule"
     mt.securityRule.fields = {
       /// field "securityRule"
-      f.of(name: 'create one', type: t.setOf(item: t.rbac.condition)).required(),
+      f.of(name: 'create one', type: t.setOf(item: t.rbac.condition))..required(),
 
       /// field "securityRule"
-      f.of(name: 'update one', type: t.setOf(item: t.rbac.condition)).required(),
+      f.of(name: 'update one', type: t.setOf(item: t.rbac.condition))..required(),
 
       /// field "securityRule"
-      f.of(name: 'find one', type: t.setOf(item: t.rbac.condition)).required(),
+      f.of(name: 'find one', type: t.setOf(item: t.rbac.condition))..required(),
 
       /// field "securityRule"
-      f.of(name: 'delete one', type: t.setOf(item: t.rbac.condition)).required(),
+      f.of(name: 'delete one', type: t.setOf(item: t.rbac.condition))..required(),
 
       /// field "securityRule"
-      f.of(name: 'find', type: t.setOf(item: t.rbac.condition)).required(),
+      f.of(name: 'find', type: t.setOf(item: t.rbac.condition))..required(),
 
       /// field "securityRule"
-      f.of(name: 'delete', type: t.setOf(item: t.rbac.condition)).required()
+      f.of(name: 'delete', type: t.setOf(item: t.rbac.condition))..required()
+    };
+
+    /// Builds fields for type "function"
+    mt.function.fields = {
+      /// field "function"
+      f.of(name: 'resource', type: t.rbac.resource)..required()
+    };
+
+    /// Builds fields for type "firestoreClient"
+    mt.firestoreClient.fields = {
+      /// field "firestoreClient"
+      f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
+
+      /// field "firestoreClient"
+      f.of(name: 'crud apis', type: t.setOf(item: t.rest.crudApi))
+    };
+
+    /// Builds fields for type "functionClient"
+    mt.functionClient.fields = {
+      /// field "functionClient"
+      f.of(name: 'functions', type: t.setOf(item: mt.function))
     };
   }
 }

@@ -49,7 +49,6 @@ class StimGenMetaInitExt implements Node {
           CodeAssignExpr.of(instanceFieldRef, getInstanceCall),
 
           // FIXME: The function private is not respected.
-          // CodeFunctionCall.of(name: _initFunction),
           CodeFunctionCall.of(name: '_$initFuncName'),
         ]);
 

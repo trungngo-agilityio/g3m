@@ -71,16 +71,16 @@ class StimStory extends StimPack {
     /// Builds fields for type "epic"
     mt.epic.fields = {
       /// field "epic"
-      f.of(name: 'stories', type: t.setOf(item: mt.story)).required()
+      f.of(name: 'stories', type: t.setOf(item: mt.story))..required()
     };
 
     /// Builds fields for type "story"
     mt.story.fields = {
       /// field "story"
-      f.of(name: 'actor', type: mt.actor).required(),
+      f.of(name: 'actor', type: mt.actor)..required(),
 
       /// field "story"
-      f.of(name: 'action', type: mt.action).required()
+      f.of(name: 'action', type: mt.action)..required()
     };
 
     /// Builds fields for type "action"

@@ -57,7 +57,8 @@ class StimRbacPolicyRef extends StimSymbolRef<StimRbacPolicy> implements StimRba
 
 class StimRbacPolicyScope {
   /// Creates a new "policy" of [StimRbacPolicy] type.
-  StimRbacPolicy of({dynamic name, @required
+  StimRbacPolicy of({@required
+  dynamic name, @required
   StimRbacPolicyKind kind, @required
   Set<StimRbacResource> resources, @required
   Set<StimRbacAction> actions, @required

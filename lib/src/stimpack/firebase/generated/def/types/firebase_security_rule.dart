@@ -69,7 +69,8 @@ class StimFirebaseSecurityRuleRef extends StimSymbolRef<StimFirebaseSecurityRule
 
 class StimFirebaseSecurityRuleScope {
   /// Creates a new "securityRule" of [StimFirebaseSecurityRule] type.
-  StimFirebaseSecurityRule of({dynamic name, @required
+  StimFirebaseSecurityRule of({@required
+  dynamic name, @required
   Set<StimRbacCondition> createOne, @required
   Set<StimRbacCondition> updateOne, @required
   Set<StimRbacCondition> findOne, @required

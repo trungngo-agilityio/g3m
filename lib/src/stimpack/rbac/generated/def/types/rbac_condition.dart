@@ -80,7 +80,8 @@ class StimRbacConditionScope {
 
 
   /// Creates a new "condition" of [StimRbacCondition] type.
-  StimRbacCondition of({dynamic name, StimRbacRole ifHasRole, Set<StimRbacRole> ifHasAnyRoles, Set<StimRbacRole> ifHasAllRoles, Set<StimRbacCondition> ifAnyOf, Set<StimRbacCondition> ifAllOf, Set<StimModelTag> tags}) {
+  StimRbacCondition of({@required
+  dynamic name, StimRbacRole ifHasRole, Set<StimRbacRole> ifHasAnyRoles, Set<StimRbacRole> ifHasAllRoles, Set<StimRbacCondition> ifAnyOf, Set<StimRbacCondition> ifAllOf, Set<StimModelTag> tags}) {
     return StimRbacCondition()
         ..name = StimName.of(name)
         ..ifHasRole = ifHasRole

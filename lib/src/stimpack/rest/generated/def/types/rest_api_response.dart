@@ -5,7 +5,7 @@ part of g3.stimpack.rest.generated;
 class StimRestApiResponse extends StimModelSymbol<StimRestApiResponse> {
   bool streamed;
 
-  Set<StimModelField> fields;
+  StimModelType model;
 
   StimRestApiResponse();
 
@@ -15,7 +15,7 @@ class StimRestApiResponse extends StimModelSymbol<StimRestApiResponse> {
   }
 
   /// Creates a new "apiResponse" of [StimRestApiResponse] type.
-  StimRestApiResponse refWith({dynamic name, bool streamed, Set<StimModelField> fields, Set<StimModelTag> tags}) {
+  StimRestApiResponse refWith({dynamic name, bool streamed, StimModelType model, Set<StimModelTag> tags}) {
     final res = ref();
     if (name != null) {
       res.name = StimName.of(name);
@@ -25,8 +25,8 @@ class StimRestApiResponse extends StimModelSymbol<StimRestApiResponse> {
       res.streamed = streamed;
     }
 
-    if (fields != null) {
-      res.fields = fields;
+    if (model != null) {
+      res.model = model;
     }
 
     if (tags != null) {
@@ -45,11 +45,13 @@ class StimRestApiResponseRef extends StimSymbolRef<StimRestApiResponse> implemen
 
 class StimRestApiResponseScope {
   /// Creates a new "apiResponse" of [StimRestApiResponse] type.
-  StimRestApiResponse of({dynamic name, bool streamed, Set<StimModelField> fields, Set<StimModelTag> tags}) {
+  StimRestApiResponse of({@required
+  dynamic name, bool streamed, @required
+  StimModelType model, Set<StimModelTag> tags}) {
     return StimRestApiResponse()
         ..name = StimName.of(name)
         ..streamed = streamed
-        ..fields = fields ?? {}
+        ..model = model
         ..tags = tags ?? {};
   }
 }

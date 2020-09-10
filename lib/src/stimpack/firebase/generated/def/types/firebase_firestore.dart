@@ -45,7 +45,8 @@ class StimFirebaseFirestoreRef extends StimSymbolRef<StimFirebaseFirestore> impl
 
 class StimFirebaseFirestoreScope {
   /// Creates a new "firestore" of [StimFirebaseFirestore] type.
-  StimFirebaseFirestore of({dynamic name, Set<StimFirebaseFirestoreCollection> collections, @required
+  StimFirebaseFirestore of({@required
+  dynamic name, Set<StimFirebaseFirestoreCollection> collections, @required
   StimRbacResource resource, Set<StimModelTag> tags}) {
     return StimFirebaseFirestore()
         ..name = StimName.of(name)

@@ -81,7 +81,9 @@ class StimRestCrudApiRef extends StimSymbolRef<StimRestCrudApi> implements StimR
 
 class StimRestCrudApiScope {
   /// Creates a new "crudApi" of [StimRestCrudApi] type.
-  StimRestCrudApi of({dynamic name, StimModelType model, @required
+  StimRestCrudApi of({@required
+  dynamic name, @required
+  StimModelType model, @required
   StimModelField idField, StimRestCrudCreateOneApi createOne, StimRestCrudUpdateOneApi updateOne, StimRestCrudFindOneApi findOne, StimRestCrudDeleteOneApi deleteOne, StimRestCrudFindApi find, StimRestCrudDeleteApi delete, Set<StimModelTag> tags}) {
     return StimRestCrudApi()
         ..name = StimName.of(name)

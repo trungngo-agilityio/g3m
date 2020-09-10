@@ -53,8 +53,6 @@ class StimGenMetaExt implements Node {
     final className = _config.valueExtClassName(pack, type);
     final fieldName = _config.valueExtFieldName(pack, type);
 
-    final packClassName = _config.packClassNameOf(pack);
-
     final getInstanceCall = _config.getPackInstance(pack);
 
     final prop = CodeProperty.of(

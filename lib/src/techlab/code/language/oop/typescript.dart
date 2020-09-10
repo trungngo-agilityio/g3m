@@ -124,6 +124,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           // Type configs
 
           typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig(child, {
+            // Typescript primitive types need to be lower case
             'unknown': 'unknown',
             'any': 'any',
             'void': 'void',
@@ -133,6 +134,16 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
             'bigint': 'bigint',
             'boolean': 'boolean',
             'bool': 'boolean',
+            // Dart types
+            'dynamic': 'dynamic',
+            'void': 'void',
+            'byte': 'number',
+            'short': 'number',
+            'int': 'number',
+            'long': 'number',
+            'float': 'number',
+            'double': 'number',
+            'bool': 'number',
           }),
           typeNameConfig: null,
           typeConfig: null,

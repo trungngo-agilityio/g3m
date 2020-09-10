@@ -60,7 +60,8 @@ class StimRbacActionScope {
 
 
   /// Creates a new "action" of [StimRbacAction] type.
-  StimRbacAction of({dynamic name, Set<StimRbacAction> actions, Set<StimModelTag> tags}) {
+  StimRbacAction of({@required
+  dynamic name, Set<StimRbacAction> actions, Set<StimModelTag> tags}) {
     return StimRbacAction()
         ..name = StimName.of(name)
         ..actions = actions ?? {}

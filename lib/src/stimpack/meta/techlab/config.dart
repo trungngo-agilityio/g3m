@@ -119,6 +119,10 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
     return name.removeIfStartsWith('stim ${pack.name}').camel();
   }
 
+  String publicPackNameOf(StimModelPackage pack) {
+    return 'stimpack.${pack.name.camel()}';
+  }
+
   String publicTypeScopeOf(StimModelPackage pack, StimModelType type) {
     final typePack = type?.package ?? pack;
     return 'stimpack.${typePack.name.camel()}.${type.name.camel()}';

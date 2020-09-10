@@ -45,7 +45,8 @@ class StimStoryStoryRef extends StimSymbolRef<StimStoryStory> implements StimSto
 
 class StimStoryStoryScope {
   /// Creates a new "story" of [StimStoryStory] type.
-  StimStoryStory of({dynamic name, @required
+  StimStoryStory of({@required
+  dynamic name, @required
   StimStoryActor actor, @required
   StimStoryAction action, Set<StimModelTag> tags}) {
     return StimStoryStory()

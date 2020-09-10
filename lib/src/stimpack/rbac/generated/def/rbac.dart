@@ -10,7 +10,7 @@ part 'rbac_pack.dart';
 part 'rbac_ext.dart';
 part 'types/rbac_action.dart';
 part 'types/rbac_resource.dart';
-part 'types/rbac_resource_id.dart';
+part 'types/rbac_resource_kind.dart';
 part 'types/rbac_group.dart';
 part 'types/rbac_role.dart';
 part 'types/rbac_policy.dart';

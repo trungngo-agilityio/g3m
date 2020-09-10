@@ -39,7 +39,8 @@ class StimStoryEpicRef extends StimSymbolRef<StimStoryEpic> implements StimStory
 
 class StimStoryEpicScope {
   /// Creates a new "epic" of [StimStoryEpic] type.
-  StimStoryEpic of({dynamic name, @required
+  StimStoryEpic of({@required
+  dynamic name, @required
   Set<StimStoryStory> stories, Set<StimModelTag> tags}) {
     return StimStoryEpic()
         ..name = StimName.of(name)

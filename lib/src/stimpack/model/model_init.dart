@@ -5,7 +5,7 @@ class StimModel extends StimPack {
   final StimModelTagScope tag;
   final StimModelTypeScope type;
   final StimModelFieldScope field;
-  final StimModelFieldFilterScope filter;
+  final StimModelFilterScope filter;
   final StimModelFieldRuleScope rule;
   final StimModelFuncScope func;
   final StimModelPatternScope pattern;
@@ -18,7 +18,7 @@ class StimModel extends StimPack {
         tag = StimModelTagScope(),
         type = StimModelTypeScope(),
         field = StimModelFieldScope(),
-        filter = StimModelFieldFilterScope(),
+        filter = StimModelFilterScope(),
         rule = StimModelFieldRuleScope(),
         func = StimModelFuncScope(),
         pattern = StimModelPatternScope(),
@@ -252,71 +252,91 @@ class StimModel extends StimPack {
   void _filters() {
     final f = filter;
 
-    f.isNull = _filter('null');
+    f.isNull = _filter('is null');
+    f.isNotNull = _filter('is not null');
+    f.isEmpty = _filter('is empty');
+    f.isNotEmpty = _filter('is not empty');
     f.isIn = _filter('is in');
-    f.exact = _filter('exact');
+    f.isNotIn = _filter('is not in');
+    f.isExact = _filter('is exact');
+    f.isNotExact = _filter('is not exact');
+
+    final common = {
+      f.isNull,
+      f.isNotNull,
+      f.isIn,
+      f.isNotIn,
+    };
 
     f.stringFilters = {
-      f.isNull,
-      f.isIn,
-      f.exact,
-      f.iExact = _filter('i exact'),
+      ...common,
+      f.isEmpty,
+      f.isNotEmpty,
+      f.isExact,
+      f.isNotExact,
+      f.isCaseInsensitiveExact = _filter('i exact'),
       f.startsWith = _filter('starts with'),
-      f.iStartsWith = _filter('i starts with'),
+      f.caseInsensitiveStartsWith = _filter('i starts with'),
       f.endsWith = _filter('ends with'),
-      f.iEndsWith = _filter('i ends with'),
+      f.caseInsensitiveEndsWith = _filter('i ends with'),
       f.contains = _filter('contains'),
-      f.iContains = _filter('i contains'),
-      f.iExact = _filter('i exact'),
-      f.regex = _filter('i regex'),
+      f.caseInsensitiveContains = _filter('i contains'),
+      f.isCaseInsensitiveExact = _filter('is i exact'),
+      f.matchesRegex = _filter('i regex'),
     };
 
     f.rangeFilters = {
-      f.gt = _filter('gt'),
-      f.gte = _filter('gte'),
-      f.lt = _filter('lt'),
-      f.lte = _filter('lte'),
-      f.range = _filter('range'),
+      ...common,
+      f.greaterThan = _filter('gt'),
+      f.greaterThanOrEqual = _filter('gte'),
+      f.lessThan = _filter('lt'),
+      f.lessThanOrEqual = _filter('lte'),
+      f.isInRange = _filter('range'),
     };
 
+    f.boolFilters = {
+      ...common,
+      f.isExact,
+      f.isNotExact,
+    };
     f.numberFilters = {
-      f.isNull,
-      f.exact,
-      f.isIn,
+      ...common,
+      f.isExact,
+      f.isNotExact,
       ...f.rangeFilters,
+    };
+
+    f.collectionFilters = {
+      ...common,
     };
 
     f.ago = _filter('ago');
     f.dateFilters = {
-      f.isNull,
-      f.exact,
-      f.isIn,
+      ...common,
       ...f.rangeFilters,
       f.ago,
-      f.date = _filter('date'),
-      f.year = _filter('year'),
-      f.month = _filter('month'),
-      f.day = _filter('day'),
-      f.week = _filter('week'),
-      f.weekDay = _filter('week day'),
-      f.quarter = _filter('quarter'),
+      f.isDate = _filter('date'),
+      f.isYear = _filter('year'),
+      f.isMonth = _filter('month'),
+      f.isDay = _filter('day'),
+      f.isWeek = _filter('week'),
+      f.isWeekDay = _filter('week day'),
+      f.isQuarter = _filter('quarter'),
     };
 
     f.timeFilters = {
-      f.isNull,
-      f.exact,
-      f.isIn,
+      ...common,
       f.ago,
-      f.time = _filter('time'),
-      f.hour = _filter('hour'),
-      f.minute = _filter('minute'),
-      f.second = _filter('second'),
+      f.isTime = _filter('time'),
+      f.isHour = _filter('hour'),
+      f.isMinute = _filter('minute'),
+      f.isSecond = _filter('second'),
     };
 
     f.dateTimeFilters = f.dateFilters + f.timeFilters;
   }
 
-  StimModelFieldFilter _filter(String name) => filter.of(name: name);
+  StimModelFilter _filter(String name) => filter.of(name: name);
 
   // ===========================================================================
   // Packages
@@ -329,25 +349,27 @@ class StimModel extends StimPack {
   // ===========================================================================
 
   void _primitiveTypes() {
-    final t = type;
+    final t = type, f = filter;
     t.primitiveTypes = {
-      t.string = t.fromDart(String),
-      t.num = t.fromDart(num),
-      t.int = t.fromDart(int),
-      t.double = t.fromDart(double),
-      t.bool = t.fromDart(bool),
-      t.duration = t.fromDart(Duration),
+      t.string = t.fromDart(String, filters: f.stringFilters),
+      t.num = t.fromDart(num, filters: f.numberFilters),
+      t.int = t.fromDart(int, filters: f.numberFilters),
+      t.double = t.fromDart(double, filters: f.numberFilters),
+      t.bool = t.fromDart(bool, filters: f.boolFilters),
+      t.dateTime = t.fromDart(DateTime, filters: f.dateTimeFilters),
+      t.duration = t.fromDart(Duration, filters: f.rangeFilters),
       t.uri = t.fromDart(Uri),
       t.type = t.fromDart(Type),
     };
+    t.numberTypes = {t.num, t.int, t.double};
   }
 
   void _collectionTypes() {
-    final t = type;
+    final t = type, f = filter;
     t.collectionTypes = {
-      t.map = t.fromDart(Map)..name ^= 'map',
-      t.list = t.fromDart(List)..name ^= 'list',
-      t.set = t.fromDart(Set)..name ^= 'set',
+      t.map = t.fromDart(Map, filters: f.collectionFilters)..name ^= 'map',
+      t.list = t.fromDart(List, filters: f.collectionFilters)..name ^= 'list',
+      t.set = t.fromDart(Set, filters: f.collectionFilters)..name ^= 'set',
     };
   }
 
@@ -413,6 +435,11 @@ class StimModel extends StimPack {
     final mf = f.model = StimModelFields();
 
     // Sets of fields.
+    mf.stringId = f.of(name: 'id', type: t.string);
+    mf.autoStringId = f.of(name: 'id', type: t.string)..readOnly();
+    mf.intId = f.of(name: 'fields', type: t.int);
+    mf.autoIntId = f.of(name: 'fields', type: t.int)..readOnly();
+    mf.fieldSet = f.of(name: 'fields', type: t.model.fieldSet);
     mf.fieldSet = f.of(name: 'fields', type: t.model.fieldSet);
   }
 

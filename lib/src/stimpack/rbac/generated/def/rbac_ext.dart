@@ -7,7 +7,7 @@ class StimRbacOnStimModelType {
 
   StimModelType resource;
 
-  StimModelType resourceId;
+  StimModelType resourceKind;
 
   StimModelType group;
 

@@ -48,7 +48,8 @@ class StimRbacRoleScope {
 
 
   /// Creates a new "role" of [StimRbacRole] type.
-  StimRbacRole of({dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+  StimRbacRole of({@required
+  dynamic name, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
     return StimRbacRole()
         ..name = StimName.of(name)
         ..roles = roles ?? {}

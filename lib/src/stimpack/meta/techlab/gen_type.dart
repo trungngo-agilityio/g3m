@@ -234,7 +234,11 @@ class StimGenMetaType implements Node {
   CodeFunction _createSymbolFunction(String functionName,
       {Node body, String comment, bool addRequired}) {
     final ofFunctionArgs = <CodeArg>[
-      CodeArg.of(name: 'name', type: 'dynamic'),
+      CodeArg.of(
+        name: 'name',
+        type: 'dynamic',
+        annotations: addRequired == true ? CodeAnnotation.required() : null,
+      ),
     ];
 
     for (final i in _metaFields + _tagSetField) {

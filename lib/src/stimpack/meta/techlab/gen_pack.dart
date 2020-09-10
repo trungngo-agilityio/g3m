@@ -242,7 +242,10 @@ final mt = ${typeExtFieldName};''',
         );
 
         if (field.isRequired) {
-          def = CodeFunctionCall.of(instance: def, name: 'required');
+          def = Container([
+            def,
+            CodeCascade.of(CodeFunctionCall.of(name: 'required')),
+          ]);
         }
 
         fieldDefs.add(
@@ -297,12 +300,10 @@ final mt = ${typeExtFieldName};''',
     } else if (type.isDart) {
       // This type come from outside.
       return Text.of('t.fromDart(${type.dartType.reflectedType})');
-
     } else if (type.package.name != pack.name) {
       // This type come from outside.
       final name = _config.fieldNameOfType(type);
       return Text.of('t.${type.package.name}.${name}');
-
     } else {
       // This type is defined in the package.
       final name = _config.fieldNameOfType(type);
@@ -353,7 +354,10 @@ final mt = ${typeExtFieldName};''',
         name: _config.packInstanceFactoryNameOf(pack),
         isStatic: true,
         returns: _packInstanceField.type,
-        body: [createInstanceIfNull, returnPackInstance],
+        body: [
+          createInstanceIfNull,
+          returnPackInstance,
+        ],
         comment: '''
 Provides global access to the "${pack.name}" pack. Only one instance of the pack 
 is created. During the creation, other packs that this pack depends on might 

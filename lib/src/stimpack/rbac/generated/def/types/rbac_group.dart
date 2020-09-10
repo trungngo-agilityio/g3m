@@ -45,7 +45,8 @@ class StimRbacGroupRef extends StimSymbolRef<StimRbacGroup> implements StimRbacG
 
 class StimRbacGroupScope {
   /// Creates a new "group" of [StimRbacGroup] type.
-  StimRbacGroup of({dynamic name, Set<StimRbacGroup> groups, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
+  StimRbacGroup of({@required
+  dynamic name, Set<StimRbacGroup> groups, Set<StimRbacRole> roles, Set<StimModelTag> tags}) {
     return StimRbacGroup()
         ..name = StimName.of(name)
         ..groups = groups ?? {}

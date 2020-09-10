@@ -45,24 +45,21 @@ void _buildRoles() {
     // admin has user permissions
     r.admin = r.of(name: 'admin', roles: {
       // user has limited permissions, including those from guest
-      r.user = r.of(name: 'user', roles: {
-        r.guest = r.of(name: 'guest'),
-      }),
+      r.user = r.of(name: 'user'),
     }),
   });
+
+  r.guest = r.of(name: 'guest');
+}
+
+void _buildResourceKind() {
+  final r = _rbac.resourceKind;
+  r.root = r.of(name: 'root');
 }
 
 void _buildResources() {
   final r = _rbac.resource;
-  r.root = r.of(name: 'root');
-  r.database = r.of(name: 'database');
-  r.dataTable = r.of(name: 'data table');
-  r.dataRecord = r.of(name: 'data record');
-  r.dataField = r.of(name: 'data field');
-  r.service = r.of(name: 'service');
-  r.serviceApi = r.of(name: 'service api');
-  r.app = r.of(name: 'app');
-  r.appFeature = r.of(name: 'app feature');
+  r.root = r.of(name: 'root', kind: _rbac.resourceKind.root);
 }
 
 void _buildPolicyKind() {

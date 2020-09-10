@@ -38,7 +38,8 @@ class StimRbacPolicyKindScope {
 
 
   /// Creates a new "policyKind" of [StimRbacPolicyKind] type.
-  StimRbacPolicyKind of({dynamic name, Set<StimModelTag> tags}) {
+  StimRbacPolicyKind of({@required
+  dynamic name, Set<StimModelTag> tags}) {
     return StimRbacPolicyKind()
         ..name = StimName.of(name)
         ..tags = tags ?? {};

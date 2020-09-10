@@ -51,6 +51,7 @@ class StimModelTypeScope {
       set;
 
   Set<StimModelType> primitiveTypes;
+  Set<StimModelType> numberTypes;
   Set<StimModelType> collectionTypes;
 
   /// Provides meta information for the model package.
@@ -65,14 +66,17 @@ class StimModelTypeScope {
     @meta.required StimModelPackage package,
     Set<StimModelType> mixins,
     Set<StimModelField> fields,
+    Set<StimModelFilter> filters,
   }) {
     final res = StimModelType()
       ..name = StimName.of(name)
-      ..tags = tags
       ..package = package
       ..mixins = mixins
-      ..fields = fields;
+      ..fields = fields
+      ..filters = filters
+      ..tags = tags;
 
+    // Adds the type to the package if that is specified.
     package?.types += res;
     return res;
   }
@@ -84,7 +88,11 @@ class StimModelTypeScope {
     return of(name: name, package: package, fields: null);
   }
 
-  StimModelType fromDart(Type type) {
+  StimModelType fromDart(
+    Type type, {
+    Set<StimModelFilter> filters,
+    Set<StimModelTag> tags,
+  }) {
     _dartTypes ??= {};
     var stimType = _dartTypes[type];
 
@@ -149,7 +157,9 @@ class StimModelTypeScope {
     stimType ??= StimModelType()
       ..name = StimName.of(typeName)
       ..package = package
-      ..dartType = rt;
+      ..dartType = rt
+      ..filters = filters ?? {}
+      ..tags = tags ?? {};
 
     return _dartTypes[rt] = stimType;
   }
@@ -183,6 +193,7 @@ class StimModelTypeScope {
     @meta.required StimModelType item,
     Set<StimModelType> mixins,
   }) {
+    assert(item != null, 'item is required');
     final list = stimpack.model.type.list;
     return collectionOf(
       name: name ?? list.name >> '<' >> item.name >> '>',
@@ -223,6 +234,9 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// The list of declared fields for this type.
   Set<StimModelField> fields;
 
+  /// The set of filters can be applied to this type.
+  Set<StimModelFilter> filters;
+
   /// This is only used for collection type.
   StimModelType collection;
 
@@ -237,9 +251,25 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// True indicates that this is a collection type.
   bool get isCollection => collection != null;
 
-  bool get isDartSet => collection == stimpack.model.type.set;
+  bool get isDartSet => collection == _model.type.set;
 
-  bool get isDartList => collection == stimpack.model.type.list;
+  bool get isDartList => collection == _model.type.list;
+
+  /// Determines if this field is a dart number type, which could
+  /// be int, double, ...
+  bool get isDartNumber => _model.type.numberTypes.contains(this);
+
+  /// Determines if this field is a dart string type.
+  bool get isDartString => _model.type.string == this;
+
+  /// Determines if this field is a dart bool type.
+  bool get isDartBool => _model.type.bool == this;
+
+  /// Determines if this field is a dart duration type.
+  bool get isDartDuration => _model.type.duration == this;
+
+  /// Determines if this field is a dart date time type.
+  bool get isDartDateTime => _model.type.dateTime == this;
 
   /// True indicates that this type is from the dart type system.
   /// It is a not a user-defined type.

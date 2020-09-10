@@ -125,37 +125,37 @@ class StimRest extends StimPack {
       f.of(name: 'policy', type: t.rbac.policy),
 
       /// field "api"
-      f.of(name: 'request', type: mt.apiRequest),
+      f.of(name: 'request', type: mt.apiRequest)..required(),
 
       /// field "api"
-      f.of(name: 'response', type: mt.apiResponse)
+      f.of(name: 'response', type: mt.apiResponse)..required()
     };
 
     /// Builds fields for type "apiRequest"
     mt.apiRequest.fields = {
       /// field "apiRequest"
-      f.of(name: 'streamed', type: t.bool),
+      f.of(name: 'streamed', type: t.fromDart(bool)),
 
       /// field "apiRequest"
-      f.of(name: 'fields', type: t.setOf(item: t.model.field))
+      f.of(name: 'model', type: t.model.type)..required()
     };
 
     /// Builds fields for type "apiResponse"
     mt.apiResponse.fields = {
       /// field "apiResponse"
-      f.of(name: 'streamed', type: t.bool),
+      f.of(name: 'streamed', type: t.fromDart(bool)),
 
       /// field "apiResponse"
-      f.of(name: 'fields', type: t.setOf(item: t.model.field))
+      f.of(name: 'model', type: t.model.type)..required()
     };
 
     /// Builds fields for type "crudApi"
     mt.crudApi.fields = {
       /// field "crudApi"
-      f.of(name: 'model', type: t.model.type),
+      f.of(name: 'model', type: t.model.type)..required(),
 
       /// field "crudApi"
-      f.of(name: 'id field', type: t.model.field).required(),
+      f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "crudApi"
       f.of(name: 'create one', type: mt.crudCreateOneApi),
@@ -179,67 +179,49 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudCreateOneApi"
     mt.crudCreateOneApi.fields = {
       /// field "crudCreateOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "crudCreateOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudCreateOneApi"
-      f.of(name: 'response', type: t.setOf(item: t.model.field))
+      f.of(name: 'api', type: mt.api)..required()
     };
 
     /// Builds fields for type "crudUpdateOneApi"
     mt.crudUpdateOneApi.fields = {
       /// field "crudUpdateOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "crudUpdateOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudUpdateOneApi"
-      f.of(name: 'response', type: t.setOf(item: t.model.field))
+      f.of(name: 'api', type: mt.api)..required()
     };
 
     /// Builds fields for type "crudFindOneApi"
     mt.crudFindOneApi.fields = {
       /// field "crudFindOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "crudFindOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudFindOneApi"
-      f.of(name: 'response', type: t.setOf(item: t.model.field))
+      f.of(name: 'api', type: mt.api)..required()
     };
 
     /// Builds fields for type "crudDeleteOneApi"
     mt.crudDeleteOneApi.fields = {
       /// field "crudDeleteOneApi"
-      f.of(name: 'id field', type: t.model.field),
+      f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "crudDeleteOneApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudDeleteOneApi"
-      f.of(name: 'response', type: t.setOf(item: t.model.field))
+      f.of(name: 'api', type: mt.api)..required()
     };
 
     /// Builds fields for type "crudFindApi"
     mt.crudFindApi.fields = {
       /// field "crudFindApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudFindApi"
-      f.of(name: 'response', type: t.setOf(item: t.model.field))
+      f.of(name: 'api', type: mt.api)..required()
     };
 
     /// Builds fields for type "crudDeleteApi"
     mt.crudDeleteApi.fields = {
       /// field "crudDeleteApi"
-      f.of(name: 'policy', type: t.rbac.policy),
-
-      /// field "crudDeleteApi"
-      f.of(name: 'response', type: t.setOf(item: t.model.field))
+      f.of(name: 'api', type: mt.api)..required()
     };
   }
 }

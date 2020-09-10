@@ -8,6 +8,12 @@ class StimFirebaseOnStimModelType {
   StimModelType firestoreCollection;
 
   StimModelType securityRule;
+
+  StimModelType function;
+
+  StimModelType firestoreClient;
+
+  StimModelType functionClient;
 }
 
 
@@ -18,14 +24,35 @@ class StimFirebaseOnStimModelField {
 }
 
 
+class StimFirebaseOnStimRbacResourceKind {
+  StimRbacResourceKind firebase;
+
+  StimRbacResourceKind storage;
+
+  StimRbacResourceKind function;
+
+  StimRbacResourceKind firestore;
+
+  StimRbacResourceKind hosting;
+
+  StimRbacResourceKind firestoreCollection;
+
+  StimRbacResourceKind firestoreDoc;
+
+  StimRbacResourceKind firestoreField;
+}
+
+
 class StimFirebaseOnStimRbacResource {
-  StimRbacResource firestore;
+  StimRbacResource firebaseService;
 
-  StimRbacResource firestoreCollection;
+  StimRbacResource storageService;
 
-  StimRbacResource firestoreDoc;
+  StimRbacResource functionService;
 
-  StimRbacResource firestoreField;
+  StimRbacResource firestoreService;
+
+  StimRbacResource hostingService;
 }
 
 
@@ -42,6 +69,14 @@ extension StimFirebaseOnStimModelFieldExtension on StimModelFieldScope {
   StimFirebaseOnStimModelField get firebase {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimFirebase.stimFirebaseInstance().onStimModelField;
+  }
+}
+
+
+extension StimFirebaseOnStimRbacResourceKindExtension on StimRbacResourceKindScope {
+  StimFirebaseOnStimRbacResourceKind get firebase {
+    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
+    return StimFirebase.stimFirebaseInstance().onStimRbacResourceKind;
   }
 }
 
