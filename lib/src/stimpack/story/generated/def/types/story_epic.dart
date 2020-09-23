@@ -8,32 +8,15 @@ class StimStoryEpic extends StimModelSymbol<StimStoryEpic> {
   StimStoryEpic();
 
 
-  StimStoryEpic ref() {
-    return StimStoryEpicRef()..symbol = this;
-  }
-
   /// Creates a new "epic" of [StimStoryEpic] type.
-  StimStoryEpic refWith({dynamic name, Set<StimStoryStory> stories, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (stories != null) {
-      res.stories = stories;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimStoryEpic copyWith({@required
+  dynamic name, @required
+  Set<StimStoryStory> stories, Set<StimModelTag> tags}) {
+    return StimStoryEpic()
+        ..name = StimName.of(name ?? this.name)
+        ..stories = stories ?? this.stories
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimStoryEpicRef extends StimSymbolRef<StimStoryEpic> implements StimStoryEpic {
-
 }
 
 

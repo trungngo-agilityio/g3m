@@ -12,40 +12,18 @@ class StimRestApi extends StimModelSymbol<StimRestApi> {
   StimRestApi();
 
 
-  StimRestApi ref() {
-    return StimRestApiRef()..symbol = this;
-  }
-
   /// Creates a new "api" of [StimRestApi] type.
-  StimRestApi refWith({dynamic name, StimRbacPolicy policy, StimRestApiRequest request, StimRestApiResponse response, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (policy != null) {
-      res.policy = policy;
-    }
-
-    if (request != null) {
-      res.request = request;
-    }
-
-    if (response != null) {
-      res.response = response;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRestApi copyWith({@required
+  dynamic name, StimRbacPolicy policy, @required
+  StimRestApiRequest request, @required
+  StimRestApiResponse response, Set<StimModelTag> tags}) {
+    return StimRestApi()
+        ..name = StimName.of(name ?? this.name)
+        ..policy = policy ?? this.policy
+        ..request = request ?? this.request
+        ..response = response ?? this.response
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRestApiRef extends StimSymbolRef<StimRestApi> implements StimRestApi {
-
 }
 
 

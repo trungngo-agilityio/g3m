@@ -6,34 +6,20 @@ class StimAngularComponentTemplate extends StimModelSymbol<StimAngularComponentT
   StimAngularComponentTemplate();
 
 
-  StimAngularComponentTemplate ref() {
-    return StimAngularComponentTemplateRef()..symbol = this;
-  }
-
   /// Creates a new "componentTemplate" of [StimAngularComponentTemplate] type.
-  StimAngularComponentTemplate refWith({dynamic name, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimAngularComponentTemplate copyWith({@required
+  dynamic name, Set<StimModelTag> tags}) {
+    return StimAngularComponentTemplate()
+        ..name = StimName.of(name ?? this.name)
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimAngularComponentTemplateRef extends StimSymbolRef<StimAngularComponentTemplate> implements StimAngularComponentTemplate {
-
 }
 
 
 class StimAngularComponentTemplateScope {
   /// Creates a new "componentTemplate" of [StimAngularComponentTemplate] type.
-  StimAngularComponentTemplate of({dynamic name, Set<StimModelTag> tags}) {
+  StimAngularComponentTemplate of({@required
+  dynamic name, Set<StimModelTag> tags}) {
     return StimAngularComponentTemplate()
         ..name = StimName.of(name)
         ..tags = tags ?? {};

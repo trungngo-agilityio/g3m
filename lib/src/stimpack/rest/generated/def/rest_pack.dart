@@ -179,7 +179,7 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudCreateOneApi"
     mt.crudCreateOneApi.fields = {
       /// field "crudCreateOneApi"
-      f.of(name: 'id field', type: t.model.field)..required(),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudCreateOneApi"
       f.of(name: 'api', type: mt.api)..required()
@@ -188,7 +188,7 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudUpdateOneApi"
     mt.crudUpdateOneApi.fields = {
       /// field "crudUpdateOneApi"
-      f.of(name: 'id field', type: t.model.field)..required(),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudUpdateOneApi"
       f.of(name: 'api', type: mt.api)..required()
@@ -197,7 +197,7 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudFindOneApi"
     mt.crudFindOneApi.fields = {
       /// field "crudFindOneApi"
-      f.of(name: 'id field', type: t.model.field)..required(),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudFindOneApi"
       f.of(name: 'api', type: mt.api)..required()
@@ -206,7 +206,7 @@ class StimRest extends StimPack {
     /// Builds fields for type "crudDeleteOneApi"
     mt.crudDeleteOneApi.fields = {
       /// field "crudDeleteOneApi"
-      f.of(name: 'id field', type: t.model.field)..required(),
+      f.of(name: 'id field', type: t.model.field),
 
       /// field "crudDeleteOneApi"
       f.of(name: 'api', type: mt.api)..required()

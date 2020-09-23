@@ -1,4 +1,6 @@
 import 'angular_gen.dart';
+import 'firebase_gen.dart';
+import 'func_gen.dart';
 import 'io_gen.dart';
 import 'ngxs_gen.dart';
 import 'rbac_gen.dart';
@@ -12,4 +14,6 @@ void main() {
   genRestPack();
   genAngularPack();
   genNgxsPack();
+  genFuncPack();
+  genFirebasePack();
 }

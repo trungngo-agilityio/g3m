@@ -14,50 +14,24 @@ class StimIoDir extends StimModelSymbol<StimIoDir> {
   StimIoDir();
 
 
-  StimIoDir ref() {
-    return StimIoDirRef()..symbol = this;
-  }
-
   /// Creates a new "dir" of [StimIoDir] type.
-  StimIoDir refWith({dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (path != null) {
-      res.path = path;
-    }
-
-    if (absolutePath != null) {
-      res.absolutePath = absolutePath;
-    }
-
-    if (files != null) {
-      res.files = files;
-    }
-
-    if (dirs != null) {
-      res.dirs = dirs;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimIoDir copyWith({@required
+  dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
+    return StimIoDir()
+        ..name = StimName.of(name ?? this.name)
+        ..path = path ?? this.path
+        ..absolutePath = absolutePath ?? this.absolutePath
+        ..files = files ?? this.files
+        ..dirs = dirs ?? this.dirs
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimIoDirRef extends StimSymbolRef<StimIoDir> implements StimIoDir {
-
 }
 
 
 class StimIoDirScope {
   /// Creates a new "dir" of [StimIoDir] type.
-  StimIoDir of({dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
+  StimIoDir of({@required
+  dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
     return StimIoDir()
         ..name = StimName.of(name)
         ..path = path

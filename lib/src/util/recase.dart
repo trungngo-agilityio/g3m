@@ -95,6 +95,8 @@ class ReCase {
   /// Sentence case
   String get sentence => _getSentenceCase();
 
+  String get words => _getWords();
+
   /// snake_case
   String get snake => _getSnakeCase();
 
@@ -152,6 +154,14 @@ class ReCase {
     var words = _words.map((word) => word.toLowerCase()).toList();
     words[0] = _upperCaseFirstLetter(words[0]);
 
+    return words.join(separator);
+  }
+
+  String _getWords({String separator = ' '}) {
+    if (_words == null) return null;
+    if (_words.isEmpty) return '';
+
+    var words = _words.map((word) => word.toLowerCase()).toList();
     return words.join(separator);
   }
 

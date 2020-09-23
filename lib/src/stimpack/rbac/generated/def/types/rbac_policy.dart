@@ -14,44 +14,21 @@ class StimRbacPolicy extends StimModelSymbol<StimRbacPolicy> {
   StimRbacPolicy();
 
 
-  StimRbacPolicy ref() {
-    return StimRbacPolicyRef()..symbol = this;
-  }
-
   /// Creates a new "policy" of [StimRbacPolicy] type.
-  StimRbacPolicy refWith({dynamic name, StimRbacPolicyKind kind, Set<StimRbacResource> resources, Set<StimRbacAction> actions, Set<StimRbacCondition> conditions, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (kind != null) {
-      res.kind = kind;
-    }
-
-    if (resources != null) {
-      res.resources = resources;
-    }
-
-    if (actions != null) {
-      res.actions = actions;
-    }
-
-    if (conditions != null) {
-      res.conditions = conditions;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRbacPolicy copyWith({@required
+  dynamic name, @required
+  StimRbacPolicyKind kind, @required
+  Set<StimRbacResource> resources, @required
+  Set<StimRbacAction> actions, @required
+  Set<StimRbacCondition> conditions, Set<StimModelTag> tags}) {
+    return StimRbacPolicy()
+        ..name = StimName.of(name ?? this.name)
+        ..kind = kind ?? this.kind
+        ..resources = resources ?? this.resources
+        ..actions = actions ?? this.actions
+        ..conditions = conditions ?? this.conditions
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRbacPolicyRef extends StimSymbolRef<StimRbacPolicy> implements StimRbacPolicy {
-
 }
 
 

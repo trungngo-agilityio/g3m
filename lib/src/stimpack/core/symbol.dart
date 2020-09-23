@@ -18,8 +18,6 @@ class StimSymbol<T> {
 T _cloneSymbol<T>(T s, bool deep, [Set processing, Map processed]) {
   if (s == null) {
     return null;
-  } else if (s is StimSymbolRef) {
-    return s;
   }
 
   if (deep == true) {
@@ -62,9 +60,7 @@ T _cloneSymbol<T>(T s, bool deep, [Set processing, Map processed]) {
       dynamic v = f;
 
       if (deep == true) {
-        if (f is StimSymbolRef) {
-          // Don't do anything. Returns the exact reference.
-        } else if (f is StimSymbol) {
+        if (f is StimSymbol) {
           v = _cloneSymbol(f, true, processing, processed);
         } else if (f is List) {
           // FIXME: Need to clone child

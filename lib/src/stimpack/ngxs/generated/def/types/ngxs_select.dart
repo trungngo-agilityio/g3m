@@ -8,38 +8,21 @@ class StimNgxsSelect extends StimModelSymbol<StimNgxsSelect> {
   StimNgxsSelect();
 
 
-  StimNgxsSelect ref() {
-    return StimNgxsSelectRef()..symbol = this;
-  }
-
   /// Creates a new "select" of [StimNgxsSelect] type.
-  StimNgxsSelect refWith({dynamic name, StimModelField field, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (field != null) {
-      res.field = field;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimNgxsSelect copyWith({@required
+  dynamic name, StimModelField field, Set<StimModelTag> tags}) {
+    return StimNgxsSelect()
+        ..name = StimName.of(name ?? this.name)
+        ..field = field ?? this.field
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimNgxsSelectRef extends StimSymbolRef<StimNgxsSelect> implements StimNgxsSelect {
-
 }
 
 
 class StimNgxsSelectScope {
   /// Creates a new "select" of [StimNgxsSelect] type.
-  StimNgxsSelect of({dynamic name, StimModelField field, Set<StimModelTag> tags}) {
+  StimNgxsSelect of({@required
+  dynamic name, StimModelField field, Set<StimModelTag> tags}) {
     return StimNgxsSelect()
         ..name = StimName.of(name)
         ..field = field

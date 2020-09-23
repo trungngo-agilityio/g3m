@@ -22,7 +22,7 @@ extension ExtCrudCreateOneApiScope on StimRestCrudCreateOneApiScope {
     package ??= model.package;
 
     // default the api name to the model name.
-    name ??= StimName.of(name ?? model) << 'create one';
+    name ??= 'create one';
 
     return forFieldSet(
       name: name,

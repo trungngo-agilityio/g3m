@@ -15,13 +15,5 @@ class StimDbDatabaseScope {
 class StimDbDatabase extends StimModelSymbol<StimDbDatabase> {
   Set<StimDbTable> tables;
 
-  StimDbDatabaseRef _ref;
-
-  /// Gets the reference to this model.
-  StimDbDatabase get ref => _ref ??= StimDbDatabaseRef()..symbol = this;
-
   StimDbDatabase();
 }
-
-class StimDbDatabaseRef extends StimSymbolRef<StimDbDatabase>
-    implements StimDbDatabase {}

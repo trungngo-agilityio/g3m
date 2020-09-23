@@ -25,7 +25,8 @@ enum _NameOp {
   header,
   title,
   constant,
-  sentence
+  sentence,
+  words,
 }
 
 abstract class StimNamed {
@@ -154,6 +155,10 @@ class StimName {
     return StimName._(_NameOp.sentence, this, null, null);
   }
 
+  StimName words() {
+    return StimName._(_NameOp.words, this, null, null);
+  }
+
   /// Normalizes an input object to a name string that.
   /// - trim left
   /// - trim right
@@ -164,7 +169,7 @@ class StimName {
     if (s is StimName) return s.toString();
     if (s is StimNamed) {
       final lName = s as StimNamed;
-      s = lName.name.toString();
+      s = lName.name?.toString() ?? '';
     }
     return s.toString().trim().replaceAll('  ', ' ');
   }
@@ -281,6 +286,9 @@ class StimName {
 
       case _NameOp.sentence:
         return ReCase.forCode(l).sentence;
+
+      case _NameOp.words:
+        return ReCase.forCode(l).words;
 
       default:
         if (_text != null) {

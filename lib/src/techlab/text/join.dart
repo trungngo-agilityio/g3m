@@ -6,6 +6,9 @@ class Join implements Node {
 
   Join._(this.separator, this.children);
 
+  factory Join.doubleNewLineSeparated(Iterable<Node> children) =>
+      Join.of('\n\n', children);
+
   factory Join.newLineSeparated(Iterable<Node> children) =>
       Join.of('\n', children);
 

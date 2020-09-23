@@ -22,66 +22,28 @@ class StimAngularModule extends StimModelSymbol<StimAngularModule> {
   StimAngularModule();
 
 
-  StimAngularModule ref() {
-    return StimAngularModuleRef()..symbol = this;
-  }
-
   /// Creates a new "module" of [StimAngularModule] type.
-  StimAngularModule refWith({dynamic name, Set<StimAngularService> services, Set<StimAngularModel> models, Set<StimAngularComponent> declarations, Set<StimAngularComponent> entryComponents, Set<StimAngularModule> imports, Set<StimAngularModule> exports, StimAngularRouter router, StimAngularResolver resolver, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (services != null) {
-      res.services = services;
-    }
-
-    if (models != null) {
-      res.models = models;
-    }
-
-    if (declarations != null) {
-      res.declarations = declarations;
-    }
-
-    if (entryComponents != null) {
-      res.entryComponents = entryComponents;
-    }
-
-    if (imports != null) {
-      res.imports = imports;
-    }
-
-    if (exports != null) {
-      res.exports = exports;
-    }
-
-    if (router != null) {
-      res.router = router;
-    }
-
-    if (resolver != null) {
-      res.resolver = resolver;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimAngularModule copyWith({@required
+  dynamic name, Set<StimAngularService> services, Set<StimAngularModel> models, Set<StimAngularComponent> declarations, Set<StimAngularComponent> entryComponents, Set<StimAngularModule> imports, Set<StimAngularModule> exports, StimAngularRouter router, StimAngularResolver resolver, Set<StimModelTag> tags}) {
+    return StimAngularModule()
+        ..name = StimName.of(name ?? this.name)
+        ..services = services ?? this.services
+        ..models = models ?? this.models
+        ..declarations = declarations ?? this.declarations
+        ..entryComponents = entryComponents ?? this.entryComponents
+        ..imports = imports ?? this.imports
+        ..exports = exports ?? this.exports
+        ..router = router ?? this.router
+        ..resolver = resolver ?? this.resolver
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimAngularModuleRef extends StimSymbolRef<StimAngularModule> implements StimAngularModule {
-
 }
 
 
 class StimAngularModuleScope {
   /// Creates a new "module" of [StimAngularModule] type.
-  StimAngularModule of({dynamic name, Set<StimAngularService> services, Set<StimAngularModel> models, Set<StimAngularComponent> declarations, Set<StimAngularComponent> entryComponents, Set<StimAngularModule> imports, Set<StimAngularModule> exports, StimAngularRouter router, StimAngularResolver resolver, Set<StimModelTag> tags}) {
+  StimAngularModule of({@required
+  dynamic name, Set<StimAngularService> services, Set<StimAngularModel> models, Set<StimAngularComponent> declarations, Set<StimAngularComponent> entryComponents, Set<StimAngularModule> imports, Set<StimAngularModule> exports, StimAngularRouter router, StimAngularResolver resolver, Set<StimModelTag> tags}) {
     return StimAngularModule()
         ..name = StimName.of(name)
         ..services = services ?? {}

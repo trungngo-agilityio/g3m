@@ -63,11 +63,5 @@ class StimModelHttpStatusScope {
 class StimModelHttpStatus extends StimModelSymbol<StimModelHttpStatus> {
   int code;
 
-  /// Gets the reference to this model.
-  StimModelHttpStatus ref() => StimModelHttpStatusRef()..symbol = this;
-
   StimModelHttpStatus();
 }
-
-class StimModelHttpStatusRef extends StimSymbolRef<StimModelHttpStatus>
-    implements StimModelHttpStatus {}

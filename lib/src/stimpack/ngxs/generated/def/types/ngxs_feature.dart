@@ -8,38 +8,21 @@ class StimNgxsFeature extends StimModelSymbol<StimNgxsFeature> {
   StimNgxsFeature();
 
 
-  StimNgxsFeature ref() {
-    return StimNgxsFeatureRef()..symbol = this;
-  }
-
   /// Creates a new "feature" of [StimNgxsFeature] type.
-  StimNgxsFeature refWith({dynamic name, Set<StimNgxsState> states, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (states != null) {
-      res.states = states;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimNgxsFeature copyWith({@required
+  dynamic name, Set<StimNgxsState> states, Set<StimModelTag> tags}) {
+    return StimNgxsFeature()
+        ..name = StimName.of(name ?? this.name)
+        ..states = states ?? this.states
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimNgxsFeatureRef extends StimSymbolRef<StimNgxsFeature> implements StimNgxsFeature {
-
 }
 
 
 class StimNgxsFeatureScope {
   /// Creates a new "feature" of [StimNgxsFeature] type.
-  StimNgxsFeature of({dynamic name, Set<StimNgxsState> states, Set<StimModelTag> tags}) {
+  StimNgxsFeature of({@required
+  dynamic name, Set<StimNgxsState> states, Set<StimModelTag> tags}) {
     return StimNgxsFeature()
         ..name = StimName.of(name)
         ..states = states ?? {}

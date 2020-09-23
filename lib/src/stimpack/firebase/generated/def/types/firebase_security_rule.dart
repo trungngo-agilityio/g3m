@@ -18,52 +18,25 @@ class StimFirebaseSecurityRule extends StimModelSymbol<StimFirebaseSecurityRule>
   StimFirebaseSecurityRule();
 
 
-  StimFirebaseSecurityRule ref() {
-    return StimFirebaseSecurityRuleRef()..symbol = this;
-  }
-
   /// Creates a new "securityRule" of [StimFirebaseSecurityRule] type.
-  StimFirebaseSecurityRule refWith({dynamic name, Set<StimRbacCondition> createOne, Set<StimRbacCondition> updateOne, Set<StimRbacCondition> findOne, Set<StimRbacCondition> deleteOne, Set<StimRbacCondition> find, Set<StimRbacCondition> delete, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (createOne != null) {
-      res.createOne = createOne;
-    }
-
-    if (updateOne != null) {
-      res.updateOne = updateOne;
-    }
-
-    if (findOne != null) {
-      res.findOne = findOne;
-    }
-
-    if (deleteOne != null) {
-      res.deleteOne = deleteOne;
-    }
-
-    if (find != null) {
-      res.find = find;
-    }
-
-    if (delete != null) {
-      res.delete = delete;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimFirebaseSecurityRule copyWith({@required
+  dynamic name, @required
+  Set<StimRbacCondition> createOne, @required
+  Set<StimRbacCondition> updateOne, @required
+  Set<StimRbacCondition> findOne, @required
+  Set<StimRbacCondition> deleteOne, @required
+  Set<StimRbacCondition> find, @required
+  Set<StimRbacCondition> delete, Set<StimModelTag> tags}) {
+    return StimFirebaseSecurityRule()
+        ..name = StimName.of(name ?? this.name)
+        ..createOne = createOne ?? this.createOne
+        ..updateOne = updateOne ?? this.updateOne
+        ..findOne = findOne ?? this.findOne
+        ..deleteOne = deleteOne ?? this.deleteOne
+        ..find = find ?? this.find
+        ..delete = delete ?? this.delete
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimFirebaseSecurityRuleRef extends StimSymbolRef<StimFirebaseSecurityRule> implements StimFirebaseSecurityRule {
-
 }
 
 

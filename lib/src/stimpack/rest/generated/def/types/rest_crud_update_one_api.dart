@@ -10,44 +10,23 @@ class StimRestCrudUpdateOneApi extends StimModelSymbol<StimRestCrudUpdateOneApi>
   StimRestCrudUpdateOneApi();
 
 
-  StimRestCrudUpdateOneApi ref() {
-    return StimRestCrudUpdateOneApiRef()..symbol = this;
-  }
-
   /// Creates a new "crudUpdateOneApi" of [StimRestCrudUpdateOneApi] type.
-  StimRestCrudUpdateOneApi refWith({dynamic name, StimModelField idField, StimRestApi api, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (idField != null) {
-      res.idField = idField;
-    }
-
-    if (api != null) {
-      res.api = api;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRestCrudUpdateOneApi copyWith({@required
+  dynamic name, StimModelField idField, @required
+  StimRestApi api, Set<StimModelTag> tags}) {
+    return StimRestCrudUpdateOneApi()
+        ..name = StimName.of(name ?? this.name)
+        ..idField = idField ?? this.idField
+        ..api = api ?? this.api
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRestCrudUpdateOneApiRef extends StimSymbolRef<StimRestCrudUpdateOneApi> implements StimRestCrudUpdateOneApi {
-
 }
 
 
 class StimRestCrudUpdateOneApiScope {
   /// Creates a new "crudUpdateOneApi" of [StimRestCrudUpdateOneApi] type.
   StimRestCrudUpdateOneApi of({@required
-  dynamic name, @required
-  StimModelField idField, @required
+  dynamic name, StimModelField idField, @required
   StimRestApi api, Set<StimModelTag> tags}) {
     return StimRestCrudUpdateOneApi()
         ..name = StimName.of(name)

@@ -10,36 +10,17 @@ class StimStoryStory extends StimModelSymbol<StimStoryStory> {
   StimStoryStory();
 
 
-  StimStoryStory ref() {
-    return StimStoryStoryRef()..symbol = this;
-  }
-
   /// Creates a new "story" of [StimStoryStory] type.
-  StimStoryStory refWith({dynamic name, StimStoryActor actor, StimStoryAction action, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (actor != null) {
-      res.actor = actor;
-    }
-
-    if (action != null) {
-      res.action = action;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimStoryStory copyWith({@required
+  dynamic name, @required
+  StimStoryActor actor, @required
+  StimStoryAction action, Set<StimModelTag> tags}) {
+    return StimStoryStory()
+        ..name = StimName.of(name ?? this.name)
+        ..actor = actor ?? this.actor
+        ..action = action ?? this.action
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimStoryStoryRef extends StimSymbolRef<StimStoryStory> implements StimStoryStory {
-
 }
 
 

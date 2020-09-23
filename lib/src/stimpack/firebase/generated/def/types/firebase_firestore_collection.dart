@@ -20,56 +20,24 @@ class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirest
   StimFirebaseFirestoreCollection();
 
 
-  StimFirebaseFirestoreCollection ref() {
-    return StimFirebaseFirestoreCollectionRef()..symbol = this;
-  }
-
   /// Creates a new "firestoreCollection" of [StimFirebaseFirestoreCollection] type.
-  StimFirebaseFirestoreCollection refWith({dynamic name, StimFirebaseFirestore firestore, StimFirebaseFirestoreCollection parent, StimModelType model, StimModelField idField, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, StimRbacResource resource, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (firestore != null) {
-      res.firestore = firestore;
-    }
-
-    if (parent != null) {
-      res.parent = parent;
-    }
-
-    if (model != null) {
-      res.model = model;
-    }
-
-    if (idField != null) {
-      res.idField = idField;
-    }
-
-    if (collections != null) {
-      res.collections = collections;
-    }
-
-    if (rule != null) {
-      res.rule = rule;
-    }
-
-    if (resource != null) {
-      res.resource = resource;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimFirebaseFirestoreCollection copyWith({@required
+  dynamic name, @required
+  StimFirebaseFirestore firestore, StimFirebaseFirestoreCollection parent, @required
+  StimModelType model, @required
+  StimModelField idField, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
+  StimRbacResource resource, Set<StimModelTag> tags}) {
+    return StimFirebaseFirestoreCollection()
+        ..name = StimName.of(name ?? this.name)
+        ..firestore = firestore ?? this.firestore
+        ..parent = parent ?? this.parent
+        ..model = model ?? this.model
+        ..idField = idField ?? this.idField
+        ..collections = collections ?? this.collections
+        ..rule = rule ?? this.rule
+        ..resource = resource ?? this.resource
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimFirebaseFirestoreCollectionRef extends StimSymbolRef<StimFirebaseFirestoreCollection> implements StimFirebaseFirestoreCollection {
-
 }
 
 

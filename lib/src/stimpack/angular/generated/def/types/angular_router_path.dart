@@ -12,46 +12,23 @@ class StimAngularRouterPath extends StimModelSymbol<StimAngularRouterPath> {
   StimAngularRouterPath();
 
 
-  StimAngularRouterPath ref() {
-    return StimAngularRouterPathRef()..symbol = this;
-  }
-
   /// Creates a new "routerPath" of [StimAngularRouterPath] type.
-  StimAngularRouterPath refWith({dynamic name, String path, StimAngularRouterPath parent, Set<StimAngularRouterParam> params, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (path != null) {
-      res.path = path;
-    }
-
-    if (parent != null) {
-      res.parent = parent;
-    }
-
-    if (params != null) {
-      res.params = params;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimAngularRouterPath copyWith({@required
+  dynamic name, String path, StimAngularRouterPath parent, Set<StimAngularRouterParam> params, Set<StimModelTag> tags}) {
+    return StimAngularRouterPath()
+        ..name = StimName.of(name ?? this.name)
+        ..path = path ?? this.path
+        ..parent = parent ?? this.parent
+        ..params = params ?? this.params
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimAngularRouterPathRef extends StimSymbolRef<StimAngularRouterPath> implements StimAngularRouterPath {
-
 }
 
 
 class StimAngularRouterPathScope {
   /// Creates a new "routerPath" of [StimAngularRouterPath] type.
-  StimAngularRouterPath of({dynamic name, String path, StimAngularRouterPath parent, Set<StimAngularRouterParam> params, Set<StimModelTag> tags}) {
+  StimAngularRouterPath of({@required
+  dynamic name, String path, StimAngularRouterPath parent, Set<StimAngularRouterParam> params, Set<StimModelTag> tags}) {
     return StimAngularRouterPath()
         ..name = StimName.of(name)
         ..path = path

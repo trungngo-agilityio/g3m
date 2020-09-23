@@ -38,11 +38,5 @@ class StimModelPackage extends StimModelSymbol<StimModelPackage> {
 
   bool get isDart => dartLibrary != null;
 
-  /// Gets the reference to this model.
-  StimModelPackage ref() => StimModelPackageRef()..symbol = this;
-
   StimModelPackage();
 }
-
-class StimModelPackageRef extends StimSymbolRef<StimModelPackage>
-    implements StimModelPackage {}

@@ -10,42 +10,22 @@ class StimAngularFeature extends StimModelSymbol<StimAngularFeature> {
   StimAngularFeature();
 
 
-  StimAngularFeature ref() {
-    return StimAngularFeatureRef()..symbol = this;
-  }
-
   /// Creates a new "feature" of [StimAngularFeature] type.
-  StimAngularFeature refWith({dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (features != null) {
-      res.features = features;
-    }
-
-    if (module != null) {
-      res.module = module;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimAngularFeature copyWith({@required
+  dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
+    return StimAngularFeature()
+        ..name = StimName.of(name ?? this.name)
+        ..features = features ?? this.features
+        ..module = module ?? this.module
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimAngularFeatureRef extends StimSymbolRef<StimAngularFeature> implements StimAngularFeature {
-
 }
 
 
 class StimAngularFeatureScope {
   /// Creates a new "feature" of [StimAngularFeature] type.
-  StimAngularFeature of({dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
+  StimAngularFeature of({@required
+  dynamic name, Set<StimAngularFeature> features, StimAngularModule module, Set<StimModelTag> tags}) {
     return StimAngularFeature()
         ..name = StimName.of(name)
         ..features = features ?? {}

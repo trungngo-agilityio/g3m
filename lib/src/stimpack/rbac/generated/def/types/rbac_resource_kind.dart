@@ -6,28 +6,13 @@ class StimRbacResourceKind extends StimModelSymbol<StimRbacResourceKind> {
   StimRbacResourceKind();
 
 
-  StimRbacResourceKind ref() {
-    return StimRbacResourceKindRef()..symbol = this;
-  }
-
   /// Creates a new "resourceKind" of [StimRbacResourceKind] type.
-  StimRbacResourceKind refWith({dynamic name, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRbacResourceKind copyWith({@required
+  dynamic name, Set<StimModelTag> tags}) {
+    return StimRbacResourceKind()
+        ..name = StimName.of(name ?? this.name)
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRbacResourceKindRef extends StimSymbolRef<StimRbacResourceKind> implements StimRbacResourceKind {
-
 }
 
 

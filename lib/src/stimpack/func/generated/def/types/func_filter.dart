@@ -10,42 +10,22 @@ class StimFuncFilter extends StimModelSymbol<StimFuncFilter> {
   StimFuncFilter();
 
 
-  StimFuncFilter ref() {
-    return StimFuncFilterRef()..symbol = this;
-  }
-
   /// Creates a new "filter" of [StimFuncFilter] type.
-  StimFuncFilter refWith({dynamic name, StimModelType from, StimModelFuncCode code, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (from != null) {
-      res.from = from;
-    }
-
-    if (code != null) {
-      res.code = code;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimFuncFilter copyWith({@required
+  dynamic name, StimModelType from, StimModelFuncCode code, Set<StimModelTag> tags}) {
+    return StimFuncFilter()
+        ..name = StimName.of(name ?? this.name)
+        ..from = from ?? this.from
+        ..code = code ?? this.code
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimFuncFilterRef extends StimSymbolRef<StimFuncFilter> implements StimFuncFilter {
-
 }
 
 
 class StimFuncFilterScope {
   /// Creates a new "filter" of [StimFuncFilter] type.
-  StimFuncFilter of({dynamic name, StimModelType from, StimModelFuncCode code, Set<StimModelTag> tags}) {
+  StimFuncFilter of({@required
+  dynamic name, StimModelType from, StimModelFuncCode code, Set<StimModelTag> tags}) {
     return StimFuncFilter()
         ..name = StimName.of(name)
         ..from = from

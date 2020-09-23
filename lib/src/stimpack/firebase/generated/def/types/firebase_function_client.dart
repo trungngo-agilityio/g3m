@@ -8,32 +8,14 @@ class StimFirebaseFunctionClient extends StimModelSymbol<StimFirebaseFunctionCli
   StimFirebaseFunctionClient();
 
 
-  StimFirebaseFunctionClient ref() {
-    return StimFirebaseFunctionClientRef()..symbol = this;
-  }
-
   /// Creates a new "functionClient" of [StimFirebaseFunctionClient] type.
-  StimFirebaseFunctionClient refWith({dynamic name, Set<StimFirebaseFunction> functions, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (functions != null) {
-      res.functions = functions;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimFirebaseFunctionClient copyWith({@required
+  dynamic name, Set<StimFirebaseFunction> functions, Set<StimModelTag> tags}) {
+    return StimFirebaseFunctionClient()
+        ..name = StimName.of(name ?? this.name)
+        ..functions = functions ?? this.functions
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimFirebaseFunctionClientRef extends StimSymbolRef<StimFirebaseFunctionClient> implements StimFirebaseFunctionClient {
-
 }
 
 

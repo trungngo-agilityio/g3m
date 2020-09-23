@@ -21,22 +21,4 @@ class StimModelTag extends StimModelSymbol<StimModelTag> {
   dynamic value;
 
   StimModelTag();
-
-  /// Gets the reference to this model.
-  StimModelTag ref() => StimModelTagRef()..symbol = this;
-
-  StimModelTag refWith({
-    dynamic name,
-    dynamic value,
-    Iterable<StimModelTag> tags,
-  }) {
-    final res = ref();
-    if (name != null) res.name = StimName.of(name);
-    if (value != null) res.value = value;
-    if (tags != null) res.tags = tags;
-    return res;
-  }
 }
-
-class StimModelTagRef extends StimSymbolRef<StimModelTag>
-    implements StimModelTag {}

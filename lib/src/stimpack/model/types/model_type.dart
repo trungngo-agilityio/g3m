@@ -20,8 +20,8 @@ class StimModelTypes {
       patternSet,
       range,
       rangeSet,
-      rule,
-      ruleSet,
+      fieldRule,
+      fieldRuleSet,
       error,
       errorSet,
       httpStatus,
@@ -275,28 +275,5 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// It is a not a user-defined type.
   bool get isDart => dartType != null;
 
-  /// Gets the reference to this model.
-  StimModelType ref() => StimModelTypeRef()..symbol = this;
-
-  StimModelType refWith({
-    dynamic name,
-    Set<StimModelTag> tags,
-    StimModelPackage package,
-    Set<StimModelType> mixins,
-    Set<StimModelField> fields,
-  }) {
-    final res = ref();
-    if (name != null) res.name = StimName.of(name);
-    if (tags != null) res.tags = tags;
-    if (package != null) res.package = package;
-    if (mixins != null) res.mixins = mixins;
-    if (fields != null) res.fields = fields;
-    package?.types += res;
-    return res;
-  }
-
   StimModelType();
 }
-
-class StimModelTypeRef extends StimSymbolRef<StimModelType>
-    implements StimModelType {}

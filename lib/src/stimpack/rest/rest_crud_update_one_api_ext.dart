@@ -14,7 +14,7 @@ extension ExtStimRestCrudUpdateOneApiScope on StimRestCrudUpdateOneApiScope {
     package ??= model.package;
 
     // default the api name to the model name.
-    name ??= StimName.of(name ?? model) << 'update one';
+    name ??= 'update one';
 
     return forFieldSet(
       name: name,
@@ -42,7 +42,7 @@ extension ExtStimRestCrudUpdateOneApiScope on StimRestCrudUpdateOneApiScope {
     // builds the request and response fields.
     final request = <StimModelField>{
       // the id field must be in the request.
-      idField,
+      idField.copyWith()..indexed(),
     };
 
     final response = <StimModelField>{};

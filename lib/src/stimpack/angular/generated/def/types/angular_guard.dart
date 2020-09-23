@@ -6,34 +6,20 @@ class StimAngularGuard extends StimModelSymbol<StimAngularGuard> {
   StimAngularGuard();
 
 
-  StimAngularGuard ref() {
-    return StimAngularGuardRef()..symbol = this;
-  }
-
   /// Creates a new "guard" of [StimAngularGuard] type.
-  StimAngularGuard refWith({dynamic name, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimAngularGuard copyWith({@required
+  dynamic name, Set<StimModelTag> tags}) {
+    return StimAngularGuard()
+        ..name = StimName.of(name ?? this.name)
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimAngularGuardRef extends StimSymbolRef<StimAngularGuard> implements StimAngularGuard {
-
 }
 
 
 class StimAngularGuardScope {
   /// Creates a new "guard" of [StimAngularGuard] type.
-  StimAngularGuard of({dynamic name, Set<StimModelTag> tags}) {
+  StimAngularGuard of({@required
+  dynamic name, Set<StimModelTag> tags}) {
     return StimAngularGuard()
         ..name = StimName.of(name)
         ..tags = tags ?? {};

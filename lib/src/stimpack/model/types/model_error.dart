@@ -40,11 +40,5 @@ class StimModelError extends StimModelSymbol<StimModelError> {
   /// http status.
   StimModelHttpStatus httpStatus;
 
-  /// Gets the reference to this model.
-  StimModelError ref() => StimModelErrorRef()..symbol = this;
-
   StimModelError();
 }
-
-class StimModelErrorRef extends StimSymbolRef<StimModelError>
-    implements StimModelError {}

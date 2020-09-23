@@ -44,7 +44,7 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
     idField = _extractRequiredIdField(idField, fields);
 
     // Builds the create one api.
-    createOneName ??= name << 'create one';
+    createOneName ??= 'create one';
     createOneFields ??= fields;
     final createOne = _rest.crudCreateOneApi.forFieldSet(
       name: createOneName,
@@ -54,7 +54,7 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
     );
 
     // Builds the update one api.
-    updateOneName ??= name << 'update one';
+    updateOneName ??= 'update one';
     updateOneFields ??= fields;
     final updateOne = _rest.crudUpdateOneApi.forFieldSet(
       name: updateOneName,
@@ -64,7 +64,7 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
     );
 
     // Builds the find one api.
-    findOneName ??= name << 'find one';
+    findOneName ??= 'find one';
     findOneFields ??= fields;
 
     final findOne = _rest.crudFindOneApi.forFieldSet(
@@ -75,14 +75,14 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
     );
 
     // Builds the delete one api
-    deleteOneName ??= name << 'delete one';
+    deleteOneName ??= 'delete one';
     final deleteOne = _rest.crudDeleteOneApi.forIdField(
       name: deleteOneName,
       package: package,
       idField: idField,
     );
 
-    findName ??= name << 'find';
+    findName ??= 'find';
     findFields ??= fields;
 
     final find = _rest.crudFindApi.forFieldSet(
@@ -92,7 +92,7 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
       idField: idField,
     );
 
-    deleteName ??= name << 'delete';
+    deleteName ??= 'delete';
     deleteFields ??= fields;
 
     final delete = _rest.crudDeleteApi.forFieldSet(

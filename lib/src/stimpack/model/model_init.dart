@@ -414,8 +414,8 @@ class StimModel extends StimPack {
     mt.rangeSet = _symbolSetOf(mt.range);
 
     // rule
-    mt.rule = _symbolOf('rule');
-    mt.ruleSet = _symbolSetOf(mt.rule);
+    mt.fieldRule = _symbolOf('field rule');
+    mt.fieldRuleSet = _symbolSetOf(mt.fieldRule);
 
     // error
     mt.error = _symbolOf('error');
@@ -439,7 +439,6 @@ class StimModel extends StimPack {
     mf.autoStringId = f.of(name: 'id', type: t.string)..readOnly();
     mf.intId = f.of(name: 'fields', type: t.int);
     mf.autoIntId = f.of(name: 'fields', type: t.int)..readOnly();
-    mf.fieldSet = f.of(name: 'fields', type: t.model.fieldSet);
     mf.fieldSet = f.of(name: 'fields', type: t.model.fieldSet);
   }
 

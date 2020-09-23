@@ -16,54 +16,25 @@ class StimAngularRouterEntry extends StimModelSymbol<StimAngularRouterEntry> {
   StimAngularRouterEntry();
 
 
-  StimAngularRouterEntry ref() {
-    return StimAngularRouterEntryRef()..symbol = this;
-  }
-
   /// Creates a new "routerEntry" of [StimAngularRouterEntry] type.
-  StimAngularRouterEntry refWith({dynamic name, StimAngularRouterPath path, StimAngularComponent component, StimAngularResolver resolver, Set<StimAngularGuard> guards, StimAngularModule lazyModule, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (path != null) {
-      res.path = path;
-    }
-
-    if (component != null) {
-      res.component = component;
-    }
-
-    if (resolver != null) {
-      res.resolver = resolver;
-    }
-
-    if (guards != null) {
-      res.guards = guards;
-    }
-
-    if (lazyModule != null) {
-      res.lazyModule = lazyModule;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimAngularRouterEntry copyWith({@required
+  dynamic name, StimAngularRouterPath path, StimAngularComponent component, StimAngularResolver resolver, Set<StimAngularGuard> guards, StimAngularModule lazyModule, Set<StimModelTag> tags}) {
+    return StimAngularRouterEntry()
+        ..name = StimName.of(name ?? this.name)
+        ..path = path ?? this.path
+        ..component = component ?? this.component
+        ..resolver = resolver ?? this.resolver
+        ..guards = guards ?? this.guards
+        ..lazyModule = lazyModule ?? this.lazyModule
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimAngularRouterEntryRef extends StimSymbolRef<StimAngularRouterEntry> implements StimAngularRouterEntry {
-
 }
 
 
 class StimAngularRouterEntryScope {
   /// Creates a new "routerEntry" of [StimAngularRouterEntry] type.
-  StimAngularRouterEntry of({dynamic name, StimAngularRouterPath path, StimAngularComponent component, StimAngularResolver resolver, Set<StimAngularGuard> guards, StimAngularModule lazyModule, Set<StimModelTag> tags}) {
+  StimAngularRouterEntry of({@required
+  dynamic name, StimAngularRouterPath path, StimAngularComponent component, StimAngularResolver resolver, Set<StimAngularGuard> guards, StimAngularModule lazyModule, Set<StimModelTag> tags}) {
     return StimAngularRouterEntry()
         ..name = StimName.of(name)
         ..path = path

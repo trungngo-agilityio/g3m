@@ -8,32 +8,15 @@ class StimRestCrudDeleteApi extends StimModelSymbol<StimRestCrudDeleteApi> {
   StimRestCrudDeleteApi();
 
 
-  StimRestCrudDeleteApi ref() {
-    return StimRestCrudDeleteApiRef()..symbol = this;
-  }
-
   /// Creates a new "crudDeleteApi" of [StimRestCrudDeleteApi] type.
-  StimRestCrudDeleteApi refWith({dynamic name, StimRestApi api, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (api != null) {
-      res.api = api;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRestCrudDeleteApi copyWith({@required
+  dynamic name, @required
+  StimRestApi api, Set<StimModelTag> tags}) {
+    return StimRestCrudDeleteApi()
+        ..name = StimName.of(name ?? this.name)
+        ..api = api ?? this.api
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRestCrudDeleteApiRef extends StimSymbolRef<StimRestCrudDeleteApi> implements StimRestCrudDeleteApi {
-
 }
 
 

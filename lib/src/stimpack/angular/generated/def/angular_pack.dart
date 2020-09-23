@@ -219,7 +219,7 @@ class StimAngular extends StimPack {
     /// Builds fields for type "routerPath"
     mt.routerPath.fields = {
       /// field "routerPath"
-      f.of(name: 'path', type: t.string),
+      f.of(name: 'path', type: t.fromDart(String)),
 
       /// field "routerPath"
       f.of(name: 'parent', type: mt.routerPath),

@@ -10,36 +10,16 @@ class StimFirebaseFirestore extends StimModelSymbol<StimFirebaseFirestore> {
   StimFirebaseFirestore();
 
 
-  StimFirebaseFirestore ref() {
-    return StimFirebaseFirestoreRef()..symbol = this;
-  }
-
   /// Creates a new "firestore" of [StimFirebaseFirestore] type.
-  StimFirebaseFirestore refWith({dynamic name, Set<StimFirebaseFirestoreCollection> collections, StimRbacResource resource, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (collections != null) {
-      res.collections = collections;
-    }
-
-    if (resource != null) {
-      res.resource = resource;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimFirebaseFirestore copyWith({@required
+  dynamic name, Set<StimFirebaseFirestoreCollection> collections, @required
+  StimRbacResource resource, Set<StimModelTag> tags}) {
+    return StimFirebaseFirestore()
+        ..name = StimName.of(name ?? this.name)
+        ..collections = collections ?? this.collections
+        ..resource = resource ?? this.resource
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimFirebaseFirestoreRef extends StimSymbolRef<StimFirebaseFirestore> implements StimFirebaseFirestore {
-
 }
 
 

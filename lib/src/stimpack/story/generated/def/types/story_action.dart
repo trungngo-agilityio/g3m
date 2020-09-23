@@ -8,32 +8,14 @@ class StimStoryAction extends StimModelSymbol<StimStoryAction> {
   StimStoryAction();
 
 
-  StimStoryAction ref() {
-    return StimStoryActionRef()..symbol = this;
-  }
-
   /// Creates a new "action" of [StimStoryAction] type.
-  StimStoryAction refWith({dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (actions != null) {
-      res.actions = actions;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimStoryAction copyWith({@required
+  dynamic name, Set<StimStoryAction> actions, Set<StimModelTag> tags}) {
+    return StimStoryAction()
+        ..name = StimName.of(name ?? this.name)
+        ..actions = actions ?? this.actions
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimStoryActionRef extends StimSymbolRef<StimStoryAction> implements StimStoryAction {
-
 }
 
 

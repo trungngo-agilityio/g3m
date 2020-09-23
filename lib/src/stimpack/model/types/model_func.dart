@@ -35,27 +35,5 @@ class StimModelFunc extends StimModelSymbol<StimModelFunc> {
   Set<StimModelError> errors;
   StimModelFuncCode code;
 
-  /// Gets the reference to this model.
-  StimModelFunc ref() => StimModelFuncRef()..symbol = this;
-
-  StimModelFunc refWith({
-    dynamic name,
-    Set<StimModelTag> tags,
-    StimModelType inType,
-    StimModelType outType,
-    Set<StimModelError> errors,
-  }) {
-    final res = ref();
-    if (name != null) res.name = StimName.of(name);
-    if (tags != null) res.tags = tags;
-    if (inType != null) res.inType = inType;
-    if (outType != null) res.outType = outType;
-    if (errors != null) res.errors = errors;
-    return res;
-  }
-
   StimModelFunc();
 }
-
-class StimModelFuncRef extends StimSymbolRef<StimModelFunc>
-    implements StimModelFunc {}

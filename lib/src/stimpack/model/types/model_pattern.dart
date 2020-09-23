@@ -38,11 +38,5 @@ class StimModelPatternScope {
 }
 
 class StimModelPattern extends StimModelSymbol<StimModelPattern> {
-  /// Gets the reference to this model.
-  StimModelPattern ref() => StimModelPatternRef()..symbol = this;
-
   StimModelPattern();
 }
-
-class StimModelPatternRef extends StimSymbolRef<StimModelPattern>
-    implements StimModelPattern {}

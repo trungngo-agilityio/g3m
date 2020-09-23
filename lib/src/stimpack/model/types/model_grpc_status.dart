@@ -74,11 +74,5 @@ class StimModelGrpcStatus extends StimModelSymbol<StimModelGrpcStatus> {
   /// The related http status code.
   StimModelHttpStatus httpStatus;
 
-  /// Gets the reference to this model.
-  StimModelGrpcStatus ref() => StimModelGrpcStatusRef()..symbol = this;
-
   StimModelGrpcStatus();
 }
-
-class StimModelGrpcStatusRef extends StimSymbolRef<StimModelGrpcStatus>
-    implements StimModelGrpcStatus {}

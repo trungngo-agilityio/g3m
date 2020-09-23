@@ -8,32 +8,15 @@ class StimRestCrudFindApi extends StimModelSymbol<StimRestCrudFindApi> {
   StimRestCrudFindApi();
 
 
-  StimRestCrudFindApi ref() {
-    return StimRestCrudFindApiRef()..symbol = this;
-  }
-
   /// Creates a new "crudFindApi" of [StimRestCrudFindApi] type.
-  StimRestCrudFindApi refWith({dynamic name, StimRestApi api, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (api != null) {
-      res.api = api;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRestCrudFindApi copyWith({@required
+  dynamic name, @required
+  StimRestApi api, Set<StimModelTag> tags}) {
+    return StimRestCrudFindApi()
+        ..name = StimName.of(name ?? this.name)
+        ..api = api ?? this.api
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRestCrudFindApiRef extends StimSymbolRef<StimRestCrudFindApi> implements StimRestCrudFindApi {
-
 }
 
 

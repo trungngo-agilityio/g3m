@@ -8,38 +8,21 @@ class StimIoFile extends StimModelSymbol<StimIoFile> {
   StimIoFile();
 
 
-  StimIoFile ref() {
-    return StimIoFileRef()..symbol = this;
-  }
-
   /// Creates a new "file" of [StimIoFile] type.
-  StimIoFile refWith({dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (type != null) {
-      res.type = type;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimIoFile copyWith({@required
+  dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
+    return StimIoFile()
+        ..name = StimName.of(name ?? this.name)
+        ..type = type ?? this.type
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimIoFileRef extends StimSymbolRef<StimIoFile> implements StimIoFile {
-
 }
 
 
 class StimIoFileScope {
   /// Creates a new "file" of [StimIoFile] type.
-  StimIoFile of({dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
+  StimIoFile of({@required
+  dynamic name, StimIoFileType type, Set<StimModelTag> tags}) {
     return StimIoFile()
         ..name = StimName.of(name)
         ..type = type

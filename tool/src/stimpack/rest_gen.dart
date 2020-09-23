@@ -38,7 +38,7 @@ void genRestPack() {
   // object should be streamed. This is for grpc api.
   final fStreamed = f.of(name: 'streamed', type: t.bool);
   final fIdField = f.of(name: 'id field', type: t.model.field);
-  final fRequiredIdField = fIdField.ref()..required();
+  final fRequiredIdField = fIdField.copyWith()..required();
 
   // A data model that can be associated to an api.
   final fRequiredModel = f.of(name: 'model', type: t.model.type)..required();

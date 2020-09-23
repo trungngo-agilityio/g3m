@@ -46,7 +46,7 @@ void genFirebasePack() {
 
   final fSecurityRule = f.of(name: 'rule', type: tSecurityRule);
 
-  final fRequireRbacResource = f.rbac.resource.ref()..required();
+  final fRequireRbacResource = f.rbac.resource.copyWith()..required();
 
   // ---------------------------------------------------------------------------
   // Type vs. Fields

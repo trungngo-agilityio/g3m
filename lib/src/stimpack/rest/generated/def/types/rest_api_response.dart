@@ -10,36 +10,16 @@ class StimRestApiResponse extends StimModelSymbol<StimRestApiResponse> {
   StimRestApiResponse();
 
 
-  StimRestApiResponse ref() {
-    return StimRestApiResponseRef()..symbol = this;
-  }
-
   /// Creates a new "apiResponse" of [StimRestApiResponse] type.
-  StimRestApiResponse refWith({dynamic name, bool streamed, StimModelType model, Set<StimModelTag> tags}) {
-    final res = ref();
-    if (name != null) {
-      res.name = StimName.of(name);
-    }
-
-    if (streamed != null) {
-      res.streamed = streamed;
-    }
-
-    if (model != null) {
-      res.model = model;
-    }
-
-    if (tags != null) {
-      res.tags = tags;
-    }
-
-    return res;
+  StimRestApiResponse copyWith({@required
+  dynamic name, bool streamed, @required
+  StimModelType model, Set<StimModelTag> tags}) {
+    return StimRestApiResponse()
+        ..name = StimName.of(name ?? this.name)
+        ..streamed = streamed ?? this.streamed
+        ..model = model ?? this.model
+        ..tags = tags ?? this.tags;
   }
-}
-
-
-class StimRestApiResponseRef extends StimSymbolRef<StimRestApiResponse> implements StimRestApiResponse {
-
 }
 
 

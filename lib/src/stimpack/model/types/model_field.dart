@@ -128,29 +128,18 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   // Marks a field should unique.
   void unique() => rules += stimpack.model.rule.unique;
 
-  /// Gets the reference to this model.
-  StimModelField ref() =>
-      StimModelFieldRef()
-        ..symbol = this;
-
-  StimModelField refWith({
+  StimModelField copyWith({
     dynamic name,
     Set<StimModelTag> tags,
     StimModelType type,
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
   }) {
-    final res = ref();
-    if (name != null) res.name = StimName.of(name);
-    if (tags != null) res.tags = tags;
-    if (type != null) res.type = type;
-    if (rules != null) res.rules = rules;
-    if (filters != null) res.filters = filters;
-    return res;
+    return StimModelField()
+      ..name = StimName.of(name ?? this.name)
+      ..type = type ?? this.type
+      ..rules = rules ?? this.rules
+      ..filters = filters ?? this.filters
+      ..tags = tags ?? this.tags;
   }
-
-  StimModelField();
 }
-
-class StimModelFieldRef extends StimSymbolRef<StimModelField>
-    implements StimModelField {}
