@@ -21,13 +21,13 @@ class StimFunc extends StimPack {
   /// typed of [StimFuncFilter]."
   final StimFuncFilterScope filter;
 
-  final StimFuncOnStimModelType onStimModelType;
+  final OnStimModelTypeForFunc onStimModelType;
 
   StimFunc(StimModel model):
       map = StimFuncMapScope(),
       fieldMap = StimFuncFieldMapScope(),
       filter = StimFuncFilterScope(),
-      onStimModelType = StimFuncOnStimModelType(),
+      onStimModelType = OnStimModelTypeForFunc(),
       super('func');
 
 

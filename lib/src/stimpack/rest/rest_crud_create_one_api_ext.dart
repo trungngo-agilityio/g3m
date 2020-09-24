@@ -23,12 +23,16 @@ extension ExtCrudCreateOneApiScope on StimRestCrudCreateOneApiScope {
 
     // default the api name to the model name.
     name ??= 'create one';
+    final requestName = name >> model.name >> 'request';
+    final responseName = name >> model.name >> 'response';
 
     return forFieldSet(
       name: name,
       idField: idField,
       package: package,
       fields: model.fields,
+      requestName: requestName,
+      responseName: responseName,
       tags: tags,
     );
   }
@@ -65,6 +69,8 @@ extension ExtCrudCreateOneApiScope on StimRestCrudCreateOneApiScope {
     @required StimModelPackage package,
     StimModelField idField,
     @required Set<StimModelField> fields,
+    dynamic requestName,
+    dynamic responseName,
     Set<StimModelTag> tags,
   }) {
     assert(name != null, 'name is required');
@@ -94,7 +100,9 @@ extension ExtCrudCreateOneApiScope on StimRestCrudCreateOneApiScope {
       api: _rest.api.forFieldSet(
         name: name,
         package: package,
+        requestName: requestName,
         request: request,
+        responseName: responseName,
         response: response,
       ),
     );

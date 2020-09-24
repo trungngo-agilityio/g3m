@@ -25,14 +25,14 @@ class StimStory extends StimPack {
   /// typed of [StimStoryActor]."
   final StimStoryActorScope actor;
 
-  final StimStoryOnStimModelType onStimModelType;
+  final OnStimModelTypeForStory onStimModelType;
 
   StimStory(StimModel model, StimRbac rbac):
       epic = StimStoryEpicScope(),
       story = StimStoryStoryScope(),
       action = StimStoryActionScope(),
       actor = StimStoryActorScope(),
-      onStimModelType = StimStoryOnStimModelType(),
+      onStimModelType = OnStimModelTypeForStory(),
       super('story');
 
 

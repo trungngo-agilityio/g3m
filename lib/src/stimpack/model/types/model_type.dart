@@ -276,4 +276,27 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   bool get isDart => dartType != null;
 
   StimModelType();
+
+  StimModelType copyWith({
+    dynamic name,
+    StimModelPackage package,
+    Set<StimModelType> mixins,
+    Set<StimModelField> fields,
+    Set<StimModelFilter> filters,
+    StimModelType collection,
+    StimModelType item,
+    TypeMirror dartType,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelType()
+      ..name = StimName.of(name ?? this.name)
+      ..package = package ?? this.package
+      ..mixins = mixins ?? this.mixins
+      ..fields = fields ?? this.fields
+      ..filters = filters ?? this.filters
+      ..collection = collection ?? this.collection
+      ..item = item ?? this.item
+      ..dartType = dartType ?? this.dartType
+      ..tags = tags ?? this.tags;
+  }
 }

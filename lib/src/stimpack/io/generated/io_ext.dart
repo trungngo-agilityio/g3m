@@ -10,7 +10,7 @@ StimIo _io;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimIoPackExtension on StimpackRoot {
+extension OnStimPackIoExtension on StimpackRoot {
   StimIo get io {
     if (_io == null) {
       _io = StimIo.stimIoInstance();

@@ -21,13 +21,13 @@ class StimIo extends StimPack {
   /// typed of [StimIoDir]."
   final StimIoDirScope dir;
 
-  final StimIoOnStimModelType onStimModelType;
+  final OnStimModelTypeForIo onStimModelType;
 
   StimIo(StimModel model):
       file = StimIoFileScope(),
       fileType = StimIoFileTypeScope(),
       dir = StimIoDirScope(),
-      onStimModelType = StimIoOnStimModelType(),
+      onStimModelType = OnStimModelTypeForIo(),
       super('io');
 
 

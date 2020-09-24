@@ -1,6 +1,6 @@
 part of g3.stimpack.firebase.init;
 
-extension StimFirebaseFirestoreCollectionExtension
+extension OnStimFirebaseFirestoreCollectionScopeExtension
     on StimFirebaseFirestoreCollectionScope {
   /// Creates a root firestore collection, with the specified [name].
   ///

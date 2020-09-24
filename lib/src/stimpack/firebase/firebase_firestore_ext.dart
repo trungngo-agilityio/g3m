@@ -1,6 +1,6 @@
 part of g3.stimpack.firebase.init;
 
-extension StimFirebaseFirestoreExtension on StimFirebaseFirestoreScope {
+extension OnStimFirebaseFirestoreScopeExtension on StimFirebaseFirestoreScope {
   /// Creates a new instance of firestore database.
   /// This also creates a new firestore instance resource under
   /// the firestore resource root.

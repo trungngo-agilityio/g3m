@@ -13,13 +13,17 @@ extension ExtStimRestCrudDeleteApiScope on StimRestCrudDeleteApiScope {
     package ??= model.package;
 
     // default the api name to the model name.
-    name ??= StimName.of(name ?? model) << 'delete';
+    name ??= StimName.of('delete');
+    final requestName = name >> model.name >> 'request';
+    final responseName = name >> model.name >> 'response';
 
     return forFieldSet(
       name: name,
       package: package,
       idField: idField,
       fields: model.fields,
+      requestName: requestName,
+      responseName: responseName,
       tags: tags,
     );
   }
@@ -30,6 +34,8 @@ extension ExtStimRestCrudDeleteApiScope on StimRestCrudDeleteApiScope {
     @required StimModelPackage package,
     @required StimModelField idField,
     @required Set<StimModelField> fields,
+    dynamic requestName,
+    dynamic responseName,
     Set<StimModelTag> tags,
   }) {
     assert(name != null, 'name is required');
@@ -60,7 +66,9 @@ extension ExtStimRestCrudDeleteApiScope on StimRestCrudDeleteApiScope {
       api: stimpack.rest.api.forFieldSet(
         name: name,
         package: package,
+        requestName: requestName,
         request: request,
+        responseName: responseName,
         response: response,
       ),
       tags: tags,

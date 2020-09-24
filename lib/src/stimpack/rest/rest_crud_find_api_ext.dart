@@ -13,13 +13,17 @@ extension ExtStimRestCrudFindApiScope on StimRestCrudFindApiScope {
     package ??= model.package;
 
     // default the api name to the model name.
-    name ??= StimName.of(name ?? model) << 'find';
+    name ??= StimName.of('find');
+    final requestName = name >> model.name >> 'request';
+    final responseName = name >> model.name >> 'response';
 
     return forFieldSet(
       name: name,
       package: package,
       idField: idField,
       fields: model.fields,
+      requestName: requestName,
+      responseName: responseName,
       tags: tags,
     );
   }
@@ -30,6 +34,8 @@ extension ExtStimRestCrudFindApiScope on StimRestCrudFindApiScope {
     @required StimModelPackage package,
     @required StimModelField idField,
     @required Set<StimModelField> fields,
+    dynamic requestName,
+    dynamic responseName,
     Set<StimModelTag> tags,
   }) {
     assert(name != null, 'name is required');
@@ -60,7 +66,9 @@ extension ExtStimRestCrudFindApiScope on StimRestCrudFindApiScope {
       api: stimpack.rest.api.forFieldSet(
         name: name,
         package: package,
+        requestName: requestName,
         request: request,
+        responseName: responseName,
         response: response,
       ),
       tags: tags,

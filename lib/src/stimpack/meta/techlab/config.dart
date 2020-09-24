@@ -48,7 +48,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   }
 
   StimName packExtensionClassNameOf(StimModelPackage pack) {
-    return ('stim' >> pack.name >> 'pack extension').pascal();
+    return ('on stim pack' >> pack.name >> 'extension').pascal();
   }
 
   StimName packInstanceFactoryNameOf(StimModelPackage pack) {
@@ -96,7 +96,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   // ===========================================================================
 
   StimName valueExtClassName(StimModelPackage package, StimModelType type) {
-    return ('stim' >> package.name >> 'on' >> type.name).pascal();
+    return ('on' >> type.name >> 'for' >> package.name).pascal();
   }
 
   StimName valueExtFieldName(StimModelPackage package, StimModelType type) {
@@ -104,8 +104,7 @@ class StimpackCodeConfig extends ExactlyOneNode<StimpackCodeConfig> {
   }
 
   StimName valueExtExtensionName(StimModelPackage package, StimModelType type) {
-    return ('stim' >> package.name >> 'on' >> type.name >> 'extension')
-        .pascal();
+    return ('on' >> type.name >> 'for' >> package.name >> 'extension').pascal();
   }
 
   // ===========================================================================

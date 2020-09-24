@@ -6,7 +6,7 @@ class StimModelPatternScope {
       slug,
       ipv4,
       ipv6,
-      // Either ipv4 or ipv6
+  // Either ipv4 or ipv6
       ip,
       url,
       email,
@@ -39,4 +39,13 @@ class StimModelPatternScope {
 
 class StimModelPattern extends StimModelSymbol<StimModelPattern> {
   StimModelPattern();
+
+  StimModelPattern copyWith({
+    dynamic name,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelPattern()
+      ..name = StimName.of(name ?? this.name)
+      ..tags = tags ?? this.tags;
+  }
 }

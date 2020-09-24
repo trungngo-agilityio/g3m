@@ -10,7 +10,7 @@ StimRbac _rbac;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimRbacPackExtension on StimpackRoot {
+extension OnStimPackRbacExtension on StimpackRoot {
   StimRbac get rbac {
     if (_rbac == null) {
       _rbac = StimRbac.stimRbacInstance();

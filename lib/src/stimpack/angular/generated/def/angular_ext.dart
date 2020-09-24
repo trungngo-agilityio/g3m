@@ -2,7 +2,7 @@ part of g3.stimpack.angular.generated;
 
 
 
-class StimAngularOnStimModelType {
+class OnStimModelTypeForAngular {
   StimModelType app;
 
   StimModelType feature;
@@ -35,7 +35,7 @@ class StimAngularOnStimModelType {
 }
 
 
-class StimAngularOnStimIoDir {
+class OnStimIoDirForAngular {
   StimIoDir repoRoot;
 
   StimIoDir repoSrc;
@@ -51,16 +51,16 @@ class StimAngularOnStimIoDir {
 
 
 
-extension StimAngularOnStimModelTypeExtension on StimModelTypeScope {
-  StimAngularOnStimModelType get angular {
+extension OnStimModelTypeForAngularExtension on StimModelTypeScope {
+  OnStimModelTypeForAngular get angular {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimAngular.stimAngularInstance().onStimModelType;
   }
 }
 
 
-extension StimAngularOnStimIoDirExtension on StimIoDirScope {
-  StimAngularOnStimIoDir get angular {
+extension OnStimIoDirForAngularExtension on StimIoDirScope {
+  OnStimIoDirForAngular get angular {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimAngular.stimAngularInstance().onStimIoDir;
   }

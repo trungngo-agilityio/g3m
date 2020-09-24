@@ -25,14 +25,14 @@ class StimNgxs extends StimPack {
   /// typed of [StimNgxsSelect]."
   final StimNgxsSelectScope select;
 
-  final StimNgxsOnStimModelType onStimModelType;
+  final OnStimModelTypeForNgxs onStimModelType;
 
   StimNgxs(StimModel model):
       feature = StimNgxsFeatureScope(),
       action = StimNgxsActionScope(),
       state = StimNgxsStateScope(),
       select = StimNgxsSelectScope(),
-      onStimModelType = StimNgxsOnStimModelType(),
+      onStimModelType = OnStimModelTypeForNgxs(),
       super('ngxs');
 
 

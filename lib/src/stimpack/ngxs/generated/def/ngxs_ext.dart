@@ -2,7 +2,7 @@ part of g3.stimpack.ngxs.generated;
 
 
 
-class StimNgxsOnStimModelType {
+class OnStimModelTypeForNgxs {
   StimModelType feature;
 
   StimModelType action;
@@ -14,8 +14,8 @@ class StimNgxsOnStimModelType {
 
 
 
-extension StimNgxsOnStimModelTypeExtension on StimModelTypeScope {
-  StimNgxsOnStimModelType get ngxs {
+extension OnStimModelTypeForNgxsExtension on StimModelTypeScope {
+  OnStimModelTypeForNgxs get ngxs {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimNgxs.stimNgxsInstance().onStimModelType;
   }

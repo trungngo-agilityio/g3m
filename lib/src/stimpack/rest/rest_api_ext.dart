@@ -15,9 +15,10 @@ extension OnRestApiScopeExt on StimRestApiScope {
   }) {
     assert(model != null, 'model is required');
     package ??= model.package;
+    name ??= model.name;
 
     return forFieldSet(
-      name: name ?? model.name,
+      name: name,
       policy: policy,
       package: package,
       requestName: requestName,

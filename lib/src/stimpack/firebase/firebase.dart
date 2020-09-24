@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 
 import 'generated/def/firebase.dart';
 
-part 'firebase_firestore_client_ext.dart';
+part 'firebase_rest_crud_api_ext.dart';
 
 part 'firebase_firestore_collection_ext.dart';
 

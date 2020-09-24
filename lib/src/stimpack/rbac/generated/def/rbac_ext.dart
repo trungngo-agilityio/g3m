@@ -2,7 +2,7 @@ part of g3.stimpack.rbac.generated;
 
 
 
-class StimRbacOnStimModelType {
+class OnStimModelTypeForRbac {
   StimModelType action;
 
   StimModelType resource;
@@ -21,7 +21,7 @@ class StimRbacOnStimModelType {
 }
 
 
-class StimRbacOnStimModelField {
+class OnStimModelFieldForRbac {
   StimModelField group;
 
   StimModelField groupSet;
@@ -49,16 +49,16 @@ class StimRbacOnStimModelField {
 
 
 
-extension StimRbacOnStimModelTypeExtension on StimModelTypeScope {
-  StimRbacOnStimModelType get rbac {
+extension OnStimModelTypeForRbacExtension on StimModelTypeScope {
+  OnStimModelTypeForRbac get rbac {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimRbac.stimRbacInstance().onStimModelType;
   }
 }
 
 
-extension StimRbacOnStimModelFieldExtension on StimModelFieldScope {
-  StimRbacOnStimModelField get rbac {
+extension OnStimModelFieldForRbacExtension on StimModelFieldScope {
+  OnStimModelFieldForRbac get rbac {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimRbac.stimRbacInstance().onStimModelField;
   }

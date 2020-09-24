@@ -49,9 +49,9 @@ class StimRest extends StimPack {
   /// typed of [StimRestCrudDeleteApi]."
   final StimRestCrudDeleteApiScope crudDeleteApi;
 
-  final StimRestOnStimModelType onStimModelType;
+  final OnStimModelTypeForRest onStimModelType;
 
-  final StimRestOnStimRbacResource onStimRbacResource;
+  final OnStimRbacResourceForRest onStimRbacResource;
 
   StimRest(StimModel model, StimRbac rbac):
       api = StimRestApiScope(),
@@ -64,8 +64,8 @@ class StimRest extends StimPack {
       crudDeleteOneApi = StimRestCrudDeleteOneApiScope(),
       crudFindApi = StimRestCrudFindApiScope(),
       crudDeleteApi = StimRestCrudDeleteApiScope(),
-      onStimModelType = StimRestOnStimModelType(),
-      onStimRbacResource = StimRestOnStimRbacResource(),
+      onStimModelType = OnStimModelTypeForRest(),
+      onStimRbacResource = OnStimRbacResourceForRest(),
       super('rest');
 
 

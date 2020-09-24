@@ -33,13 +33,13 @@ class StimFirebase extends StimPack {
   /// typed of [StimFirebaseFunctionClient]."
   final StimFirebaseFunctionClientScope functionClient;
 
-  final StimFirebaseOnStimModelType onStimModelType;
+  final OnStimModelTypeForFirebase onStimModelType;
 
-  final StimFirebaseOnStimModelField onStimModelField;
+  final OnStimModelFieldForFirebase onStimModelField;
 
-  final StimFirebaseOnStimRbacResourceKind onStimRbacResourceKind;
+  final OnStimRbacResourceKindForFirebase onStimRbacResourceKind;
 
-  final StimFirebaseOnStimRbacResource onStimRbacResource;
+  final OnStimRbacResourceForFirebase onStimRbacResource;
 
   StimFirebase(StimModel model, StimRbac rbac, StimRest rest):
       firestore = StimFirebaseFirestoreScope(),
@@ -48,10 +48,10 @@ class StimFirebase extends StimPack {
       function = StimFirebaseFunctionScope(),
       firestoreClient = StimFirebaseFirestoreClientScope(),
       functionClient = StimFirebaseFunctionClientScope(),
-      onStimModelType = StimFirebaseOnStimModelType(),
-      onStimModelField = StimFirebaseOnStimModelField(),
-      onStimRbacResourceKind = StimFirebaseOnStimRbacResourceKind(),
-      onStimRbacResource = StimFirebaseOnStimRbacResource(),
+      onStimModelType = OnStimModelTypeForFirebase(),
+      onStimModelField = OnStimModelFieldForFirebase(),
+      onStimRbacResourceKind = OnStimRbacResourceKindForFirebase(),
+      onStimRbacResource = OnStimRbacResourceForFirebase(),
       super('firebase');
 
 

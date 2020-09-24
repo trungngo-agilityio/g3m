@@ -1,6 +1,7 @@
 part of g3.stimpack.firebase.init;
 
-extension StimFirebaseSecurityRuleExtension on StimFirebaseSecurityRuleScope {
+extension OnStimRbacSecurityRuleFirebaseExtension
+    on StimFirebaseSecurityRuleScope {
   /// Creates a readonly security rule. This rule can be applied to any
   /// firebase resource. The [read] condition defines who can read
   /// the resource. This rule is quite strict and no one, even backend

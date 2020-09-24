@@ -2,7 +2,7 @@ part of g3.stimpack.firebase.generated;
 
 
 
-class StimFirebaseOnStimModelType {
+class OnStimModelTypeForFirebase {
   StimModelType firestore;
 
   StimModelType firestoreCollection;
@@ -17,14 +17,14 @@ class StimFirebaseOnStimModelType {
 }
 
 
-class StimFirebaseOnStimModelField {
+class OnStimModelFieldForFirebase {
   StimModelField firestoreCollection;
 
   StimModelField firestoreCollectionSet;
 }
 
 
-class StimFirebaseOnStimRbacResourceKind {
+class OnStimRbacResourceKindForFirebase {
   StimRbacResourceKind firebase;
 
   StimRbacResourceKind storage;
@@ -43,7 +43,7 @@ class StimFirebaseOnStimRbacResourceKind {
 }
 
 
-class StimFirebaseOnStimRbacResource {
+class OnStimRbacResourceForFirebase {
   StimRbacResource firebaseService;
 
   StimRbacResource storageService;
@@ -57,32 +57,32 @@ class StimFirebaseOnStimRbacResource {
 
 
 
-extension StimFirebaseOnStimModelTypeExtension on StimModelTypeScope {
-  StimFirebaseOnStimModelType get firebase {
+extension OnStimModelTypeForFirebaseExtension on StimModelTypeScope {
+  OnStimModelTypeForFirebase get firebase {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimFirebase.stimFirebaseInstance().onStimModelType;
   }
 }
 
 
-extension StimFirebaseOnStimModelFieldExtension on StimModelFieldScope {
-  StimFirebaseOnStimModelField get firebase {
+extension OnStimModelFieldForFirebaseExtension on StimModelFieldScope {
+  OnStimModelFieldForFirebase get firebase {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimFirebase.stimFirebaseInstance().onStimModelField;
   }
 }
 
 
-extension StimFirebaseOnStimRbacResourceKindExtension on StimRbacResourceKindScope {
-  StimFirebaseOnStimRbacResourceKind get firebase {
+extension OnStimRbacResourceKindForFirebaseExtension on StimRbacResourceKindScope {
+  OnStimRbacResourceKindForFirebase get firebase {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimFirebase.stimFirebaseInstance().onStimRbacResourceKind;
   }
 }
 
 
-extension StimFirebaseOnStimRbacResourceExtension on StimRbacResourceScope {
-  StimFirebaseOnStimRbacResource get firebase {
+extension OnStimRbacResourceForFirebaseExtension on StimRbacResourceScope {
+  OnStimRbacResourceForFirebase get firebase {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimFirebase.stimFirebaseInstance().onStimRbacResource;
   }

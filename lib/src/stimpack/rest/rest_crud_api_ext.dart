@@ -14,20 +14,30 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
 
     // create one
     dynamic createOneName,
+    dynamic createOneRequestName,
+    dynamic createOneResponseName,
     Set<StimModelField> createOneFields,
     // update one
     dynamic updateOneName,
+    dynamic updateOneRequestName,
+    dynamic updateOneResponseName,
     Set<StimModelField> updateOneFields,
     // find one
     dynamic findOneName,
+    dynamic findOneRequestName,
+    dynamic findOneResponseName,
     Set<StimModelField> findOneFields,
     // delete one
     dynamic deleteOneName,
     // find
     dynamic findName,
+    dynamic findRequestName,
+    dynamic findResponseName,
     Set<StimModelField> findFields,
     // delete
     dynamic deleteName,
+    dynamic deleteRequestName,
+    dynamic deleteResponseName,
     Set<StimModelField> deleteFields,
     Set<StimModelTag> tags,
   }) {
@@ -43,28 +53,45 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
     name = StimName.of(name ?? model);
     idField = _extractRequiredIdField(idField, fields);
 
-    // Builds the create one api.
-    createOneName ??= 'create one';
+    // -------------------------------------------------------------------------
+    // Create one
+
+    createOneName ??= StimName.of('create one');
+    createOneRequestName ??= createOneName >> model.name >> 'request';
+    createOneResponseName ??= createOneName >> model.name >> 'response';
     createOneFields ??= fields;
+
     final createOne = _rest.crudCreateOneApi.forFieldSet(
       name: createOneName,
       package: package,
       fields: createOneFields,
       idField: idField,
+      requestName: createOneRequestName,
+      responseName: createOneResponseName,
     );
 
-    // Builds the update one api.
-    updateOneName ??= 'update one';
+    // -------------------------------------------------------------------------
+    // Update ond
+    updateOneName ??= StimName.of('update one');
+    updateOneRequestName ??= updateOneName >> model.name >> 'request';
+    updateOneResponseName ??= updateOneName >> model.name >> 'response';
     updateOneFields ??= fields;
+
     final updateOne = _rest.crudUpdateOneApi.forFieldSet(
       name: updateOneName,
       package: package,
       fields: updateOneFields,
       idField: idField,
+      requestName: updateOneRequestName,
+      responseName: updateOneResponseName,
     );
 
-    // Builds the find one api.
-    findOneName ??= 'find one';
+    // -------------------------------------------------------------------------
+    // Find one
+
+    findOneName ??= StimName.of('find one');
+    findOneRequestName ??= findOneName >> model.name >> 'request';
+    findOneResponseName ??= findOneName >> model.name >> 'response';
     findOneFields ??= fields;
 
     final findOne = _rest.crudFindOneApi.forFieldSet(
@@ -72,17 +99,24 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
       package: package,
       fields: findOneFields,
       idField: idField,
+      requestName: findOneResponseName,
+      responseName: findOneResponseName,
     );
 
-    // Builds the delete one api
-    deleteOneName ??= 'delete one';
+    // -------------------------------------------------------------------------
+    // Delete One
+    deleteOneName ??= StimName.of('delete one');
     final deleteOne = _rest.crudDeleteOneApi.forIdField(
       name: deleteOneName,
       package: package,
       idField: idField,
     );
 
-    findName ??= 'find';
+    // -------------------------------------------------------------------------
+    // Find
+    findName ??= StimName.of('find');
+    findRequestName ??= findName >> model.name >> 'request';
+    findResponseName ??= findName >> model.name >> 'response';
     findFields ??= fields;
 
     final find = _rest.crudFindApi.forFieldSet(
@@ -90,9 +124,15 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
       package: package,
       fields: findFields,
       idField: idField,
+      requestName: findRequestName,
+      responseName: findResponseName,
     );
 
-    deleteName ??= 'delete';
+    // -------------------------------------------------------------------------
+    // Delete
+    deleteName ??= StimName.of('delete');
+    deleteRequestName ??= deleteName >> model.name >> 'request';
+    deleteResponseName ??= deleteName >> model.name >> 'response';
     deleteFields ??= fields;
 
     final delete = _rest.crudDeleteApi.forFieldSet(
@@ -100,6 +140,8 @@ extension OnRestCrudApiScopeExtension on StimRestCrudApiScope {
       package: package,
       fields: deleteFields,
       idField: idField,
+      requestName: deleteRequestName,
+      responseName: deleteResponseName,
     );
 
     final res = of(

@@ -10,7 +10,7 @@ StimFunc _func;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimFuncPackExtension on StimpackRoot {
+extension OnStimPackFuncExtension on StimpackRoot {
   StimFunc get func {
     if (_func == null) {
       _func = StimFunc.stimFuncInstance();

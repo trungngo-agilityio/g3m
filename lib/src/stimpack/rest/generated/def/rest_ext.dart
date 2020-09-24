@@ -2,7 +2,7 @@ part of g3.stimpack.rest.generated;
 
 
 
-class StimRestOnStimModelType {
+class OnStimModelTypeForRest {
   StimModelType api;
 
   StimModelType apiRequest;
@@ -25,22 +25,22 @@ class StimRestOnStimModelType {
 }
 
 
-class StimRestOnStimRbacResource {
+class OnStimRbacResourceForRest {
   StimRbacResource restApi;
 }
 
 
 
-extension StimRestOnStimModelTypeExtension on StimModelTypeScope {
-  StimRestOnStimModelType get rest {
+extension OnStimModelTypeForRestExtension on StimModelTypeScope {
+  OnStimModelTypeForRest get rest {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimRest.stimRestInstance().onStimModelType;
   }
 }
 
 
-extension StimRestOnStimRbacResourceExtension on StimRbacResourceScope {
-  StimRestOnStimRbacResource get rest {
+extension OnStimRbacResourceForRestExtension on StimRbacResourceScope {
+  OnStimRbacResourceForRest get rest {
     /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
     return StimRest.stimRestInstance().onStimRbacResource;
   }

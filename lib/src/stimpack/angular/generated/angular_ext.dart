@@ -10,7 +10,7 @@ StimAngular _angular;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimAngularPackExtension on StimpackRoot {
+extension OnStimPackAngularExtension on StimpackRoot {
   StimAngular get angular {
     if (_angular == null) {
       _angular = StimAngular.stimAngularInstance();

@@ -1,5 +1,6 @@
 library g3.stimpack.model;
 
+import 'dart:math';
 import 'dart:mirrors';
 
 import 'package:g3m/stimpack_core.dart';

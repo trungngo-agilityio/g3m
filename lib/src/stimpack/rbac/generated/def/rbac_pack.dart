@@ -41,9 +41,9 @@ class StimRbac extends StimPack {
   /// typed of [StimRbacCondition]."
   final StimRbacConditionScope condition;
 
-  final StimRbacOnStimModelType onStimModelType;
+  final OnStimModelTypeForRbac onStimModelType;
 
-  final StimRbacOnStimModelField onStimModelField;
+  final OnStimModelFieldForRbac onStimModelField;
 
   StimRbac(StimModel model):
       action = StimRbacActionScope(),
@@ -54,8 +54,8 @@ class StimRbac extends StimPack {
       policy = StimRbacPolicyScope(),
       policyKind = StimRbacPolicyKindScope(),
       condition = StimRbacConditionScope(),
-      onStimModelType = StimRbacOnStimModelType(),
-      onStimModelField = StimRbacOnStimModelField(),
+      onStimModelType = OnStimModelTypeForRbac(),
+      onStimModelField = OnStimModelFieldForRbac(),
       super('rbac');
 
 

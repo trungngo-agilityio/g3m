@@ -10,7 +10,7 @@ StimRest _rest;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimRestPackExtension on StimpackRoot {
+extension OnStimPackRestExtension on StimpackRoot {
   StimRest get rest {
     if (_rest == null) {
       _rest = StimRest.stimRestInstance();

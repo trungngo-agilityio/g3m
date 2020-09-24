@@ -10,7 +10,7 @@ StimStory _story;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimStoryPackExtension on StimpackRoot {
+extension OnStimPackStoryExtension on StimpackRoot {
   StimStory get story {
     if (_story == null) {
       _story = StimStory.stimStoryInstance();

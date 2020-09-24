@@ -69,9 +69,9 @@ class StimAngular extends StimPack {
   /// typed of [StimAngularComponentStyle]."
   final StimAngularComponentStyleScope componentStyle;
 
-  final StimAngularOnStimModelType onStimModelType;
+  final OnStimModelTypeForAngular onStimModelType;
 
-  final StimAngularOnStimIoDir onStimIoDir;
+  final OnStimIoDirForAngular onStimIoDir;
 
   StimAngular(StimModel model, StimIo io):
       app = StimAngularAppScope(),
@@ -89,8 +89,8 @@ class StimAngular extends StimPack {
       component = StimAngularComponentScope(),
       componentTemplate = StimAngularComponentTemplateScope(),
       componentStyle = StimAngularComponentStyleScope(),
-      onStimModelType = StimAngularOnStimModelType(),
-      onStimIoDir = StimAngularOnStimIoDir(),
+      onStimModelType = OnStimModelTypeForAngular(),
+      onStimIoDir = OnStimIoDirForAngular(),
       super('angular');
 
 

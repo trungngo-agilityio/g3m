@@ -39,4 +39,17 @@ class StimModelPackage extends StimModelSymbol<StimModelPackage> {
   bool get isDart => dartLibrary != null;
 
   StimModelPackage();
+
+  StimModelPackage copyWith({
+    dynamic name,
+    Set<StimModelType> types,
+    LibraryMirror dartLibrary,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelPackage()
+      ..name = StimName.of(name ?? this.name)
+      ..types = types ?? this.types
+      ..dartLibrary = dartLibrary ?? this.dartLibrary
+      ..tags = tags ?? this.tags;
+  }
 }

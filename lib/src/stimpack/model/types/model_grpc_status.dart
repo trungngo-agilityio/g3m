@@ -75,4 +75,17 @@ class StimModelGrpcStatus extends StimModelSymbol<StimModelGrpcStatus> {
   StimModelHttpStatus httpStatus;
 
   StimModelGrpcStatus();
+
+  StimModelGrpcStatus copyWith({
+    dynamic name,
+    int code,
+    StimModelHttpStatus httpStatus,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelGrpcStatus()
+      ..name = StimName.of(name ?? this.name)
+      ..code = code ?? this.code
+      ..httpStatus = httpStatus ?? this.httpStatus
+      ..tags = tags ?? this.tags;
+  }
 }

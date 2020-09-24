@@ -15,13 +15,17 @@ extension ExtStimRestCrudFindOneApiScope on StimRestCrudFindOneApiScope {
     assert(model.fields != null, 'model field is required');
     final idField = _extractRequiredIdField(null, model.fields);
 
-    name ??= StimName.of(name ?? model) << 'find one';
+    name ??= StimName.of('find one');
+    final requestName = name >> model.name >> 'request';
+    final responseName = name >> model.name >> 'response';
 
     return forFieldSet(
       name: name,
       package: package,
       idField: idField,
       fields: model.fields,
+      requestName: requestName,
+      responseName: responseName,
       tags: tags,
     );
   }
@@ -32,6 +36,8 @@ extension ExtStimRestCrudFindOneApiScope on StimRestCrudFindOneApiScope {
     @required StimModelPackage package,
     StimModelField idField,
     @required Set<StimModelField> fields,
+    dynamic requestName,
+    dynamic responseName,
     Set<StimModelTag> tags,
   }) {
     assert(name != null, 'name is required');
@@ -53,7 +59,9 @@ extension ExtStimRestCrudFindOneApiScope on StimRestCrudFindOneApiScope {
       api: _rest.api.forFieldSet(
         name: name,
         package: package,
+        requestName: requestName,
         request: {idField},
+        responseName: responseName,
         response: response,
       ),
     );

@@ -52,4 +52,13 @@ class StimModelFilterScope {
 
 class StimModelFilter extends StimModelSymbol<StimModelFilter> {
   StimModelFilter();
+
+  StimModelFilter copyWith({
+    dynamic name,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelFilter()
+      ..name = StimName.of(name ?? this.name)
+      ..tags = tags ?? this.tags;
+  }
 }

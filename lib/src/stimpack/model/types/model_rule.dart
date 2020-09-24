@@ -83,4 +83,19 @@ class StimModelFieldRule extends StimModelSymbol<StimModelFieldRule> {
   Set<StimModelRange> ranges;
 
   StimModelFieldRule();
+
+  StimModelFieldRule copyWith({
+    dynamic name,
+    StimModelError error,
+    Set<StimModelPattern> patterns,
+    Set<StimModelRange> ranges,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelFieldRule()
+      ..name = StimName.of(name ?? this.name)
+      ..error = error ?? this.error
+      ..patterns = patterns ?? this.patterns
+      ..ranges = ranges ?? this.ranges
+      ..tags = tags ?? this.tags;
+  }
 }

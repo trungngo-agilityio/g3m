@@ -10,7 +10,7 @@ StimNgxs _ngxs;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimNgxsPackExtension on StimpackRoot {
+extension OnStimPackNgxsExtension on StimpackRoot {
   StimNgxs get ngxs {
     if (_ngxs == null) {
       _ngxs = StimNgxs.stimNgxsInstance();

@@ -10,7 +10,7 @@ StimFirebase _firebase;
 // is created. During the creation, other packs that this pack depends on might 
 // be created as well.
 //  
-extension StimFirebasePackExtension on StimpackRoot {
+extension OnStimPackFirebaseExtension on StimpackRoot {
   StimFirebase get firebase {
     if (_firebase == null) {
       _firebase = StimFirebase.stimFirebaseInstance();

@@ -1,7 +1,6 @@
 part of g3.stimpack.firebase.init;
 
-extension OnRestCrudApiExtension on StimRestCrudApiScope {
-
+extension OnStimRestCrudApiScopeFirebaseExtension on StimRestCrudApiScope {
   /// Givens a firestore collection, this function helps
   /// to create a new set of crud apis for the specified api [client].
   /// The newly created crud api is also added into the
@@ -28,7 +27,7 @@ extension OnRestCrudApiExtension on StimRestCrudApiScope {
         'client must not have the collection');
 
     // Creates the crud api for the model.
-    final res = stimpack.rest.crudApi.forModel(
+    final crudApi = stimpack.rest.crudApi.forModel(
       // the crud api name shall refers to the collection name
       name: StimName.refOf(collection) >> 'api',
 
@@ -41,9 +40,14 @@ extension OnRestCrudApiExtension on StimRestCrudApiScope {
       idField: collection.idField,
     );
 
-    client.collections += collection;
-    client.crudApis += res;
+    // Tags the collection to the crud api for easy navigation back from
+    // the crud apis.
+    crudApi.addSymbolAsTag(collection);
+    collection.addSymbolAsTag(crudApi);
 
-    return res;
+    client.collections += collection;
+    client.crudApis += crudApi;
+
+    return crudApi;
   }
 }

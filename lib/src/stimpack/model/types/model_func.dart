@@ -36,4 +36,21 @@ class StimModelFunc extends StimModelSymbol<StimModelFunc> {
   StimModelFuncCode code;
 
   StimModelFunc();
+
+  StimModelFunc copyWith({
+    dynamic name,
+    StimModelType inType,
+    StimModelType outType,
+    Set<StimModelError> errors,
+    StimModelFuncCode code,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelFunc()
+      ..name = StimName.of(name ?? this.name)
+      ..inType = inType ?? this.inType
+      ..outType = outType ?? this.outType
+      ..errors = errors ?? this.errors
+      ..code = code ?? this.code
+      ..tags = tags ?? this.tags;
+  }
 }

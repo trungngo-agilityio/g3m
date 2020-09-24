@@ -64,4 +64,15 @@ class StimModelHttpStatus extends StimModelSymbol<StimModelHttpStatus> {
   int code;
 
   StimModelHttpStatus();
+
+  StimModelHttpStatus copyWith({
+    dynamic name,
+    int code,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelHttpStatus()
+      ..name = StimName.of(name ?? this.name)
+      ..code = code ?? this.code
+      ..tags = tags ?? this.tags;
+  }
 }

@@ -21,4 +21,15 @@ class StimModelTag extends StimModelSymbol<StimModelTag> {
   dynamic value;
 
   StimModelTag();
+
+  StimModelTag copyWith({
+    dynamic name,
+    dynamic value,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelTag()
+      ..name = StimName.of(name ?? this.name)
+      ..value = value ?? this.value
+      ..tags = tags ?? this.tags;
+  }
 }
