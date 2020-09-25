@@ -1,7 +1,42 @@
 part of g3.stimpack.firebase.init;
 
+extension OnStimFirebaseFirestoreCollectionExtension
+on StimFirebaseFirestoreCollection {
+
+  void partOf(StimFirebaseFirestoreCollection target,) {
+    idField.name = StimName.of(target) >> 'id';
+  }
+
+  /// For all target collection, has the id field is the src id field.
+  void hasOne(Iterable<StimFirebaseFirestoreCollection> targets) {
+    for (final target in targets) {
+      final targetId = stimpack.model.field.of(
+        name: StimName.refOf(target) >> 'id',
+        type: target.idField.type,
+      )
+        ..indexed();
+
+      model.fields += targetId;
+    }
+  }
+
+  /// For all target collections, add a foreign key field that link to
+  /// the source collection.
+  void hasMany(Iterable<StimFirebaseFirestoreCollection> targets) {
+    for (final target in targets) {
+      final targetIds = stimpack.model.field.setOf(
+        name: StimName.of(target) >> 'ids',
+        type: target.idField.type,
+      )
+        ..indexed();
+
+      model.fields += targetIds;
+    }
+  }
+}
+
 extension OnStimFirebaseFirestoreCollectionScopeExtension
-    on StimFirebaseFirestoreCollectionScope {
+on StimFirebaseFirestoreCollectionScope {
   /// Creates a root firestore collection, with the specified [name].
   ///
   /// The [StimFirebaseFirestoreCollection.resource] is automatically
@@ -27,7 +62,7 @@ extension OnStimFirebaseFirestoreCollectionScopeExtension
 
     // automatically add the id field to the model.
     // This is the firestore requirements.
-    final idField = stimpack.model.field.model.autoStringId;
+    final idField = stimpack.model.field.model.autoStringId.copyWith();
     fields ??= {};
     fields.add(idField);
 
@@ -39,11 +74,13 @@ extension OnStimFirebaseFirestoreCollectionScopeExtension
       resource: null,
       idField: idField,
       model: stimpack.model.type.of(
-        name: StimName.of(name),
         package: package,
         fields: fields,
       ),
     );
+
+    /// Makes model name is always collection names
+    res.model.name = StimName.of(res);
 
     // adds the collection to the parent firestore.
     _addCollectionResource('instance of', res, firestore.resource);
@@ -107,11 +144,9 @@ extension OnStimFirebaseFirestoreCollectionScopeExtension
   }
 }
 
-void _addCollectionResource(
-  String text,
-  StimFirebaseFirestoreCollection res,
-  StimRbacResource parentResource,
-) {
+void _addCollectionResource(String text,
+    StimFirebaseFirestoreCollection res,
+    StimRbacResource parentResource,) {
   // Makes a resource for this collection.
   final r = stimpack.rbac.resource;
   res.resource = r.of(

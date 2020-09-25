@@ -56,6 +56,7 @@ class StimName {
   }
 
   factory StimName.refOf(StimNamed value) {
+    assert(value != null);
     return StimName._(_NameOp.ref, value, null, null);
   }
 
@@ -247,8 +248,8 @@ class StimName {
         return _removeIfEndsWith(l, r);
 
       case _NameOp.reset:
-        // This is the special operation. Ignore the current one and
-        // replace by the new one.
+      // This is the special operation. Ignore the current one and
+      // replace by the new one.
         return r;
 
       case _NameOp.upper:
@@ -258,37 +259,59 @@ class StimName {
         return l.toLowerCase();
 
       case _NameOp.camel:
-        return ReCase.forCode(l).camel;
+        return ReCase
+            .forCode(l)
+            .camel;
 
       case _NameOp.pascal:
-        return ReCase.forCode(l).pascal;
+        return ReCase
+            .forCode(l)
+            .pascal;
 
       case _NameOp.snake:
-        return ReCase.forCode(l).snake;
+        return ReCase
+            .forCode(l)
+            .snake;
 
       case _NameOp.dot:
-        return ReCase.forCode(l).dot;
+        return ReCase
+            .forCode(l)
+            .dot;
 
       case _NameOp.path:
-        return ReCase.forCode(l).path;
+        return ReCase
+            .forCode(l)
+            .path;
 
       case _NameOp.param:
-        return ReCase.forCode(l).param;
+        return ReCase
+            .forCode(l)
+            .param;
 
       case _NameOp.header:
-        return ReCase.forCode(l).header;
+        return ReCase
+            .forCode(l)
+            .header;
 
       case _NameOp.title:
-        return ReCase.forCode(l).title;
+        return ReCase
+            .forCode(l)
+            .title;
 
       case _NameOp.constant:
-        return ReCase.forCode(l).constant;
+        return ReCase
+            .forCode(l)
+            .constant;
 
       case _NameOp.sentence:
-        return ReCase.forCode(l).sentence;
+        return ReCase
+            .forCode(l)
+            .sentence;
 
       case _NameOp.words:
-        return ReCase.forCode(l).words;
+        return ReCase
+            .forCode(l)
+            .words;
 
       default:
         if (_text != null) {
@@ -321,20 +344,42 @@ class StimName {
 /// and a name operation.
 ///
 extension StringNameExtension on String {
-  StimName operator &(StimName another) {
-    return StimName.of(this) & another;
+  StimName operator &(dynamic another) {
+    return StimName.of(this) & StimName.of(another);
   }
 
-  StimName operator >>(StimName another) {
-    return StimName.of(this) >> another;
+  StimName operator >>(dynamic another) {
+    return StimName.of(this) >> StimName.of(another);
   }
 
-  StimName operator <<(StimName another) {
-    return StimName.of(this) << another;
+  StimName operator <<(dynamic another) {
+    return StimName.of(this) << StimName.of(another);
   }
 
-  StimName operator +(StimName another) {
-    return StimName.of(this) + another;
+  StimName operator +(dynamic another) {
+    return StimName.of(this) + StimName.of(another);
+  }
+}
+
+extension StimNamedExtension on StimNamed {
+  StimName operator &(dynamic another) {
+    return StimName.refOf(this) & StimName.of(another);
+  }
+
+  StimName operator >>(dynamic another) {
+    return StimName.refOf(this) >> StimName.of(another);
+  }
+
+  StimName operator <<(dynamic another) {
+    return StimName.refOf(this) << StimName.of(another);
+  }
+
+  StimName operator +(dynamic another) {
+    return StimName.refOf(this) + StimName.of(another);
+  }
+
+  StimName operator ^(dynamic another) {
+    return StimName.refOf(this) ^ StimName.of(another);
   }
 }
 

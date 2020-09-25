@@ -18,8 +18,6 @@ extension OnStimRestCrudApiScopeFirebaseExtension on StimRestCrudApiScope {
     @required StimFirebaseFirestoreCollection collection,
     StimModelPackage package,
   }) {
-    assert(client != null, 'client is required');
-
     assert(collection != null, 'collection is required');
     assert(collection.model != null, 'collection.model is required');
 

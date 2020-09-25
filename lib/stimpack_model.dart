@@ -1,5 +1,6 @@
 library g3.stimpack.model;
 
+import 'dart:collection';
 import 'dart:math';
 import 'dart:mirrors';
 
@@ -36,3 +37,5 @@ part 'src/stimpack/model/types/model_symbol.dart';
 part 'src/stimpack/model/types/model_tag.dart';
 
 part 'src/stimpack/model/types/model_type.dart';
+
+part 'src/stimpack/model/utils/model_type_scanner.dart';
