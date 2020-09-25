@@ -1,10 +1,20 @@
 part of g3.stimpack.model;
 
+/// Scans the list of given [types] to returns a map of packages vs.
+/// types found from the specified types. The function shall look for all
+/// related types found in the type's fields to compute the final map.
+///
+/// In the case that certain types or packages should be ignored during
+/// the scan process, caller can implement the [isPackageIgnored] and
+/// [isTypeIgnored] handlers.
+///
 Map<StimModelPackage, Set<StimModelType>> stimModelTypeScan({
   @meta.required Set<StimModelType> types,
   bool Function(StimModelPackage package) isPackageIgnored,
   bool Function(StimModelType type) isTypeIgnored,
 }) {
+  if (types?.isNotEmpty != true) return {};
+
   // This is the set of already processed types.
   // This is needed to make sure no type has been processed twice
   // to avoid recursive structure.
