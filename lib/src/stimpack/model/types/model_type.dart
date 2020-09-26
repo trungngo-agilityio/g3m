@@ -64,14 +64,12 @@ class StimModelTypeScope {
     @meta.required dynamic name,
     Set<StimModelTag> tags,
     @meta.required StimModelPackage package,
-    Set<StimModelType> mixins,
     Set<StimModelField> fields,
     Set<StimModelFilter> filters,
   }) {
     final res = StimModelType()
       ..name = StimName.of(name)
       ..package = package
-      ..mixins = mixins
       ..fields = fields
       ..filters = filters
       ..tags = tags;
@@ -181,7 +179,6 @@ class StimModelTypeScope {
       tags: tags,
       package: package,
       fields: fields,
-      mixins: mixins,
     )
       ..collection = collection
       ..item = item;
@@ -191,7 +188,6 @@ class StimModelTypeScope {
     dynamic name,
     Set<StimModelTag> tags,
     @meta.required StimModelType item,
-    Set<StimModelType> mixins,
   }) {
     assert(item != null, 'item is required');
     final list = stimpack.model.type.list;
@@ -208,7 +204,6 @@ class StimModelTypeScope {
     dynamic name,
     Set<StimModelTag> tags,
     @meta.required StimModelType item,
-    Set<StimModelType> mixins,
   }) {
     final set = stimpack.model.type.set;
     return collectionOf(
@@ -224,12 +219,6 @@ class StimModelTypeScope {
 class StimModelType extends StimModelSymbol<StimModelType> {
   /// A model might belong to a package.
   StimModelPackage package;
-
-  /// The list of mixins types. Given this list, the actual list
-  /// of declared fields might be different from the list of instance fields,
-  /// which is the union of all fields defined in both the current class
-  /// and its mixins.
-  Set<StimModelType> mixins;
 
   /// The list of declared fields for this type.
   Set<StimModelField> fields;
@@ -280,7 +269,6 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   StimModelType copyWith({
     dynamic name,
     StimModelPackage package,
-    Set<StimModelType> mixins,
     Set<StimModelField> fields,
     Set<StimModelFilter> filters,
     StimModelType collection,
@@ -291,7 +279,6 @@ class StimModelType extends StimModelSymbol<StimModelType> {
     return StimModelType()
       ..name = StimName.of(name ?? this.name)
       ..package = package ?? this.package
-      ..mixins = mixins ?? this.mixins
       ..fields = fields ?? this.fields
       ..filters = filters ?? this.filters
       ..collection = collection ?? this.collection

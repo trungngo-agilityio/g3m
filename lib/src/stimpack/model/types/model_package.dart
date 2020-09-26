@@ -5,7 +5,10 @@ class StimModelPackageScope {
 
   Map<DeclarationMirror, StimModelPackage> _dartPackages;
 
-  StimModelPackage of({@meta.required dynamic name, Set<StimModelTag> tags}) {
+  StimModelPackage of({
+    @meta.required dynamic name,
+    Set<StimModelTag> tags,
+  }) {
     return StimModelPackage()
       ..name = StimName.of(name)
       ..types = {}

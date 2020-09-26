@@ -68,6 +68,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
 
   /// The list of data types that this class implements.
   final CodeTypeList implements;
+
   final CodeTypeList mixins;
 
   /// Class-level code comment.
