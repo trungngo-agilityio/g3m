@@ -113,7 +113,8 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           placeHolderConfig: null,
 
           // Package configs
-          packageNameConfig: null,
+          packageNameConfig: (_, child) =>
+              CodePackageNameConfig.forTypescriptLike(child),
           packageConfig: (_, child) => CodePackageConfig.noSupport(child),
 
           // Import Configs

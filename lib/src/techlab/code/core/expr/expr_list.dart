@@ -74,6 +74,7 @@ class CodeOps {
   static const CodeOp conditionalNullOp = CodeOp.exprOpExpr('??');
 
   // Access or call operators
+  static const CodeOp newOp = CodeOp.opExpr('new');
   static const CodeOp accessOp = CodeOp.exprOpExpr('.');
   static const CodeOp cascadeOp = CodeOp.opExpr('..');
   static const CodeOp annotationOp = CodeOp.opExpr('@');
@@ -98,7 +99,11 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
 
         switch (op.style) {
           case CodeOpStyle.opExpr:
-            child = Container([name, e1]);
+            if (op == CodeOps.newOp) {
+              child = Container([name, ' ', e1]);
+            } else {
+              child = Container([name, e1]);
+            }
             break;
 
           case CodeOpStyle.exprOpExpr:
@@ -602,6 +607,16 @@ class CodeConditionalNullExpr extends SingleChildNode {
             op: CodeOps.conditionalNullOp,
             expr1: e1,
             expr2: e2,
+          ),
+        ));
+}
+
+class CodeNewExpr extends SingleChildNode {
+  CodeNewExpr.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.newOp,
+            expr1: CodeRef.of(e1),
           ),
         ));
 }
