@@ -2,36 +2,105 @@ part of g3.stimpack.firebase.init;
 
 extension OnStimFirebaseFirestoreCollectionExtension
 on StimFirebaseFirestoreCollection {
+  void childOf(StimFirebaseFirestoreCollection target) {
+    assert(target != null, 'target is required');
+    assert(parent == null, 'parent must not be set');
+    assert(!target.collections.contains(
+        this), 'target must not contains the current collection');
+    parent = target;
+    target.collections.add(this);
+  }
 
-  void partOf(StimFirebaseFirestoreCollection target,) {
-    idField.name = StimName.of(target) >> 'id';
+  StimModelField partOf(StimFirebaseFirestoreCollection target, {
+    dynamic name,
+    String comment,
+  }) {
+    idField.name = name ?? StimName.of(target) >> 'id';
+    if (comment != null) idField.comment = comment;
+    return idField;
   }
 
   /// For all target collection, has the id field is the src id field.
-  void hasOne(Iterable<StimFirebaseFirestoreCollection> targets) {
-    for (final target in targets) {
-      final targetId = stimpack.model.field.of(
-        name: StimName.refOf(target) >> 'id',
-        type: target.idField.type,
-      )
-        ..indexed();
+  StimModelField hasOne(StimFirebaseFirestoreCollection target, {
+    dynamic name,
+    Set<StimModelFieldRule> rules,
+    Set<StimModelFilter> filters,
+    String comment,
+    Set<StimModelTag> tags,
+  }) {
+    final field = stimpack.model.field.of(
+      name: name ?? StimName.refOf(target) >> 'id',
+      type: target.idField.type,
+      tags: tags,
+      rules: rules,
+      filters: filters,
+      comment: comment,
+    );
 
-      model.fields += targetId;
-    }
+    model.fields += field;
+    return field;
+  }
+
+  StimModelField hasOneEmbedded(StimModelType target, {
+    dynamic name,
+    Set<StimModelFieldRule> rules,
+    Set<StimModelFilter> filters,
+    String comment,
+    Set<StimModelTag> tags,
+  }) {
+    final field = stimpack.model.field.listOf(
+      name: name ?? StimName.of(target),
+      type: target,
+      rules: rules,
+      filters: filters,
+      comment: comment,
+      tags: tags,
+    );
+
+    model.fields += field;
+    return field;
   }
 
   /// For all target collections, add a foreign key field that link to
   /// the source collection.
-  void hasMany(Iterable<StimFirebaseFirestoreCollection> targets) {
-    for (final target in targets) {
-      final targetIds = stimpack.model.field.setOf(
-        name: StimName.of(target) >> 'ids',
-        type: target.idField.type,
-      )
-        ..indexed();
+  StimModelField hasMany(StimFirebaseFirestoreCollection target, {
+    dynamic name,
+    Set<StimModelFieldRule> rules,
+    Set<StimModelFilter> filters,
+    String comment,
+    Set<StimModelTag> tags,
+  }) {
+    final field = stimpack.model.field.setOf(
+      name: name ?? StimName.of(target) >> 'ids',
+      type: target.idField.type,
+      rules: rules,
+      filters: filters,
+      comment: comment,
+      tags: tags,
+    );
 
-      model.fields += targetIds;
-    }
+    model.fields += field;
+    return field;
+  }
+
+  StimModelField hasManyEmbedded(StimModelType target, {
+    dynamic name,
+    Set<StimModelFieldRule> rules,
+    Set<StimModelFilter> filters,
+    String comment,
+    Set<StimModelTag> tags,
+  }) {
+    final field = stimpack.model.field.listOf(
+      name: name ?? StimName.of(target) >> 'list',
+      type: target,
+      rules: rules,
+      filters: filters,
+      comment: comment,
+      tags: tags,
+    );
+
+    model.fields += field;
+    return field;
   }
 }
 

@@ -19,14 +19,12 @@ class TypescriptCodeFile implements Node {
   /// null indicates that needs human confirm.
   final bool overwriteIfExists;
 
-  TypescriptCodeFile._(
-    this.name, {
+  TypescriptCodeFile._(this.name, {
     this.source,
     this.overwriteIfExists,
   });
 
-  factory TypescriptCodeFile.of(
-    String name, {
+  factory TypescriptCodeFile.of(String name, {
     CodePackage package,
     CodeComment comment,
     List<CodeImport> imports,
@@ -103,157 +101,157 @@ class TypescriptCode extends SingleChildNode {
 class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
   TypescriptCodeConfig(Node child)
       : super(
-          child,
-          indentConfig: null,
-          blockConfig: null,
-          codeAccessConfig: (_, child) =>
-              CodeModifierConfig.forTypescriptLike(child),
+    child,
+    indentConfig: null,
+    blockConfig: null,
+    codeAccessConfig: (_, child) =>
+        CodeModifierConfig.forTypescriptLike(child),
 
-          commentConfig: null,
-          placeHolderConfig: null,
+    commentConfig: null,
+    placeHolderConfig: null,
 
-          // Package configs
-          packageNameConfig: (_, child) =>
-              CodePackageNameConfig.forTypescriptLike(child),
-          packageConfig: (_, child) => CodePackageConfig.noSupport(child),
+    // Package configs
+    packageNameConfig: (_, child) =>
+        CodePackageNameConfig.forTypescriptLike(child),
+    packageConfig: (_, child) => CodePackageConfig.noSupport(child),
 
-          // Import Configs
-          importConfig: (_, child) => CodeImportConfig.forTypescriptLike(child),
-          importListConfig: null,
-          importTypeConfig: null,
+    // Import Configs
+    importConfig: (_, child) => CodeImportConfig.forTypescriptLike(child),
+    importListConfig: null,
+    importTypeConfig: null,
 
-          // Type configs
+    // Type configs
 
-          typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig(child, {
-            // Typescript primitive types need to be lower case
-            'unknown': 'unknown',
-            'any': 'any',
-            'void': 'void',
-            'null': 'null',
-            'string': 'string',
-            'number': 'number',
-            'bigint': 'bigint',
-            'boolean': 'boolean',
-            'bool': 'boolean',
-            // Dart types
-            'dynamic': 'dynamic',
-            'void': 'void',
-            'byte': 'number',
-            'short': 'number',
-            'int': 'number',
-            'long': 'number',
-            'float': 'number',
-            'double': 'number',
-            'bool': 'number',
-          }),
-          typeNameConfig: null,
-          typeConfig: null,
-          typeListConfig: null,
+    typeNameMapperConfig: (_, child) =>
+        CodeTypeNameMapperConfig(child, {
+          // Typescript primitive types need to be lower case
+          'unknown': 'unknown',
+          'any': 'any',
+          'void': 'void',
+          'null': 'null',
+          'string': 'string',
+          'number': 'number',
+          'bigint': 'bigint',
+          'boolean': 'boolean',
+          // Dart types
+          'dynamic': 'dynamic',
+          'void': 'void',
+          'byte': 'number',
+          'short': 'number',
+          'int': 'number',
+          'long': 'number',
+          'float': 'number',
+          'double': 'number',
+          'bool': 'boolean',
+        }),
+    typeNameConfig: null,
+    typeConfig: null,
+    typeListConfig: null,
 
-          // Expr configs
-          nullLiteralConfig: null,
-          boolLiteralConfig: null,
-          charLiteralConfig: null,
-          stringLiteralConfig: (_, child) =>
-              CodeStringLiteralConfig.forDartLike(child),
-          numericLiteralConfig: null,
-          arrayLiteralConfig: null,
-          setLiteralConfig: null,
-          mapLiteralConfig: null,
-          cascadeConfig: (_, child) => CodeCascadeConfig.noSupport(child),
-          spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
-          awaitConfig: null,
-          yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
-          refConfig: null,
-          varConfig: (_, child) => CodeVarConfig.forJavascriptLike(child),
+    // Expr configs
+    nullLiteralConfig: null,
+    boolLiteralConfig: null,
+    charLiteralConfig: null,
+    stringLiteralConfig: (_, child) =>
+        CodeStringLiteralConfig.forDartLike(child),
+    numericLiteralConfig: null,
+    arrayLiteralConfig: null,
+    setLiteralConfig: null,
+    mapLiteralConfig: null,
+    cascadeConfig: (_, child) => CodeCascadeConfig.noSupport(child),
+    spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
+    awaitConfig: null,
+    yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
+    refConfig: null,
+    varConfig: (_, child) => CodeVarConfig.forJavascriptLike(child),
 
-          // Statement configs
-          exprConfig: null,
-          exprListConfig: null,
-          statementListConfig: null,
-          statementConfig: null,
-          breakConfig: null,
-          continueConfig: null,
-          varNameConfig: null,
-          ifConfig: null,
-          elseIfConfig: null,
-          returnConfig: null,
-          forConfig: null,
-          forEachConfig: (_, child) => CodeForEachConfig.forDartLike(child),
-          whileConfig: null,
-          functionCallConfig: null,
-          constructorCallConfig: null,
-          annotationListConfig: null,
+    // Statement configs
+    exprConfig: null,
+    exprListConfig: null,
+    statementListConfig: null,
+    statementConfig: null,
+    breakConfig: null,
+    continueConfig: null,
+    varNameConfig: null,
+    ifConfig: null,
+    elseIfConfig: null,
+    returnConfig: null,
+    forConfig: null,
+    forEachConfig: (_, child) => CodeForEachConfig.forDartLike(child),
+    whileConfig: null,
+    functionCallConfig: null,
+    constructorCallConfig: null,
+    annotationListConfig: null,
 
-          // Generic configs
-          genericParamConfig: null,
-          genericParamListConfig: null,
+    // Generic configs
+    genericParamConfig: null,
+    genericParamListConfig: null,
 
-          // Field configs
-          fieldNameConfig: null,
-          fieldListConfig: null,
-          fieldConfig: (_, child) => CodeFieldConfig.forTypescriptLike(child),
+    // Field configs
+    fieldNameConfig: null,
+    fieldListConfig: null,
+    fieldConfig: (_, child) => CodeFieldConfig.forTypescriptLike(child),
 
-          // Arg configs
-          argNameConfig: null,
-          argListConfig: null,
-          argConfig: (_, child) => CodeArgConfig.forTypescriptLike(child),
+    // Arg configs
+    argNameConfig: null,
+    argListConfig: null,
+    argConfig: (_, child) => CodeArgConfig.forTypescriptLike(child),
 
-          // Function configs
-          functionThrowListConfig: (_, child) =>
-              CodeFunctionThrowListConfig.ignored(child),
-          functionThrowConfig: (_, child) =>
-              CodeFunctionThrowConfig.ignored(child),
-          functionReturnConfig: (_, child) =>
-              CodeFunctionReturnConfig.forJavaLike(child),
-          functionReturnListConfig: null,
-          functionNameConfig: (_, child) =>
-              CodeFunctionNameConfig.forJavaLike(child),
-          functionListConfig: null,
-          functionConfig: (_, child) =>
-              CodeFunctionConfig.forTypescriptLike(child),
-          lambdaConfig: null,
+    // Function configs
+    functionThrowListConfig: (_, child) =>
+        CodeFunctionThrowListConfig.ignored(child),
+    functionThrowConfig: (_, child) =>
+        CodeFunctionThrowConfig.ignored(child),
+    functionReturnConfig: (_, child) =>
+        CodeFunctionReturnConfig.forJavaLike(child),
+    functionReturnListConfig: null,
+    functionNameConfig: (_, child) =>
+        CodeFunctionNameConfig.forJavaLike(child),
+    functionListConfig: null,
+    functionConfig: (_, child) =>
+        CodeFunctionConfig.forTypescriptLike(child),
+    lambdaConfig: null,
 
-          // Enum configs,
-          enumValueNameConfig: (_, child) =>
-              CodeEnumValueNameConfig.forTypescriptLike(child),
-          enumValueListConfig: null,
-          enumValueConfig: null,
-          enumNameConfig: null,
-          enumListConfig: null,
-          enumConfig: null,
+    // Enum configs,
+    enumValueNameConfig: (_, child) =>
+        CodeEnumValueNameConfig.forTypescriptLike(child),
+    enumValueListConfig: null,
+    enumValueConfig: null,
+    enumNameConfig: null,
+    enumListConfig: null,
+    enumConfig: null,
 
-          // Property configs
-          propertyNameConfig: (_, child) =>
-              CodePropertyNameConfig.forDartLike(child),
-          propertyListConfig: null,
-          propertyGetterConfig: (_, child) =>
-              CodePropertyGetterConfig.forDartLike(child),
-          propertySetterConfig: (_, child) =>
-              CodePropertySetterConfig.forDartLike(child),
-          propertyConfig: (_, child) => CodePropertyConfig.forDartLike(child),
+    // Property configs
+    propertyNameConfig: (_, child) =>
+        CodePropertyNameConfig.forDartLike(child),
+    propertyListConfig: null,
+    propertyGetterConfig: (_, child) =>
+        CodePropertyGetterConfig.forDartLike(child),
+    propertySetterConfig: (_, child) =>
+        CodePropertySetterConfig.forDartLike(child),
+    propertyConfig: (_, child) => CodePropertyConfig.forDartLike(child),
 
-          // Interface configs
-          interfaceListConfig: null,
-          interfaceConfig: null,
+    // Interface configs
+    interfaceListConfig: null,
+    interfaceConfig: null,
 
-          // Class configs
-          classNameConfig: null,
-          classListConfig: null,
-          classConfig: null,
-          classConstructorNameConfig: null,
-          classConstructorListConfig: null,
-          classConstructorConfig: (_, child) =>
-              CodeConstructorConfig.forTypescriptLike(child),
+    // Class configs
+    classNameConfig: null,
+    classListConfig: null,
+    classConfig: null,
+    classConstructorNameConfig: null,
+    classConstructorListConfig: null,
+    classConstructorConfig: (_, child) =>
+        CodeConstructorConfig.forTypescriptLike(child),
 
-          // Mixin configs
-          mixinNameConfig: null,
-          mixinListConfig: null,
-          mixinConfig: null,
+    // Mixin configs
+    mixinNameConfig: null,
+    mixinListConfig: null,
+    mixinConfig: null,
 
-          // Extension config
-          extensionNameConfig: null,
-          extensionListConfig: null,
-          extensionConfig: null,
-        );
+    // Extension config
+    extensionNameConfig: null,
+    extensionListConfig: null,
+    extensionConfig: null,
+  );
 }

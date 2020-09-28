@@ -58,15 +58,17 @@ class StimModelFieldRuleScope {
 
   StimModelFieldRule of({
     @meta.required dynamic name,
-    Set<StimModelTag> tags,
+    Set<StimModelChoice> choices,
     Set<StimModelPattern> patterns,
     Set<StimModelRange> ranges,
+    Set<StimModelTag> tags,
   }) {
     return StimModelFieldRule()
       ..name = StimName.of(name)
-      ..tags = tags
+      ..choices = choices
       ..patterns = patterns
-      ..ranges = ranges;
+      ..ranges = ranges
+      ..tags = tags;
   }
 }
 
@@ -76,17 +78,30 @@ class StimModelFieldRule extends StimModelSymbol<StimModelFieldRule> {
   /// if needed.
   StimModelError error;
 
+  /// The list of choices, applied to this data field
+  Set<StimModelChoice> choices;
+
   /// The list of validation patterns applied to this data field.
   Set<StimModelPattern> patterns;
 
   /// The list of validation data ranges applied to this data field.
   Set<StimModelRange> ranges;
 
+  /// Determines if the current rule has choices in it
+  bool get hasChoices => choices?.isNotEmpty == true;
+
+  /// Determines if the current rule has ranges in it
+  bool get hasRange => ranges?.isNotEmpty == true;
+
+  /// Determines if the current rule has patterns in it
+  bool get hasPatterns => patterns?.isNotEmpty == true;
+
   StimModelFieldRule();
 
   StimModelFieldRule copyWith({
     dynamic name,
     StimModelError error,
+    Set<StimModelChoice> choices,
     Set<StimModelPattern> patterns,
     Set<StimModelRange> ranges,
     Set<StimModelTag> tags,
@@ -94,6 +109,7 @@ class StimModelFieldRule extends StimModelSymbol<StimModelFieldRule> {
     return StimModelFieldRule()
       ..name = StimName.of(name ?? this.name)
       ..error = error ?? this.error
+      ..choices = choices ?? this.choices
       ..patterns = patterns ?? this.patterns
       ..ranges = ranges ?? this.ranges
       ..tags = tags ?? this.tags;

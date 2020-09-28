@@ -6,8 +6,10 @@ class StimModel extends StimPack {
   final StimModelTypeScope type;
   final StimModelFieldScope field;
   final StimModelFilterScope filter;
-  final StimModelFieldRuleScope rule;
+  final StimModelFieldRuleScope fieldRule;
+  final StimModelTypeRuleScope typeRule;
   final StimModelFuncScope func;
+  final StimModelChoiceScope choice;
   final StimModelPatternScope pattern;
   final StimModelRangeScope range;
   final StimModelHttpStatusScope httpStatus;
@@ -19,8 +21,10 @@ class StimModel extends StimPack {
         type = StimModelTypeScope(),
         field = StimModelFieldScope(),
         filter = StimModelFilterScope(),
-        rule = StimModelFieldRuleScope(),
+        fieldRule = StimModelFieldRuleScope(),
+        typeRule = StimModelTypeRuleScope(),
         func = StimModelFuncScope(),
+        choice = StimModelChoiceScope(),
         pattern = StimModelPatternScope(),
         range = StimModelRangeScope(),
         httpStatus = StimModelHttpStatusScope(),
@@ -32,7 +36,7 @@ class StimModel extends StimPack {
     _grpcStatuses();
     _patterns();
     _ranges();
-    _rules();
+    _fieldRules();
     _filters();
     _packages();
     _primitiveTypes();
@@ -202,21 +206,21 @@ class StimModel extends StimPack {
   // Rules
   // ===========================================================================
 
-  void _rules() {
-    rule
-      ..required = rule.of(name: 'required')
-      ..unique = rule.of(name: 'unique')
-      ..indexed = rule.of(name: 'indexed')
-      ..authorized = rule.of(name: 'authorized')
-      ..readOnly = rule.of(name: 'read only')
-      ..writeOnly = rule.of(name: 'write only')
-      ..systemOnly = rule.of(name: 'system only')
-      ..autoIncreased = rule.of(name: 'auto increased')
-      ..transient = rule.of(name: 'transient');
+  void _fieldRules() {
+    fieldRule
+      ..required = fieldRule.of(name: 'required')
+      ..unique = fieldRule.of(name: 'unique')
+      ..indexed = fieldRule.of(name: 'indexed')
+      ..authorized = fieldRule.of(name: 'authorized')
+      ..readOnly = fieldRule.of(name: 'read only')
+      ..writeOnly = fieldRule.of(name: 'write only')
+      ..systemOnly = fieldRule.of(name: 'system only')
+      ..autoIncreased = fieldRule.of(name: 'auto increased')
+      ..transient = fieldRule.of(name: 'transient');
 
     // pattern based fields
     final p = pattern;
-    rule
+    fieldRule
       ..id = _patternRule(p.id)
       ..uuidV4 = _patternRule(p.uuidV4)
       ..slug = _patternRule(p.slug)
@@ -230,7 +234,7 @@ class StimModel extends StimPack {
       ..zipCode = _patternRule(p.zipCode);
 
     // pattern based - data type
-    rule
+    fieldRule
       ..string = _patternRule(p.string)
       ..num = _patternRule(p.num)
       ..bool = _patternRule(p.bool)
@@ -242,7 +246,7 @@ class StimModel extends StimPack {
   }
 
   StimModelFieldRule _patternRule(StimModelPattern pattern) {
-    return rule.of(name: pattern.name, patterns: {pattern});
+    return fieldRule.of(name: pattern.name, patterns: {pattern});
   }
 
   // ===========================================================================

@@ -15,9 +15,7 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
         ]);
       }, child);
 
-  factory CodeVarConfig.forJavascriptLike(
-    Node child,
-  ) =>
+  factory CodeVarConfig.forJavascriptLike(Node child,) =>
       CodeVarConfig._internal(
         child,
         varKeyword: 'let ',
@@ -26,9 +24,7 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
         typeFirst: false,
       );
 
-  factory CodeVarConfig.forDartLike(
-    Node child,
-  ) =>
+  factory CodeVarConfig.forDartLike(Node child,) =>
       CodeVarConfig._internal(
         child,
         varKeyword: 'var ',
@@ -37,8 +33,7 @@ class CodeVarConfig extends CodeConfigNode<CodeVar> {
         typeFirst: true,
       );
 
-  factory CodeVarConfig._internal(
-    Node child, {
+  factory CodeVarConfig._internal(Node child, {
     @required String varKeyword,
     @required String finalKeyword,
     @required String typeNameSeparator,
@@ -99,7 +94,9 @@ class CodeVar extends CodeConfigProxyNode<CodeVar> {
   }) =>
       CodeVar._(
         name: CodeVarName.of(name),
-        type: CodeType.of(name: type),
+        type: CodeType._parse(type, error: () {
+          throw 'invalid type "$type" found';
+        }),
         init: CodeExpr.of(init),
         isFinal: isFinal,
         comment: CodeComment.of(comment),
