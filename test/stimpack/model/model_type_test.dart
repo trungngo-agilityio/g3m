@@ -1,6 +1,6 @@
-import 'package:g3m/src/stimpack/story/generated/story.dart';
 import 'package:g3m/stimpack_core.dart';
 import 'package:g3m/stimpack_model.dart';
+import 'package:g3m/stimpack_story.dart';
 import 'package:test/test.dart';
 
 class _FakeSymbol extends StimModelSymbol<_FakeSymbol> {}

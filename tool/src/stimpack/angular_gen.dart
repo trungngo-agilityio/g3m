@@ -90,8 +90,8 @@ void genAngularPack() {
 
   // An angular app is a set of feature
   tApp.fields = {
-    fDir.refWith(name: 'root dir'),
-    fDir.refWith(name: 'feature dir'),
+    fDir.copyWith(name: 'root dir'),
+    fDir.copyWith(name: 'feature dir'),
     fFeatureSet,
   };
 
@@ -103,12 +103,12 @@ void genAngularPack() {
   tModule.fields = {
     fServiceSet,
     fModelSet,
-    fComponentSet.refWith(name: 'declarations'),
-    fComponentSet.refWith(name: 'entry components'),
-    fModuleSet.refWith(name: 'imports'),
-    fModuleSet.refWith(name: 'exports'),
+    fComponentSet.copyWith(name: 'declarations'),
+    fComponentSet.copyWith(name: 'entry components'),
+    fModuleSet.copyWith(name: 'imports'),
+    fModuleSet.copyWith(name: 'exports'),
     fRouter,
-    fResolver
+    fResolver,
   };
 
   tRouter.fields = {
@@ -118,7 +118,7 @@ void genAngularPack() {
 
   tRouterPath.fields = {
     fPath,
-    fRouterPath.refWith(name: 'parent'),
+    fRouterPath.copyWith(name: 'parent'),
     fRouterParamSet,
   };
 
@@ -127,7 +127,7 @@ void genAngularPack() {
     fComponent,
     fResolver,
     fGuardSet,
-    fModule.refWith(name: 'lazy module'),
+    fModule.copyWith(name: 'lazy module'),
   };
 
   tRouterRedirectEntry.fields = {

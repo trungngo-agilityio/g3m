@@ -14,4 +14,4 @@ part 'src/stimpack/core/symbol_iterable.dart';
 part 'src/stimpack/core/symbol_scan.dart';
 part 'src/stimpack/core/symbol_list.dart';
 part 'src/stimpack/core/symbol_map.dart';
-part 'src/stimpack/core/symbol_ref.dart';
+part 'src/stimpack/core/symbol_gen.dart';

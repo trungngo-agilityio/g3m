@@ -41,6 +41,9 @@ class Pad implements Node {
   factory Pad.doubleQuotes(Node content, {bool onlyIfMissing}) =>
       Pad.of('"', '"', content, onlyIfMissing: onlyIfMissing);
 
+  factory Pad.tildaQuotes(Node content, {bool onlyIfMissing}) =>
+      Pad.of('`', '`', content, onlyIfMissing: onlyIfMissing);
+
   @override
   Node build(BuildContext context) {
     if (prefix == null && suffix == null) {

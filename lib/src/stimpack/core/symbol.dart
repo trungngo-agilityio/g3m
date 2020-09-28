@@ -2,14 +2,22 @@ part of g3.stimpack.core;
 
 class StimSymbol<T> {
   _StimSymbolScanner toScanner() => _StimSymbolScanner(this);
+
+  @override
+  String toString() {
+    if (this is StimNamed) {
+      final name = (this as StimNamed)?.name;
+      return '${runtimeType}{name: $name}';
+    } else {
+      return '${runtimeType}{}';
+    }
+  }
 }
 
 /// Deep clone a symbol to make a new one.
 T _cloneSymbol<T>(T s, bool deep, [Set processing, Map processed]) {
   if (s == null) {
     return null;
-  } else if (s is StimSymbolRef) {
-    return s;
   }
 
   if (deep == true) {
@@ -52,9 +60,7 @@ T _cloneSymbol<T>(T s, bool deep, [Set processing, Map processed]) {
       dynamic v = f;
 
       if (deep == true) {
-        if (f is StimSymbolRef) {
-          // Don't do anything. Returns the exact reference.
-        } else if (f is StimSymbol) {
+        if (f is StimSymbol) {
           v = _cloneSymbol(f, true, processing, processed);
         } else if (f is List) {
           // FIXME: Need to clone child

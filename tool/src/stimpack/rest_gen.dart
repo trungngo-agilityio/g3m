@@ -38,23 +38,24 @@ void genRestPack() {
   // object should be streamed. This is for grpc api.
   final fStreamed = f.of(name: 'streamed', type: t.bool);
   final fIdField = f.of(name: 'id field', type: t.model.field);
-  final fRequiredIdField = fIdField.clone().required();
+  final fRequiredIdField = fIdField.copyWith()..required();
 
   // A data model that can be associated to an api.
-  final fModel = f.of(name: 'model', type: t.model.type);
+  final fRequiredModel = f.of(name: 'model', type: t.model.type)..required();
 
   // This is the list of model fields attached to an api request.
   // Each rule should have validations, and potential filter set on
   // the field.
   final fFieldSet = f.of(name: 'fields', type: t.model.fieldSet);
-  final fRequestFieldSet = f.of(name: 'request', type: t.model.fieldSet);
-  final fResponseFieldSet = f.of(name: 'response', type: t.model.fieldSet);
 
   // The security policy applied on the request.
   final fRbacPolicy = f.of(name: 'policy', type: t.rbac.policy);
 
-  final fApiRequest = f.of(name: 'request', type: tApiRequest);
-  final fApiResponse = f.of(name: 'response', type: tApiResponse);
+  final fRequiredApi = f.of(name: 'api', type: tApi)..required();
+  final fRequiredApiRequest = f.of(name: 'request', type: tApiRequest)
+    ..required();
+  final fRequiredApiResponse = f.of(name: 'response', type: tApiResponse)
+    ..required();
 
   // ---------------------------------------------------------------------------
   // Normal API field definitions
@@ -65,12 +66,12 @@ void genRestPack() {
   // or not.
   tApiRequest.fields = {
     fStreamed,
-    fFieldSet,
+    fRequiredModel,
   };
 
   tApiResponse.fields = {
     fStreamed,
-    fFieldSet,
+    fRequiredModel,
   };
 
   tApi.fields = {
@@ -78,10 +79,10 @@ void genRestPack() {
     fRbacPolicy,
 
     // The request body
-    fApiRequest,
+    fRequiredApiRequest,
 
     // The response body
-    fApiResponse,
+    fRequiredApiResponse,
   };
 
   // ---------------------------------------------------------------------------
@@ -104,12 +105,12 @@ void genRestPack() {
 
   /// All crud apis should have security policy and a response.
   for (final api in allCrudApis) {
-    api.fields += fRbacPolicy + fResponseFieldSet;
+    api.fields += fRequiredApi;
   }
 
   tCrudApi.fields = {
     // The data model affected by these apis.
-    fModel,
+    fRequiredModel,
 
     // Marks which field in the data model is the id field.
     fRequiredIdField,
@@ -123,5 +124,7 @@ void genRestPack() {
     f.of(name: 'delete', type: tCrudDeleteApi),
   };
 
-  stimpackGen(meta, 'lib/src/stimpack');
+  stimpackGen(meta, 'lib/src/stimpack', values: {
+    t.rbac.resource: {'rest api'},
+  });
 }

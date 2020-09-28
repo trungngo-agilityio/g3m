@@ -1,54 +1,64 @@
 part of g3.stimpack.model;
 
-class StimModelFieldFilterScope {
-  Set<StimModelFieldFilter> stringFilters,
+class StimModelFilterScope {
+  Set<StimModelFilter> stringFilters,
       numberFilters,
+      boolFilters,
+      collectionFilters,
       rangeFilters,
       dateFilters,
       dateTimeFilters,
       timeFilters;
 
-  StimModelFieldFilter isNull, isIn;
-  StimModelFieldFilter exact,
-      iExact,
+  StimModelFilter isNull, isNotNull, isEmpty, isNotEmpty, isIn, isNotIn;
+  StimModelFilter isExact,
+      isNotExact,
+      isCaseInsensitiveExact,
       startsWith,
-      iStartsWith,
+      caseInsensitiveStartsWith,
       endsWith,
-      iEndsWith,
+      caseInsensitiveEndsWith,
       contains,
-      iContains,
-      regex;
+      caseInsensitiveContains,
+      matchesRegex;
 
-  StimModelFieldFilter gt, gte, lt, lte, range;
+  StimModelFilter greaterThan,
+      greaterThanOrEqual,
+      lessThan,
+      lessThanOrEqual,
+      isInRange;
 
-  StimModelFieldFilter ago,
-      date,
-      year,
-      month,
-      day,
-      week,
-      weekDay,
-      quarter,
-      time,
-      hour,
-      minute,
-      second;
+  StimModelFilter ago,
+      isDate,
+      isYear,
+      isMonth,
+      isDay,
+      isWeek,
+      isWeekDay,
+      isQuarter,
+      isTime,
+      isHour,
+      isMinute,
+      isSecond;
 
-  StimModelFieldFilter of({
+  StimModelFilter of({
     @meta.required dynamic name,
     Set<StimModelTag> tags,
   }) =>
-      StimModelFieldFilter()
+      StimModelFilter()
         ..name = StimName.of(name)
         ..tags = tags;
 }
 
-class StimModelFieldFilter extends StimModelSymbol<StimModelFieldFilter> {
-  /// Gets the reference to this model.
-  StimModelFieldFilter ref() => StimModelFieldFilterRef()..symbol = this;
+class StimModelFilter extends StimModelSymbol<StimModelFilter> {
+  StimModelFilter();
 
-  StimModelFieldFilter();
+  StimModelFilter copyWith({
+    dynamic name,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelFilter()
+      ..name = StimName.of(name ?? this.name)
+      ..tags = tags ?? this.tags;
+  }
 }
-
-class StimModelFieldFilterRef extends StimSymbolRef<StimModelFieldFilter>
-    implements StimModelFieldFilter {}

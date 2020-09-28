@@ -74,11 +74,18 @@ class StimModelGrpcStatus extends StimModelSymbol<StimModelGrpcStatus> {
   /// The related http status code.
   StimModelHttpStatus httpStatus;
 
-  /// Gets the reference to this model.
-  StimModelGrpcStatus ref() => StimModelGrpcStatusRef()..symbol = this;
-
   StimModelGrpcStatus();
-}
 
-class StimModelGrpcStatusRef extends StimSymbolRef<StimModelGrpcStatus>
-    implements StimModelGrpcStatus {}
+  StimModelGrpcStatus copyWith({
+    dynamic name,
+    int code,
+    StimModelHttpStatus httpStatus,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelGrpcStatus()
+      ..name = StimName.of(name ?? this.name)
+      ..code = code ?? this.code
+      ..httpStatus = httpStatus ?? this.httpStatus
+      ..tags = tags ?? this.tags;
+  }
+}

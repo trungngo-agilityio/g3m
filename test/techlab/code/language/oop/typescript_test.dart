@@ -24,12 +24,17 @@ void main() {
         ),
       ],
       functions: [
-        CodeFunction.of(name: 'hello', requiredArgs: [
-          ['first name', 'string'],
-        ], body: [
-          Text.of('var name = "John";\n'
-              'print(name);\n'),
-        ]),
+        CodeFunction.of(
+          name: 'hello',
+          isAsync: true,
+          requiredArgs: [
+            ['first name', 'string'],
+          ],
+          body: [
+            Text.of('var name = "John";\n'
+                'print(name);\n'),
+          ],
+        ),
       ],
       interfaces: [
         CodeInterface.of(
@@ -56,7 +61,7 @@ void main() {
       '\n'
       '\n'
       'import * from \'io\';\n'
-      'import * as io_path from \'path\';\n'
+      'import * as ioPath from \'path\';\n'
       'import { Vector as MyVector , HumanMatrix } from \'math\';\n'
       '\n'
       '\n'
@@ -66,13 +71,13 @@ void main() {
       '}\n'
       '\n'
       '\n'
-      'hello(firstName: string) {\n'
+      'async hello(firstName: string) {\n'
       '  var name = "John";\n'
       '  print(name);\n'
       '}\n'
       '\n'
       '\n'
-      'interface Car extends Vehicle {\n'
+      'private interface Car extends Vehicle {\n'
       '  name: string;\n'
       '\n'
       '  lastName?: string;\n'
@@ -98,7 +103,7 @@ void main() {
       '  /**\n'
       '   * just a demo function\n'
       '   */\n'
-      '  void drive<T>(vehicle, car) {\n'
+      '  drive<T>(vehicle, car): void {\n'
       '    // Just any text\n'
       '  }\n'
       '  // just a free text class body \n'

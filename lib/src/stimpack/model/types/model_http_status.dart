@@ -63,11 +63,16 @@ class StimModelHttpStatusScope {
 class StimModelHttpStatus extends StimModelSymbol<StimModelHttpStatus> {
   int code;
 
-  /// Gets the reference to this model.
-  StimModelHttpStatus ref() => StimModelHttpStatusRef()..symbol = this;
-
   StimModelHttpStatus();
-}
 
-class StimModelHttpStatusRef extends StimSymbolRef<StimModelHttpStatus>
-    implements StimModelHttpStatus {}
+  StimModelHttpStatus copyWith({
+    dynamic name,
+    int code,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelHttpStatus()
+      ..name = StimName.of(name ?? this.name)
+      ..code = code ?? this.code
+      ..tags = tags ?? this.tags;
+  }
+}

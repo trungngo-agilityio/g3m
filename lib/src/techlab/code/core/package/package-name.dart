@@ -4,6 +4,10 @@ class CodePackageNameConfig extends CodeConfigNode<CodePackageName> {
   CodePackageNameConfig(NodeBuildFunc<CodePackageName> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodePackageNameConfig.forTypescriptLike(Node child) =>
+      // Don't handle anything special for dart name
+      CodePackageNameConfig.of(child, nameFunc: StringFuncs.camel);
+
   factory CodePackageNameConfig.forDartLike(Node child) =>
       // Don't handle anything special for dart name
       CodePackageNameConfig.of(child);

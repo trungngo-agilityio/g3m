@@ -5,7 +5,10 @@ class StimModelPackageScope {
 
   Map<DeclarationMirror, StimModelPackage> _dartPackages;
 
-  StimModelPackage of({@meta.required dynamic name, Set<StimModelTag> tags}) {
+  StimModelPackage of({
+    @meta.required dynamic name,
+    Set<StimModelTag> tags,
+  }) {
     return StimModelPackage()
       ..name = StimName.of(name)
       ..types = {}
@@ -38,11 +41,18 @@ class StimModelPackage extends StimModelSymbol<StimModelPackage> {
 
   bool get isDart => dartLibrary != null;
 
-  /// Gets the reference to this model.
-  StimModelPackage ref() => StimModelPackageRef()..symbol = this;
-
   StimModelPackage();
-}
 
-class StimModelPackageRef extends StimSymbolRef<StimModelPackage>
-    implements StimModelPackage {}
+  StimModelPackage copyWith({
+    dynamic name,
+    Set<StimModelType> types,
+    LibraryMirror dartLibrary,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelPackage()
+      ..name = StimName.of(name ?? this.name)
+      ..types = types ?? this.types
+      ..dartLibrary = dartLibrary ?? this.dartLibrary
+      ..tags = tags ?? this.tags;
+  }
+}

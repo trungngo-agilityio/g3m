@@ -12,13 +12,13 @@ class StimGenMetaLib implements Node {
   Node build(BuildContext context) {
     _config = context.dependOnAncestorNodeOfExactType<StimpackCodeConfig>();
 
-    final fileName = _config.libFileNameOf(pack);
+    final fileName = _config.generatedLibFileNameOf(pack);
 
     // Generates a dart file that defines the entry point
     // for the whole pack.
     return DartCodeFile.of(
       fileName,
-      package: _config.codePackageLibraryOf(pack),
+      package: _config.codeGeneratedPackageLibraryOf(pack),
       parts: _buildPartList(),
       imports: _buildImportList(),
     );
@@ -51,7 +51,6 @@ class StimGenMetaLib implements Node {
   ///
   List<String> _buildPartList() {
     final parts = <String>[];
-    parts.add('../' + _config.initPackFileNameOf(pack).toString());
     parts.add(_config.packFileNameOf(pack).toString());
     parts.add(_config.packExtFileNameOf(pack).toString());
 

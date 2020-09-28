@@ -4,18 +4,39 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
   CodeFunctionConfig(NodeBuildFunc<CodeFunction> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeFunctionConfig.forTypescriptLike(Node child) =>
+      CodeFunctionConfig._internal(
+        child,
+        returnsAfter: true,
+        returnSeparator: ': ',
+      );
+
   factory CodeFunctionConfig.forDartLike(Node child) =>
       CodeFunctionConfig._internal(child);
 
   factory CodeFunctionConfig.forJavaLike(Node child) =>
       CodeFunctionConfig._internal(child);
 
+  /// [returnsAfter] determines if the return clause should be put
+  /// in front or at the end of the function definition.
+  ///
   factory CodeFunctionConfig._internal(
     Node child, {
     String throwKeyword = 'throws',
     bool overrideAsAnnotation = true,
+    bool returnsAfter = false,
+    String returnSeparator = '',
   }) =>
       CodeFunctionConfig((context, func) {
+        final returnNode = func.returns != null
+            ? Container([
+                if (returnsAfter && returnSeparator?.isNotEmpty == true)
+                  returnSeparator,
+                func.returns,
+                if (!returnsAfter) Text.space(),
+              ])
+            : null;
+
         final def = Container([
           '\n',
           func.comment,
@@ -26,18 +47,14 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
           overrideAsAnnotation == true && func.modifier?.isOverride == true
               ? '@override\n'
               : null,
-          func.returns != null
-              ? Container([
-                  func.returns,
-                  Text.space(),
-                ])
-              : null,
           func.modifier,
+          if (returnsAfter == false) returnNode,
           func.name,
           func.generic,
           '(',
           func.args,
           ')',
+          if (returnsAfter == true) returnNode,
           func.throws,
         ]);
 
@@ -91,12 +108,11 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction>
     bool isInternal,
     bool isAbstract,
     bool isStatic,
+    bool isAsync,
     dynamic generic,
     dynamic requiredArgs,
     dynamic optionalArgs,
     dynamic namedArgs,
-    bool isAsync,
-    bool isStream,
     dynamic returns,
     dynamic throws,
     dynamic body,
@@ -120,6 +136,7 @@ class CodeFunction extends CodeConfigProxyNode<CodeFunction>
         isProtected: isProtected,
         isInternal: isInternal,
         isStatic: isStatic,
+        isAsync: isAsync,
       ),
       generic: CodeGenericParamList.of(generic),
       args: CodeArgList.of(

@@ -4,6 +4,23 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
   CodeModifierConfig(NodeBuildFunc<CodeModifier> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeModifierConfig.forTypescriptLike(Node child) {
+    return CodeModifierConfig._internal(
+      child,
+      overrideKeyword: null,
+      factoryKeyword: null,
+      privateKeyword: 'private ',
+      publicKeyword: 'export ',
+      protectedKeyword: 'protected ',
+      internalKeyword: null,
+      abstractKeyword: 'abstract ',
+      staticKeyword: 'static ',
+      finalKeyword: 'const ',
+      optionalKeyword: null,
+      asyncKeyword: 'async ',
+    );
+  }
+
   factory CodeModifierConfig.forJavaLike(Node child) {
     return CodeModifierConfig._internal(
       child,
@@ -17,6 +34,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
       staticKeyword: 'static ',
       finalKeyword: null,
       optionalKeyword: null,
+      asyncKeyword: null,
     );
   }
 
@@ -33,22 +51,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
       staticKeyword: 'static ',
       finalKeyword: 'final ',
       optionalKeyword: null,
-    );
-  }
-
-  factory CodeModifierConfig.forTypescriptLike(Node child) {
-    return CodeModifierConfig._internal(
-      child,
-      overrideKeyword: null,
-      factoryKeyword: null,
-      privateKeyword: null,
-      publicKeyword: 'export ',
-      protectedKeyword: null,
-      internalKeyword: null,
-      abstractKeyword: 'abstract ',
-      staticKeyword: 'static ',
-      finalKeyword: 'const ',
-      optionalKeyword: null,
+      asyncKeyword: null,
     );
   }
 
@@ -64,6 +67,7 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
     @required String staticKeyword,
     @required String finalKeyword,
     @required String optionalKeyword,
+    @required String asyncKeyword,
   }) =>
       CodeModifierConfig((context, access) {
         final keywords = <String>[];
@@ -108,6 +112,10 @@ class CodeModifierConfig extends CodeConfigNode<CodeModifier> {
           keywords.add(optionalKeyword);
         }
 
+        if (access.isAsync == true && asyncKeyword != null) {
+          keywords.add(asyncKeyword);
+        }
+
         if (keywords.isEmpty) return null;
 
         return Container(keywords);
@@ -127,6 +135,7 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
   final bool isFinal;
 
   final bool isOptional;
+  final bool isAsync;
 
   CodeModifier({
     this.isOverride,
@@ -139,5 +148,6 @@ class CodeModifier extends CodeConfigProxyNode<CodeModifier> {
     this.isStatic,
     this.isFinal,
     this.isOptional,
+    this.isAsync,
   });
 }

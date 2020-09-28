@@ -7,6 +7,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
   factory CodeImportConfig.forDartLike(
     Node child, {
     String importKeyword = 'import ',
+    String exportKeyword = 'export ',
     String asKeyword = 'as',
     bool packageIgnored = true,
     bool pathIgnored = false,
@@ -31,7 +32,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
 
       return CodeExpr.open(
         Container([
-          importKeyword,
+          import.isExported == true ? exportKeyword : importKeyword,
           packageNode,
           pathNode,
           aliasNode,
@@ -40,7 +41,11 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
     }, child);
   }
 
-  factory CodeImportConfig.forTypescriptLike(Node child) {
+  factory CodeImportConfig.forTypescriptLike(
+    Node child, {
+    String importKeyword = 'import ',
+    String exportKeyword = 'export ',
+  }) {
     return CodeImportConfig((context, import) {
       final types = import.types;
 
@@ -57,7 +62,8 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
         /// Example: import { ZipCodeValidator as ZCV } from "./ZipCodeValidator";
         return CodeExpr.open(
           Container([
-            'import { ',
+            import.isExported == true ? exportKeyword : importKeyword,
+            '{ ',
             Join.commaSeparated(typeNodes),
             '} from ',
             quoteNode,
@@ -66,7 +72,8 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
       } else {
         return CodeExpr.open(
           Container([
-            'import * ',
+            import.isExported == true ? exportKeyword : importKeyword,
+            '* ',
             import.alias != null ? Container(['as ', import.alias, ' ']) : null,
             'from ',
             quoteNode,
@@ -78,7 +85,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
 
   factory CodeImportConfig.forJavaLike(
     Node child, {
-    String importKeyword = 'import',
+    String importKeyword = 'import ',
   }) =>
       CodeImportConfig((context, import) {
         if (import.types != null && import.types.isNotEmpty) {
@@ -87,7 +94,6 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
           return CodeExpr.open(
             Container([
               importKeyword,
-              ' ',
               import.package,
               '.*',
             ]),
@@ -109,11 +115,16 @@ class CodeImport extends CodeConfigProxyNode<CodeImport> {
   /// The optional file path of where to find the package.
   final String path;
 
+  /// True indicates that the imported types should
+  /// be re-exported.
+  final bool isExported;
+
   CodeImport._({
     this.package,
     this.alias,
     this.types,
     this.path,
+    this.isExported,
   });
 
   /// Try parse a dynamic value to an argument object.
@@ -127,12 +138,14 @@ class CodeImport extends CodeConfigProxyNode<CodeImport> {
     List<CodeImportType> types,
     // FIXME dynamic?
     String path,
+    bool isExported,
   }) {
     return CodeImport._(
       package: CodePackageName.of(package),
       alias: CodePackageName.of(alias),
       path: path,
       types: types,
+      isExported: isExported,
     );
   }
 }

@@ -40,5 +40,19 @@ void main() {
     assertEq('Hello World', s.title());
     assertEq('HELLO_WORLD', s.constant());
     assertEq('Hello world', s.sentence());
+    assertEq('hello world', s.constant().words());
+  });
+
+  test('operators', () {
+    var s1 = StimName.of('hello world');
+    var s2 = StimName.of('john doe');
+    assertEq('hello world john doe', s1 >> s2);
+    assertEq('john doe hello world', s1 << s2);
+    assertEq('HelloWorld john_doe', s1.pascal() >> s2.snake());
+    var s = (s1.pascal() >> s2.snake());
+
+    // TODO: If we can get the HelloWorld/john_doe case, it is much better.
+    // assertEq('HelloWorld/john_doe', s.path());
+    assertEq('hello/world/john/doe', s.path());
   });
 }

@@ -1,67 +1,21 @@
-part of g3.stimpack.angular.generated;
+part of g3.stimpack.angular.init;
+
+
+/// The only instance of the [StimAngular] pack.
+StimAngular _angular;
 
 
 
-class StimAngularOnStimModelType {
-  StimModelType app;
-
-  StimModelType feature;
-
-  StimModelType module;
-
-  StimModelType service;
-
-  StimModelType model;
-
-  StimModelType resolver;
-
-  StimModelType router;
-
-  StimModelType routerPath;
-
-  StimModelType routerParam;
-
-  StimModelType routerEntry;
-
-  StimModelType routerRedirect;
-
-  StimModelType guard;
-
-  StimModelType component;
-
-  StimModelType componentTemplate;
-
-  StimModelType componentStyle;
-}
-
-
-class StimAngularOnStimIoDir {
-  StimIoDir repoRoot;
-
-  StimIoDir repoSrc;
-
-  StimIoDir repoAssets;
-
-  StimIoDir repoStyles;
-
-  StimIoDir repoI18n;
-
-  StimIoDir repoApp;
-}
-
-
-
-extension StimAngularOnStimModelTypeExtension on StimModelTypeScope {
-  StimAngularOnStimModelType get angular {
-    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
-    return stimpack.angular.onStimModelType;
-  }
-}
-
-
-extension StimAngularOnStimIoDirExtension on StimIoDirScope {
-  StimAngularOnStimIoDir get angular {
-    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
-    return stimpack.angular.onStimIoDir;
+// Provides global access to the "angular" pack. Only one instance of the pack 
+// is created. During the creation, other packs that this pack depends on might 
+// be created as well.
+//  
+extension OnStimPackAngularExtension on StimpackRoot {
+  StimAngular get angular {
+    if (_angular == null) {
+      _angular = StimAngular.stimAngularInstance();
+      _stimInitAngularPack();
+    }
+    return _angular;
   }
 }

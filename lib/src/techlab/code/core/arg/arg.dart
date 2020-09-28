@@ -17,7 +17,8 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       child,
       typeFirst: false,
       separator: ': ',
-      finalPrefix: 'const ',
+      finalPrefix: 'readonly ',
+      privatePrefix: 'private ',
       acceptThisSyntax: true,
       optionalSuffix: '?',
     );
@@ -32,6 +33,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
     @required bool typeFirst,
     String separator = ' ',
     String finalPrefix = 'final ',
+    String privatePrefix,
     bool acceptThisSyntax = false,
     String optionalSuffix,
   }) {
@@ -46,6 +48,7 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
       if (arg.isOptional == true && optionalSuffix?.isNotEmpty == true) {
         name = Pad.right(optionalSuffix, name, onlyIfMissing: true);
       }
+
       Node typeAndName;
 
       if (type != null && name != null) {
@@ -63,10 +66,14 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
         typeAndName = type;
       }
 
-      Node modifier;
+      Node privateModifier;
+      if (arg.isPrivate == true && privatePrefix != null) {
+        privateModifier = Text.of(privatePrefix);
+      }
 
+      Node finalModifier;
       if (arg.isFinal == true && finalPrefix != null) {
-        modifier = Text.of(finalPrefix);
+        finalModifier = Text.of(finalPrefix);
       }
 
       Node init = arg.init;
@@ -76,7 +83,8 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
 
       return Container([
         arg.annotations,
-        modifier,
+        privateModifier,
+        finalModifier,
         typeAndName,
         init,
       ]);

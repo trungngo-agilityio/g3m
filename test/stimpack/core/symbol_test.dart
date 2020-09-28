@@ -13,6 +13,11 @@ class _FakeSymbol extends StimSymbol<_FakeSymbol> {
   List<_FakeSymbol> fakeSymbolList;
 }
 
+class _FakeSymbolNamed extends StimSymbol<_FakeSymbol> implements StimNamed {
+  @override
+  StimName name;
+}
+
 void main() {
   test('clone', () {
     final s1 = _FakeSymbol()
@@ -112,5 +117,14 @@ void main() {
         assert(setPlusSet.contains(s1) && setPlusSet.contains(s2));
       });
     });
+  });
+
+  test('toString', () {
+    expect(_FakeSymbol().toString(), '_FakeSymbol{}');
+    var named = _FakeSymbolNamed();
+    expect(named.toString(), '_FakeSymbolNamed{name: null}');
+
+    named.name = StimName.of('hello');
+    expect(named.toString(), '_FakeSymbolNamed{name: hello}');
   });
 }

@@ -1,5 +1,4 @@
 library g3.stimpack.rest;
 
-export 'src/stimpack/rest/generated/rest.dart';
-
-part 'src/stimpack/rest/rest_extensions.dart';
+export 'src/stimpack/rest/generated/def/rest.dart';
+export 'src/stimpack/rest/rest.dart';

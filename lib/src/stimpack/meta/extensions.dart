@@ -1,6 +1,6 @@
 part of g3.stimpack.meta;
 
-extension StimMetaExtensionOnModelTypeScope on StimModelTypeScope {
+extension OnModelTypeScopeMetaExtension on StimModelTypeScope {
   StimModelType symbolOf({
     @required dynamic name,
     @required StimModelPackage package,

@@ -1,23 +1,23 @@
-part of g3.stimpack.story.generated;
+part of g3.stimpack.story.init;
 
 /// This function is called during the initialization of story
-void stimInitStoryPack(StimStory pack) {
-  _buildActors(pack);
-  _buildActions(pack);
+void _stimInitStoryPack() {
+  _buildActors();
+  _buildActions();
 }
 
-void _buildActors(StimStory pack) {}
+void _buildActors() {}
 
-void _buildActions(StimStory pack) {
-  _buildCrudActions(pack);
-  _buildAuthActions(pack);
-  _buildReversibleActions(pack);
-  _buildFlowActions(pack);
-  _buildMiscActions(pack);
+void _buildActions() {
+  _buildCrudActions();
+  _buildAuthActions();
+  _buildReversibleActions();
+  _buildFlowActions();
+  _buildMiscActions();
 }
 
-void _buildCrudActions(StimStory pack) {
-  final a = pack.action;
+void _buildCrudActions() {
+  final a = _story.action;
 
   /// manage is a set of other actions.
   a.manage = a.of(name: 'manage', actions: {
@@ -30,15 +30,15 @@ void _buildCrudActions(StimStory pack) {
   });
 }
 
-void _buildAuthActions(StimStory pack) {
-  final a = pack.action;
+void _buildAuthActions() {
+  final a = _story.action;
   a.signUp = a.of(name: 'sign up');
   a.signIn = a.of(name: 'sign in');
   a.signOut = a.of(name: 'sign out');
 }
 
-void _buildReversibleActions(StimStory pack) {
-  final a = pack.action;
+void _buildReversibleActions() {
+  final a = _story.action;
   a.star = a.of(name: 'star');
   a.unstar = a.of(name: 'unstar');
 
@@ -68,16 +68,16 @@ void _buildReversibleActions(StimStory pack) {
   a.download = a.of(name: 'download');
 }
 
-void _buildFlowActions(StimStory pack) {
-  final a = pack.action;
+void _buildFlowActions() {
+  final a = _story.action;
   a.invite = a.of(name: 'invite');
   a.suggest = a.of(name: 'suggest');
   a.accept = a.of(name: 'accept');
   a.deny = a.of(name: 'deny');
 }
 
-void _buildMiscActions(StimStory pack) {
-  final a = pack.action;
+void _buildMiscActions() {
+  final a = _story.action;
 
   a.request = a.of(name: 'request');
   a.reset = a.of(name: 'reset');

@@ -15,7 +15,7 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
         if (literal.values == null) return CodeNullLiteral();
         var pairs = literal.values.entries.map(
           (e) {
-            final k = Pad.of(quote, quote, Text.of(e.key));
+            final k = e.key;
             return Container([k, separator, e.value]);
           },
         ).toList();
@@ -61,17 +61,17 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
 }
 
 class CodeMapLiteral extends CodeConfigProxyNode<CodeMapLiteral> {
-  final Map<String, CodeExpr> values;
+  final Map<CodeExpr, CodeExpr> values;
 
   CodeMapLiteral._(this.values);
 
-  factory CodeMapLiteral.of(Map<String, dynamic> values) {
+  factory CodeMapLiteral.of(Map<dynamic, dynamic> values) {
     if (values == null) return CodeMapLiteral._(null);
 
-    final res = <String, CodeExpr>{};
+    final res = <CodeExpr, CodeExpr>{};
 
     for (final e in values.entries) {
-      res[e.key] = CodeExpr.of(e.value, acceptNull: true);
+      res[CodeExpr.of(e.key)] = CodeExpr.of(e.value, acceptNull: true);
     }
 
     return CodeMapLiteral._(res);

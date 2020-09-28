@@ -27,6 +27,10 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
         final array = type.array;
 
         Node name = type.name;
+        if (type.instance != null) {
+          name = Container([type.instance, '.', name]);
+        }
+
         if (array != true && (params == null || params.params.isEmpty)) {
           // If there is no complex settings, just return the
           // type name.
@@ -72,13 +76,15 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   @override
   final CodeTypeName name;
 
+  final CodeRef instance;
+
   /// The list of generic params.
   final CodeGenericParamList generic;
 
   /// True indicates that this is an array type.
   final bool array;
 
-  CodeType._({this.name, this.generic, this.array});
+  CodeType._({this.instance, this.name, this.generic, this.array});
 
   static CodeType _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeType>(value, (v) {
@@ -92,7 +98,8 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   }
 
   factory CodeType.of({
-    dynamic name,
+    dynamic instance,
+    @required dynamic name,
     dynamic generic,
     bool array,
   }) {
@@ -101,6 +108,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     }
 
     return CodeType._(
+      instance: CodeRef.of(instance),
       name: CodeTypeName.of(name),
       generic: CodeGenericParamList.of(generic),
       array: array,

@@ -1,7 +1,12 @@
 part of g3.stimpack.model;
 
+/// The pre-defined set of types, commonly used for modeling.
 class StimModelTypes {
   StimModelType tag,
+      name,
+      nameSet,
+      funcCode,
+      funcCodeSet,
       tagSet,
       type,
       typeSet,
@@ -15,8 +20,8 @@ class StimModelTypes {
       patternSet,
       range,
       rangeSet,
-      rule,
-      ruleSet,
+      fieldRule,
+      fieldRuleSet,
       error,
       errorSet,
       httpStatus,
@@ -28,6 +33,7 @@ class StimModelTypes {
 // Reusable type mirror fo StimSymbol type.
 TypeMirror _stimSymbolType;
 
+// Pattern to split type name string to a bag of words.
 RegExp _splitTypeNameRegEx = RegExp('[A-Z][^A-Z]*');
 
 class StimModelTypeScope {
@@ -45,6 +51,7 @@ class StimModelTypeScope {
       set;
 
   Set<StimModelType> primitiveTypes;
+  Set<StimModelType> numberTypes;
   Set<StimModelType> collectionTypes;
 
   /// Provides meta information for the model package.
@@ -55,18 +62,23 @@ class StimModelTypeScope {
 
   StimModelType of({
     @meta.required dynamic name,
-    Set<StimModelTag> tags,
     @meta.required StimModelPackage package,
-    Set<StimModelType> mixins,
     Set<StimModelField> fields,
+    Set<StimModelTypeRule> rules,
+    Set<StimModelFilter> filters,
+    String comment,
+    Set<StimModelTag> tags,
   }) {
     final res = StimModelType()
       ..name = StimName.of(name)
-      ..tags = tags
       ..package = package
-      ..mixins = mixins
-      ..fields = fields;
+      ..fields = fields ?? {}
+      ..filters = filters ?? {}
+      ..comment = comment
+      ..rules = rules ?? {}
+      ..tags = tags;
 
+    // Adds the type to the package if that is specified.
     package?.types += res;
     return res;
   }
@@ -74,11 +86,24 @@ class StimModelTypeScope {
   StimModelType primitiveOf({
     dynamic name,
     @meta.required StimModelPackage package,
+    String comment,
+    Set<StimModelTag> tags,
   }) {
-    return of(name: name, package: package, fields: null);
+    return of(
+      name: name,
+      package: package,
+      fields: null,
+      comment: comment,
+      tags: tags,
+    );
   }
 
-  StimModelType fromDart(Type type) {
+  StimModelType fromDart(
+    Type type, {
+    Set<StimModelFilter> filters,
+    String comment,
+    Set<StimModelTag> tags,
+  }) {
     _dartTypes ??= {};
     var stimType = _dartTypes[type];
 
@@ -143,29 +168,34 @@ class StimModelTypeScope {
     stimType ??= StimModelType()
       ..name = StimName.of(typeName)
       ..package = package
-      ..dartType = rt;
+      ..dartType = rt
+      ..filters = filters ?? {}
+      ..comment = comment
+      ..tags = tags ?? {};
 
     return _dartTypes[rt] = stimType;
   }
 
   StimModelType collectionOf({
     dynamic name,
-    Set<StimModelTag> tags,
     @meta.required StimModelPackage package,
     @meta.required Set<StimModelField> fields,
     @meta.required StimModelType collection,
     @meta.required StimModelType item,
-    Set<StimModelType> mixins,
+    String comment,
+    Set<StimModelTypeRule> rules,
+    Set<StimModelTag> tags,
   }) {
     assert(collection != null, 'collection is required');
     assert(item != null, 'item is required');
 
     return of(
       name: name,
-      tags: tags,
       package: package,
       fields: fields,
-      mixins: mixins,
+      comment: comment,
+      rules: rules,
+      tags: tags,
     )
       ..collection = collection
       ..item = item;
@@ -173,10 +203,12 @@ class StimModelTypeScope {
 
   StimModelType listOf({
     dynamic name,
-    Set<StimModelTag> tags,
     @meta.required StimModelType item,
-    Set<StimModelType> mixins,
+    String comment,
+    Set<StimModelTypeRule> rules,
+    Set<StimModelTag> tags,
   }) {
+    assert(item != null, 'item is required');
     final list = stimpack.model.type.list;
     return collectionOf(
       name: name ?? list.name >> '<' >> item.name >> '>',
@@ -184,14 +216,18 @@ class StimModelTypeScope {
       fields: list.fields,
       collection: list,
       item: item,
+      comment: comment,
+      rules: rules,
+      tags: tags,
     );
   }
 
   StimModelType setOf({
     dynamic name,
-    Set<StimModelTag> tags,
     @meta.required StimModelType item,
-    Set<StimModelType> mixins,
+    String comment,
+    Set<StimModelTypeRule> rules,
+    Set<StimModelTag> tags,
   }) {
     final set = stimpack.model.type.set;
     return collectionOf(
@@ -200,6 +236,9 @@ class StimModelTypeScope {
       fields: set.fields,
       collection: set,
       item: item,
+      comment: comment,
+      rules: rules,
+      tags: tags,
     );
   }
 }
@@ -208,14 +247,14 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// A model might belong to a package.
   StimModelPackage package;
 
-  /// The list of mixins types. Given this list, the actual list
-  /// of declared fields might be different from the list of instance fields,
-  /// which is the union of all fields defined in both the current class
-  /// and its mixins.
-  Set<StimModelType> mixins;
-
-  /// The list of declared fields for this type.
+  /// The set of declared fields for this type.
   Set<StimModelField> fields;
+
+  /// The set of rules applied to this type
+  Set<StimModelTypeRule> rules;
+
+  /// The set of filters can be applied to this type.
+  Set<StimModelFilter> filters;
 
   /// This is only used for collection type.
   StimModelType collection;
@@ -228,42 +267,109 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// to a [StimModelPackage] that is also from a dart library.
   TypeMirror dartType;
 
+  String comment;
+
   /// True indicates that this is a collection type.
   bool get isCollection => collection != null;
 
-  bool get isDartSet => collection == stimpack.model.type.set;
+  bool get isDartSet => collection == _model.type.set;
 
-  bool get isDartList => collection == stimpack.model.type.list;
+  bool get isDartList => collection == _model.type.list;
 
-  /// Determines if this is a primitive dart type.
-  bool get isDartPrimitive => stimpack.model.type.primitiveTypes.contains(this);
+  /// Determines if this field is a dart number type, which could
+  /// be int, double, ...
+  bool get isDartNumber => _model.type.numberTypes.contains(this);
+
+  /// Determines if this field is a dart string type.
+  bool get isDartString => _model.type.string == this;
+
+  /// Determines if this field is a dart bool type.
+  bool get isDartBool => _model.type.bool == this;
+
+  /// Determines if this field is a dart duration type.
+  bool get isDartDuration => _model.type.duration == this;
+
+  /// Determines if this field is a dart date time type.
+  bool get isDartDateTime => _model.type.dateTime == this;
 
   /// True indicates that this type is from the dart type system.
   /// It is a not a user-defined type.
   bool get isDart => dartType != null;
 
-  /// Gets the reference to this model.
-  StimModelType ref() => StimModelTypeRef()..symbol = this;
+  StimModelType();
 
-  StimModelType refWith({
-    dynamic name,
-    Set<StimModelTag> tags,
-    StimModelPackage package,
-    Set<StimModelType> mixins,
-    Set<StimModelField> fields,
-  }) {
-    final res = ref();
-    if (name != null) res.name = StimName.of(name);
-    if (tags != null) res.tags = tags;
-    if (package != null) res.package = package;
-    if (mixins != null) res.mixins = mixins;
-    if (fields != null) res.fields = fields;
-    package?.types += res;
+  Set<StimModelChoice> get choices {
+    if (rules?.isNotEmpty != true) return {};
+    Set<StimModelChoice> res;
+
+    for (final rule in rules) {
+      final choices = rule.choices;
+      if (choices?.isNotEmpty != true) continue;
+      if (res == null) {
+        res = choices;
+      } else {
+        res = res.intersection(choices);
+      }
+    }
+
     return res;
   }
 
-  StimModelType();
-}
+  /// Gets the range applied to the field
+  StimModelRange get range {
+    if (rules?.isNotEmpty != true) return null;
+    final processed = <StimModelRange>{};
+    var min, max;
 
-class StimModelTypeRef extends StimSymbolRef<StimModelType>
-    implements StimModelType {}
+    for (final rule in rules) {
+      final ranges = rule.ranges;
+      if (ranges?.isNotEmpty != true) continue;
+      for (final range in ranges) {
+        if (processed.contains(range)) continue;
+        processed.add(range);
+        if (range.min != null && (min == null || range.min < min)) {
+          // record new min
+          min = range.min;
+        }
+
+        if (range.max != null && (max == null || range.max > max)) {
+          // record new max
+          max = range.max;
+        }
+      }
+    }
+
+    // combine the ranges to make the final result.
+    if (processed.isEmpty) return null;
+
+    return StimModelRange()
+      ..name = StimName.of('$min-$max')
+      ..min = min
+      ..max = max;
+  }
+
+  StimModelType copyWith({
+    dynamic name,
+    StimModelPackage package,
+    Set<StimModelField> fields,
+    Set<StimModelTypeRule> rules,
+    Set<StimModelFilter> filters,
+    StimModelType collection,
+    StimModelType item,
+    TypeMirror dartType,
+    String comment,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelType()
+      ..name = StimName.of(name ?? this.name)
+      ..package = package ?? this.package
+      ..fields = fields ?? this.fields
+      ..rules = rules ?? this.rules
+      ..filters = filters ?? this.filters
+      ..collection = collection ?? this.collection
+      ..item = item ?? this.item
+      ..dartType = dartType ?? this.dartType
+      ..comment = comment ?? this.comment
+      ..tags = tags ?? this.tags;
+  }
+}

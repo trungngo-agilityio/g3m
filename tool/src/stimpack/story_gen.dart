@@ -19,12 +19,12 @@ void genStoryPack() {
   final tActor = t.symbolOf(name: 'actor', package: meta);
 
   tEpic.fields = {
-    f.setOf(name: 'stories', type: tStory).required(),
+    f.setOf(name: 'stories', type: tStory)..required(),
   };
 
   tStory.fields = {
-    f.of(name: 'actor', type: tActor).required(),
-    f.of(name: 'action', type: tAction).required(),
+    f.of(name: 'actor', type: tActor)..required(),
+    f.of(name: 'action', type: tAction)..required(),
   };
 
   tActor.fields = {

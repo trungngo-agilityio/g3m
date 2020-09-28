@@ -1,6 +1,6 @@
-part of g3.stimpack.ngxs.generated;
+part of g3.stimpack.ngxs.init;
 
 /// This function is called during the initialization of ngxs
-void stimInitNgxsPack(StimNgxs pack) {
+void _stimInitNgxsPack() {
   /// init ngxs here
 }

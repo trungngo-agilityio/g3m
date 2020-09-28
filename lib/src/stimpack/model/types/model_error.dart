@@ -40,11 +40,22 @@ class StimModelError extends StimModelSymbol<StimModelError> {
   /// http status.
   StimModelHttpStatus httpStatus;
 
-  /// Gets the reference to this model.
-  StimModelError ref() => StimModelErrorRef()..symbol = this;
-
   StimModelError();
-}
 
-class StimModelErrorRef extends StimSymbolRef<StimModelError>
-    implements StimModelError {}
+  StimModelError copyWith({
+    dynamic name,
+    int code,
+    String message,
+    StimModelGrpcStatus grpcStatus,
+    StimModelHttpStatus httpStatus,
+    Set<StimModelTag> tags,
+  }) {
+    return StimModelError()
+      ..name = StimName.of(name ?? this.name)
+      ..code = code ?? this.code
+      ..message = message ?? this.message
+      ..grpcStatus = grpcStatus ?? this.grpcStatus
+      ..httpStatus = httpStatus ?? this.httpStatus
+      ..tags = tags ?? this.tags;
+  }
+}

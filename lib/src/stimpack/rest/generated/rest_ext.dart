@@ -1,34 +1,21 @@
-part of g3.stimpack.rest.generated;
+part of g3.stimpack.rest.init;
+
+
+/// The only instance of the [StimRest] pack.
+StimRest _rest;
 
 
 
-class StimRestOnStimModelType {
-  StimModelType api;
-
-  StimModelType apiRequest;
-
-  StimModelType apiResponse;
-
-  StimModelType crudApi;
-
-  StimModelType crudCreateOneApi;
-
-  StimModelType crudUpdateOneApi;
-
-  StimModelType crudFindOneApi;
-
-  StimModelType crudDeleteOneApi;
-
-  StimModelType crudFindApi;
-
-  StimModelType crudDeleteApi;
-}
-
-
-
-extension StimRestOnStimModelTypeExtension on StimModelTypeScope {
-  StimRestOnStimModelType get rest {
-    /// Gets the type meta through stimpack public instance to trigger lazy init of the pack.
-    return stimpack.rest.onStimModelType;
+// Provides global access to the "rest" pack. Only one instance of the pack 
+// is created. During the creation, other packs that this pack depends on might 
+// be created as well.
+//  
+extension OnStimPackRestExtension on StimpackRoot {
+  StimRest get rest {
+    if (_rest == null) {
+      _rest = StimRest.stimRestInstance();
+      _stimInitRestPack();
+    }
+    return _rest;
   }
 }

@@ -15,6 +15,7 @@ class CodeClassConfig extends CodeConfigNode<CodeClass> {
         return Container([
           '\n',
           clazz.comment,
+          clazz.annotations,
           Trim.leftRight(
             Container([
               clazz.modifier,
@@ -67,10 +68,13 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
 
   /// The list of data types that this class implements.
   final CodeTypeList implements;
+
   final CodeTypeList mixins;
 
   /// Class-level code comment.
   final CodeComment comment;
+
+  final CodeAnnotationList annotations;
 
   /// The class body.
   final CodeBlock body;
@@ -82,6 +86,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
     this.extend,
     this.implements,
     this.mixins,
+    this.annotations,
     this.comment,
     this.body,
   }) : assert(name != null);
@@ -103,6 +108,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
     dynamic properties,
     dynamic functions,
     dynamic comment,
+    dynamic annotations,
     dynamic body,
   }) =>
       CodeClass(
@@ -121,6 +127,7 @@ class CodeClass extends CodeConfigProxyNode<CodeClass> implements _NamedNode {
         }),
         implements: CodeTypeList.of(implements),
         mixins: CodeTypeList.of(mixins),
+        annotations: CodeAnnotationList.of(annotations),
         body: CodeBlock.of(
           Container([
             CodeStatement.of(

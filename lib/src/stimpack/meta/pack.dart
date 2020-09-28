@@ -14,13 +14,6 @@ class StimMetaPackScope {
 
 class StimMetaPack extends StimModelSymbol<StimMetaPack> {
   StimModelType types;
-  StimMetaPackRef _ref;
-
-  /// Gets the reference to this model.
-  StimMetaPack get ref => _ref ??= StimMetaPackRef()..symbol = this;
 
   StimMetaPack();
 }
-
-class StimMetaPackRef extends StimSymbolRef<StimMetaPack>
-    implements StimMetaPack {}

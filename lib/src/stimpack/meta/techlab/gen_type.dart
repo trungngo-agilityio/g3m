@@ -13,7 +13,6 @@ class StimGenMetaType implements Node {
 
   StimName _stimNameClass,
       _symbolClassName,
-      _symbolRefClassName,
       _scopeClassName,
       _simplifiedSymbolName;
 
@@ -29,10 +28,9 @@ class StimGenMetaType implements Node {
 
     return DartCodeFile.of(
       fileName,
-      package: _config.codePackageLibraryOf(pack, isPart: true),
+      package: _config.codeGeneratedPackageLibraryOf(pack, isPart: true),
       classes: [
         _symbolClassDef(),
-        _symbolRefClassDef(),
         _symbolScopeClassDef(),
       ],
     );
@@ -48,7 +46,6 @@ class StimGenMetaType implements Node {
 
     _stimNameClass = StimName.of('stim name').pascal();
     _symbolClassName = _config.symbolClassNameOf(type);
-    _symbolRefClassName = _config.symbolRefClassNameOf(pack, type);
     _scopeClassName = _config.scopeClassNameOf(type);
     _simplifiedSymbolName = _config.fieldNameSimplified(pack, type.name);
   }
@@ -68,91 +65,63 @@ class StimGenMetaType implements Node {
       );
     }
 
-    final refClass = _config.symbolRefClassNameOf(pack, type);
-    final refFunction = CodeFunction.of(
-      name: 'ref',
-      returns: _symbolClassName,
-      body: CodeReturn.of(
-        Container([
-          CodeConstructorCall.of(className: refClass),
-          CodeCascadeExpr.of(CodeAssignExpr.of('symbol', CodeRef.ofThis())),
-        ]),
-      ),
-    );
-
     return CodeClass.of(
       name: _symbolClassName,
       extend: baseSymbolClass,
       fields: fields.toList(),
       functions: [
-        refFunction,
-        _symbolClassRefWithFunction(),
+        _symbolCopyWithFunction(),
       ],
       constructors: CodeConstructor.of(),
     );
   }
 
-  Node _ifNullThenAssignStatement(StimName name, [Node value]) {
-    // This is the value assigned to the field.
-    // In the case of dart set and list data type, we inits
-    // the field with empty set/list to avoid null check.
-    value ??= CodeRef.of(name);
-    Node expr = CodeAssignExpr.of(CodeAccessExpr.of('res', name), value);
-    expr = CodeIf.of(
-        condition: CodeNotEqualExpr.of(name, CodeNullLiteral()), then: expr);
-    expr = Container([expr, '\n']);
-    return expr;
-  }
-
-  CodeFunction _symbolClassRefWithFunction() {
-    // Copies all input arguments to the symbol.
-    final assignList = <Node>[];
-
-    final nameRef = CodeRef.of('name');
+  CodeFunction _symbolCopyWithFunction() {
+    Node nameRef = CodeRef.of('name');
 
     // Copy the dynamic input name, and covert it to a stim name.
+    Node existingValue = CodeAccessExpr.of(CodeRef.ofThis(), nameRef);
 
-    final createName = CodeConstructorCall.of(
-        className: _stimNameClass, name: 'of', args: nameRef);
-    assignList.add(_ifNullThenAssignStatement(
-      StimName.of('name'),
-      createName,
-    ));
+    Node nameAssign = CodeAssignExpr.of(
+        nameRef,
+        CodeConstructorCall.of(
+          className: _stimNameClass,
+          name: 'of',
+          args: CodeConditionalNullExpr.of(nameRef, existingValue),
+        ));
+
+    // Copies all input arguments to the symbol.
+    final argsAssign = <Node>[];
 
     for (final field in _metaFields + _tagSetField) {
       final name = field.name.camel();
-      assignList.add(_ifNullThenAssignStatement(name));
+
+      // This is the value assigned to the field.
+      // In the case of dart set and list data type, we inits
+      // the field with existingValue set/list to avoid null check.
+      Node value = CodeRef.of(name);
+      Node existingValue = CodeAccessExpr.of(CodeRef.ofThis(), value);
+      value = CodeConditionalNullExpr.of(CodeRef.of(name), existingValue);
+
+      argsAssign.add(CodeAssignExpr.of(name, value));
     }
 
-    final resVar = CodeVar.of(
-        name: 'res', isFinal: true, init: CodeFunctionCall.of(name: 'ref'));
-
-    final resVarRef = CodeRef.of(resVar);
-    final body = <Node>[
-      resVar,
-      ...assignList,
-      CodeReturn.of(resVarRef),
+    final assignList = [
+      nameAssign,
+      ...argsAssign,
     ];
 
-    final ofFunction = _createSymbolFunction(
-      'refWith',
-      addRequired: false,
+    return _createSymbolFunction(
+      'copyWith',
+      addRequired: true,
       comment:
-          '''Creates a reference to the current symbol "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
-      body: Container(body),
-    );
-    return ofFunction;
-  }
-
-  CodeClass _symbolRefClassDef() {
-    final baseSymbolClass = CodeType.of(name: 'stim symbol ref', generic: [
-      _symbolClassName,
-    ]);
-
-    return CodeClass.of(
-      name: _symbolRefClassName,
-      extend: baseSymbolClass,
-      implements: _symbolClassName,
+          '''Creates a new "${_simplifiedSymbolName}" of [$_symbolClassName] type.''',
+      body: CodeReturn.of(
+        _cascadeMultiCodeLine(
+          CodeConstructorCall.of(className: _symbolClassName),
+          assignList,
+        ),
+      ),
     );
   }
 
@@ -234,7 +203,11 @@ class StimGenMetaType implements Node {
   CodeFunction _createSymbolFunction(String functionName,
       {Node body, String comment, bool addRequired}) {
     final ofFunctionArgs = <CodeArg>[
-      CodeArg.of(name: 'name', type: 'dynamic'),
+      CodeArg.of(
+        name: 'name',
+        type: 'dynamic',
+        annotations: addRequired == true ? CodeAnnotation.required() : null,
+      ),
     ];
 
     for (final i in _metaFields + _tagSetField) {
