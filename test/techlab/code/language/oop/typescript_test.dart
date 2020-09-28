@@ -61,7 +61,7 @@ void main() {
       '\n'
       '\n'
       'import * from \'io\';\n'
-      'import * as io_path from \'path\';\n'
+      'import * as ioPath from \'path\';\n'
       'import { Vector as MyVector , HumanMatrix } from \'math\';\n'
       '\n'
       '\n'
