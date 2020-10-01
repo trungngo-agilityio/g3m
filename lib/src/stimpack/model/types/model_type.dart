@@ -46,6 +46,7 @@ class StimModelTypeScope {
       uri,
       dateTime,
       type,
+      field,
       map,
       list,
       set;

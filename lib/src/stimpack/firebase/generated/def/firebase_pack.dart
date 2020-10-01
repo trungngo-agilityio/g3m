@@ -117,6 +117,9 @@ class StimFirebase extends StimPack {
       f.of(name: 'id field', type: t.model.field)..required(),
 
       /// field "firestoreCollection"
+      f.of(name: 'crudApi', type: t.rest.crudApi),
+
+      /// field "firestoreCollection"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
 
       /// field "firestoreCollection"

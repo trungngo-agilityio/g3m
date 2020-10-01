@@ -75,6 +75,8 @@ void genFirebasePack() {
     // A field in models' field set used as the identifier
     f.of(name: 'id field', type: t.model.field)..required(),
 
+    f.of(name: 'crudApi', type: t.rest.crudApi),
+
     // The sub collections
     fFirestoreCollectionSet,
 

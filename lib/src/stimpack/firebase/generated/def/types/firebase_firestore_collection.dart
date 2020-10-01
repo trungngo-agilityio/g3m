@@ -11,6 +11,8 @@ class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirest
 
   StimModelField idField;
 
+  StimRestCrudApi crudApi;
+
   Set<StimFirebaseFirestoreCollection> collections;
 
   StimFirebaseSecurityRule rule;
@@ -25,7 +27,7 @@ class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirest
   dynamic name, @required
   StimFirebaseFirestore firestore, StimFirebaseFirestoreCollection parent, @required
   StimModelType model, @required
-  StimModelField idField, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
+  StimModelField idField, StimRestCrudApi crudApi, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
   StimRbacResource resource, Set<StimModelTag> tags}) {
     return StimFirebaseFirestoreCollection()
         ..name = StimName.of(name ?? this.name)
@@ -33,6 +35,7 @@ class StimFirebaseFirestoreCollection extends StimModelSymbol<StimFirebaseFirest
         ..parent = parent ?? this.parent
         ..model = model ?? this.model
         ..idField = idField ?? this.idField
+        ..crudApi = crudApi ?? this.crudApi
         ..collections = collections ?? this.collections
         ..rule = rule ?? this.rule
         ..resource = resource ?? this.resource
@@ -47,7 +50,7 @@ class StimFirebaseFirestoreCollectionScope {
   dynamic name, @required
   StimFirebaseFirestore firestore, StimFirebaseFirestoreCollection parent, @required
   StimModelType model, @required
-  StimModelField idField, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
+  StimModelField idField, StimRestCrudApi crudApi, Set<StimFirebaseFirestoreCollection> collections, StimFirebaseSecurityRule rule, @required
   StimRbacResource resource, Set<StimModelTag> tags}) {
     return StimFirebaseFirestoreCollection()
         ..name = StimName.of(name)
@@ -55,6 +58,7 @@ class StimFirebaseFirestoreCollectionScope {
         ..parent = parent
         ..model = model
         ..idField = idField
+        ..crudApi = crudApi
         ..collections = collections ?? {}
         ..rule = rule
         ..resource = resource

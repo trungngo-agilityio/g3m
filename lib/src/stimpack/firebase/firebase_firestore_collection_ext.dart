@@ -1,17 +1,18 @@
 part of g3.stimpack.firebase.init;
 
 extension OnStimFirebaseFirestoreCollectionExtension
-on StimFirebaseFirestoreCollection {
+    on StimFirebaseFirestoreCollection {
   void childOf(StimFirebaseFirestoreCollection target) {
     assert(target != null, 'target is required');
     assert(parent == null, 'parent must not be set');
-    assert(!target.collections.contains(
-        this), 'target must not contains the current collection');
+    assert(!target.collections.contains(this),
+        'target must not contains the current collection');
     parent = target;
     target.collections.add(this);
   }
 
-  StimModelField partOf(StimFirebaseFirestoreCollection target, {
+  StimModelField partOf(
+    StimFirebaseFirestoreCollection target, {
     dynamic name,
     String comment,
   }) {
@@ -21,7 +22,8 @@ on StimFirebaseFirestoreCollection {
   }
 
   /// For all target collection, has the id field is the src id field.
-  StimModelField hasOne(StimFirebaseFirestoreCollection target, {
+  StimModelField hasOne(
+    StimFirebaseFirestoreCollection target, {
     dynamic name,
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
@@ -41,7 +43,8 @@ on StimFirebaseFirestoreCollection {
     return field;
   }
 
-  StimModelField hasOneEmbedded(StimModelType target, {
+  StimModelField hasOneEmbedded(
+    StimModelType target, {
     dynamic name,
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
@@ -63,7 +66,8 @@ on StimFirebaseFirestoreCollection {
 
   /// For all target collections, add a foreign key field that link to
   /// the source collection.
-  StimModelField hasMany(StimFirebaseFirestoreCollection target, {
+  StimModelField hasMany(
+    StimFirebaseFirestoreCollection target, {
     dynamic name,
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
@@ -83,7 +87,8 @@ on StimFirebaseFirestoreCollection {
     return field;
   }
 
-  StimModelField hasManyEmbedded(StimModelType target, {
+  StimModelField hasManyEmbedded(
+    StimModelType target, {
     dynamic name,
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
@@ -105,7 +110,7 @@ on StimFirebaseFirestoreCollection {
 }
 
 extension OnStimFirebaseFirestoreCollectionScopeExtension
-on StimFirebaseFirestoreCollectionScope {
+    on StimFirebaseFirestoreCollectionScope {
   /// Creates a root firestore collection, with the specified [name].
   ///
   /// The [StimFirebaseFirestoreCollection.resource] is automatically
@@ -131,7 +136,7 @@ on StimFirebaseFirestoreCollectionScope {
 
     // automatically add the id field to the model.
     // This is the firestore requirements.
-    final idField = stimpack.model.field.model.autoStringId.copyWith();
+    final idField = stimpack.model.field.model.stringId.copyWith();
     fields ??= {};
     fields.add(idField);
 
@@ -143,13 +148,14 @@ on StimFirebaseFirestoreCollectionScope {
       resource: null,
       idField: idField,
       model: stimpack.model.type.of(
+        name: null,
         package: package,
         fields: fields,
       ),
     );
 
     /// Makes model name is always collection names
-    res.model.name = StimName.of(res);
+    res.model.name = StimName.refOf(res);
 
     // adds the collection to the parent firestore.
     _addCollectionResource('instance of', res, firestore.resource);
@@ -200,11 +206,13 @@ on StimFirebaseFirestoreCollectionScope {
       resource: null,
       idField: idField,
       model: stimpack.model.type.of(
-        name: StimName.of(name),
+        name: null,
         package: package,
         fields: fields,
       ),
     );
+
+    res.model.name = StimName.refOf(res);
 
     _addCollectionResource('collection of', res, parent.resource);
 
@@ -213,9 +221,11 @@ on StimFirebaseFirestoreCollectionScope {
   }
 }
 
-void _addCollectionResource(String text,
-    StimFirebaseFirestoreCollection res,
-    StimRbacResource parentResource,) {
+void _addCollectionResource(
+  String text,
+  StimFirebaseFirestoreCollection res,
+  StimRbacResource parentResource,
+) {
   // Makes a resource for this collection.
   final r = stimpack.rbac.resource;
   res.resource = r.of(

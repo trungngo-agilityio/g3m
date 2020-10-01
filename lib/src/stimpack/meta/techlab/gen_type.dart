@@ -61,6 +61,7 @@ class StimGenMetaType implements Node {
         CodeField.of(
           name: field.name,
           type: field.type.name,
+          comment: field.comment,
         ),
       );
     }
@@ -69,6 +70,7 @@ class StimGenMetaType implements Node {
       name: _symbolClassName,
       extend: baseSymbolClass,
       fields: fields.toList(),
+      comment: type.comment,
       functions: [
         _symbolCopyWithFunction(),
       ],

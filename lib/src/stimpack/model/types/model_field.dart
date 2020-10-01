@@ -93,6 +93,10 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   bool get isWriteOnly =>
       rules?.contains(stimpack.model.fieldRule.writeOnly) == true;
 
+  /// Determines if the field is modifiable after being created or not.
+  bool get isCreateOnly =>
+      rules?.contains(stimpack.model.fieldRule.createOnly) == true;
+
   /// Determines if the field is system only or not.
   bool get isSystemOnly =>
       rules?.contains(stimpack.model.fieldRule.systemOnly) == true;
@@ -128,6 +132,9 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   /// Marks that this field is a write only field. An example,
   /// a field password might a write only field.
   void writeOnly() => rules += stimpack.model.fieldRule.writeOnly;
+
+  /// Marks that this field is not modifiable after being created.
+  void createOnly() => rules += stimpack.model.fieldRule.createOnly;
 
   /// Marks that this field is a system field. It will not be readable
   /// by users or external systems

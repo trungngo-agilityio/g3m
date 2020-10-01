@@ -13,48 +13,48 @@ class StimModelSymbol<T extends StimModelSymbol<T>> extends StimSymbol<T>
 
   StimModelSymbol.of(this.name, {this.tags});
 
-  StimModelTag toTag() {
-    final tagName = runtimeType.toString();
-    return StimModelTag()
-      ..name = StimName.of(tagName)
-      ..value = this;
+  /// Converts the symbol to a model tag, that can be added
+  /// as tag to some other model.
+  StimModelTag toTag([dynamic name]) {
+    return stimpack.model.tag.of(name: name, value: this);
   }
 
-  StimModelTag addSymbolAsTag<E>(StimModelSymbol symbol) {
+  StimModelTag addValueAsTypeTag(dynamic value) {
     tags ??= {};
-    final tag = symbol.toTag();
+    final tag = stimpack.model.tag.withTypeOf(value);
     tags.add(tag);
     return tag;
   }
 
-  E lazyInitTaggedSymbolOfExactType<E extends StimModelSymbol<E>>(
-      E Function() build) {
-    var symbol = firstTaggedSymbolOfExactType<E>();
-    if (symbol == null) {
-      symbol = build();
-      addSymbolAsTag(symbol);
-    }
-
-    return symbol;
+  StimModelTag setValueAsTypeTag(dynamic value) {
+    final tag = stimpack.model.tag.withTypeOf(value);
+    tags?.removeWhereNameIs(tag.name);
+    tags ??= {};
+    tags.add(tag);
+    return tag;
   }
 
-  void removeTaggedSymbol(StimModelSymbol symbol) {
-    if (tags?.isNotEmpty != true) return;
-    final tagName = StimName.of(symbol.runtimeType.toString());
-    return tags.removeWhere((e) => e.name == tagName && e.value == symbol);
-  }
-
-  E firstTaggedSymbolOfExactType<E>() {
-    final tagName = E.toString();
+  E firstValueOfTypeTag<E>() {
+    final tagName = StimModelTagScope.tagNameOfType(E);
     final value = tags?.firstWhereNameIs(tagName)?.value;
     return value == null ? null : value as E;
   }
 
-  Set<E> allTaggedSymbolsOfExactType<E>() {
-    final tagName = E.toString();
-    final symbolTags = tags?.whereNameIs(tagName);
-    return symbolTags
-        ?.map((e) => e.value == null ? null : e.value as E)
-        ?.toSet();
+  Iterable<E> allValuesOfTypeTag<E>() {
+    final tagName = StimModelTagScope.tagNameOfType(E);
+    return tags
+        ?.whereNameIs(tagName)
+        ?.map((e) => e.value == null ? null : e.value as E);
+  }
+
+  void removeAllTypeTags<E>() {
+    final tagName = StimModelTagScope.tagNameOfType(E);
+    tags?.removeWhereNameIs(tagName);
+  }
+
+  void removeTypeTagOfValue(dynamic value) {
+    assert(value != null);
+    final tagName = StimModelTagScope.tagNameOfType(value.runtimeType);
+    tags?.removeWhere((e) => e.name == tagName && e.value == value);
   }
 }

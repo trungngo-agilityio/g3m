@@ -5,17 +5,17 @@ extension OnModelTypeScopeMetaExtension on StimModelTypeScope {
     @required dynamic name,
     @required StimModelPackage package,
     Set<StimModelField> fields,
+    String comment,
   }) {
     assert(package != null, 'package is required');
     assert(package.name?.isNotEmpty == true, 'package name is required');
 
-    final res = StimModelType()
-      ..name = 'stim ' >> package.name >> StimName.of(name)
+    return stimpack.model.type.of(
+      name: 'stim ' >> package.name >> StimName.of(name),
       // adds a tag for the meta value.
-      ..package = package
-      ..fields = fields;
-
-    package?.types += res;
-    return res;
+      package: package,
+      fields: fields,
+      comment: comment,
+    );
   }
 }

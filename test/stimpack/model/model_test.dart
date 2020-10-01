@@ -17,25 +17,25 @@ void main() {
     final t4 = t.of(name: 't4', package: null);
 
     test('add & remove', () {
-      final tag1 = t1.addSymbolAsTag(t2);
+      final tag1 = t1.addValueAsTypeTag(t2);
       assert(tag1 != null);
       assert(tag1.value == t2);
 
-      t1.addSymbolAsTag(t3);
-      t1.addSymbolAsTag(t4);
+      t1.addValueAsTypeTag(t3);
+      t1.addValueAsTypeTag(t4);
 
-      final t2_tag = t1.firstTaggedSymbolOfExactType<_FakeSymbol>();
+      final t2_tag = t1.firstValueOfTypeTag<_FakeSymbol>();
       assert(t2_tag != null);
       assert(t2 == t2_tag);
       assert(t2_tag.name == t2.name);
 
-      var ts = t1.allTaggedSymbolsOfExactType<_FakeSymbol>();
+      var ts = t1.allValuesOfTypeTag<_FakeSymbol>();
       assert(ts?.length == 2);
       assert(ts.contains(t2));
       assert(ts.contains(t3));
 
-      t1.removeTaggedSymbol(t2);
-      ts = t1.allTaggedSymbolsOfExactType<_FakeSymbol>();
+      t1.removeTypeTagOfValue(t2);
+      ts = t1.allValuesOfTypeTag<_FakeSymbol>();
       assert(ts?.length == 1);
       assert(!ts.contains(t2));
       assert(ts.contains(t3));

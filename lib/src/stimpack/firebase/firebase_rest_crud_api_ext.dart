@@ -40,12 +40,20 @@ extension OnStimRestCrudApiScopeFirebaseExtension on StimRestCrudApiScope {
 
     // Tags the collection to the crud api for easy navigation back from
     // the crud apis.
-    crudApi.addSymbolAsTag(collection);
-    collection.addSymbolAsTag(crudApi);
+    crudApi.firestoreCollection = collection;
+    collection.crudApi = crudApi;
 
     client.collections += collection;
     client.crudApis += crudApi;
 
     return crudApi;
   }
+}
+
+extension OnStimRestCrudApiFirebaseExtension on StimRestCrudApi {
+  StimFirebaseFirestoreCollection get firestoreCollection =>
+      firstValueOfTypeTag<StimFirebaseFirestoreCollection>();
+
+  set firestoreCollection(StimFirebaseFirestoreCollection value) =>
+      setValueAsTypeTag(value);
 }
