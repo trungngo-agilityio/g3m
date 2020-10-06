@@ -8,13 +8,34 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
         child,
         typeFirst: true,
         typeNameSeparator: ' ',
+        optionalSuffix: null,
         overrideAsAnnotation: true,
+        overrideKeyword: null,
+        privateKeyword: null,
+        publicKeyword: null,
+        protectedKeyword: null,
+        internalKeyword: null,
+        abstractKeyword: 'abstract ',
+        staticKeyword: 'static ',
+        finalKeyword: 'final ',
+        optionalKeyword: null,
       );
 
   factory CodeFieldConfig.forJavaLike(Node child) => CodeFieldConfig._internal(
         child,
         typeFirst: true,
         typeNameSeparator: ' ',
+        optionalSuffix: null,
+        overrideAsAnnotation: false,
+        overrideKeyword: null,
+        privateKeyword: 'private ',
+        publicKeyword: 'public ',
+        protectedKeyword: 'protected ',
+        internalKeyword: null,
+        abstractKeyword: 'abstract ',
+        staticKeyword: 'static ',
+        finalKeyword: null,
+        optionalKeyword: null,
       );
 
   factory CodeFieldConfig.forTypescriptLike(Node child) =>
@@ -23,23 +44,51 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
         typeFirst: false,
         typeNameSeparator: ': ',
         optionalSuffix: '?',
+        overrideAsAnnotation: false,
+        overrideKeyword: null,
+        privateKeyword: 'private ',
+        publicKeyword: 'public ',
+        protectedKeyword: 'protected ',
+        internalKeyword: null,
+        abstractKeyword: 'abstract ',
+        staticKeyword: 'static ',
+        finalKeyword: 'readonly ',
+        optionalKeyword: null,
       );
 
   factory CodeFieldConfig._internal(
     Node child, {
     @required bool typeFirst,
     @required String typeNameSeparator,
-    String optionalSuffix,
-    bool overrideAsAnnotation,
+    @required String optionalSuffix,
+    @required bool overrideAsAnnotation,
+    @required String overrideKeyword,
+    @required String privateKeyword,
+    @required String publicKeyword,
+    @required String protectedKeyword,
+    @required String internalKeyword,
+    @required String abstractKeyword,
+    @required String staticKeyword,
+    @required String finalKeyword,
+    @required String optionalKeyword,
   }) =>
       CodeFieldConfig((context, field) {
-        final modifier = field.modifier;
+        final modifiers = <String>[
+          if (field.isOverride == true) overrideKeyword,
+          if (field.isPrivate == true) privateKeyword,
+          if (field.isPublic == true) publicKeyword,
+          if (field.isProtected == true) protectedKeyword,
+          if (field.isInternal == true) internalKeyword,
+          if (field.isAbstract == true) abstractKeyword,
+          if (field.isStatic == true) staticKeyword,
+          if (field.isFinal == true) finalKeyword,
+          if (field.isOptional == true) optionalKeyword,
+        ];
 
         Node s1 = field.name;
         Node s2 = field.type;
 
-        if (modifier?.isOptional == true &&
-            optionalSuffix?.isNotEmpty == true) {
+        if (field.isOptional == true && optionalSuffix?.isNotEmpty == true) {
           s1 = Pad.right(optionalSuffix, s1, onlyIfMissing: true);
         }
 
@@ -57,10 +106,10 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
               field.annotations,
               // In the case of dart language, override is an annotation.
               // For csharp, it is an modifier.
-              overrideAsAnnotation == true && modifier?.isOverride == true
+              overrideAsAnnotation == true && field.isOverride == true
                   ? '@override\n'
                   : null,
-              modifier,
+              Container(modifiers),
               s1,
               typeNameSeparator,
               s2,
@@ -78,8 +127,15 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
 
   final CodeAnnotationList annotations;
 
-  // The field's comment.
-  final CodeModifier modifier;
+  final bool isOverride;
+  final bool isPrivate;
+  final bool isPublic;
+  final bool isProtected;
+  final bool isInternal;
+  final bool isAbstract;
+  final bool isStatic;
+  final bool isFinal;
+  final bool isOptional;
 
   // The field data type. This is required.
   final CodeType type;
@@ -91,10 +147,18 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
   CodeField._({
     @required this.name,
     this.annotations,
-    this.modifier,
     @required this.type,
     this.init,
     this.comment,
+    this.isOverride,
+    this.isPrivate,
+    this.isPublic,
+    this.isProtected,
+    this.isInternal,
+    this.isAbstract,
+    this.isStatic,
+    this.isFinal,
+    this.isOptional,
   });
 
   /// Try parse a dynamic value to an argument object.
@@ -144,6 +208,7 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
     return CodeField._(
       name: CodeFieldName.of(
         name: name,
+        // FIXME:
         isOverride: isOverride,
         isPrivate: isPrivate,
         isPublic: isPublic,
@@ -155,16 +220,14 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
       annotations: CodeAnnotationList._parse(annotations, error: () {
         throw '$annotations is not a valid annotation list';
       }),
-      modifier: CodeModifier(
-        isOverride: isOverride,
-        isPrivate: isPrivate,
-        isPublic: isPublic,
-        isProtected: isProtected,
-        isInternal: isInternal,
-        isStatic: isStatic,
-        isFinal: isFinal,
-        isOptional: isOptional,
-      ),
+      isOverride: isOverride,
+      isPrivate: isPrivate,
+      isPublic: isPublic,
+      isProtected: isProtected,
+      isInternal: isInternal,
+      isStatic: isStatic,
+      isFinal: isFinal,
+      isOptional: isOptional,
       type:
           CodeType._parse(type, error: () => '$type is not a valid data type.'),
       init: CodeExpr.of(init),

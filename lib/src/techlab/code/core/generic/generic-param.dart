@@ -15,7 +15,8 @@ class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam>
   @override
   final CodeType name;
 
-  CodeGenericParam._({@required this.name}) : assert(name != null);
+  CodeGenericParam._({@required this.name})
+      : assert(name != null);
 
   static CodeGenericParam _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeGenericParam>(value, (v) {
@@ -32,7 +33,7 @@ class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam>
     @required dynamic name,
   }) {
     return CodeGenericParam._(
-      name: CodeType.of(name: name),
+      name: CodeType._parse(name),
     );
   }
 }
