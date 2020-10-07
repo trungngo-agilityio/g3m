@@ -1,5 +1,7 @@
 part of g3.stimpack.firebase.init;
 
+final _firestoreCollectionTagName = 'firebase:firestoreCollection';
+
 extension OnStimRestCrudApiScopeFirebaseExtension on StimRestCrudApiScope {
   /// Givens a firestore collection, this function helps
   /// to create a new set of crud apis for the specified api [client].
@@ -52,8 +54,9 @@ extension OnStimRestCrudApiScopeFirebaseExtension on StimRestCrudApiScope {
 
 extension OnStimRestCrudApiFirebaseExtension on StimRestCrudApi {
   StimFirebaseFirestoreCollection get firestoreCollection =>
-      firstValueOfTypeTag<StimFirebaseFirestoreCollection>();
+      firstValueOfTag<StimFirebaseFirestoreCollection>(
+          _firestoreCollectionTagName);
 
   set firestoreCollection(StimFirebaseFirestoreCollection value) =>
-      setValueAsTypeTag(value);
+      setTag(name: _firestoreCollectionTagName, value: value);
 }

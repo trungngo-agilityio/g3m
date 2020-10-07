@@ -13,48 +13,56 @@ class StimModelSymbol<T extends StimModelSymbol<T>> extends StimSymbol<T>
 
   StimModelSymbol.of(this.name, {this.tags});
 
-  /// Converts the symbol to a model tag, that can be added
-  /// as tag to some other model.
-  StimModelTag toTag([dynamic name]) {
-    return stimpack.model.tag.of(name: name, value: this);
-  }
-
-  StimModelTag addValueAsTypeTag(dynamic value) {
+  /// Adds a new tag with the specified [name] and [value].
+  StimModelTag addTag({
+    @meta.required dynamic name,
+    @meta.required dynamic value,
+  }) {
     tags ??= {};
-    final tag = stimpack.model.tag.withTypeOf(value);
+    final tag = stimpack.model.tag.of(name: name, value: value);
     tags.add(tag);
     return tag;
   }
 
-  StimModelTag setValueAsTypeTag(dynamic value) {
-    final tag = stimpack.model.tag.withTypeOf(value);
-    tags?.removeWhereNameIs(tag.name);
-    tags ??= {};
-    tags.add(tag);
+  /// Removes all tags with the same [name] and add a new one with
+  /// the specified [name] and [value].
+  StimModelTag setTag({
+    @meta.required dynamic name,
+    @meta.required dynamic value,
+  }) {
+    tags = tags?.where((t) => t.name != name)?.toSet();
+    final tag = stimpack.model.tag.of(name: name, value: value);
+    tags += tag;
     return tag;
   }
 
-  E firstValueOfTypeTag<E>() {
-    final tagName = StimModelTagScope.tagNameOfType(E);
-    final value = tags?.firstWhereNameIs(tagName)?.value;
+  /// Removes a tag with the specified [name] and [value].
+  void removeTag({
+    @meta.required dynamic name,
+    @meta.required dynamic value,
+  }) {
+    assert(name != null, 'name is required');
+    tags = tags?.where((t) => t.name != name || t.value != value)?.toSet();
+  }
+
+  /// Gets the first tag with the specified [name].
+  E firstValueOfTag<E>(dynamic name) {
+    assert(name != null, 'name is required');
+    final value = tags?.firstWhereNameIs(name)?.value;
     return value == null ? null : value as E;
   }
 
-  Iterable<E> allValuesOfTypeTag<E>() {
-    final tagName = StimModelTagScope.tagNameOfType(E);
+  /// Gets all tags with the specified [name].
+  Iterable<E> allValuesOfTag<E>(dynamic name) {
+    assert(name != null, 'name is required');
     return tags
-        ?.whereNameIs(tagName)
+        ?.whereNameIs(name)
         ?.map((e) => e.value == null ? null : e.value as E);
   }
 
-  void removeAllTypeTags<E>() {
-    final tagName = StimModelTagScope.tagNameOfType(E);
-    tags?.removeWhereNameIs(tagName);
-  }
-
-  void removeTypeTagOfValue(dynamic value) {
-    assert(value != null);
-    final tagName = StimModelTagScope.tagNameOfType(value.runtimeType);
-    tags?.removeWhere((e) => e.name == tagName && e.value == value);
+  /// Removes all tags with the specified [name].
+  void removeAllTags(dynamic name) {
+    assert(name != null, 'name is required');
+    tags = tags?.where((t) => t.name != name)?.toSet();
   }
 }

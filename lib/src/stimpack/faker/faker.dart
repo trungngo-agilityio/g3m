@@ -10,7 +10,6 @@ import 'package:meta/meta.dart';
 part 'generated/faker_ext.dart';
 part 'faker_init.dart';
 part 'faker_faker_ext.dart';
-part 'faker_model_package_ext.dart';
 part 'faker_model_type_ext.dart';
 part 'faker_model_field_ext.dart';
 

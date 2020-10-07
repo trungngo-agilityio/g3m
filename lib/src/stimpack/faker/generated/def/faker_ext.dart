@@ -3,13 +3,7 @@ part of g3.stimpack.faker.generated;
 
 
 class OnStimModelTypeForFaker {
-  StimModelType config;
-
-  StimModelType package;
-
   StimModelType type;
-
-  StimModelType field;
 }
 
 

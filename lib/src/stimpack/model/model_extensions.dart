@@ -41,3 +41,12 @@ extension OnStimModelTagExtension<T extends StimModelTag> on Set<T> {
     removeWhere((e) => e.value == value);
   }
 }
+
+extension OnDynamicTagExtension on dynamic {
+
+  /// Converts to stim model tag.
+  StimModelTag toTag(dynamic name) {
+    assert(name != null, 'name is required');
+    return stimpack.model.tag.of(name: name, value: this);
+  }
+}
