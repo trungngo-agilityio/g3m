@@ -11,7 +11,10 @@ extension OnStimModelFieldFakerExtension on StimModelField {
     if (faker == null) {
       removeAllTags(_fakerTagName);
     } else {
-      assert(faker.type == null || type == faker.type, 'invalid faker type');
+      final fakerType = faker.type;
+      assert(fakerType == null || type == fakerType,
+      'invalid faker type. ${type?.name?.pascal()} vs.'
+          '${fakerType?.name?.pascal()}');
       setTag(name: _fakerTagName, value: faker);
     }
   }

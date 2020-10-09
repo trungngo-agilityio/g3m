@@ -43,6 +43,17 @@ void main() {
     assertEq('hello world', s.constant().words());
   });
 
+  test('inflection functions', () {
+    assertEq('dogs', StimName.of('dog').plural());
+    assertEq('technologies', StimName.of('technology').plural());
+
+    assertEq('dog', StimName.of('dogs').singular());
+    assertEq('technology', StimName.of('technologies').singular());
+
+    assertEq('walked', StimName.of('walk').past());
+    assertEq('did', StimName.of('do').past());
+  });
+
   test('operators', () {
     var s1 = StimName.of('hello world');
     var s2 = StimName.of('john doe');
