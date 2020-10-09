@@ -9,15 +9,15 @@ part of g3.stimpack.semver.generated;
 /// 
 /// Additional labels for pre-release and build metadata are available as 
 /// extensions to the MAJOR.MINOR.PATCH format.
-class StimSemverVersion extends StimModelSymbol<StimSemverVersion> {
+class StimSemverVersion extends StimModelSymbol<StimSemverVersion> implements Versionable {
   /// The major version.
-  String major;
+  int major;
 
   /// The minor version.
-  String minor;
+  int minor;
 
   /// The patch version
-  String patch;
+  int patch;
 
   /// The additional labels.
   String label;
@@ -28,8 +28,8 @@ class StimSemverVersion extends StimModelSymbol<StimSemverVersion> {
   /// Creates a new "version" of [StimSemverVersion] type.
   StimSemverVersion copyWith({@required
   dynamic name, @required
-  String major, @required
-  String minor, String patch, String label, Set<StimModelTag> tags}) {
+  int major, @required
+  int minor, int patch, String label, Set<StimModelTag> tags}) {
     return StimSemverVersion()
         ..name = StimName.of(name ?? this.name)
         ..major = major ?? this.major
@@ -42,11 +42,14 @@ class StimSemverVersion extends StimModelSymbol<StimSemverVersion> {
 
 
 class StimSemverVersionScope {
+  StimSemverVersion latest;
+
+
   /// Creates a new "version" of [StimSemverVersion] type.
   StimSemverVersion of({@required
   dynamic name, @required
-  String major, @required
-  String minor, String patch, String label, Set<StimModelTag> tags}) {
+  int major, @required
+  int minor, int patch, String label, Set<StimModelTag> tags}) {
     return StimSemverVersion()
         ..name = StimName.of(name)
         ..major = major

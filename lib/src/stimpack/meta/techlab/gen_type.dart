@@ -9,6 +9,7 @@ class StimGenMetaType implements Node {
   final Set<String> metaValues;
 
   StimModelField _tagSetField;
+  Set<StimModelType> _metaInterfaces;
   Set<StimModelField> _metaFields;
 
   StimName _stimNameClass,
@@ -39,6 +40,7 @@ class StimGenMetaType implements Node {
   void _initCommonFields(BuildContext context) {
     final t = stimpack.model.type.model, f = stimpack.model.field;
 
+    _metaInterfaces = type.interfaces ?? {};
     _metaFields = type.fields ?? {};
     _tagSetField = f.of(name: 'tags', type: t.tagSet);
 
@@ -51,10 +53,19 @@ class StimGenMetaType implements Node {
   }
 
   CodeClass _symbolClassDef() {
-    final baseSymbolClass = CodeType.of(name: 'stim model symbol', generic: [
-      _symbolClassName,
-    ]);
+    final baseSymbolClass = CodeType.of(
+      name: 'stim model symbol',
+      generic: [
+        _symbolClassName,
+      ],
+    );
 
+    final interfaces = <CodeType>{};
+    for (final interface in _metaInterfaces) {
+      interfaces.add(
+        CodeType.of(name: interface.name),
+      );
+    }
     final fields = <CodeField>{};
     for (final field in _metaFields) {
       fields.add(
@@ -69,6 +80,7 @@ class StimGenMetaType implements Node {
     return CodeClass.of(
       name: _symbolClassName,
       extend: baseSymbolClass,
+      implements: interfaces.isEmpty ? null : interfaces.toList(),
       fields: fields.toList(),
       comment: type.comment,
       functions: [

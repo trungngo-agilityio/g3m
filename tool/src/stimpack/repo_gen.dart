@@ -51,16 +51,27 @@ void genRepoPack() {
 
   // A file has a file type.
   tRepository.fields = {
-    fProject.copyWith(comment: 'The project this repository is in')..required(),
+    fProject.copyWith(
+      comment: 'The project this repository is in',
+    )..required(),
     fRepository.copyWith(
-        name: 'parent repo', comment: 'The parent repository of this one.'),
+      name: 'parent repo',
+      comment: 'The parent repository of this one.',
+    ),
     fRepositorySet.copyWith(
-        name: 'child repos', comment: 'The child repositories of this one.'),
+      name: 'child repos',
+      comment: 'The child repositories of this one.',
+    ),
     fDir.copyWith(
-        name: 'path',
-        comment: 'The relative path from project root to this repository.'),
-    fDirSet.copyWith(comment: 'the set of sub directories'),
-    fManifest.copyWith(comment: 'The manifest defines this dependency'),
+      name: 'path',
+      comment: 'The relative path from project root to this repository.',
+    ),
+    fDirSet.copyWith(
+      comment: 'the set of sub directories',
+    ),
+    fManifest.copyWith(
+      comment: 'The manifest defines this dependency',
+    ),
   };
 
   tManifest.fields = {
@@ -68,16 +79,25 @@ void genRepoPack() {
         name: 'dependency',
         comment: 'The main dependency defined by this manifest')
       ..required(),
+    f.of(
+        name: 'description',
+        type: t.string,
+        comment: 'Additional description about the library'),
   };
 
   tDependency.fields = {
-    fVersion.copyWith(comment: 'The dependency version')..required(),
+    fVersion.copyWith(
+      comment: 'The dependency version',
+    )..required(),
     fDependencies.copyWith(
-        comment: 'The dependencies of this one, at run time'),
+      comment: 'The dependencies of this one, at run time',
+    ),
     fDevDependencies.copyWith(
-        comment: 'The dev dependencies of this one, at compile time'),
+      comment: 'The dev dependencies of this one, at compile time',
+    ),
     fRepository.copyWith(
-        comment: 'The optional repository defined this dependency.'),
+      comment: 'The optional repository defined this dependency.',
+    ),
   };
 
   stimpackGen(meta, 'lib/src/stimpack', values: {});

@@ -50,6 +50,16 @@ abstract class RenderContext {
 ///
 abstract class Node {
   Node build(BuildContext context);
+
+  factory Node.of(dynamic value) {
+    if (value == null) {
+      return null;
+    } else if (value is Node) {
+      return value;
+    } else {
+      return Text.of(value);
+    }
+  }
 }
 
 /// This node has no child. The [NoChildNode.build] method does return
@@ -114,7 +124,7 @@ abstract class ExactlyOneNode<T extends ExactlyOneNode<T>> implements Node {
 /// is set to true. See [PromptLoop] and [PromptLoopUntil] to see how this
 /// node can be used.
 ///
-abstract class LoopNode extends Node {
+abstract class LoopNode implements Node {
   /// If this is true, the [LoopNode.build] function will not be called.
   bool get isDone;
 }

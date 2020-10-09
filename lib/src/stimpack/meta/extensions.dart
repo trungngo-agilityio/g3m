@@ -1,9 +1,11 @@
 part of g3.stimpack.meta;
 
 extension OnModelTypeScopeMetaExtension on StimModelTypeScope {
+
   StimModelType symbolOf({
     @required dynamic name,
     @required StimModelPackage package,
+    Set<StimModelType> interfaces,
     Set<StimModelField> fields,
     String comment,
   }) {
@@ -15,6 +17,7 @@ extension OnModelTypeScopeMetaExtension on StimModelTypeScope {
       // adds a tag for the meta value.
       package: package,
       fields: fields,
+      interfaces: interfaces,
       comment: comment,
     );
   }

@@ -105,6 +105,10 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   bool get isTransient =>
       rules?.contains(stimpack.model.fieldRule.transient) == true;
 
+  /// Determines if the field is auto increased.
+  bool get isAutoIncreased =>
+      rules?.contains(stimpack.model.fieldRule.autoIncreased) == true;
+
   /// Determines if a field is unique or not.
   bool get isUnique => rules?.contains(stimpack.model.fieldRule.unique) == true;
 
@@ -145,6 +149,9 @@ class StimModelField extends StimModelSymbol<StimModelField> {
 
   // Marks a field should unique.
   void unique() => rules += stimpack.model.fieldRule.unique;
+
+  // Marks a field should be auto increased.
+  void autoIncreased() => rules += stimpack.model.fieldRule.autoIncreased;
 
   /// Gets the intersection of all rules' choices
   Set<StimModelChoice> get choices {

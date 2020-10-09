@@ -20,7 +20,9 @@ class StimGenMetaLib implements Node {
       fileName,
       package: _config.codeGeneratedPackageLibraryOf(pack),
       parts: _buildPartList(),
+      afterPartSection: CodePlaceHolder.of(name: 'custom parts'),
       imports: _buildImportList(),
+      afterImportSection: CodePlaceHolder.of(name: 'custom imports'),
     );
   }
 

@@ -1,6 +1,6 @@
 part of g3.techlab.markdown;
 
-class MarkdownFile extends Node {
+class MarkdownFile implements Node {
   final String name;
 
   final MarkdownDoc source;

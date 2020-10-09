@@ -4,6 +4,12 @@ part of g3.stimpack.semver.generated;
 
 class OnStimModelTypeForSemver {
   StimModelType version;
+
+  StimModelType versionRange;
+
+  StimModelType unaryVersionRange;
+
+  StimModelType versionRangeOp;
 }
 
 

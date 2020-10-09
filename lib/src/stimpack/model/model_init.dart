@@ -36,6 +36,7 @@ class StimModel extends StimPack {
     _grpcStatuses();
     _patterns();
     _ranges();
+    _typeRules();
     _fieldRules();
     _filters();
     _packages();
@@ -205,6 +206,8 @@ class StimModel extends StimPack {
   // ===========================================================================
   // Rules
   // ===========================================================================
+
+  void _typeRules() {}
 
   void _fieldRules() {
     fieldRule

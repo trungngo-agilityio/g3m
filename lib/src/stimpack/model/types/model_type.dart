@@ -64,6 +64,7 @@ class StimModelTypeScope {
   StimModelType of({
     @meta.required dynamic name,
     @meta.required StimModelPackage package,
+    Set<StimModelType> interfaces,
     Set<StimModelField> fields,
     Set<StimModelTypeRule> rules,
     Set<StimModelFilter> filters,
@@ -73,6 +74,7 @@ class StimModelTypeScope {
     final res = StimModelType()
       ..name = StimName.of(name)
       ..package = package
+      ..interfaces = interfaces ?? {}
       ..fields = fields ?? {}
       ..filters = filters ?? {}
       ..comment = comment
@@ -248,6 +250,9 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   /// A model might belong to a package.
   StimModelPackage package;
 
+  /// The sets of interfaces this model implements.
+  Set<StimModelType> interfaces;
+
   /// The set of declared fields for this type.
   Set<StimModelField> fields;
 
@@ -352,6 +357,7 @@ class StimModelType extends StimModelSymbol<StimModelType> {
   StimModelType copyWith({
     dynamic name,
     StimModelPackage package,
+    Set<StimModelType> interfaces,
     Set<StimModelField> fields,
     Set<StimModelTypeRule> rules,
     Set<StimModelFilter> filters,
@@ -364,6 +370,7 @@ class StimModelType extends StimModelSymbol<StimModelType> {
     return StimModelType()
       ..name = StimName.of(name ?? this.name)
       ..package = package ?? this.package
+      ..interfaces = interfaces ?? this.interfaces
       ..fields = fields ?? this.fields
       ..rules = rules ?? this.rules
       ..filters = filters ?? this.filters
