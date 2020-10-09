@@ -50,9 +50,6 @@ void genIoPack() {
   stimpackGen(meta, 'lib/src/stimpack', values: {
     tFileType: {
       'txt',
-      'markdown',
-      'yaml',
-      'json',
     },
   });
 }

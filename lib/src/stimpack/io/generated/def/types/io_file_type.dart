@@ -22,12 +22,6 @@ class StimIoFileType extends StimModelSymbol<StimIoFileType> {
 class StimIoFileTypeScope {
   StimIoFileType txt;
 
-  StimIoFileType markdown;
-
-  StimIoFileType yaml;
-
-  StimIoFileType json;
-
 
   /// Creates a new "fileType" of [StimIoFileType] type.
   StimIoFileType of({@required
