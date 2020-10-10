@@ -3,6 +3,7 @@ part of g3.stimpack.io.generated;
 
 
 class StimIoFileType extends StimModelSymbol<StimIoFileType> {
+  /// The file extension.
   String path;
 
   StimIoFileType();

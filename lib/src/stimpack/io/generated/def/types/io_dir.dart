@@ -3,12 +3,16 @@ part of g3.stimpack.io.generated;
 
 
 class StimIoDir extends StimModelSymbol<StimIoDir> {
+  /// The dir path. It is an absolute path if the [parent] is not set.
   String path;
 
-  String absolutePath;
+  /// The parent directory of this one.
+  StimIoDir parent;
 
+  /// The set of files in this directories.
   Set<StimIoFile> files;
 
+  /// The set of sub directories of this one.
   Set<StimIoDir> dirs;
 
   StimIoDir();
@@ -16,11 +20,11 @@ class StimIoDir extends StimModelSymbol<StimIoDir> {
 
   /// Creates a new "dir" of [StimIoDir] type.
   StimIoDir copyWith({@required
-  dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
+  dynamic name, String path, StimIoDir parent, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
     return StimIoDir()
         ..name = StimName.of(name ?? this.name)
         ..path = path ?? this.path
-        ..absolutePath = absolutePath ?? this.absolutePath
+        ..parent = parent ?? this.parent
         ..files = files ?? this.files
         ..dirs = dirs ?? this.dirs
         ..tags = tags ?? this.tags;
@@ -31,11 +35,11 @@ class StimIoDir extends StimModelSymbol<StimIoDir> {
 class StimIoDirScope {
   /// Creates a new "dir" of [StimIoDir] type.
   StimIoDir of({@required
-  dynamic name, String path, String absolutePath, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
+  dynamic name, String path, StimIoDir parent, Set<StimIoFile> files, Set<StimIoDir> dirs, Set<StimModelTag> tags}) {
     return StimIoDir()
         ..name = StimName.of(name)
         ..path = path
-        ..absolutePath = absolutePath
+        ..parent = parent
         ..files = files ?? {}
         ..dirs = dirs ?? {}
         ..tags = tags ?? {};

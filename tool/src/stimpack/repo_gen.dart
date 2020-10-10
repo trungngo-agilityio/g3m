@@ -30,9 +30,10 @@ void genRepoPack() {
   final fRepositorySet = f.setOf(name: 'repositories', type: tRepository);
   final fDir = f.of(name: 'dir', type: t.io.dir);
   final fVersion = f.of(name: 'version', type: t.semver.version);
+  final fVersionRange =
+      f.of(name: 'version range', type: t.semver.versionRange);
   final fDirSet = f.setOf(name: 'dirs', type: t.io.dir);
   final fManifest = f.of(name: 'manifest', type: tManifest);
-  final fDependency = f.of(name: 'dependency', type: tDependency);
   final fDependencies = f.setOf(name: 'dependencies', type: tDependency);
   final fDevDependencies = f.setOf(name: 'dev dependencies', type: tDependency);
 
@@ -75,14 +76,19 @@ void genRepoPack() {
   };
 
   tManifest.fields = {
-    fDependency.copyWith(
-        name: 'dependency',
-        comment: 'The main dependency defined by this manifest')
-      ..required(),
+    fVersionRange.copyWith(
+      comment: 'The dependency version range',
+    )..required(),
     f.of(
         name: 'description',
         type: t.string,
         comment: 'Additional description about the library'),
+    fDependencies.copyWith(
+      comment: 'The dependencies of this one, at run time',
+    ),
+    fDevDependencies.copyWith(
+      comment: 'The dev dependencies of this one, at compile time',
+    ),
   };
 
   tDependency.fields = {

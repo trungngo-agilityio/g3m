@@ -9,7 +9,7 @@ part of g3.stimpack.semver.generated;
 /// 
 /// Additional labels for pre-release and build metadata are available as 
 /// extensions to the MAJOR.MINOR.PATCH format.
-class StimSemverVersion extends StimModelSymbol<StimSemverVersion> implements Versionable {
+class StimSemverVersion extends StimModelSymbol<StimSemverVersion> {
   /// The major version.
   int major;
 

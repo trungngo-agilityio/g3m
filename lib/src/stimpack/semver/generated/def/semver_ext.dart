@@ -7,8 +7,6 @@ class OnStimModelTypeForSemver {
 
   StimModelType versionRange;
 
-  StimModelType unaryVersionRange;
-
   StimModelType versionRangeOp;
 }
 

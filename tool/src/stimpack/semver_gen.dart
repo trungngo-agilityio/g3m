@@ -13,11 +13,6 @@ void genSemverPack() {
   final meta = m.package.of(name: 'semver');
 
   // ---------------------------------------------------------------------------
-  // Custom Interfaces
-  // ---------------------------------------------------------------------------
-  final iVer = t.of(name: 'stim semver versionable', package: null);
-
-  // ---------------------------------------------------------------------------
   // Types
   // ---------------------------------------------------------------------------
   final tVersion = t.symbolOf(name: 'version', package: meta, comment: '''
@@ -35,12 +30,6 @@ extensions to the MAJOR.MINOR.PATCH format.''');
     comment: 'Defines the range of versions',
   );
 
-  final tUnaryVersionRange = t.symbolOf(
-    name: 'unary version range',
-    package: meta,
-    comment: 'Defines the range of versions',
-  );
-
   final tVersionRangeOp = t.symbolOf(
     name: 'version range op',
     package: meta,
@@ -54,7 +43,6 @@ extensions to the MAJOR.MINOR.PATCH format.''');
   // A directory has a relative path, an absolute path, a set of files,
   // a set of sub dirs.
   tVersion
-    ..interfaces = {iVer}
     ..fields = {
       f.of(
         name: 'major',
@@ -76,26 +64,6 @@ extensions to the MAJOR.MINOR.PATCH format.''');
         type: t.string,
         comment: 'The additional labels.',
       ),
-    };
-
-  tUnaryVersionRange
-    ..fields = {
-      f.of(
-        name: 'op',
-        type: tVersionRangeOp,
-        comment: 'The operator applied to the range',
-      )..required(),
-      f.of(
-        name: 'start',
-        type: tVersion,
-        comment: 'The inclusive start version of the range.',
-      )..required(),
-      f.of(
-        name: 'end',
-        type: tVersion,
-        comment:
-            'Exclusive end version. This value is not included in the range.',
-      )..required(),
     };
 
   stimpackGen(meta, 'lib/src/stimpack', values: {

@@ -17,10 +17,6 @@ class StimSemver extends StimPack {
   /// typed of [StimSemverVersionRange]."
   final StimSemverVersionRangeScope versionRange;
 
-  /// Scope class for constructing all "unaryVersionRange" symbols, 
-  /// typed of [StimSemverUnaryVersionRange]."
-  final StimSemverUnaryVersionRangeScope unaryVersionRange;
-
   /// Scope class for constructing all "versionRangeOp" symbols, 
   /// typed of [StimSemverVersionRangeOp]."
   final StimSemverVersionRangeOpScope versionRangeOp;
@@ -30,7 +26,6 @@ class StimSemver extends StimPack {
   StimSemver(StimModel model):
       version = StimSemverVersionScope(),
       versionRange = StimSemverVersionRangeScope(),
-      unaryVersionRange = StimSemverUnaryVersionRangeScope(),
       versionRangeOp = StimSemverVersionRangeOpScope(),
       onStimModelType = OnStimModelTypeForSemver(),
       super('semver');
@@ -62,9 +57,6 @@ class StimSemver extends StimPack {
     /// Builds type "versionRange"
     mt.versionRange = t.symbolOf(name: 'versionRange', package: mp);
 
-    /// Builds type "unaryVersionRange"
-    mt.unaryVersionRange = t.symbolOf(name: 'unaryVersionRange', package: mp);
-
     /// Builds type "versionRangeOp"
     mt.versionRangeOp = t.symbolOf(name: 'versionRangeOp', package: mp);
 
@@ -81,18 +73,6 @@ class StimSemver extends StimPack {
 
       /// field "version"
       f.of(name: 'label', type: t.fromDart(String))
-    };
-
-    /// Builds fields for type "unaryVersionRange"
-    mt.unaryVersionRange.fields = {
-      /// field "unaryVersionRange"
-      f.of(name: 'op', type: mt.versionRangeOp)..required(),
-
-      /// field "unaryVersionRange"
-      f.of(name: 'start', type: mt.version)..required(),
-
-      /// field "unaryVersionRange"
-      f.of(name: 'end', type: mt.version)..required()
     };
   }
 }
