@@ -30,6 +30,8 @@ void genRepoPack() {
   final fRepositorySet = f.setOf(name: 'repositories', type: tRepository);
   final fDir = f.of(name: 'dir', type: t.io.dir);
   final fVersion = f.of(name: 'version', type: t.semver.version);
+  final fUri = f.of(name: 'uri', type: t.uri);
+
   final fVersionRange =
       f.of(name: 'version range', type: t.semver.versionRange);
   final fDirSet = f.setOf(name: 'dirs', type: t.io.dir);
@@ -76,8 +78,8 @@ void genRepoPack() {
   };
 
   tManifest.fields = {
-    fVersionRange.copyWith(
-      comment: 'The dependency version range',
+    fVersion.copyWith(
+      comment: 'The dependency version',
     )..required(),
     f.of(
         name: 'description',
@@ -92,9 +94,10 @@ void genRepoPack() {
   };
 
   tDependency.fields = {
-    fVersion.copyWith(
-      comment: 'The dependency version',
+    fVersionRange.copyWith(
+      comment: 'The dependency version range',
     )..required(),
+    fUri.copyWith(comment: 'The location where to download this dependency.'),
     fDependencies.copyWith(
       comment: 'The dependencies of this one, at run time',
     ),

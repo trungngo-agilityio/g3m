@@ -16,3 +16,5 @@ part 'nx_init.dart';
 part 'nx_workspace_ext.dart';
 part 'nx_lib_ext.dart';
 part 'nx_app_ext.dart';
+part 'nx_model_package_ext.dart';
+part 'nx_model_type_ext.dart';

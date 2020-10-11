@@ -96,6 +96,7 @@ extension OnDirScopeExtension on StimIoDir {
     return dir.existsSync();
   }
 
+  /// Builds an absolute path string of a child path.
   String absolutePathOf(String child) {
     assert(child != null);
     return io_path.join(absolutePath, child);

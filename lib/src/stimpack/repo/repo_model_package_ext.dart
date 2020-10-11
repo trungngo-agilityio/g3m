@@ -4,7 +4,9 @@ const _modelPackageTagName = 'repo:repo';
 
 extension OnStimModelPackageRepoExtension on StimModelPackage {
   StimRepoRepository get repo =>
-      firstValueOfTag<StimRepoRepository>(_modelPackageTagName) ?? parent?.repo;
+      firstValueOfTag<StimRepoRepository>(_modelPackageTagName) ??
+      sourceFile?.repo ??
+      parent?.repo;
 
   set repo(StimRepoRepository repo) {
     if (repo == null) {

@@ -3,8 +3,8 @@ part of g3.stimpack.repo.generated;
 
 
 class StimRepoManifest extends StimModelSymbol<StimRepoManifest> {
-  /// The dependency version range
-  StimSemverVersionRange versionRange;
+  /// The dependency version
+  StimSemverVersion version;
 
   /// Additional description about the library
   String description;
@@ -21,10 +21,10 @@ class StimRepoManifest extends StimModelSymbol<StimRepoManifest> {
   /// Creates a new "manifest" of [StimRepoManifest] type.
   StimRepoManifest copyWith({@required
   dynamic name, @required
-  StimSemverVersionRange versionRange, String description, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, Set<StimModelTag> tags}) {
+  StimSemverVersion version, String description, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, Set<StimModelTag> tags}) {
     return StimRepoManifest()
         ..name = StimName.of(name ?? this.name)
-        ..versionRange = versionRange ?? this.versionRange
+        ..version = version ?? this.version
         ..description = description ?? this.description
         ..dependencies = dependencies ?? this.dependencies
         ..devDependencies = devDependencies ?? this.devDependencies
@@ -37,10 +37,10 @@ class StimRepoManifestScope {
   /// Creates a new "manifest" of [StimRepoManifest] type.
   StimRepoManifest of({@required
   dynamic name, @required
-  StimSemverVersionRange versionRange, String description, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, Set<StimModelTag> tags}) {
+  StimSemverVersion version, String description, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, Set<StimModelTag> tags}) {
     return StimRepoManifest()
         ..name = StimName.of(name)
-        ..versionRange = versionRange
+        ..version = version
         ..description = description
         ..dependencies = dependencies ?? {}
         ..devDependencies = devDependencies ?? {}

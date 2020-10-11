@@ -101,7 +101,10 @@ class StimRepo extends StimPack {
     /// Builds fields for type "dependency"
     mt.dependency.fields = {
       /// field "dependency"
-      f.of(name: 'version', type: t.semver.version)..required(),
+      f.of(name: 'version range', type: t.semver.versionRange)..required(),
+
+      /// field "dependency"
+      f.of(name: 'uri', type: t.fromDart(Uri)),
 
       /// field "dependency"
       f.of(name: 'dependencies', type: t.setOf(item: mt.dependency)),
@@ -116,7 +119,7 @@ class StimRepo extends StimPack {
     /// Builds fields for type "manifest"
     mt.manifest.fields = {
       /// field "manifest"
-      f.of(name: 'version range', type: t.semver.versionRange)..required(),
+      f.of(name: 'version', type: t.semver.version)..required(),
 
       /// field "manifest"
       f.of(name: 'description', type: t.fromDart(String)),

@@ -3,8 +3,11 @@ part of g3.stimpack.repo.generated;
 
 
 class StimRepoDependency extends StimModelSymbol<StimRepoDependency> {
-  /// The dependency version
-  StimSemverVersion version;
+  /// The dependency version range
+  StimSemverVersionRange versionRange;
+
+  /// The location where to download this dependency.
+  Uri uri;
 
   /// The dependencies of this one, at run time
   Set<StimRepoDependency> dependencies;
@@ -21,10 +24,11 @@ class StimRepoDependency extends StimModelSymbol<StimRepoDependency> {
   /// Creates a new "dependency" of [StimRepoDependency] type.
   StimRepoDependency copyWith({@required
   dynamic name, @required
-  StimSemverVersion version, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, StimRepoRepository repository, Set<StimModelTag> tags}) {
+  StimSemverVersionRange versionRange, Uri uri, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, StimRepoRepository repository, Set<StimModelTag> tags}) {
     return StimRepoDependency()
         ..name = StimName.of(name ?? this.name)
-        ..version = version ?? this.version
+        ..versionRange = versionRange ?? this.versionRange
+        ..uri = uri ?? this.uri
         ..dependencies = dependencies ?? this.dependencies
         ..devDependencies = devDependencies ?? this.devDependencies
         ..repository = repository ?? this.repository
@@ -37,10 +41,11 @@ class StimRepoDependencyScope {
   /// Creates a new "dependency" of [StimRepoDependency] type.
   StimRepoDependency of({@required
   dynamic name, @required
-  StimSemverVersion version, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, StimRepoRepository repository, Set<StimModelTag> tags}) {
+  StimSemverVersionRange versionRange, Uri uri, Set<StimRepoDependency> dependencies, Set<StimRepoDependency> devDependencies, StimRepoRepository repository, Set<StimModelTag> tags}) {
     return StimRepoDependency()
         ..name = StimName.of(name)
-        ..version = version
+        ..versionRange = versionRange
+        ..uri = uri
         ..dependencies = dependencies ?? {}
         ..devDependencies = devDependencies ?? {}
         ..repository = repository
