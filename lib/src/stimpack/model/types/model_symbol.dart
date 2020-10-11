@@ -9,6 +9,10 @@ class StimModelSymbol<T extends StimModelSymbol<T>> extends StimSymbol<T>
   /// All things in the models should have tags.
   Set<StimModelTag> tags;
 
+  /// Custom attribute slots. Other pack should write dart extension
+  /// to use this slot to provide custom property.
+  Map<String, dynamic> attributes;
+
   StimModelSymbol();
 
   StimModelSymbol.of(this.name, {this.tags});

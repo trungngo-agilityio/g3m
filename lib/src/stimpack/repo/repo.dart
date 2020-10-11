@@ -16,3 +16,7 @@ part 'repo_io_dir_ext.dart';
 part 'repo_io_file_ext.dart';
 
 part 'repo_project_ext.dart';
+
+part 'repo_model_package_ext.dart';
+part 'repo_model_type_ext.dart';
+

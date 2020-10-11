@@ -7,10 +7,12 @@ class StimModelPackageScope {
 
   StimModelPackage of({
     @meta.required dynamic name,
+    StimModelPackage parent,
     Set<StimModelTag> tags,
   }) {
     return StimModelPackage()
       ..name = StimName.of(name)
+      ..parent = parent
       ..types = {}
       ..tags = tags ?? {};
   }
@@ -33,24 +35,40 @@ class StimModelPackageScope {
 }
 
 class StimModelPackage extends StimModelSymbol<StimModelPackage> {
+  /// The parent package of the current package.
+  StimModelPackage parent;
+
+  /// The set of types in this package.
   Set<StimModelType> types;
 
   /// This instance is only not null when the library come
   /// from a dart library.
   LibraryMirror dartLibrary;
 
+  /// Determines if the current package come from dart.
   bool get isDart => dartLibrary != null;
 
   StimModelPackage();
 
+  /// Gets out the ancestors, nearest first.
+  Iterable<StimModelPackage> get ancestors sync* {
+    var p = parent;
+    while (p != null) {
+      yield p;
+      p = p.parent;
+    }
+  }
+
   StimModelPackage copyWith({
     dynamic name,
+    StimModelPackage parent,
     Set<StimModelType> types,
     LibraryMirror dartLibrary,
     Set<StimModelTag> tags,
   }) {
     return StimModelPackage()
       ..name = StimName.of(name ?? this.name)
+      ..parent = parent ?? this.parent
       ..types = types ?? this.types
       ..dartLibrary = dartLibrary ?? this.dartLibrary
       ..tags = tags ?? this.tags;

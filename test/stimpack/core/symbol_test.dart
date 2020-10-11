@@ -63,19 +63,6 @@ void main() {
 
     final intList1 = [15];
     s1.intList = intList1;
-
-    final symbolField2 = _FakeSymbol()..stringField = 'y';
-    final symbolSet1 = {symbolField1, symbolField2};
-//    s1.fakeSymbolSet = symbolSet1;
-
-    // FIXME: Deep clone not work yet, need to figure out the way
-//    final s2 = s1.deepClone();
-//    assert(s1.stringSet != s2.stringSet);
-//    assert(s1.intList != s2.intList);
-//    assert(s1.fakeSymbol != s2.fakeSymbol);
-//    assert(s1.fakeSymbolSet != s2.fakeSymbolSet);
-//    assert(s1.fakeSymbolSet.first != s2.fakeSymbolSet.first);
-//    assert(s1.fakeSymbol.stringField == s2.fakeSymbol.stringField);
   });
 
   group('set operations', () {

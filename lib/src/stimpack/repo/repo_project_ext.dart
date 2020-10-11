@@ -20,8 +20,6 @@ extension OnProjectScopeRepoExtension on StimRepoProjectScope {
       path: projectDir,
     );
 
-    projectDir._project = project;
-
     return project;
   }
 }
