@@ -11,8 +11,8 @@ class CodeBoolLiteralConfig extends CodeConfigNode<CodeBoolLiteral> {
   }) =>
       CodeBoolLiteralConfig((context, literal) {
         if (literal.value == null) return CodeNullLiteral();
-        if (literal.value == true) return Text.of(trueKeyword);
-        return Text.of(falseKeyword);
+        if (literal.value == true) return Text(trueKeyword);
+        return Text(falseKeyword);
       }, child);
 }
 

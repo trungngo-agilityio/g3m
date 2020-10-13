@@ -6,10 +6,11 @@ part of g3.techlab.dart;
 ///
 class DartCodeFile implements Node {
   static const String syntax = 'dart';
-  static const String extension = 'dart';
+  static const String defaultExtension = 'dart';
 
   /// The file name without extension.
   final String name;
+  final String extension;
 
   /// The file content.
   final Node source;
@@ -21,12 +22,14 @@ class DartCodeFile implements Node {
 
   DartCodeFile._(
     this.name, {
+    this.extension = defaultExtension,
     this.source,
     this.overwriteIfExists,
   });
 
   factory DartCodeFile.of(
     String name, {
+    String extension,
     bool overwriteIfExists,
     CodePackage package,
     CodeComment comment,
@@ -45,6 +48,7 @@ class DartCodeFile implements Node {
     // Node that java code expect the file name to be class name.
     return DartCodeFile._(
       name,
+      extension: extension,
       overwriteIfExists: overwriteIfExists,
       source: DartCode.of(
           package: package,
@@ -104,8 +108,8 @@ class DartCode extends SingleChildNode {
             if (e == null) return null;
             // make sure the part name is always end with .dart extension.
             var name = e;
-            if (name?.endsWith(DartCodeFile.extension) != true) {
-              name = name + '.' + DartCodeFile.extension;
+            if (name?.endsWith(DartCodeFile.defaultExtension) != true) {
+              name = name + '.' + DartCodeFile.defaultExtension;
             }
 
             return Container([

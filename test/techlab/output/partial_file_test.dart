@@ -18,7 +18,7 @@ void main() {
         PartialFile(
           name,
           markers: ['<content>', '</content>'],
-          content: Text.of('Ignored <content>John!</content> ignored.'),
+          content: Text('Ignored <content>John!</content> ignored.'),
         ),
       ]),
     );

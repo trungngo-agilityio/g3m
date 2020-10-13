@@ -48,7 +48,11 @@ class Indent implements Node {
   final int level;
   final Node child;
 
-  Indent(this.child, {this.level = 1});
+  Indent._(this.child, this.level)
+      : assert(level > 0, 'level must be a positive number');
+
+  factory Indent(dynamic child, {int level = 1}) =>
+      Indent._(Node.of(child), level);
 
   static String compute(String s, bool useTab, size, int level) {
     if (level < 1) return s;

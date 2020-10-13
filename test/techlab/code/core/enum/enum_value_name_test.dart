@@ -21,7 +21,7 @@ void main() {
 
   test('node', () {
     run(
-      CodeEnumValueName.of(name: Text.of('hello world')),
+      CodeEnumValueName.of(name: Text('hello world')),
       'HELLO_WORLD',
     );
   });

@@ -42,7 +42,7 @@ class CodeRef extends CodeConfigProxyNode<CodeRef> implements _NamedNode {
     });
   }
 
-  factory CodeRef.ofThis() => CodeRef._(Text.of('this'));
+  factory CodeRef.ofThis() => CodeRef._(Text('this'));
 
-  factory CodeRef.ofSuper() => CodeRef._(Text.of('super'));
+  factory CodeRef.ofSuper() => CodeRef._(Text('super'));
 }

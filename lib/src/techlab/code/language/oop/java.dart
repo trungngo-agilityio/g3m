@@ -6,10 +6,10 @@ part of g3.techlab.java;
 ///
 class JavaCodeFile implements Node {
   static const String syntax = 'java';
-  static const String extension = 'java';
 
   /// The file name without extension.
   final String name;
+  final String extension;
 
   /// The file content.
   final Node source;
@@ -19,10 +19,16 @@ class JavaCodeFile implements Node {
   /// null indicates that needs human confirm.
   final bool overwriteIfExists;
 
-  JavaCodeFile._(this.name, {this.source, this.overwriteIfExists});
+  JavaCodeFile._(
+    this.name, {
+    this.extension = 'java',
+    this.source,
+    this.overwriteIfExists,
+  });
 
   factory JavaCodeFile.of(
     String name, {
+    String extension,
     CodePackage package,
     CodeComment comment,
     List<CodeImport> imports,
@@ -35,6 +41,7 @@ class JavaCodeFile implements Node {
     // Node that java code expect the file name to be class name.
     return JavaCodeFile._(
       name,
+      extension: extension,
       source: JavaCode.of(
           package: package,
           comment: comment,

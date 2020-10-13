@@ -24,5 +24,5 @@ class CodeStringLiteral extends CodeConfigProxyNode<CodeStringLiteral> {
   CodeStringLiteral._(this.value);
 
   factory CodeStringLiteral.of(dynamic value) =>
-      CodeStringLiteral._(Text.of(value));
+      CodeStringLiteral._(Text(value));
 }

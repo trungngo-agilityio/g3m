@@ -13,7 +13,7 @@ class Mustache implements Node, PostRenderer {
 
   factory Mustache.template(String template,
           {Map<String, StringFunc> functions, Map<String, dynamic> values}) =>
-      Mustache(Text.of(template), functions: functions, values: values);
+      Mustache(Text(template), functions: functions, values: values);
 
   String Function(LambdaContext) _make(StringFunc func) {
     return (ctx) => func(ctx.renderString());

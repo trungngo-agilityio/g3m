@@ -93,7 +93,7 @@ class CodeExpr extends CodeConfigProxyNode<CodeExpr> {
       } else if (value is Map<String, dynamic>) {
         child = CodeMapLiteral.of(value);
       } else {
-        child = Text.of(v);
+        child = Text(v);
       }
       return CodeExpr._(child, closed);
     }, error: error);

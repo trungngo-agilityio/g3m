@@ -18,7 +18,7 @@ class CodeArrayLiteralConfig extends CodeConfigNode<CodeArrayLiteral> {
         if (values == null) {
           return CodeNullLiteral();
         } else if (values.isNotEmpty != true) {
-          return Text.of(emptyArray);
+          return Text(emptyArray);
         }
 
         var body = Join.of(

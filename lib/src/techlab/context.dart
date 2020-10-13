@@ -51,14 +51,23 @@ abstract class RenderContext {
 abstract class Node {
   Node build(BuildContext context);
 
+  /// Parses the specify dynamic value to a node.
   factory Node.of(dynamic value) {
     if (value == null) {
       return null;
     } else if (value is Node) {
       return value;
+    } else if (value is Iterable) {
+      // Converts the value list to a container.
+      return Container(iterableOf(value));
     } else {
-      return Text.of(value);
+      // Just make a text value
+      return _RawText(value.toString());
     }
+  }
+
+  static Iterable<Node> iterableOf(dynamic children) {
+    return _parseNodeList(children, (e) => Node.of(e));
   }
 }
 

@@ -65,9 +65,9 @@ class CodeArgList extends CodeConfigProxyNode<CodeArgList> {
     dynamic named,
   }) {
     return CodeArgList._(
-      required: _parseNodeList(required, CodeArg._parse),
-      optional: _parseNodeList(optional, CodeArg._parse),
-      named: _parseNodeList(named, CodeArg._parse),
+      required: _parseNodeList<CodeArg>(required, CodeArg._parse),
+      optional: _parseNodeList<CodeArg>(optional, CodeArg._parse),
+      named: _parseNodeList<CodeArg>(named, CodeArg._parse),
     );
   }
 }

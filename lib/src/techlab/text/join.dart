@@ -6,32 +6,34 @@ class Join implements Node {
 
   Join._(this.separator, this.children);
 
-  factory Join.doubleNewLineSeparated(Iterable<Node> children) =>
+  factory Join.doubleNewLineSeparated(Iterable<dynamic> children) =>
       Join.of('\n\n', children);
 
-  factory Join.newLineSeparated(Iterable<Node> children) =>
+  factory Join.newLineSeparated(Iterable<dynamic> children) =>
       Join.of('\n', children);
 
-  factory Join.commaNewLineSeparated(Iterable<Node> children) =>
+  factory Join.commaNewLineSeparated(Iterable<dynamic> children) =>
       Join.of(',\n', children);
 
-  factory Join.notSeparated(Iterable<Node> children) => Join.of('', children);
+  factory Join.notSeparated(Iterable<dynamic> children) =>
+      Join.of('', children);
 
-  factory Join.commaSeparated(Iterable<Node> children) =>
+  factory Join.commaSeparated(Iterable<dynamic> children) =>
       Join.of(', ', children);
 
-  factory Join.spaceSeparated(Iterable<Node> children) =>
+  factory Join.spaceSeparated(Iterable<dynamic> children) =>
       Join.of(' ', children);
 
-  factory Join.of(String separator, Iterable<Node> children) =>
+  factory Join.of(String separator, Iterable<dynamic> children) =>
       children?.isNotEmpty == true
-          ? Join._(Text.of(separator), children)
+          ? Join._(Text(separator), Node.iterableOf(children))
           : null;
 
   @override
   Node build(BuildContext context) {
     final list = List.of(children);
     final res = <Node>[list[0]];
+
     for (var i = 1; i < list.length; i++) {
       res.add(separator);
       res.add(list[i]);

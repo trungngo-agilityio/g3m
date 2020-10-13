@@ -8,10 +8,10 @@ void main() {
     var root = Directory.temp(
       '~step1',
       Container([
-        File.alwaysOverwrite('test1.text', Text.of('hello1')),
+        File.alwaysOverwrite('test1.text', Text('hello1')),
         Directory.temp(
           '~step2',
-          File.alwaysOverwrite('test2.text', Text.of('hello2')),
+          File.alwaysOverwrite('test2.text', Text('hello2')),
         ),
       ]),
     );

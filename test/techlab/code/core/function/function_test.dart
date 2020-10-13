@@ -127,10 +127,10 @@ void main() {
                 className: 'repository', args: [1, false]),
           ],
           generic: ['t'],
-          requiredArgs: {
+          requiredArgs: [
             ['name', 'string'],
             ['another', 't'],
-          },
+          ],
           throws: ['invalid argument exception'],
         ),
       );
@@ -139,7 +139,7 @@ void main() {
         '\n'
         '@Repository()\n'
         '@Repository(1, false)\n'
-        'String hello<T>({[name,String],[another,T]}) throws InvalidArgumentException',
+        'String hello<T>(String name, T another) throws InvalidArgumentException',
       );
     });
   });

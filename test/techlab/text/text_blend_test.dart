@@ -6,10 +6,10 @@ import '../utils.dart';
 void main() {
   test('simple', () {
     var m1 = '###';
-    var text1 = Text.of(
+    var text1 = Text(
       'hello $m1 john!',
     );
-    var text2 = Text.of(
+    var text2 = Text(
       'bye $m1 tim',
     );
     var node = TextBlend(
@@ -22,10 +22,10 @@ void main() {
 
   test('two, and new goes first', () {
     var m1 = '###';
-    var text1 = Text.of(
+    var text1 = Text(
       'hello $m1 john $m1 doe!',
     );
-    var text2 = Text.of(
+    var text2 = Text(
       'bye $m1 tim $m1 smith!',
     );
     var node = TextBlend(

@@ -6,7 +6,7 @@ import '../../utils.dart';
 void main() {
   group('space', () {
     test('no space', () {
-      var code = CodeSpace(Text.of('hello'));
+      var code = CodeSpace(Text('hello'));
       runAndExpect(
         code,
         ' hello',
@@ -14,7 +14,7 @@ void main() {
     });
 
     test('with space', () {
-      var code = CodeSpace(Text.of(' hello'));
+      var code = CodeSpace(Text(' hello'));
       runAndExpect(
         code,
         ' hello',
@@ -22,7 +22,7 @@ void main() {
     });
 
     test('with newline', () {
-      var code = CodeSpace(Text.of('\nhello'));
+      var code = CodeSpace(Text('\nhello'));
       runAndExpect(
         code,
         '\nhello',
@@ -32,7 +32,7 @@ void main() {
 
   group('new line', () {
     test('no new line', () {
-      var code = CodeNewLine(Text.of('hello'));
+      var code = CodeNewLine(Text('hello'));
       runAndExpect(
         code,
         '\nhello',

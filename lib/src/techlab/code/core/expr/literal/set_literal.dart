@@ -18,7 +18,7 @@ class CodeSetLiteralConfig extends CodeConfigNode<CodeSetLiteral> {
         if (values == null) {
           return CodeNullLiteral();
         } else if (values.isNotEmpty != true) {
-          return Text.of(emptySet);
+          return Text(emptySet);
         }
 
         var body = Join.of(

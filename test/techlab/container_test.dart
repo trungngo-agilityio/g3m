@@ -10,7 +10,7 @@ void main() {
   });
 
   test('non empty', () {
-    var container = Container([Text.of('hello'), 1, null]);
+    var container = Container([Text('hello'), 1, null]);
     runAndExpect(container, 'hello1');
   });
 

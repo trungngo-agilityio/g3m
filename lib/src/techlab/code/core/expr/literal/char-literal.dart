@@ -11,7 +11,7 @@ class CodeCharLiteralConfig extends CodeConfigNode<CodeCharLiteral> {
       CodeCharLiteralConfig((context, literal) {
         if (literal.value == null) return CodeNullLiteral();
 
-        return Pad.of(quoteChar, quoteChar, Text.of(literal.value));
+        return Pad.of(quoteChar, quoteChar, Text(literal.value));
       }, child);
 }
 
