@@ -52,7 +52,7 @@ void main() {
         'name': 'john',
         'age': 20,
         'male': true,
-        'node': Text.of('"can put anything here"'),
+        'node': Text('"can put anything here"'),
         'array': [1, null, 'hello'],
         'object': {
           'name': 'mary',

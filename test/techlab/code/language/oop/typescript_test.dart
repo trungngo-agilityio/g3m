@@ -7,7 +7,7 @@ import '../../../utils.dart';
 void main() {
   test('all', () {
     var root = TypescriptCode.of(
-      body: Text.of('// You can put anything in this body.'),
+      body: Text('// You can put anything in this body.'),
       comment: CodeComment.of('Demo file level comment'),
       imports: [
         CodeImport.of(path: 'io'),
@@ -31,7 +31,7 @@ void main() {
             ['first name', 'string'],
           ],
           body: [
-            Text.of('var name = "John";\n'
+            Text('var name = "John";\n'
                 'print(name);\n'),
           ],
         ),
@@ -187,7 +187,7 @@ CodeFunction function() {
       returns: ['void'],
       throws: ['accident exception', 'bad driver exception'],
       body: [
-        Text.of('// Just any text'),
+        Text('// Just any text'),
       ]);
 }
 

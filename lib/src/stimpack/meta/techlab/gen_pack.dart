@@ -299,15 +299,15 @@ final mt = ${typeExtFieldName};''',
       }
     } else if (type.isDart) {
       // This type come from outside.
-      return Text.of('t.fromDart(${type.dartType.reflectedType})');
+      return Text('t.fromDart(${type.dartType.reflectedType})');
     } else if (type.package.name != pack.name) {
       // This type come from outside.
       final name = _config.fieldNameOfType(type);
-      return Text.of('t.${type.package.name}.${name}');
+      return Text('t.${type.package.name}.${name}');
     } else {
       // This type is defined in the package.
       final name = _config.fieldNameOfType(type);
-      return Text.of('mt.${name}');
+      return Text('mt.${name}');
     }
   }
 

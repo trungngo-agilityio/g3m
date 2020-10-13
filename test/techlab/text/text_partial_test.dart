@@ -9,8 +9,8 @@ void main() {
 
   group('success', () {
     test('null & empty', () {
-      for (final i in [null, Text.of(''), Text.of('to be overwritten')]) {
-        for (final j in [null, Text.of('')]) {
+      for (final i in [null, Text(''), Text('to be overwritten')]) {
+        for (final j in [null, Text('')]) {
           var node = PartialText(
             startMarker: start,
             endMarker: end,
@@ -26,7 +26,7 @@ void main() {
     });
 
     test('all', () {
-      var text1 = Text.of('hello \n'
+      var text1 = Text('hello \n'
           '$start name \n'
           'john! \n'
           '$end\n'
@@ -34,7 +34,7 @@ void main() {
           '$start message\n'
           'Great to meet you.'
           '$end');
-      var text2 = Text.of(
+      var text2 = Text(
         'bye \n'
         '$start name \n'
         'tim \n'
@@ -73,8 +73,8 @@ void main() {
         var node = PartialText(
           startMarker: start,
           endMarker: end,
-          oldContent: Text.of(i),
-          newContent: Text.of('new content'),
+          oldContent: Text(i),
+          newContent: Text('new content'),
           onMissingOldBlockError: failOnMissingOldBlockError,
           onNotEndedBlockError: (isOldContent, lineNo, line) {
             expect(isOldContent, true);
@@ -96,8 +96,8 @@ void main() {
         var node = PartialText(
           startMarker: start,
           endMarker: end,
-          oldContent: Text.of('old content'),
-          newContent: Text.of(i),
+          oldContent: Text('old content'),
+          newContent: Text(i),
           onMissingOldBlockError: failOnMissingOldBlockError,
           onNotEndedBlockError: (isOldContent, lineNo, line) {
             expect(isOldContent, false);
@@ -125,8 +125,8 @@ void main() {
         var node = PartialText(
           startMarker: start,
           endMarker: end,
-          oldContent: Text.of(i),
-          newContent: Text.of('new content'),
+          oldContent: Text(i),
+          newContent: Text('new content'),
           onMissingOldBlockError: failOnMissingOldBlockError,
           onNotEndedBlockError: failOnNotEndedBlockError,
           onDuplicatedNameBlockError: (isOldContent, lineNo, line) {
@@ -152,8 +152,8 @@ void main() {
         var node = PartialText(
           startMarker: start,
           endMarker: end,
-          oldContent: Text.of('old content'),
-          newContent: Text.of(i),
+          oldContent: Text('old content'),
+          newContent: Text(i),
           onMissingOldBlockError: failOnMissingOldBlockError,
           onNotEndedBlockError: failOnNotEndedBlockError,
           onDuplicatedNameBlockError: (isOldContent, lineNo, line) {
@@ -179,8 +179,8 @@ void main() {
         var node = PartialText(
           startMarker: start,
           endMarker: end,
-          oldContent: Text.of(i),
-          newContent: Text.of('new content'),
+          oldContent: Text(i),
+          newContent: Text('new content'),
           onMissingOldBlockError: (startLineNo, endLineNo, startLine, endLine) {
             reported = true;
             return true;

@@ -36,7 +36,7 @@ class CodeBlockConfig extends CodeConfigNode<CodeBlock> {
       String open, String close, bool newLine, Node child) {
     return CodeBlockConfig((context, codeBlock) {
       var body = codeBlock.body;
-      if (body == null) return Text._('{}');
+      if (body == null) return _RawText('{}');
       return Container([
         newLine ? '\n' : null,
         open,

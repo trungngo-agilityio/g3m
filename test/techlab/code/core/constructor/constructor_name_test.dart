@@ -33,7 +33,7 @@ void main() {
 
   test('node', () {
     run(
-      CodeConstructorName.of(Text.of('hello world')),
+      CodeConstructorName.of(Text('hello world')),
       'helloWorld',
     );
   });

@@ -113,7 +113,7 @@ class MarkdownParagraph implements Node {
     if (lines?.isNotEmpty == true) {
       return Container([
         Join.newLineSeparated(
-          lines?.map((e) => e is Node ? e : Text.of(e))?.toList(),
+          lines?.map((e) => e is Node ? e : Text(e))?.toList(),
         ),
         '\n',
         '\n',
@@ -131,7 +131,7 @@ class MarkdownBold implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(Text.of(text), StringFuncs.markdown.bold);
+    return TextTransform(Text(text), StringFuncs.markdown.bold);
   }
 }
 
@@ -142,7 +142,7 @@ class MarkdownItalic implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(Text.of(text), StringFuncs.markdown.italic);
+    return TextTransform(Text(text), StringFuncs.markdown.italic);
   }
 }
 
@@ -153,7 +153,7 @@ class MarkdownCode implements Node {
 
   @override
   Node build(BuildContext context) {
-    return TextTransform(Text.of(text), StringFuncs.markdown.code);
+    return TextTransform(Text(text), StringFuncs.markdown.code);
   }
 }
 

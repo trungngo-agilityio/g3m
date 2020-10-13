@@ -80,7 +80,7 @@ Node _parseNameNode(dynamic value, {_NodeParseErrorFunc error}) {
     } else if (value is Node) {
       name = value;
     } else {
-      name = Text.of(value);
+      name = Text(value);
     }
   }
 

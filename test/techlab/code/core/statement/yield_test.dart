@@ -7,7 +7,7 @@ import '../../../utils.dart';
 void main() {
   test('simple', () {
     var code = DartCodeConfig(
-      CodeYield.of(Text.of('a')),
+      CodeYield.of(Text('a')),
     );
 
     run(
@@ -18,7 +18,7 @@ void main() {
 
   test('async', () {
     var code = DartCodeConfig(
-      CodeYield.of(Text.of('a'), async: true),
+      CodeYield.of(Text('a'), async: true),
     );
 
     run(

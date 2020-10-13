@@ -119,7 +119,7 @@ class CodeComment extends CodeConfigProxyNode<CodeComment> {
       if (v is Node) {
         return CodeComment(v);
       } else {
-        return CodeComment(Text.of(v?.toString()));
+        return CodeComment(Text(v?.toString()));
       }
     });
   }

@@ -9,7 +9,7 @@ class CodeBreakConfig extends CodeConfigNode<CodeBreak> {
     String breakKeyword = 'break',
   }) =>
       CodeBreakConfig((context, package) {
-        return CodeExpr._(Text._(breakKeyword), false);
+        return CodeExpr._(_RawText(breakKeyword), false);
       }, child);
 }
 

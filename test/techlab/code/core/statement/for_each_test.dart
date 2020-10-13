@@ -9,7 +9,7 @@ void main() {
     var code = JavaCodeConfig(
       CodeForEach.of(
         item: CodeVar.of(name: 'i', type: 'int'),
-        collection: Text.of('entries'),
+        collection: Text('entries'),
         body: ['print("Hello World!");'],
       ),
     );

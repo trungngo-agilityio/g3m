@@ -5,13 +5,16 @@ class Trim implements Node {
   final bool right;
   final Node content;
 
-  Trim(this.left, this.right, this.content);
+  Trim._(this.left, this.right, this.content);
 
-  factory Trim.left(Node content) => Trim(true, false, content);
+  factory Trim(bool left, bool right, dynamic content) =>
+      Trim._(left, right, Node.of(content));
 
-  factory Trim.right(Node content) => Trim(false, true, content);
+  factory Trim.left(dynamic content) => Trim(true, false, content);
 
-  factory Trim.leftRight(Node content) => Trim(true, true, content);
+  factory Trim.right(dynamic content) => Trim(false, true, content);
+
+  factory Trim.leftRight(dynamic content) => Trim(true, true, content);
 
   @override
   Node build(BuildContext context) {

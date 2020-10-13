@@ -7,7 +7,7 @@ import '../../../utils.dart';
 void main() {
   test('simple', () async {
     var code = JavaCodeConfig(
-      CodeAwait.of(Text.of('a')),
+      CodeAwait.of(Text('a')),
     );
 
     await runAndExpect(

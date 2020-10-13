@@ -19,7 +19,7 @@ void main() {
 
   test('node', () {
     run(
-      CodeExpr.of(Text.of('hello world')),
+      CodeExpr.of(Text('hello world')),
       'hello world',
     );
   });

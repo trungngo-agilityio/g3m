@@ -7,7 +7,7 @@ import '../../../utils.dart';
 void main() {
   test('all', () {
     var root = DartCode.of(
-      body: Text.of('// You can put anything in this body.'),
+      body: Text('// You can put anything in this body.'),
       comment: CodeComment.of('Demo file level comment'),
       package: CodePackage.of('my personal vehicle'),
       imports: [
@@ -132,7 +132,7 @@ CodeFunction function() {
       returns: ['void'],
       throws: ['accident exception', 'bad driver exception'],
       body: [
-        Text.of('// Just any text'),
+        Text('// Just any text'),
       ]);
 }
 

@@ -39,7 +39,7 @@ class CodePropertyName extends CodeConfigProxyNode<CodePropertyName>
     return _parseNode<CodePropertyName>(text, (v) {
       if (v is CodeField) return CodePropertyName._(v.name.name);
       if (v is CodeFieldName) return CodePropertyName._(v.name);
-      return CodePropertyName._(Text.of(v));
+      return CodePropertyName._(Text(v));
     });
   }
 }

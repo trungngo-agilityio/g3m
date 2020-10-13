@@ -22,7 +22,7 @@ void main() {
 
   test('node', () {
     run(
-      CodeArgName.of(name: Text.of('hello world')),
+      CodeArgName.of(name: Text('hello world')),
       'helloWorld',
     );
   });

@@ -18,7 +18,7 @@ class CodeImportConfig extends CodeConfigNode<CodeImport> {
       // For dart, the package path is used.
       Node pathNode;
       if (pathIgnored != true && import.path != null) {
-        pathNode = Pad.of(pathQuote, pathQuote, Text.of(import.path));
+        pathNode = Pad.of(pathQuote, pathQuote, Text(import.path));
       }
 
       // Include the package name if that is not ignored.

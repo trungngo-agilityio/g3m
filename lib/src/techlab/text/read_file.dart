@@ -22,7 +22,7 @@ class ReadFile implements Node {
 
     final file = io.File(path);
     if (file.existsSync()) {
-      return Text.of(file.readAsStringSync());
+      return Text(file.readAsStringSync());
     } else {
       final relativePath = ioPath.relative(path);
       printWarn('$relativePath does not exist');

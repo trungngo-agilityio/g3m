@@ -57,7 +57,7 @@ class _Context implements BuildContext, RenderContext {
       if (container.children != null) {
         for (final i in container.children) {
           if (i != null) {
-            final child = i is Node ? i : Text.of(i);
+            final child = i is Node ? i : Text(i);
 
             final context = _Context.childOf(this, child)..build();
             _children.add(context);

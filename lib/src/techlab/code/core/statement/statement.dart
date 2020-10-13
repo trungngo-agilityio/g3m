@@ -33,11 +33,11 @@ class CodeStatement extends CodeConfigProxyNode<CodeStatement> {
       // Notes: We wrap the text inside a [CodeExpr] so that the
       // expr is not auto terminated and can be rendered as free text.
       if (v is String) {
-        child = Text._(v);
+        child = _RawText(v);
       } else if (v is Node) {
         child = v;
       } else {
-        child = Text._(v?.toString());
+        child = _RawText(v?.toString());
       }
 
       if (closed == true) child = CodeExpr._(child, true);

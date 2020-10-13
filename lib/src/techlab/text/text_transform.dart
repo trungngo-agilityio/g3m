@@ -8,11 +8,15 @@ part of g3.techlab;
 /// [DotCase], [ParamCase], [HeaderCase], [TitleCase], [ConstantCase],
 /// [SentenceCase].
 ///
-class TextTransform implements Node, Renderer, PostRenderer {
+class TextTransform implements Text, Renderer, PostRenderer {
   final Node content;
   final StringFunc transform;
 
-  TextTransform(this.content, this.transform);
+  TextTransform._(this.content, this.transform);
+
+  factory TextTransform(dynamic content, StringFunc transform) {
+    return TextTransform._(Node.of(content), transform);
+  }
 
   @override
   Node build(BuildContext context) {
@@ -38,134 +42,94 @@ class TextTransform implements Node, Renderer, PostRenderer {
   }
 }
 
-class UpperCase implements Node {
-  final Node content;
-
-  UpperCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.upper);
-  }
+class UpperCase extends TextTransform {
+  UpperCase(dynamic content) : super._(Node.of(content), StringFuncs.upper);
 }
 
-class LowerCase implements Node {
-  final Node content;
-
-  LowerCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.lower);
-  }
+class LowerCase extends SingleChildNode {
+  LowerCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.lower,
+        ));
 }
 
-class PascalCase implements Node {
-  final Node content;
-
-  PascalCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.pascal);
-  }
+class PascalCase extends SingleChildNode {
+  PascalCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.pascal,
+        ));
 }
 
-class CamelCase implements Node {
-  final Node content;
-
-  CamelCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.camel);
-  }
+class CamelCase extends SingleChildNode {
+  CamelCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.camel,
+        ));
 }
 
-class SnakeCase implements Node {
-  final Node content;
-
-  SnakeCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.snake);
-  }
+class SnakeCase extends SingleChildNode {
+  SnakeCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.snake,
+        ));
 }
 
-class PathCase implements Node {
-  final Node content;
-
-  PathCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.path);
-  }
+class PathCase extends SingleChildNode {
+  PathCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.path,
+        ));
 }
 
-class DotCase implements Node {
-  final Node content;
-
-  DotCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.dot);
-  }
+class DotCase extends SingleChildNode {
+  DotCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.dot,
+        ));
 }
 
-class ParamCase implements Node {
-  final Node content;
-
-  ParamCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.param);
-  }
+class ParamCase extends SingleChildNode {
+  ParamCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.param,
+        ));
 }
 
-class HeaderCase implements Node {
-  final Node content;
-
-  HeaderCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.header);
-  }
+class HeaderCase extends SingleChildNode {
+  HeaderCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.header,
+        ));
 }
 
-class TitleCase implements Node {
-  final Node content;
-
-  TitleCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.title);
-  }
+class TitleCase extends SingleChildNode {
+  TitleCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.title,
+        ));
 }
 
-class ConstantCase implements Node {
-  final Node content;
-
-  ConstantCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.constant);
-  }
+class ConstantCase extends SingleChildNode {
+  ConstantCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.constant,
+        ));
 }
 
-class SentenceCase implements Node {
-  final Node content;
-
-  SentenceCase(this.content);
-
-  @override
-  Node build(BuildContext context) {
-    return TextTransform(content, StringFuncs.sentence);
-  }
+class SentenceCase extends SingleChildNode {
+  SentenceCase(dynamic content)
+      : super(TextTransform(
+          content,
+          StringFuncs.sentence,
+        ));
 }

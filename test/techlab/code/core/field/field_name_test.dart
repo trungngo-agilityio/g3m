@@ -22,7 +22,7 @@ void main() {
 
   test('node', () {
     run(
-      CodeFieldName.of(name: Text.of('hello world')),
+      CodeFieldName.of(name: Text('hello world')),
       'helloWorld',
     );
   });

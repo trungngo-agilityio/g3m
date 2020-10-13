@@ -28,7 +28,7 @@ void main() {
 
   test('node', () {
     run(
-      CodeArgList.of(required: Text.of('hello world')),
+      CodeArgList.of(required: Text('hello world')),
       'helloWorld',
     );
   });

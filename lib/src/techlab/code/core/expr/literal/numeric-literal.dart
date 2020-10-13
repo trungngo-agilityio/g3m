@@ -8,7 +8,7 @@ class CodeNumericLiteralConfig extends CodeConfigNode<CodeNumericLiteral> {
   factory CodeNumericLiteralConfig.forJavaLike(Node child) =>
       CodeNumericLiteralConfig((context, literal) {
         if (literal.value == null) return CodeNullLiteral();
-        return Text.of(literal.value);
+        return Text(literal.value);
       }, child);
 }
 

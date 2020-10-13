@@ -7,10 +7,10 @@ class Console implements Node {
   Console(this.child, this.error);
 
   factory Console.info(dynamic text) =>
-      Console(text is Node ? text : Text.of(text?.toString()), false);
+      Console(text is Node ? text : Text(text?.toString()), false);
 
   factory Console.error(dynamic text) =>
-      Console(text is Node ? text : Text.of(text?.toString()), true);
+      Console(text is Node ? text : Text(text?.toString()), true);
 
   @override
   Node build(BuildContext context) {

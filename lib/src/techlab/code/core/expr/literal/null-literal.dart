@@ -9,7 +9,7 @@ class CodeNullLiteralConfig extends CodeConfigNode<CodeNullLiteral> {
     String nullKeyword = 'null',
   }) =>
       CodeNullLiteralConfig((context, package) {
-        return Text.of(nullKeyword);
+        return Text(nullKeyword);
       }, child);
 }
 

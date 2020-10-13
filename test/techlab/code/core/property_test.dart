@@ -46,7 +46,7 @@ void main() {
         name: 'first name',
         type: 'string',
         getter: CodePropertyGetter.of(
-          body: CodeReturn.of(Text.of('_firstName')),
+          body: CodeReturn.of(Text('_firstName')),
         ),
       );
       runDart(

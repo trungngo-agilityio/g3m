@@ -68,12 +68,12 @@ class CodeArgConfig extends CodeConfigNode<CodeArg> {
 
       Node privateModifier;
       if (arg.isPrivate == true && privatePrefix != null) {
-        privateModifier = Text.of(privatePrefix);
+        privateModifier = Text(privatePrefix);
       }
 
       Node finalModifier;
       if (arg.isFinal == true && finalPrefix != null) {
-        finalModifier = Text.of(finalPrefix);
+        finalModifier = Text(finalPrefix);
       }
 
       Node init = arg.init;

@@ -9,8 +9,8 @@ void main() {
     var code = JavaCodeConfig(
       CodeFor.of(
         init: CodeVar.of(name: 'i', type: 'int'),
-        condition: Text.of('i<10'),
-        step: Text.of('i++'),
+        condition: Text('i<10'),
+        step: Text('i++'),
         body: ['print("Hello World!");'],
       ),
     );

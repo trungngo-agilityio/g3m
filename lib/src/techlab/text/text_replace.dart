@@ -4,7 +4,7 @@ class TextReplace extends SingleChildNode {
   TextReplace.all(
     Pattern from,
     String replace,
-    Node child,
+    dynamic child,
   )   : assert(from != null, 'from is required'),
         assert(replace != null, 'replace is required'),
         super(TextTransform(child, (s) {
@@ -14,7 +14,7 @@ class TextReplace extends SingleChildNode {
   TextReplace.first(
     Pattern from,
     String replace,
-    Node child,
+    dynamic child,
   )   : assert(from != null, 'from is required'),
         assert(replace != null, 'replace is required'),
         super(TextTransform(child, (s) {
@@ -25,7 +25,7 @@ class TextReplace extends SingleChildNode {
     int start,
     int end,
     String replace,
-    Node child,
+    dynamic child,
   )   : assert(start != null, 'start required'),
         assert(replace != null, 'replace required'),
         super(TextTransform(child, (s) {
