@@ -5,17 +5,6 @@ extension StimSetExtension<T> on Set<T> {
     return Set<T>.of(this);
   }
 
-  // // FIXME, this does not work yet
-  // Set<T> deepClone() {
-  //   if (isNotEmpty != true) return this;
-  //   return Set<T>.of(map((e) => _cloneSymbol<T>(e, true)).toSet());
-  // }
-
-  /// Adds a set with another.
-  /// If a set is null, the make sure the other is a T or set of T then return.
-  /// Otherwise, make sure the other is T or set of T and then
-  /// make a new set and return.
-  ///
   Set<T> operator +(dynamic other) {
     if (this == null) {
       if (other == null) return null;

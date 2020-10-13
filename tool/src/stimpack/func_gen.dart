@@ -15,30 +15,28 @@ void genFuncPack() {
   // ---------------------------------------------------------------------------
   // Types
   // ---------------------------------------------------------------------------
-  final tMap = t.symbolOf(name: 'map', package: meta);
+  final tMapFunc = t.symbolOf(name: 'map func', package: meta);
   final tFieldMap = t.symbolOf(name: 'field map', package: meta);
   final tFilter = t.symbolOf(name: 'filter', package: meta);
 
   // ---------------------------------------------------------------------------
   // Fields
   // ---------------------------------------------------------------------------
-  tMap.fields = {
+  tMapFunc.fields = {
     f.of(name: 'from', type: t.model.type),
     f.of(name: 'to', type: t.model.type),
     f.of(name: 'removed fields', type: t.model.fieldSet),
     f.setOf(name: 'mapped fields', type: tFieldMap),
-    f.of(name: 'code', type: t.model.funcCode),
   };
 
   tFieldMap.fields = {
     f.of(name: 'from', type: t.model.field),
     f.of(name: 'to', type: t.model.field),
-    f.of(name: 'map', type: tMap),
+    f.of(name: 'map', type: tMapFunc),
   };
 
   tFilter.fields = {
     f.of(name: 'from', type: t.model.type),
-    f.of(name: 'code', type: t.model.funcCode),
   };
 
   // ---------------------------------------------------------------------------

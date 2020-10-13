@@ -19,5 +19,8 @@ G3M
 * [Installation](doc/install.md)
 * [Technical Stack](doc/techstack.md)
 * [Development](doc/dev.md)
+
+## Worth Readings:
+* [semver](https://devhints.io/semver) demo
         
 

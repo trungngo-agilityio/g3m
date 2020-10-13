@@ -188,6 +188,6 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
       CodeArg.of(
         name: field.name,
         type: null,
-        isPrivate: field.modifier?.isPrivate,
+        isPrivate: field.isPrivate,
       );
 }

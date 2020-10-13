@@ -36,6 +36,7 @@ class StimModel extends StimPack {
     _grpcStatuses();
     _patterns();
     _ranges();
+    _typeRules();
     _fieldRules();
     _filters();
     _packages();
@@ -206,6 +207,8 @@ class StimModel extends StimPack {
   // Rules
   // ===========================================================================
 
+  void _typeRules() {}
+
   void _fieldRules() {
     fieldRule
       ..required = fieldRule.of(name: 'required')
@@ -214,6 +217,7 @@ class StimModel extends StimPack {
       ..authorized = fieldRule.of(name: 'authorized')
       ..readOnly = fieldRule.of(name: 'read only')
       ..writeOnly = fieldRule.of(name: 'write only')
+      ..createOnly = fieldRule.of(name: 'create only')
       ..systemOnly = fieldRule.of(name: 'system only')
       ..autoIncreased = fieldRule.of(name: 'auto increased')
       ..transient = fieldRule.of(name: 'transient');
@@ -439,10 +443,14 @@ class StimModel extends StimPack {
     final mf = f.model = StimModelFields();
 
     // Sets of fields.
-    mf.stringId = f.of(name: 'id', type: t.string);
-    mf.autoStringId = f.of(name: 'id', type: t.string)..readOnly();
-    mf.intId = f.of(name: 'fields', type: t.int);
-    mf.autoIntId = f.of(name: 'fields', type: t.int)..readOnly();
+    mf.stringId = f.of(name: 'id', type: t.string)..createOnly();
+    mf.autoStringId = f.of(name: 'id', type: t.string)
+      ..createOnly()
+      ..readOnly();
+    mf.intId = f.of(name: 'fields', type: t.int)..createOnly();
+    mf.autoIntId = f.of(name: 'fields', type: t.int)
+      ..createOnly()
+      ..readOnly();
     mf.fieldSet = f.of(name: 'fields', type: t.model.fieldSet);
   }
 

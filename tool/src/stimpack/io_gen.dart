@@ -24,11 +24,9 @@ void genIoPack() {
   // ---------------------------------------------------------------------------
   final fFileExtension = f.of(name: 'path', type: t.string);
   final fPath = f.of(name: 'path', type: t.string);
-  final fAbsolutePath = f.of(name: 'absolute path', type: t.string);
 
   final fFileType = f.of(name: 'type', type: tFileType);
 
-  final fFile = f.of(name: 'file', type: tFile);
   final fFileSet = f.setOf(name: 'files', type: tFile);
 
   final fDir = f.of(name: 'dir', type: tDir);
@@ -40,19 +38,44 @@ void genIoPack() {
 
   // A directory has a relative path, an absolute path, a set of files,
   // a set of sub dirs.
-  tDir.fields = {fPath, fAbsolutePath, fFileSet, fDirSet};
+  tDir.fields = {
+    fPath.copyWith(
+      comment: 'The dir [path], with out the dir [name].\n'
+          'It is an absolute path if the [parent] is not set.\n'
+          'Otherwise, it is a relative path.',
+    ),
+    fDir.copyWith(
+      name: 'parent',
+      comment: 'The parent directory of this one.',
+    ),
+    fFileSet.copyWith(
+      comment: 'The set of files in this directories.',
+    ),
+    fDirSet.copyWith(
+      comment: 'The set of sub directories of this one.',
+    ),
+  };
 
   // A file has a file type.
-  tFile.fields = {fFileType};
+  tFile.fields = {
+    fDir.copyWith(
+      name: 'dir',
+      comment: 'The directory that this file is in',
+    ),
+    fFileType.copyWith(
+      comment: 'The file type',
+    ),
+  };
 
-  tFileType.fields = {fFileExtension};
+  tFileType.fields = {
+    fFileExtension.copyWith(
+      comment: 'The file extension.',
+    ),
+  };
 
   stimpackGen(meta, 'lib/src/stimpack', values: {
     tFileType: {
       'txt',
-      'markdown',
-      'yaml',
-      'json',
     },
   });
 }

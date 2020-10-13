@@ -3,6 +3,7 @@ part of g3.stimpack.io.generated;
 
 
 class StimIoFileType extends StimModelSymbol<StimIoFileType> {
+  /// The file extension.
   String path;
 
   StimIoFileType();
@@ -21,12 +22,6 @@ class StimIoFileType extends StimModelSymbol<StimIoFileType> {
 
 class StimIoFileTypeScope {
   StimIoFileType txt;
-
-  StimIoFileType markdown;
-
-  StimIoFileType yaml;
-
-  StimIoFileType json;
 
 
   /// Creates a new "fileType" of [StimIoFileType] type.

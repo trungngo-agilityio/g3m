@@ -1,15 +1,32 @@
 part of g3.stimpack.model;
 
 class StimModelTagScope {
+  static StimName tagNameOfType(Type type) {
+    return 'runtimeType:' >> StimName.of(type);
+  }
+
+  StimModelTag withTypeOf(
+    dynamic value, {
+    Iterable<StimModelTag> tags,
+  }) {
+    assert(value != null, 'value is required');
+
+    return StimModelTag()
+      ..name = tagNameOfType(value.runtimeType)
+      ..value = value
+      ..tags = tags;
+  }
+
   StimModelTag of({
     @meta.required dynamic name,
     @meta.required dynamic value,
     Iterable<StimModelTag> tags,
-  }) =>
-      StimModelTag()
-        ..name = StimName.of(name)
-        ..value = value
-        ..tags = tags;
+  }) {
+    return StimModelTag()
+      ..name = StimName.of(name)
+      ..value = value
+      ..tags = tags;
+  }
 }
 
 /// This provides the flexibility to attach any tags data to any model entity.

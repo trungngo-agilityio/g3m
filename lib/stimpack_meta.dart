@@ -8,3 +8,4 @@ part 'src/stimpack/meta/extensions.dart';
 part 'src/stimpack/meta/init.dart';
 part 'src/stimpack/meta/pack.dart';
 part 'src/stimpack/meta/validator.dart';
+part 'src/stimpack/meta/meta_model_type_rule_ext.dart';

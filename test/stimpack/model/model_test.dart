@@ -6,39 +6,50 @@ class _FakeSymbol extends StimModelSymbol<_FakeSymbol> {}
 
 void main() {
   final m = stimpack.model, t = m.type;
+  final typeTag = 'my';
+  final symbolTag = 'symbol';
   test('load test', () {
     print(stimpack.model.type.bool);
   });
 
   group('tags', () {
-    final t1 = t.of(name: 't1', package: null);
-    final t2 = _FakeSymbol()..name = StimName.of('t2');
-    final t3 = _FakeSymbol()..name = StimName.of('t3');
-    final t4 = t.of(name: 't4', package: null);
+    final type1 = t.of(name: 'type1', package: null);
+    final symbol1 = _FakeSymbol()..name = StimName.of('symbol1');
+    final symbol2 = _FakeSymbol()..name = StimName.of('symbol2');
+    final type2 = t.of(name: 'type2', package: null);
 
     test('add & remove', () {
-      final tag1 = t1.addSymbolAsTag(t2);
-      assert(tag1 != null);
-      assert(tag1.value == t2);
+      final symbolTag1 = type1.addTag(name: symbolTag, value: symbol1);
 
-      t1.addSymbolAsTag(t3);
-      t1.addSymbolAsTag(t4);
+      expect(symbolTag1, isNotNull);
+      expect(symbolTag1.value, equals(symbol1));
 
-      final t2_tag = t1.firstTaggedSymbolOfExactType<_FakeSymbol>();
+      type1.addTag(name: symbolTag, value: symbol2);
+      type1.addTag(name: typeTag, value: type2);
+
+      final t2_tag = type1.firstValueOfTag<_FakeSymbol>(symbolTag);
       assert(t2_tag != null);
-      assert(t2 == t2_tag);
-      assert(t2_tag.name == t2.name);
+      assert(symbol1 == t2_tag);
+      assert(t2_tag.name == symbol1.name);
 
-      var ts = t1.allTaggedSymbolsOfExactType<_FakeSymbol>();
-      assert(ts?.length == 2);
-      assert(ts.contains(t2));
-      assert(ts.contains(t3));
+      var ts = type1.allValuesOfTag<_FakeSymbol>(symbolTag);
+      print(ts);
+      expect(
+          ts,
+          allOf([
+            hasLength(2),
+            contains(symbol1),
+            contains(symbol2),
+          ]));
 
-      t1.removeTaggedSymbol(t2);
-      ts = t1.allTaggedSymbolsOfExactType<_FakeSymbol>();
-      assert(ts?.length == 1);
-      assert(!ts.contains(t2));
-      assert(ts.contains(t3));
+      type1.removeTag(name: symbolTag, value: symbol1);
+      ts = type1.allValuesOfTag<_FakeSymbol>(symbolTag);
+      expect(
+          ts,
+          allOf([
+            hasLength(1),
+            contains(symbol2),
+          ]));
     });
   });
 }

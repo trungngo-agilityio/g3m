@@ -55,7 +55,9 @@ extension ExtStimRestCrudUpdateOneApiScope on StimRestCrudUpdateOneApiScope {
 
     for (final field in fields) {
       // Ignore certain fields
-      if (field.isSystemOnly || field.isTransient) continue;
+      if (field.isSystemOnly || field.isTransient || field.isCreateOnly) {
+        continue;
+      }
 
       // notes: id field cannot be updated by default.
       if (field != idField && !field.isReadOnly) request.add(field);

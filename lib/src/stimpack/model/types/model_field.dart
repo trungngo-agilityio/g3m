@@ -93,6 +93,10 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   bool get isWriteOnly =>
       rules?.contains(stimpack.model.fieldRule.writeOnly) == true;
 
+  /// Determines if the field is modifiable after being created or not.
+  bool get isCreateOnly =>
+      rules?.contains(stimpack.model.fieldRule.createOnly) == true;
+
   /// Determines if the field is system only or not.
   bool get isSystemOnly =>
       rules?.contains(stimpack.model.fieldRule.systemOnly) == true;
@@ -100,6 +104,10 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   /// Determines if the field is transient or not.
   bool get isTransient =>
       rules?.contains(stimpack.model.fieldRule.transient) == true;
+
+  /// Determines if the field is auto increased.
+  bool get isAutoIncreased =>
+      rules?.contains(stimpack.model.fieldRule.autoIncreased) == true;
 
   /// Determines if a field is unique or not.
   bool get isUnique => rules?.contains(stimpack.model.fieldRule.unique) == true;
@@ -129,6 +137,9 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   /// a field password might a write only field.
   void writeOnly() => rules += stimpack.model.fieldRule.writeOnly;
 
+  /// Marks that this field is not modifiable after being created.
+  void createOnly() => rules += stimpack.model.fieldRule.createOnly;
+
   /// Marks that this field is a system field. It will not be readable
   /// by users or external systems
   void systemOnly() => rules += stimpack.model.fieldRule.systemOnly;
@@ -138,6 +149,9 @@ class StimModelField extends StimModelSymbol<StimModelField> {
 
   // Marks a field should unique.
   void unique() => rules += stimpack.model.fieldRule.unique;
+
+  // Marks a field should be auto increased.
+  void autoIncreased() => rules += stimpack.model.fieldRule.autoIncreased;
 
   /// Gets the intersection of all rules' choices
   Set<StimModelChoice> get choices {

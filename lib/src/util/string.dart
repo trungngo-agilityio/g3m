@@ -13,35 +13,32 @@ class StringFuncs {
 
   static final StringFunc noop = (s) => s;
   static final StringFunc ignore = (s) => '';
-  static final StringFunc upper =
-      (s) => s != null && s.isNotEmpty ? s.toUpperCase() : s;
-  static final StringFunc lower =
-      (s) => s != null && s.isNotEmpty ? s.toLowerCase() : s;
-  static final StringFunc camel =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).camel : s;
-  static final StringFunc pascal =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).pascal : s;
-  static final StringFunc snake =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).snake : s;
-  static final StringFunc dot =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).dot : s;
-  static final StringFunc path =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).path : s;
-  static final StringFunc param =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).param : s;
-  static final StringFunc header =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).header : s;
-  static final StringFunc title =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).title : s;
-  static final StringFunc constant =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).constant : s;
 
-  static final StringFunc sentence =
-      (s) => s != null && s.isNotEmpty ? ReCase.forCode(s).sentence : s;
-  static final StringFunc singleQuotes = (s) =>
-      s != null && s.isNotEmpty ? '\'${s.replaceAll('\'', '\\\'')}\'' : s;
+  static final StringFunc upper = noEmpty((s) => s.toUpperCase());
+  static final StringFunc lower = noEmpty((s) => s.toLowerCase());
+  static final StringFunc camel = noEmpty((s) => ReCase.forCode(s).camel);
+  static final StringFunc pascal = noEmpty((s) => ReCase.forCode(s).pascal);
+  static final StringFunc snake = noEmpty((s) => ReCase.forCode(s).snake);
+  static final StringFunc dot = noEmpty((s) => ReCase.forCode(s).dot);
+  static final StringFunc path = noEmpty((s) => ReCase.forCode(s).path);
+  static final StringFunc param = noEmpty((s) => ReCase.forCode(s).param);
+  static final StringFunc header = noEmpty((s) => ReCase.forCode(s).header);
+  static final StringFunc title = noEmpty((s) => ReCase.forCode(s).title);
+  static final StringFunc constant = noEmpty((s) => ReCase.forCode(s).constant);
+  static final StringFunc sentence = noEmpty((s) => ReCase.forCode(s).sentence);
+
+  static final StringFunc singleQuotes =
+      noEmpty((s) => '\'${s.replaceAll('\'', '\\\'')}\'');
+
   static final StringFunc doubleQuotes =
-      (s) => s != null && s.isNotEmpty ? '"${s.replaceAll('"', '\\"')}"' : s;
+      noEmpty((s) => '"${s.replaceAll('"', '\\"')}"');
+
+  static final StringFunc plural = noEmpty((s) => inflection.pluralize(s));
+  static final StringFunc singular = noEmpty((s) => inflection.singularize(s));
+  static final StringFunc past = noEmpty((s) => inflection.past(s));
+
+  static StringFunc noEmpty(StringFunc func) =>
+      (s) => s != null && s.isNotEmpty ? func(s) : s;
 
   /// Lazy init the code func.
   static CodeFunc _code;

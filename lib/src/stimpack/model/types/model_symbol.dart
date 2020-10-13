@@ -13,48 +13,56 @@ class StimModelSymbol<T extends StimModelSymbol<T>> extends StimSymbol<T>
 
   StimModelSymbol.of(this.name, {this.tags});
 
-  StimModelTag toTag() {
-    final tagName = runtimeType.toString();
-    return StimModelTag()
-      ..name = StimName.of(tagName)
-      ..value = this;
-  }
-
-  StimModelTag addSymbolAsTag<E>(StimModelSymbol symbol) {
+  /// Adds a new tag with the specified [name] and [value].
+  StimModelTag addTag({
+    @meta.required dynamic name,
+    @meta.required dynamic value,
+  }) {
     tags ??= {};
-    final tag = symbol.toTag();
+    final tag = stimpack.model.tag.of(name: name, value: value);
     tags.add(tag);
     return tag;
   }
 
-  E lazyInitTaggedSymbolOfExactType<E extends StimModelSymbol<E>>(
-      E Function() build) {
-    var symbol = firstTaggedSymbolOfExactType<E>();
-    if (symbol == null) {
-      symbol = build();
-      addSymbolAsTag(symbol);
-    }
-
-    return symbol;
+  /// Removes all tags with the same [name] and add a new one with
+  /// the specified [name] and [value].
+  StimModelTag setTag({
+    @meta.required dynamic name,
+    @meta.required dynamic value,
+  }) {
+    tags = tags?.where((t) => t.name != name)?.toSet();
+    final tag = stimpack.model.tag.of(name: name, value: value);
+    tags += tag;
+    return tag;
   }
 
-  void removeTaggedSymbol(StimModelSymbol symbol) {
-    if (tags?.isNotEmpty != true) return;
-    final tagName = StimName.of(symbol.runtimeType.toString());
-    return tags.removeWhere((e) => e.name == tagName && e.value == symbol);
+  /// Removes a tag with the specified [name] and [value].
+  void removeTag({
+    @meta.required dynamic name,
+    @meta.required dynamic value,
+  }) {
+    assert(name != null, 'name is required');
+    tags = tags?.where((t) => t.name != name || t.value != value)?.toSet();
   }
 
-  E firstTaggedSymbolOfExactType<E>() {
-    final tagName = E.toString();
-    final value = tags?.firstWhereNameIs(tagName)?.value;
+  /// Gets the first tag with the specified [name].
+  E firstValueOfTag<E>(dynamic name) {
+    assert(name != null, 'name is required');
+    final value = tags?.firstWhereNameIs(name)?.value;
     return value == null ? null : value as E;
   }
 
-  Set<E> allTaggedSymbolsOfExactType<E>() {
-    final tagName = E.toString();
-    final symbolTags = tags?.whereNameIs(tagName);
-    return symbolTags
-        ?.map((e) => e.value == null ? null : e.value as E)
-        ?.toSet();
+  /// Gets all tags with the specified [name].
+  Iterable<E> allValuesOfTag<E>(dynamic name) {
+    assert(name != null, 'name is required');
+    return tags
+        ?.whereNameIs(name)
+        ?.map((e) => e.value == null ? null : e.value as E);
+  }
+
+  /// Removes all tags with the specified [name].
+  void removeAllTags(dynamic name) {
+    assert(name != null, 'name is required');
+    tags = tags?.where((t) => t.name != name)?.toSet();
   }
 }

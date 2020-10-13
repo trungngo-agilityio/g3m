@@ -15,19 +15,23 @@ class CodeConstructorCallConfig extends CodeConfigNode<CodeConstructorCall> {
     Node child, {
     @required bool namedConstructorEnabled,
   }) {
-    return CodeConstructorCallConfig((context, func) {
-      Node name = func.className;
-      if (namedConstructorEnabled == true && func.name != null) {
-        name = CodeAccessExpr.of(name, func.name);
+    return CodeConstructorCallConfig((context, call) {
+      Node name = call.className;
+      if (namedConstructorEnabled == true && call.name != null) {
+        name = CodeAccessExpr.of(name, call.name);
+      }
+
+      if (call.instance != null) {
+        name = Container([call.instance, '.', name]);
       }
 
       return CodeExpr.open(
         Container([
-          func.comment,
+          call.comment,
           name,
-          func.generic,
+          call.generic,
           '(',
-          Join.commaSeparated(func.args),
+          Join.commaSeparated(call.args),
           ')',
         ]),
       );
@@ -36,6 +40,7 @@ class CodeConstructorCallConfig extends CodeConfigNode<CodeConstructorCall> {
 }
 
 class CodeConstructorCall extends CodeConfigProxyNode<CodeConstructorCall> {
+  final CodeRef instance;
   final CodeClassName className;
   final CodeConstructorName name;
   final CodeComment comment;
@@ -43,6 +48,7 @@ class CodeConstructorCall extends CodeConfigProxyNode<CodeConstructorCall> {
   final List<CodeExpr> args;
 
   CodeConstructorCall({
+    this.instance,
     @required this.className,
     this.name,
     this.comment,
@@ -51,6 +57,7 @@ class CodeConstructorCall extends CodeConfigProxyNode<CodeConstructorCall> {
   });
 
   factory CodeConstructorCall.of({
+    dynamic instance,
     @required dynamic className,
     dynamic name,
     dynamic comment,
@@ -58,6 +65,7 @@ class CodeConstructorCall extends CodeConfigProxyNode<CodeConstructorCall> {
     dynamic args,
   }) =>
       CodeConstructorCall(
+        instance: CodeRef.of(instance),
         className: CodeClassName.of(className),
         name: CodeConstructorName.of(name),
         comment: CodeComment.of(comment),

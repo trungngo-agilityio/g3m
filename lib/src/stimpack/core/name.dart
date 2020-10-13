@@ -27,6 +27,11 @@ enum _NameOp {
   constant,
   sentence,
   words,
+
+  // inflection
+  plural,
+  singular,
+  past,
 }
 
 abstract class StimNamed {
@@ -160,6 +165,18 @@ class StimName {
     return StimName._(_NameOp.words, this, null, null);
   }
 
+  StimName plural() {
+    return StimName._(_NameOp.plural, this, null, null);
+  }
+
+  StimName singular() {
+    return StimName._(_NameOp.singular, this, null, null);
+  }
+
+  StimName past() {
+    return StimName._(_NameOp.past, this, null, null);
+  }
+
   /// Normalizes an input object to a name string that.
   /// - trim left
   /// - trim right
@@ -248,8 +265,8 @@ class StimName {
         return _removeIfEndsWith(l, r);
 
       case _NameOp.reset:
-      // This is the special operation. Ignore the current one and
-      // replace by the new one.
+        // This is the special operation. Ignore the current one and
+        // replace by the new one.
         return r;
 
       case _NameOp.upper:
@@ -259,59 +276,46 @@ class StimName {
         return l.toLowerCase();
 
       case _NameOp.camel:
-        return ReCase
-            .forCode(l)
-            .camel;
+        return ReCase.forCode(l).camel;
 
       case _NameOp.pascal:
-        return ReCase
-            .forCode(l)
-            .pascal;
+        return ReCase.forCode(l).pascal;
 
       case _NameOp.snake:
-        return ReCase
-            .forCode(l)
-            .snake;
+        return ReCase.forCode(l).snake;
 
       case _NameOp.dot:
-        return ReCase
-            .forCode(l)
-            .dot;
+        return ReCase.forCode(l).dot;
 
       case _NameOp.path:
-        return ReCase
-            .forCode(l)
-            .path;
+        return ReCase.forCode(l).path;
 
       case _NameOp.param:
-        return ReCase
-            .forCode(l)
-            .param;
+        return ReCase.forCode(l).param;
 
       case _NameOp.header:
-        return ReCase
-            .forCode(l)
-            .header;
+        return ReCase.forCode(l).header;
 
       case _NameOp.title:
-        return ReCase
-            .forCode(l)
-            .title;
+        return ReCase.forCode(l).title;
 
       case _NameOp.constant:
-        return ReCase
-            .forCode(l)
-            .constant;
+        return ReCase.forCode(l).constant;
 
       case _NameOp.sentence:
-        return ReCase
-            .forCode(l)
-            .sentence;
+        return ReCase.forCode(l).sentence;
 
       case _NameOp.words:
-        return ReCase
-            .forCode(l)
-            .words;
+        return ReCase.forCode(l).words;
+
+      case _NameOp.plural:
+        return StringFuncs.plural(l);
+
+      case _NameOp.singular:
+        return StringFuncs.singular(l);
+
+      case _NameOp.past:
+        return StringFuncs.past(l);
 
       default:
         if (_text != null) {

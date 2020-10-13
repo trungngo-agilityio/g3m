@@ -5,8 +5,8 @@ on StimFirebaseFirestoreCollection {
   void childOf(StimFirebaseFirestoreCollection target) {
     assert(target != null, 'target is required');
     assert(parent == null, 'parent must not be set');
-    assert(!target.collections.contains(
-        this), 'target must not contains the current collection');
+    assert(!target.collections.contains(this),
+    'target must not contains the current collection');
     parent = target;
     target.collections.add(this);
   }
@@ -48,7 +48,7 @@ on StimFirebaseFirestoreCollection {
     String comment,
     Set<StimModelTag> tags,
   }) {
-    final field = stimpack.model.field.listOf(
+    final field = stimpack.model.field.of(
       name: name ?? StimName.of(target),
       type: target,
       rules: rules,
@@ -131,7 +131,7 @@ on StimFirebaseFirestoreCollectionScope {
 
     // automatically add the id field to the model.
     // This is the firestore requirements.
-    final idField = stimpack.model.field.model.autoStringId.copyWith();
+    final idField = stimpack.model.field.model.stringId.copyWith();
     fields ??= {};
     fields.add(idField);
 
@@ -143,13 +143,14 @@ on StimFirebaseFirestoreCollectionScope {
       resource: null,
       idField: idField,
       model: stimpack.model.type.of(
+        name: null,
         package: package,
         fields: fields,
       ),
     );
 
     /// Makes model name is always collection names
-    res.model.name = StimName.of(res);
+    res.model.name = StimName.refOf(res);
 
     // adds the collection to the parent firestore.
     _addCollectionResource('instance of', res, firestore.resource);
@@ -200,11 +201,13 @@ on StimFirebaseFirestoreCollectionScope {
       resource: null,
       idField: idField,
       model: stimpack.model.type.of(
-        name: StimName.of(name),
+        name: null,
         package: package,
         fields: fields,
       ),
     );
+
+    res.model.name = StimName.refOf(res);
 
     _addCollectionResource('collection of', res, parent.resource);
 

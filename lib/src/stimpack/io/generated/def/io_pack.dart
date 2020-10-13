@@ -63,6 +63,9 @@ class StimIo extends StimPack {
     /// Builds fields for type "file"
     mt.file.fields = {
       /// field "file"
+      f.of(name: 'dir', type: mt.dir),
+
+      /// field "file"
       f.of(name: 'type', type: mt.fileType)
     };
 
@@ -78,7 +81,7 @@ class StimIo extends StimPack {
       f.of(name: 'path', type: t.fromDart(String)),
 
       /// field "dir"
-      f.of(name: 'absolute path', type: t.fromDart(String)),
+      f.of(name: 'parent', type: mt.dir),
 
       /// field "dir"
       f.of(name: 'files', type: t.setOf(item: mt.file)),
