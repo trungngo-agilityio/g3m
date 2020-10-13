@@ -66,8 +66,9 @@ abstract class Node {
     }
   }
 
-  static Iterable<Node> iterableOf(dynamic children) {
-    return _parseNodeList(children, (e) => Node.of(e));
+  static Iterable<Node> iterableOf(Iterable<dynamic> children) {
+    if (children == null) return null;
+    return children.map((e) => Node.of(e));
   }
 }
 
