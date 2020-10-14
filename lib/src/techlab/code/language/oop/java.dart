@@ -6,6 +6,7 @@ part of g3.techlab.java;
 ///
 class JavaCodeFile implements Node {
   static const String syntax = 'java';
+  static const String defaultExtension = 'java';
 
   /// The file name without extension.
   final String name;
@@ -21,7 +22,7 @@ class JavaCodeFile implements Node {
 
   JavaCodeFile._(
     this.name, {
-    this.extension = 'java',
+    this.extension,
     this.source,
     this.overwriteIfExists,
   });
@@ -41,7 +42,7 @@ class JavaCodeFile implements Node {
     // Node that java code expect the file name to be class name.
     return JavaCodeFile._(
       name,
-      extension: extension,
+      extension: extension ?? defaultExtension,
       source: JavaCode.of(
           package: package,
           comment: comment,

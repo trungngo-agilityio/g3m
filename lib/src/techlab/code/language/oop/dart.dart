@@ -22,7 +22,7 @@ class DartCodeFile implements Node {
 
   DartCodeFile._(
     this.name, {
-    this.extension = defaultExtension,
+    this.extension,
     this.source,
     this.overwriteIfExists,
   });
@@ -48,7 +48,7 @@ class DartCodeFile implements Node {
     // Node that java code expect the file name to be class name.
     return DartCodeFile._(
       name,
-      extension: extension,
+      extension: extension ?? defaultExtension,
       overwriteIfExists: overwriteIfExists,
       source: DartCode.of(
           package: package,
