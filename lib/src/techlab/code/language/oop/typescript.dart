@@ -6,10 +6,11 @@ part of g3.techlab.typescript;
 ///
 class TypescriptCodeFile implements Node {
   static const String syntax = 'typescript';
-  final String extension;
+  static const String defaultExtension = 'ts';
 
   /// The file name without extension.
   final String name;
+  final String extension;
 
   /// The file content.
   final Node source;
@@ -23,7 +24,7 @@ class TypescriptCodeFile implements Node {
     this.name, {
     this.source,
     this.overwriteIfExists,
-    this.extension = 'ts',
+    this.extension,
   });
 
   factory TypescriptCodeFile.of(
@@ -41,7 +42,7 @@ class TypescriptCodeFile implements Node {
     // Node that java code expect the file name to be class name.
     return TypescriptCodeFile._(
       name,
-      extension: extension,
+      extension: extension ?? defaultExtension,
       source: TypescriptCode.of(
           package: package,
           comment: comment,
