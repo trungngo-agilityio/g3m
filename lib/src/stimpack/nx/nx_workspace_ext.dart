@@ -32,10 +32,11 @@ extension OnWorkspaceNxExtension on StimNxWorkspace {
   StimNxLib addLib({
     dynamic name,
     bool exists,
-    String path,
+    @required String path,
     Set<StimModelTag> tags,
   }) {
     assert(project != null, 'repo project must be set before calling this.');
+    assert(path != null, 'path is required');
 
     name ??= StimName.of(path).param();
     final lib = stimpack.nx.lib.of(
@@ -56,16 +57,15 @@ extension OnWorkspaceNxExtension on StimNxWorkspace {
   }
 
   StimNxApp addApp({
-    @required dynamic name,
+    dynamic name,
     bool exists,
     @required String path,
     Set<StimModelTag> tags,
   }) {
-    assert(name != null, 'name is required');
     assert(path != null, 'path is required');
     assert(project != null, 'project must be set before calling this.');
 
-    name = StimName.of(name).param();
+    name ??= StimName.of(path).param();
     final app = stimpack.nx.app.of(
       name: name,
       workspace: this,

@@ -77,6 +77,12 @@ void genFirebasePack() {
 
     f.of(name: 'crudApi', type: t.rest.crudApi),
 
+    f.of(name: 'on created event', type: t.bool),
+
+    f.of(name: 'on updated event', type: t.bool),
+
+    f.of(name: 'on deleted event', type: t.bool),
+
     // The sub collections
     fFirestoreCollectionSet,
 

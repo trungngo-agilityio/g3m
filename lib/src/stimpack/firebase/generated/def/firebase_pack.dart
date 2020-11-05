@@ -120,6 +120,15 @@ class StimFirebase extends StimPack {
       f.of(name: 'crudApi', type: t.rest.crudApi),
 
       /// field "firestoreCollection"
+      f.of(name: 'on created event', type: t.fromDart(bool)),
+
+      /// field "firestoreCollection"
+      f.of(name: 'on updated event', type: t.fromDart(bool)),
+
+      /// field "firestoreCollection"
+      f.of(name: 'on deleted event', type: t.fromDart(bool)),
+
+      /// field "firestoreCollection"
       f.of(name: 'collections', type: t.setOf(item: mt.firestoreCollection)),
 
       /// field "firestoreCollection"
