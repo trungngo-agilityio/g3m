@@ -37,12 +37,14 @@ class TypescriptCodeFile implements Node {
     Iterable<CodeFunction> functions,
     Iterable<CodeInterface> interfaces,
     Iterable<CodeClass> classes,
+    bool overwriteIfExists,
     dynamic body,
   }) {
     // Node that java code expect the file name to be class name.
     return TypescriptCodeFile._(
       name,
       extension: extension ?? defaultExtension,
+      overwriteIfExists: overwriteIfExists,
       source: TypescriptCode.of(
           package: package,
           comment: comment,
@@ -85,7 +87,7 @@ class TypescriptCode extends SingleChildNode {
     final source = Container([
       CodeStatement.of(
         Container([
-          comment,
+          CodeComment.of(comment),
           package,
           CodeImportList.of(imports),
           CodeEnumList.of(enums),
