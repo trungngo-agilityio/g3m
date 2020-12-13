@@ -7,6 +7,40 @@ class CodeTypeNameMapperConfig extends SingleChildNode {
       : assert(map != null),
         super(child);
 
+  factory CodeTypeNameMapperConfig.of(
+    Node child, {
+    String tDynamic,
+    String tVoid,
+    String tBool,
+    String tChar,
+    String tString,
+    String tByte,
+    String tShort,
+    String tInteger,
+    String tLong,
+    String tFloat,
+    String tDouble,
+    Map<String, String> others,
+  }) {
+    final data = <String, String>{};
+
+    if (tDynamic != null) data[CodeType._dynamic] = tDynamic;
+    if (tVoid != null) data[CodeType._void] = tVoid;
+    if (tBool != null) data[CodeType._bool] = tBool;
+    if (tChar != null) data[CodeType._char] = tChar;
+    if (tString != null) data[CodeType._string] = tString;
+    if (tByte != null) data[CodeType._byte] = tByte;
+    if (tShort != null) data[CodeType._short] = tShort;
+    if (tInteger != null) data[CodeType._integer] = tInteger;
+    if (tLong != null) data[CodeType._long] = tLong;
+    if (tFloat != null) data[CodeType._float] = tFloat;
+    if (tDouble != null) data[CodeType._double] = tDouble;
+    if (others != null) data.addAll(others);
+
+    return CodeTypeNameMapperConfig(child, data);
+  }
+
+  // FIXME: Remove this, makes it more simple
   factory CodeTypeNameMapperConfig.forGRpcTypeToDartLike(
     Node child, {
     String double = 'double',

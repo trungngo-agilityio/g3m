@@ -11,6 +11,14 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
         returnSeparator: ': ',
       );
 
+  factory CodeFunctionConfig.forKotlinLike(Node child) =>
+      CodeFunctionConfig._internal(
+        child,
+        returnsAfter: true,
+        returnSeparator: ': ',
+        functionKeywords: 'fun ',
+      );
+
   factory CodeFunctionConfig.forDartLike(Node child) =>
       CodeFunctionConfig._internal(child);
 
@@ -23,6 +31,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
   factory CodeFunctionConfig._internal(
     Node child, {
     String throwKeyword = 'throws',
+    String functionKeywords = '',
     bool overrideAsAnnotation = true,
     bool returnsAfter = false,
     String returnSeparator = '',
@@ -48,13 +57,16 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
               ? '@override\n'
               : null,
           func.modifier,
-          if (returnsAfter == false) returnNode,
+          if (returnsAfter == false)
+            returnNode,
+          functionKeywords,
           func.name,
           func.generic,
           '(',
           func.args,
           ')',
-          if (returnsAfter == true) returnNode,
+          if (returnsAfter == true)
+            returnNode,
           func.throws,
         ]);
 

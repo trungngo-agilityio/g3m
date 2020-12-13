@@ -174,18 +174,22 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Type configs
 
-          typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig(child, {
-            'dynamic': 'dynamic',
-            'void': 'void',
-            'null': 'null',
-            'byte': 'byte',
-            'short': 'short',
-            'int': 'int',
-            'long': 'long',
-            'float': 'float',
-            'double': 'double',
-            'bool': 'bool',
-          }),
+          // https://dart.dev/guides/language/language-tour#built-in-types
+          typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig.of(
+            child,
+            tDynamic: 'dynamic',
+            tVoid: 'void',
+            tBool: 'bool',
+            tChar: 'String',
+            tString: 'String',
+            tByte: 'int',
+            tShort: 'int',
+            tInteger: 'int',
+            tLong: 'int',
+            tFloat: 'double',
+            tDouble: 'double',
+          ),
+
           typeNameConfig: null,
           typeConfig: (_, child) => CodeTypeConfig.forDartLike(child),
           typeListConfig: null,

@@ -13,15 +13,18 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
   /// Creates a data type config just like java language.
   /// It will work for csharp, typescript and many others.
   factory CodeTypeConfig.forJavaLike(Node child, {StringFunc mapper}) =>
-      CodeTypeConfig._internal(child, false, mapper);
+      CodeTypeConfig._internal(child, null, mapper);
 
   /// Creates a data type config for dart language.
   ///
   factory CodeTypeConfig.forDartLike(Node child, {StringFunc mapper}) =>
-      CodeTypeConfig._internal(child, true, mapper);
+      CodeTypeConfig._internal(child, 'List', mapper);
+
+  factory CodeTypeConfig.forKotlinLike(Node child, {StringFunc mapper}) =>
+      CodeTypeConfig._internal(child, 'Array', mapper);
 
   factory CodeTypeConfig._internal(
-          Node child, bool isDart, StringFunc mapper) =>
+          Node child, String arrayClassName, StringFunc mapper) =>
       CodeTypeConfig((context, type) {
         final params = type.generic;
         final array = type.array;
@@ -50,10 +53,10 @@ class CodeTypeConfig extends CodeConfigNode<CodeType> {
         }
 
         if (array == true) {
-          if (isDart == true) {
+          if (arrayClassName != null) {
             // Dart has syntax for array (or immutable list) as
             // List<T> as a example.
-            name = Pad.of('List<', '>', name);
+            name = Pad.of(arrayClassName + '<', '>', name);
           } else {
             // Other language often like T[].
             name = Pad.right('[]', name);
@@ -115,7 +118,122 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     );
   }
 
-  factory CodeType.ofVoid() => CodeType.simple('void');
+  // ---------------------------------------------------------------------------
+  // Basic Types
+  // See: https://developers.google.com/protocol-buffers/docs/proto3#scalar
+  // ---------------------------------------------------------------------------
+
+  static const _list = 'list';
+
+  // --- Dynamic Type
+
+  static const _dynamic = 'dynamic';
+
+  factory CodeType.ofDynamic() => CodeType.simple(_dynamic);
+
+  factory CodeType.ofDynamicArray() => CodeType.array(_dynamic);
+
+  factory CodeType.ofDynamicList() => CodeType.list(_dynamic);
+
+  // --- Void Type
+
+  static const _void = 'void';
+
+  factory CodeType.ofVoid() => CodeType.simple(_void);
+
+  // --- Bool Type
+
+  static const _bool = 'bool';
+
+  factory CodeType.ofBool() => CodeType.simple(_bool);
+
+  factory CodeType.ofBoolArray() => CodeType.array(_bool);
+
+  factory CodeType.ofBoolList() => CodeType.list(_bool);
+
+  // --- Char Type
+
+  static const _char = 'char';
+
+  factory CodeType.ofChar() => CodeType.simple(_char);
+
+  factory CodeType.ofCharArray() => CodeType.array(_char);
+
+  factory CodeType.ofCharList() => CodeType.list(_char);
+
+  // --- String Type
+
+  static const _string = 'string';
+
+  factory CodeType.ofString() => CodeType.simple(_string);
+
+  factory CodeType.ofStringArray() => CodeType.array(_string);
+
+  factory CodeType.ofStringList() => CodeType.list(_string);
+
+  // --- Byte Type
+
+  static const _byte = 'byte';
+
+  factory CodeType.ofByte() => CodeType.simple(_byte);
+
+  factory CodeType.ofByteArray() => CodeType.array(_byte);
+
+  factory CodeType.ofByteList() => CodeType.list(_byte);
+
+  // --- Short Type
+
+  static const _short = 'short';
+
+  factory CodeType.ofShort() => CodeType.simple(_short);
+
+  factory CodeType.ofShortArray() => CodeType.array(_short);
+
+  factory CodeType.ofShortList() => CodeType.list(_short);
+
+  // --- Integer Type
+
+  static const _integer = 'integer';
+
+  factory CodeType.ofInteger() => CodeType.simple(_integer);
+
+  factory CodeType.ofIntegerArray() => CodeType.array(_integer);
+
+  factory CodeType.ofIntegerList() => CodeType.list(_integer);
+
+  // --- Long Type
+
+  static const _long = 'long';
+
+  factory CodeType.ofLong() => CodeType.simple(_long);
+
+  factory CodeType.ofLongArray() => CodeType.array(_long);
+
+  factory CodeType.ofLongList() => CodeType.list(_long);
+
+  // --- Float Type
+
+  static const _float = 'float';
+
+  factory CodeType.ofFloat() => CodeType.simple(_float);
+
+  factory CodeType.ofFloatArray() => CodeType.array(_float);
+
+  factory CodeType.ofFloatList() => CodeType.list(_float);
+
+  // --- Double Type
+
+  static const _double = 'double';
+
+  factory CodeType.ofDouble() => CodeType.simple(_double);
+
+  factory CodeType.ofDoubleArray() => CodeType.array(_double);
+
+  factory CodeType.ofDoubleList() => CodeType.list(_double);
+
+  // ---------------------------------------------------------------------------
+  // Utilities
+  // ---------------------------------------------------------------------------
 
   factory CodeType.simple(String name) => CodeType.of(
         name: CodeTypeName.of(name),
@@ -137,6 +255,11 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   factory CodeType.array(String name) => CodeType.of(
         name: CodeTypeName.of(name),
         array: true,
+      );
+
+  factory CodeType.list(String name) => CodeType.genericSingle(
+        _list,
+        name,
       );
 
   factory CodeType.genericSingleArray(String name, String param) => CodeType.of(

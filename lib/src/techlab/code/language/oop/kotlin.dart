@@ -1,12 +1,12 @@
-part of g3.techlab.java;
+part of g3.techlab.kotlin;
 
 /// Defines a dart code fine.
 /// This help to enforce the dart syntax and [DatCode] will
 /// be automatically added in the node tree.
 ///
-class JavaCodeFile implements Node {
-  static const String syntax = 'java';
-  static const String defaultExtension = 'java';
+class KotlinCodeFile implements Node {
+  static const String syntax = 'kotlin';
+  static const String defaultExtension = 'kt';
 
   /// The file name without extension.
   final String name;
@@ -20,14 +20,14 @@ class JavaCodeFile implements Node {
   /// null indicates that needs human confirm.
   final bool overwriteIfExists;
 
-  JavaCodeFile._(
+  KotlinCodeFile._(
     this.name, {
     this.extension,
     this.source,
     this.overwriteIfExists,
   });
 
-  factory JavaCodeFile.of(
+  factory KotlinCodeFile.of(
     String name, {
     String extension,
     CodePackage package,
@@ -40,10 +40,10 @@ class JavaCodeFile implements Node {
     Node body,
   }) {
     // Node that java code expect the file name to be class name.
-    return JavaCodeFile._(
+    return KotlinCodeFile._(
       name,
       extension: extension ?? defaultExtension,
-      source: JavaCode.of(
+      source: KotlinCode.of(
           package: package,
           comment: comment,
           imports: imports,
@@ -57,7 +57,7 @@ class JavaCodeFile implements Node {
 
   @override
   Node build(BuildContext context) {
-    return JavaCodeConfig(
+    return KotlinCodeConfig(
       CodeFile(
         name: name,
         extension: extension,
@@ -69,10 +69,10 @@ class JavaCodeFile implements Node {
   }
 }
 
-class JavaCode extends SingleChildNode {
-  JavaCode(Node source) : super(JavaCodeConfig(source));
+class KotlinCode extends SingleChildNode {
+  KotlinCode(Node source) : super(KotlinCodeConfig(source));
 
-  factory JavaCode.of({
+  factory KotlinCode.of({
     dynamic package,
     dynamic comment,
     dynamic imports,
@@ -96,14 +96,14 @@ class JavaCode extends SingleChildNode {
       CodeStatementList.of(body),
     ]);
     // Node that java code expect the file name to be class name.
-    return JavaCode(source);
+    return KotlinCode(source);
   }
 }
 
 /// Defines global configuration for java code generation.
 ///
-class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
-  JavaCodeConfig(Node child)
+class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
+  KotlinCodeConfig(Node child)
       : super(
           child,
           indentConfig: null,
@@ -123,23 +123,23 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           importTypeConfig: null,
 
           // Type configs
-          // https://www.tutorialspoint.com/java/java_basic_datatypes.htm
+          // https://kotlinlang.org/docs/reference/basic-types.html
           typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig.of(
             child,
-            tDynamic: 'object',
+            tDynamic: 'Any',
             tVoid: 'void',
-            tBool: 'boolean',
-            tChar: 'char',
+            tBool: 'Boolean',
+            tChar: 'Char',
             tString: 'String',
-            tByte: 'byte',
-            tShort: 'short',
-            tInteger: 'int',
-            tLong: 'long',
-            tFloat: 'float',
-            tDouble: 'double',
+            tByte: 'Byte',
+            tShort: 'Short',
+            tInteger: 'Int',
+            tLong: 'Long',
+            tFloat: 'Float',
+            tDouble: 'Double',
           ),
           typeNameConfig: null,
-          typeConfig: null,
+          typeConfig: (_, child) => CodeTypeConfig.forKotlinLike(child),
           typeListConfig: null,
 
           // Expr configs
@@ -156,7 +156,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           awaitConfig: null,
           yieldConfig: null,
           refConfig: null,
-          varConfig: null,
+          varConfig: (_, child) => CodeVarConfig.forJavascriptLike(child),
 
           // Statement configs
           exprConfig: null,
@@ -188,7 +188,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           // Arg configs
           argNameConfig: null,
           argListConfig: null,
-          argConfig: null,
+          argConfig: (_, child) => CodeArgConfig.forTypescriptLike(child),
 
           // Function configs
           functionThrowListConfig: null,
@@ -197,7 +197,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           functionReturnListConfig: null,
           functionNameConfig: null,
           functionListConfig: null,
-          functionConfig: null,
+          functionConfig: (_, sub) => CodeFunctionConfig.forKotlinLike(sub),
           lambdaConfig: null,
 
           // Enum configs,
