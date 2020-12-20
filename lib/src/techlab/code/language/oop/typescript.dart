@@ -149,7 +149,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
                 'bigint': 'bigint',
               }),
           typeNameConfig: null,
-          typeConfig: null,
+          typeConfig: (_, child) => CodeTypeConfig.forTypescriptLike(child),
           typeListConfig: null,
 
           // Expr configs
@@ -171,7 +171,8 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
 
           // Statement configs
           exprConfig: null,
-          exprListConfig: null,
+          exprListConfig: (_, child) =>
+              CodeExprListConfig.forTypescriptLike(child),
           statementListConfig: null,
           statementConfig: null,
           breakConfig: null,
@@ -226,14 +227,14 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           enumConfig: null,
 
           // Property configs
-          propertyNameConfig: (_, child) =>
-              CodePropertyNameConfig.forDartLike(child),
+          propertyNameConfig: null,
           propertyListConfig: null,
           propertyGetterConfig: (_, child) =>
-              CodePropertyGetterConfig.forDartLike(child),
+              CodePropertyGetterConfig.forTypescriptLike(child),
           propertySetterConfig: (_, child) =>
-              CodePropertySetterConfig.forDartLike(child),
-          propertyConfig: (_, child) => CodePropertyConfig.forDartLike(child),
+              CodePropertySetterConfig.forTypescriptLike(child),
+          propertyConfig: (_, child) =>
+              CodePropertyConfig.forTypescriptLike(child),
 
           // Interface configs
           interfaceListConfig: null,

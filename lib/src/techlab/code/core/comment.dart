@@ -45,7 +45,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         mixinFunc: null,
         interfaceFunc: StringFuncs.code.commentJavaDoc,
         fieldFunc: StringFuncs.code.commentDoubleSplash,
-        propertyFunc: StringFuncs.code.commentDoubleSplash,
+        propertyFunc: StringFuncs.code.commentJavaDoc,
         constructorFunc: StringFuncs.code.commentJavaDoc,
         functionFunc: StringFuncs.code.commentJavaDoc,
         otherFunc: StringFuncs.code.commentDoubleSplash,
@@ -67,6 +67,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         // Finds the nearest container for this comment.
         final container = context.ancestors.firstWhere(
             (e) =>
+                e is CodeBlock ||
                 e is CodeEnum ||
                 e is CodeMixin ||
                 e is CodeClass ||

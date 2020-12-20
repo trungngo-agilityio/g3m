@@ -160,7 +160,7 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
 
           // Statement configs
           exprConfig: null,
-          exprListConfig: null,
+          exprListConfig: (_, child) => CodeExprListConfig.forKotlinLike(child),
           statementListConfig: null,
           statementConfig: null,
           breakConfig: null,
@@ -183,7 +183,7 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           // Field configs
           fieldNameConfig: null,
           fieldListConfig: null,
-          fieldConfig: null,
+          fieldConfig: (_, child) => CodeFieldConfig.forKotlinLike(child),
 
           // Arg configs
           argNameConfig: null,
@@ -211,9 +211,11 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           // Property configs
           propertyNameConfig: null,
           propertyListConfig: null,
-          propertyGetterConfig: null,
-          propertySetterConfig: null,
-          propertyConfig: null,
+          propertyGetterConfig: (_, child) =>
+              CodePropertyGetterConfig.forKotlinLike(child),
+          propertySetterConfig: (_, child) =>
+              CodePropertySetterConfig.forKotlinLike(child),
+          propertyConfig: (_, child) => CodePropertyConfig.forKotlinLike(child),
 
           // Interface configs
           interfaceListConfig: null,

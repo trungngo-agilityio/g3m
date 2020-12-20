@@ -15,14 +15,12 @@ class CodeConstructorNameConfig extends CodeConfigNode<CodeConstructorName> {
 
   factory CodeConstructorNameConfig.forDartLike(Node child) =>
       CodeConstructorNameConfig((context, name) {
-        final field = context.findAncestorNodeOfExactType<CodeConstructor>();
-        final modifier = field?.modifier;
-
+        final constructor =
+            context.findAncestorNodeOfExactType<CodeConstructor>();
         Node res = TextTransform(name.name, StringFuncs.camel);
 
-        if (modifier?.isPrivate == true ||
-            modifier?.isProtected == true ||
-            modifier?.isInternal == true) {
+        if (constructor?.isPrivate == true ||
+            constructor?.isProtected == true) {
           // Add '_' prefix for non public field.
           res = Pad.left('_', res, onlyIfMissing: true);
         }

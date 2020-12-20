@@ -3,6 +3,7 @@ import 'package:g3m/techlab_dart.dart';
 import 'package:g3m/techlab_java.dart';
 import 'package:g3m/techlab_kotlin.dart';
 import 'package:g3m/techlab_typescript.dart';
+import 'package:test/test.dart';
 
 import '../../../utils.dart';
 
@@ -14,15 +15,25 @@ void oopRunAndExpect(
   String typescript,
 }) {
   if (dart != null) {
-    runAndExpect(DartCodeConfig(node), dart, 'language: dart');
+    test('dart', () {
+      runAndExpect(DartCodeConfig(node), dart, 'language: dart');
+    });
   }
+
   if (typescript != null) {
-    runAndExpect(TypescriptCodeConfig(node), typescript, 'language: typescript');
+    test('typescript', () {
+      runAndExpect(
+          TypescriptCodeConfig(node), typescript, 'language: typescript');
+    });
   }
   if (java != null) {
-    runAndExpect(JavaCodeConfig(node), java, 'language: java');
+    test('java', () {
+      runAndExpect(JavaCodeConfig(node), java, 'language: java');
+    });
   }
   if (kotlin != null) {
-    runAndExpect(KotlinCodeConfig(node), kotlin, 'language: kotlin');
+    test('kotlin', () {
+      runAndExpect(KotlinCodeConfig(node), kotlin, 'language: kotlin');
+    });
   }
 }

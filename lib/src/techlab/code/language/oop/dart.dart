@@ -213,7 +213,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Statement configs
           exprConfig: null,
-          exprListConfig: null,
+          exprListConfig: (_, child) => CodeExprListConfig.forDartLike(child),
           statementListConfig: null,
           statementConfig: null,
           breakConfig: null,

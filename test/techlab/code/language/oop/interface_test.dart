@@ -2,7 +2,7 @@ import 'package:g3m/techlab_core.dart';
 import 'package:g3m/techlab_java.dart';
 import 'package:test/test.dart';
 
-import '../../utils.dart';
+import '../../../utils.dart';
 
 void main() {
   group('comment', () {
@@ -11,7 +11,7 @@ void main() {
       runAndExpect(code, expected);
     }
 
-    test('empty', () {
+    group('empty', () {
       run(
         () => CodeInterface.of(name: 'person'),
         '\n'
@@ -21,7 +21,7 @@ void main() {
       );
     });
 
-    test('with code access', () {
+    group('with code access', () {
       run(
         () => CodeInterface.of(
           name: 'person',
@@ -34,7 +34,7 @@ void main() {
       );
     });
 
-    test('with comment', () {
+    group('with comment', () {
       run(
         () => CodeInterface.of(
           name: 'person',
@@ -50,7 +50,7 @@ void main() {
       );
     });
 
-    test('with field', () {
+    group('with field', () {
       run(
         () => CodeInterface.of(
           name: 'person',
@@ -65,7 +65,7 @@ void main() {
       );
     });
 
-    test('with field list', () {
+    group('with field list', () {
       run(
         () => CodeInterface.of(
           name: 'person',
@@ -83,7 +83,7 @@ void main() {
       );
     });
 
-    test('with function list', () {
+    group('with function list', () {
       run(
         () {
           return CodeInterface.of(
@@ -109,7 +109,7 @@ void main() {
       );
     });
 
-    test('with all ', () {
+    group('with all ', () {
       run(
         () {
           final generic = [

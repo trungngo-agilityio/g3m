@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 import 'utils.dart';
 
 void main() {
-  test('Single', () {
+  group('Single', () {
     oopRunAndExpect(
       CodePackage.of('hello'),
       kotlin: '\npackage hello',
@@ -15,7 +15,7 @@ void main() {
     );
   });
 
-  test('With Path', () {
+  group('With Path', () {
     oopRunAndExpect(
       CodePackage.of(
         'hello',
