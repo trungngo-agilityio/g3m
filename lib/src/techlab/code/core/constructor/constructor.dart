@@ -166,7 +166,11 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
     dynamic body,
   }) {
     return CodeConstructor._(
-      name: CodeConstructorName.of(name),
+      name: CodeConstructorName.of(
+        name,
+        isPrivate: private,
+        isProtected: protected,
+      ),
       isFactory: factory,
       isPrivate: private,
       isPublic: public,

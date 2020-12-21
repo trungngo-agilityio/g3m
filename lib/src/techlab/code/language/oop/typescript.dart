@@ -238,7 +238,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
 
           // Interface configs
           interfaceListConfig: null,
-          interfaceConfig: null,
+          interfaceConfig: (_, child) => CodeInterfaceConfig.forTypescriptLike(child),
 
           // Class configs
           classNameConfig: null,

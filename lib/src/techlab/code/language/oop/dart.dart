@@ -190,7 +190,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
             tDouble: 'double',
           ),
 
-          typeNameConfig: null,
+          typeNameConfig: (_, child) => CodeTypeNameConfig.forDartLike(child),
           typeConfig: (_, child) => CodeTypeConfig.forDartLike(child),
           typeListConfig: null,
 
@@ -279,8 +279,7 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
 
           // Interface configs
           interfaceListConfig: null,
-          interfaceConfig: (_, child) => CodeInterfaceConfig.forJavaLike(child,
-              interfaceKeyword: 'class '),
+          interfaceConfig: (_, child) => CodeInterfaceConfig.forDartLike(child),
 
           // Class configs
           classNameConfig: (_, child) => CodeClassNameConfig.forDartLike(child),

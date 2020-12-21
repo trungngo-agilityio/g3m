@@ -4,7 +4,52 @@ import 'package:test/test.dart';
 import '../utils.dart';
 
 void main() {
-  group('body test', () {
+  group('no args', () {
+    const s1 = '\n'
+        'class Person {\n'
+        '  Person() {\n'
+        '\n'
+        '  }\n'
+        '}\n';
+
+    const s2 = '\n'
+        'class Person {\n'
+        '  constructor() {\n'
+        '\n'
+        '  }\n'
+        '}\n'
+        '';
+
+    const s3 = '\n'
+        'class Person {\n'
+        '  Person() {\n'
+        '\n'
+        '  }\n'
+        '}\n';
+
+    const s4 = '\n'
+        'class Person {\n'
+        '  Person() {\n'
+        '\n'
+        '  }\n'
+        '}\n'
+        '';
+
+    oopRunAndExpect(
+      CodeClass.of(
+        name: 'person',
+        constructors: CodeConstructor.of(
+          body: [],
+        ),
+      ),
+      dart: s1,
+      typescript: s2,
+      java: s3,
+      kotlin: s4,
+    );
+  });
+
+  group('args', () {
     const s1 = '\n'
         'class Person {\n'
         '  /// Just a sample\n'

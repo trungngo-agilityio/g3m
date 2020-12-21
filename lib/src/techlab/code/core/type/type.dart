@@ -128,7 +128,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
 
   static CodeType _parse(dynamic value, {_NodeParseErrorFunc error}) {
     return _parseNode<CodeType>(value, (v) {
-      var name = CodeTypeName._parse(v);
+      var name = CodeTypeName.of(v);
       if (name != null) {
         return CodeType._(name: name);
       }
@@ -296,7 +296,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   // ---------------------------------------------------------------------------
 
   factory CodeType.simple(String name, {bool nullable}) => CodeType.of(
-        name: CodeTypeName.of(name),
+        name: name,
         nullable: nullable,
       );
 
@@ -306,7 +306,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     bool nullable,
   }) =>
       CodeType.of(
-        name: CodeTypeName.of(name),
+        name: name,
         generic: CodeGenericParamList.of(
           [CodeGenericParam.of(name: param)],
         ),
@@ -319,7 +319,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     bool nullable,
   }) =>
       CodeType.of(
-        name: CodeTypeName.of(name),
+        name: name,
         generic: CodeGenericParamList.of(
             params?.map((e) => CodeGenericParam.of(name: e))?.toList()),
         nullable: nullable,
@@ -330,7 +330,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     bool nullable,
   }) =>
       CodeType.of(
-        name: CodeTypeName.of(name),
+        name: name,
         array: true,
         nullable: nullable,
       );
@@ -348,7 +348,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   factory CodeType.genericSingleArray(String name, String param,
           {bool nullable}) =>
       CodeType.of(
-        name: CodeTypeName.of(name),
+        name: name,
         generic: CodeGenericParamList.of([CodeGenericParam.of(name: param)]),
         array: true,
         nullable: nullable,
@@ -360,7 +360,7 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
     bool nullable,
   }) =>
       CodeType.of(
-        name: CodeTypeName.of(name),
+        name: name,
         generic: CodeGenericParamList.of(
             params?.map((e) => CodeGenericParam.of(name: e))?.toList()),
         array: true,

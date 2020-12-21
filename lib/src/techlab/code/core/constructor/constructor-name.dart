@@ -15,12 +15,9 @@ class CodeConstructorNameConfig extends CodeConfigNode<CodeConstructorName> {
 
   factory CodeConstructorNameConfig.forDartLike(Node child) =>
       CodeConstructorNameConfig((context, name) {
-        final constructor =
-            context.findAncestorNodeOfExactType<CodeConstructor>();
         Node res = TextTransform(name.name, StringFuncs.camel);
 
-        if (constructor?.isPrivate == true ||
-            constructor?.isProtected == true) {
+        if (name.isPrivate == true || name.isProtected == true) {
           // Add '_' prefix for non public field.
           res = Pad.left('_', res, onlyIfMissing: true);
         }
@@ -34,21 +31,15 @@ class CodeConstructorName extends CodeConfigProxyNode<CodeConstructorName>
   @override
   final Node name;
 
-  CodeConstructorName._(this.name);
+  final bool isPrivate;
 
-  static CodeConstructorName _parse(dynamic value,
-      {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeConstructorName>(value, (v) {
-      // Try to parse the value as the expression name.
-      final name = _parseNameNode(v, error: error);
-      if (name == null) return null;
-      return CodeConstructorName._(name);
-    }, error: error);
-  }
+  final bool isProtected;
 
-  factory CodeConstructorName.of(dynamic value) {
-    return CodeConstructorName._parse(value, error: () {
-      throw '${value} is not a valid constructor name.';
-    });
+  CodeConstructorName._(this.name, this.isPrivate, this.isProtected);
+
+  factory CodeConstructorName.of(dynamic value,
+      {bool isPrivate, bool isProtected}) {
+    if (value == null) return null;
+    return CodeConstructorName._(Node.of(value), isPrivate, isProtected);
   }
 }

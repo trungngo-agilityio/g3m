@@ -1,7 +1,7 @@
 import 'package:g3m/techlab_core.dart';
 import 'package:test/test.dart';
 
-import 'utils.dart';
+import '../utils.dart';
 
 void main() {
   group('simple', () {
