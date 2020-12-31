@@ -4,7 +4,8 @@ import 'package:test/test.dart';
 import '../utils.dart';
 
 void main() {
-  group('List', () {
+
+  group('List - dynamic', () {
     oopRunAndExpect(
       CodeType.listOfDynamic(),
       dart: 'List<dynamic>',
@@ -12,6 +13,9 @@ void main() {
       java: 'List<object>',
       kotlin: 'List<Any>',
     );
+  });
+
+  group('List', () {
     oopRunAndExpect(
       CodeType.listOfBool(),
       dart: 'List<bool>',
@@ -19,6 +23,9 @@ void main() {
       java: 'List<boolean>',
       kotlin: 'List<Boolean>',
     );
+  });
+
+  group('List', () {
     oopRunAndExpect(
       CodeType.listOfChar(),
       dart: 'List<String>',
@@ -26,6 +33,9 @@ void main() {
       java: 'List<char>',
       kotlin: 'List<Char>',
     );
+  });
+
+  group('List - string', () {
     oopRunAndExpect(
       CodeType.listOfString(),
       dart: 'List<String>',
@@ -33,6 +43,9 @@ void main() {
       java: 'List<String>',
       kotlin: 'List<String>',
     );
+  });
+
+  group('List - byte', () {
     oopRunAndExpect(
       CodeType.listOfByte(),
       dart: 'List<int>',
@@ -40,6 +53,9 @@ void main() {
       java: 'List<byte>',
       kotlin: 'List<Byte>',
     );
+  });
+
+  group('List short', () {
     oopRunAndExpect(
       CodeType.listOfShort(),
       dart: 'List<int>',
@@ -47,6 +63,9 @@ void main() {
       java: 'List<short>',
       kotlin: 'List<Short>',
     );
+  });
+
+  group('List - Integer', () {
     oopRunAndExpect(
       CodeType.listOfInteger(),
       dart: 'List<int>',
@@ -54,6 +73,9 @@ void main() {
       java: 'List<int>',
       kotlin: 'List<Int>',
     );
+  });
+
+  group('List - Long', () {
     oopRunAndExpect(
       CodeType.listOfLong(),
       dart: 'List<int>',
@@ -61,6 +83,9 @@ void main() {
       java: 'List<long>',
       kotlin: 'List<Long>',
     );
+  });
+
+  group('List - Float', () {
     oopRunAndExpect(
       CodeType.listOfFloat(),
       dart: 'List<double>',
@@ -68,6 +93,9 @@ void main() {
       java: 'List<float>',
       kotlin: 'List<Float>',
     );
+  });
+
+  group('List - Double', () {
     oopRunAndExpect(
       CodeType.listOfDouble(),
       dart: 'List<double>',

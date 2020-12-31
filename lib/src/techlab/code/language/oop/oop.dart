@@ -292,7 +292,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     // Important: Yield is not supported by default.
     yieldConfig ??= (_, child) => CodeYieldConfig.noSupport(child);
     refConfig ??= (_, child) => CodeRefConfig.forJavaLike(child);
-    varConfig ??= (_, child) => CodeVarConfig.forJavaLike(child);
+    varConfig ??= (_, child) => CodeVarConfig.forJava(child);
 
     // Statement configs
     exprConfig ??= (_, child) => CodeExprConfig.forJavaLike(child);

@@ -793,24 +793,32 @@ class CodeAnnotation extends SingleChildNode {
 
   factory CodeAnnotation.functionCall({
     @required dynamic name,
+    dynamic instance,
+    dynamic generic,
     dynamic args,
   }) {
     return CodeAnnotation.of(
       CodeFunctionCall.of(
         name: name,
+        instance: instance,
+        generic: generic,
         args: args,
       ),
     );
   }
 
   factory CodeAnnotation.constructorCall({
+    dynamic instance,
     @required dynamic className,
     dynamic name,
+    dynamic generic,
     dynamic args,
   }) {
     return CodeAnnotation.of(
       CodeConstructorCall.of(
         className: className,
+        instance: instance,
+        generic: generic,
         name: name,
         args: args,
       ),

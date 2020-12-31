@@ -167,7 +167,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           awaitConfig: null,
           yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
           refConfig: null,
-          varConfig: (_, child) => CodeVarConfig.forJavascriptLike(child),
+          varConfig: (_, child) => CodeVarConfig.forTypescript(child),
 
           // Statement configs
           exprConfig: null,
