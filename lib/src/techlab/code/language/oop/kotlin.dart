@@ -171,7 +171,7 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           returnConfig: null,
           whileConfig: null,
           forConfig: null,
-          forEachConfig: null,
+          forEachConfig: (_, child) => CodeForEachConfig.forKotlin(child),
           functionCallConfig: null,
           constructorCallConfig: null,
           annotationListConfig: null,

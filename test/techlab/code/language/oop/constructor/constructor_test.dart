@@ -7,31 +7,23 @@ void main() {
   group('no args', () {
     const s1 = '\n'
         'class Person {\n'
-        '  Person() {\n'
-        '\n'
-        '  }\n'
+        '  Person() {}\n'
         '}\n';
 
     const s2 = '\n'
         'class Person {\n'
-        '  constructor() {\n'
-        '\n'
-        '  }\n'
+        '  constructor() {}\n'
         '}\n'
         '';
 
     const s3 = '\n'
         'class Person {\n'
-        '  Person() {\n'
-        '\n'
-        '  }\n'
+        '  Person() {}\n'
         '}\n';
 
     const s4 = '\n'
         'class Person {\n'
-        '  Person() {\n'
-        '\n'
-        '  }\n'
+        '  Person() {}\n'
         '}\n'
         '';
 
@@ -53,9 +45,7 @@ void main() {
     const s1 = '\n'
         'class Person {\n'
         '  /// Just a sample\n'
-        '  Person(String firstName = \'john doe\') {\n'
-        '\n'
-        '  }\n'
+        '  Person(String firstName = \'john doe\') {}\n'
         '}\n';
 
     const s2 = '\n'
@@ -63,9 +53,7 @@ void main() {
         '  /**\n'
         '   * Just a sample\n'
         '   */\n'
-        '  constructor(firstName: string = \'john doe\') {\n'
-        '\n'
-        '  }\n'
+        '  constructor(firstName: string = \'john doe\') {}\n'
         '}\n'
         '';
 
@@ -74,9 +62,7 @@ void main() {
         '  /**\n'
         '   * Just a sample\n'
         '   */\n'
-        '  public Person(String firstName = "john doe") {\n'
-        '\n'
-        '  }\n'
+        '  public Person(String firstName = "john doe") {}\n'
         '}\n';
 
     const s4 = '\n'
@@ -84,9 +70,7 @@ void main() {
         '  /**\n'
         '   * Just a sample\n'
         '   */\n'
-        '  public Person(firstName: String = "john doe") {\n'
-        '\n'
-        '  }\n'
+        '  public Person(firstName: String = "john doe") {}\n'
         '}\n'
         '';
 

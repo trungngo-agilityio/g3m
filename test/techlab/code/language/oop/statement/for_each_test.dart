@@ -5,28 +5,24 @@ import '../utils.dart';
 
 void main() {
   group('simple', () {
-    const s1 = 'for (Int i: entries) {\n'
-        '\n'
-        '}\n';
+    const s1 = 'for (int i in entries) {}\n';
 
-    const s2 = 'for (let i: Int of entries) {\n'
-        '\n'
-        '}\n';
+    const s2 = 'for (let i: number in entries) {}\n';
 
-    const s3 = 'for (int i: entries) {\n'
-        '\n'
-        '}\n';
+    const s3 = 'for (int i: entries) {}\n';
+
+    const s4 = 'for (i in entries) {}\n';
 
     oopRunAndExpect(
       CodeForEach.of(
-        item: CodeVar.of(name: 'i', type: 'int'),
+        item: CodeVar.of(name: 'i', type: CodeType.ofInteger()),
         collection: Text('entries'),
         body: [],
       ),
       dart: s1,
       typescript: s2,
-      java: s1,
-      kotlin: s1,
+      java: s3,
+      kotlin: s4,
     );
   });
 }

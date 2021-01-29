@@ -5,9 +5,7 @@ import '../utils.dart';
 
 void main() {
   group('with null body', () {
-    const s1 = 'while (true) {\n'
-        '\n'
-        '}\n';
+    const s1 = 'while (true) {}\n';
 
     oopRunAndExpect(
       CodeWhile.of(
@@ -20,9 +18,7 @@ void main() {
     );
   });
   group('with no body', () {
-    const s1 = 'while (true) {\n'
-        '\n'
-        '}\n';
+    const s1 = 'while (true) {}\n';
 
     oopRunAndExpect(
       CodeWhile.of(
