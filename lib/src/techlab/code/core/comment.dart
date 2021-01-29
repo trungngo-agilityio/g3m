@@ -69,6 +69,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
             (e) =>
                 e is CodeBlock ||
                 e is CodeEnum ||
+                    e is CodeEnumValue ||
                 e is CodeMixin ||
                 e is CodeClass ||
                 e is CodeInterface ||
@@ -83,7 +84,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         var func;
         if (container != null) {
           // Determines the comment style for the given container.
-          if (container is CodeEnum) {
+          if (container is CodeEnum || container is CodeEnumValue) {
             func = enumFunc;
           } else if (container is CodeMixin) {
             func = mixinFunc;

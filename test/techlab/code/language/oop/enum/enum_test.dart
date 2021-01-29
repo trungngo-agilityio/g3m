@@ -3,36 +3,36 @@ import 'package:g3m/techlab_dart.dart';
 import 'package:g3m/techlab_java.dart';
 import 'package:test/test.dart';
 
-import '../../../utils.dart';
+import '../utils.dart';
 
 void main() {
   group('long syntax', () {
-    test('empty', () {
-      run(
+    group('empty', () {
+      oopRunAndExpect(
         CodeEnum.of(name: 'person'),
-        '\n'
+        java: '\n'
         'enum Person {}\n',
       );
     });
 
-    test('with code access', () {
-      run(
+    group('with code access', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           isPrivate: true,
         ),
-        '\n'
+        java: '\n'
         'private enum _Person {}\n',
       );
     });
 
-    test('with comment', () {
-      run(
+    group('with comment', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           comment: 'hello world',
         ),
-        '\n'
+        java: '\n'
         '/**\n'
         ' * hello world\n'
         ' */\n'
@@ -40,23 +40,23 @@ void main() {
       );
     });
 
-    test('with value', () {
-      run(
+    group('with value', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           values: [
             CodeEnumValue.of(name: 'first name'),
           ],
         ),
-        '\n'
+        java: '\n'
         'enum Person {\n'
         '  FIRST_NAME\n'
         '}\n',
       );
     });
 
-    test('with value list', () {
-      run(
+    group('with value list', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           values: [
@@ -64,7 +64,7 @@ void main() {
             CodeEnumValue.of(name: 'last name'),
           ],
         ),
-        '\n'
+        java: '\n'
         'enum Person {\n'
         '  FIRST_NAME,\n'
         '  LAST_NAME\n'
@@ -72,8 +72,8 @@ void main() {
       );
     });
 
-    test('with all ', () {
-      run(
+    group('with all ', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           isPrivate: true,
@@ -82,7 +82,7 @@ void main() {
             CodeEnumValue.of(name: 'last name'),
           ],
         ),
-        '\n'
+        java: '\n'
         'private enum _Person {\n'
         '  FIRST_NAME,\n'
         '  LAST_NAME\n'
@@ -92,21 +92,21 @@ void main() {
   });
 
   group('short syntax', () {
-    test('with value', () {
-      run(
+    group('with value', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           values: 'first name',
         ),
-        '\n'
+        java: '\n'
         'enum Person {\n'
         '  FIRST_NAME\n'
         '}\n',
       );
     });
 
-    test('with all ', () {
-      run(
+    group('with all ', () {
+      oopRunAndExpect(
         CodeEnum.of(
           name: 'person',
           isPrivate: true,
@@ -116,7 +116,7 @@ void main() {
             ['age', 10, 'this is a comment'],
           ],
         ),
-        '\n'
+        java: '\n'
         'private enum _Person {\n'
         '  FIRST_NAME,\n'
         '  LAST_NAME = "john doe",\n'
@@ -129,8 +129,8 @@ void main() {
     });
   });
 
-  test('with dart private', () {
-    run(
+  group('with dart private', () {
+    oopRunAndExpect(
       DartCodeConfig(
         CodeEnum.of(
           name: 'hello',
@@ -140,7 +140,7 @@ void main() {
           ],
         ),
       ),
-      '\n'
+      java: '\n'
       'enum _Hello {\n'
       '  firstName\n'
       '}\n'
@@ -149,6 +149,3 @@ void main() {
   });
 }
 
-void run(Node code, String expected) {
-  runAndExpect(JavaCodeConfig(code), expected);
-}
