@@ -156,7 +156,7 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           awaitConfig: null,
           yieldConfig: null,
           refConfig: null,
-          varConfig: (_, child) => CodeVarConfig.forJavascriptLike(child),
+          varConfig: (_, child) => CodeVarConfig.forKotlin(child),
 
           // Statement configs
           exprConfig: null,
@@ -188,7 +188,7 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           // Arg configs
           argNameConfig: null,
           argListConfig: null,
-          argConfig: (_, child) => CodeArgConfig.forTypescriptLike(child),
+          argConfig: (_, child) => CodeArgConfig.forKotlin(child),
 
           // Function configs
           functionThrowListConfig: null,

@@ -32,8 +32,7 @@ class CodeWhile extends CodeConfigProxyNode<CodeWhile> {
     @required this.condition,
     @required this.body,
     this.comment,
-  })  : assert(condition != null, "while condition is required"),
-        assert(body != null, 'while body is required');
+  }) : assert(condition != null, 'while condition is required');
 
   factory CodeWhile.of({
     dynamic condition,
