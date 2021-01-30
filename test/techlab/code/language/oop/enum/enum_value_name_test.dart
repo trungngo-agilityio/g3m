@@ -4,32 +4,40 @@ import 'package:test/test.dart';
 import '../utils.dart';
 
 void main() {
-  group('empty', () {
-    oopRunAndExpect(
-      CodeEnumValueName.of(name: ''),
-      java: '',
-    );
-  });
+  const s1 = 'helloWorld';
+  const s2 = 'HelloWorld';
+  const s3 = 'HELLO_WORLD';
 
   group('string', () {
     oopRunAndExpect(
       CodeEnumValueName.of(name: 'hello world'),
-      java: 'HELLO_WORLD',
+      dart: s1,
+      typescript: s2,
+      java: s3,
+      kotlin: s3,
     );
   });
 
   group('node', () {
     oopRunAndExpect(
       CodeEnumValueName.of(name: Text('hello world')),
-      java: 'HELLO_WORLD',
+      dart: s1,
+      typescript: s2,
+      java: s3,
+      kotlin: s3,
     );
   });
 
   group('name of another name', () {
     // Runs with dart config
     oopRunAndExpect(
-      CodeArgName.of(name: 'hello world'),
-      java: 'helloWorld',
+      CodeEnumValueName.of(
+        name: CodeArgName.of(name: 'hello world'),
+      ),
+      dart: s1,
+      typescript: s2,
+      java: s3,
+      kotlin: s3,
     );
   });
 }

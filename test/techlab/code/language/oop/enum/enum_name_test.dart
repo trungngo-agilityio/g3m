@@ -1,28 +1,28 @@
 import 'package:g3m/techlab_core.dart';
-import 'package:g3m/techlab_java.dart';
 import 'package:test/test.dart';
 
 import '../utils.dart';
 
 void main() {
-  group('empty', () {
-    oopRunAndExpect(
-      CodeEnumName.of(name: ''),
-      java: '',
-    );
-  });
+  const s1 = 'HelloWorld';
 
   group('string', () {
     oopRunAndExpect(
       CodeEnumName.of(name: 'hello world'),
-      java: 'HelloWorld',
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
     );
   });
 
   group('node', () {
     oopRunAndExpect(
       CodeEnumName.of(name: Text('hello world')),
-      java: 'HelloWorld',
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
     );
   });
 
@@ -30,9 +30,12 @@ void main() {
     // Runs with dart config
     oopRunAndExpect(
       CodeEnumName.of(
-          name: CodeArgName.of(name: 'hello world'),
+        name: CodeArgName.of(name: 'hello world'),
       ),
-      java: 'HelloWorld',
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
     );
   });
 }
