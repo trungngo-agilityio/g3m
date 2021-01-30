@@ -44,8 +44,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
   CodeConfigBuildFunc<CodeCascadeConfig> cascadeConfig;
   CodeConfigBuildFunc<CodeSpreadConfig> spreadConfig;
-  CodeConfigBuildFunc<CodeAwaitConfig> awaitConfig;
-  CodeConfigBuildFunc<CodeYieldConfig> yieldConfig;
   CodeConfigBuildFunc<CodeRefConfig> refConfig;
   CodeConfigBuildFunc<CodeVarConfig> varConfig;
 
@@ -54,8 +52,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
   CodeConfigBuildFunc<CodeExprListConfig> exprListConfig;
   CodeConfigBuildFunc<CodeStatementListConfig> statementListConfig;
   CodeConfigBuildFunc<CodeStatementConfig> statementConfig;
-  CodeConfigBuildFunc<CodeBreakConfig> breakConfig;
-  CodeConfigBuildFunc<CodeContinueConfig> continueConfig;
   CodeConfigBuildFunc<CodeVarNameConfig> varNameConfig;
 
   CodeConfigBuildFunc<CodeIfConfig> ifConfig;
@@ -163,8 +159,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.mapLiteralConfig,
     @required this.cascadeConfig,
     @required this.spreadConfig,
-    @required this.awaitConfig,
-    @required this.yieldConfig,
     @required this.refConfig,
     @required this.varConfig,
 
@@ -173,8 +167,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.exprListConfig,
     @required this.statementListConfig,
     @required this.statementConfig,
-    @required this.breakConfig,
-    @required this.continueConfig,
     @required this.varNameConfig,
     @required this.ifConfig,
     @required this.elseIfConfig,
@@ -287,10 +279,8 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     mapLiteralConfig ??= (_, child) => CodeMapLiteralConfig.forJavaLike(child);
     cascadeConfig ??= (_, child) => CodeCascadeConfig.noSupport(child);
     spreadConfig ??= (_, child) => CodeSpreadConfig.noSupport(child);
-    awaitConfig ??= (_, child) => CodeAwaitConfig.forJavaLike(child);
 
     // Important: Yield is not supported by default.
-    yieldConfig ??= (_, child) => CodeYieldConfig.noSupport(child);
     refConfig ??= (_, child) => CodeRefConfig.forJavaLike(child);
     varConfig ??= (_, child) => CodeVarConfig.forJava(child);
 
@@ -300,8 +290,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     statementListConfig ??=
         (_, child) => CodeStatementListConfig.forJavaLike(child);
     statementConfig ??= (_, child) => CodeStatementConfig.forJavaLike(child);
-    breakConfig ??= (_, child) => CodeBreakConfig.forJavaLike(child);
-    continueConfig ??= (_, child) => CodeContinueConfig.forJavaLike(child);
     varNameConfig ??= (_, child) => CodeVarNameConfig.forJavaLike(child);
     ifConfig ??= (_, child) => CodeIfConfig.forJavaLike(child);
     elseIfConfig ??= (_, child) => CodeElseIfConfig.forJavaLike(child);
@@ -426,8 +414,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       mapLiteralConfig,
       cascadeConfig,
       spreadConfig,
-      awaitConfig,
-      yieldConfig,
       refConfig,
       varConfig,
 
@@ -436,8 +422,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
       exprListConfig,
       statementListConfig,
       statementConfig,
-      breakConfig,
-      continueConfig,
       varNameConfig,
       ifConfig,
       elseIfConfig,

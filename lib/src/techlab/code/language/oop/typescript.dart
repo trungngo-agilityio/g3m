@@ -164,8 +164,6 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           mapLiteralConfig: null,
           cascadeConfig: (_, child) => CodeCascadeConfig.noSupport(child),
           spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
-          awaitConfig: null,
-          yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
           refConfig: null,
           varConfig: (_, child) => CodeVarConfig.forTypescript(child),
 
@@ -175,8 +173,6 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
               CodeExprListConfig.forTypescriptLike(child),
           statementListConfig: null,
           statementConfig: null,
-          breakConfig: null,
-          continueConfig: null,
           varNameConfig: null,
           ifConfig: null,
           elseIfConfig: null,
@@ -238,7 +234,8 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
 
           // Interface configs
           interfaceListConfig: null,
-          interfaceConfig: (_, child) => CodeInterfaceConfig.forTypescriptLike(child),
+          interfaceConfig: (_, child) =>
+              CodeInterfaceConfig.forTypescriptLike(child),
 
           // Class configs
           classNameConfig: null,

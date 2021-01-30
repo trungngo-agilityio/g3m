@@ -493,4 +493,116 @@ void main() {
       kotlin: s1,
     );
   });
+
+  group('CodeYieldExpr', () {
+    const s1 = 'yield i';
+    oopRunAndExpect(
+      CodeYieldExpr.of('i'),
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
+    );
+  });
+
+  group('CodeYieldAsyncExpr', () {
+    const s1 = 'yield* i';
+    oopRunAndExpect(
+      CodeYieldAsyncExpr.of('i'),
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
+    );
+  });
+
+  group('CodeAwaitExpr', () {
+    const s1 = 'await i';
+    oopRunAndExpect(
+      CodeAwaitExpr.of('i'),
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
+    );
+  });
+
+  group('CodeBreakExpr', () {
+    const s1 = 'break';
+    oopRunAndExpect(
+      CodeBreakExpr(),
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
+    );
+  });
+
+  group('CodeContinueExpr', () {
+    const s1 = 'continue';
+    oopRunAndExpect(
+      CodeContinueExpr(),
+      dart: s1,
+      typescript: s1,
+      java: s1,
+      kotlin: s1,
+    );
+  });
+
+  group('CodeReturnExpr', () {
+    group('no value', () {
+      const s1 = 'return';
+      oopRunAndExpect(
+        CodeReturnExpr(),
+        dart: s1,
+        typescript: s1,
+        java: s1,
+        kotlin: s1,
+      );
+    });
+
+    group('with value', () {
+      const s1 = 'return 1';
+      oopRunAndExpect(
+        CodeReturnExpr.of(1),
+        dart: s1,
+        typescript: s1,
+        java: s1,
+        kotlin: s1,
+      );
+    });
+
+    group('with null', () {
+      const s1 = 'return null';
+      oopRunAndExpect(
+        CodeReturnExpr.ofNull(),
+        dart: s1,
+        typescript: s1,
+        java: s1,
+        kotlin: s1,
+      );
+    });
+
+    group('with true', () {
+      const s1 = 'return true';
+      oopRunAndExpect(
+        CodeReturnExpr.ofTrue(),
+        dart: s1,
+        typescript: s1,
+        java: s1,
+        kotlin: s1,
+      );
+    });
+
+    group('with false', () {
+      const s1 = 'return false';
+      oopRunAndExpect(
+        CodeReturnExpr.ofFalse(),
+        dart: s1,
+        typescript: s1,
+        java: s1,
+        kotlin: s1,
+      );
+    });
+  });
 }

@@ -1,6 +1,7 @@
 part of g3.techlab;
 
 enum CodeOpStyle {
+  op,
   opExpr,
   exprOpExpr,
   opExpr2,
@@ -10,6 +11,8 @@ enum CodeOpStyle {
 class CodeOp {
   final String name;
   final CodeOpStyle style;
+
+  const CodeOp.op(this.name) : style = CodeOpStyle.op;
 
   const CodeOp.opExpr(this.name) : style = CodeOpStyle.opExpr;
 
@@ -81,6 +84,18 @@ class CodeOps {
   static const CodeOp listAccessOp = CodeOp.exprOpExpr('[]');
   static const CodeOp arrowOp = CodeOp.opExpr(' => ');
   static const CodeOp nameArgOp = CodeOp.exprOpExpr(':');
+
+  // Misc operators
+  static const CodeOp yieldOp = CodeOp.opExpr('yield ');
+  static const CodeOp yieldAsyncOp = CodeOp.opExpr('yield* ');
+
+  static const CodeOp awaitOp = CodeOp.opExpr('await ');
+
+  static const CodeOp breakOp = CodeOp.op('break');
+  static const CodeOp continueOp = CodeOp.op('continue');
+
+  static const CodeOp returnOp = CodeOp.op('return');
+  static const CodeOp returnSingleOp = CodeOp.opExpr('return ');
 }
 
 class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
@@ -122,10 +137,12 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
 
         default:
           switch (op.style) {
+            case CodeOpStyle.op:
+              child = Container([name]);
+              break;
             case CodeOpStyle.opExpr:
               child = Container([name, e1]);
               break;
-            //
             case CodeOpStyle.exprOpExpr:
               child = Container([e1, ' ', name, ' ', e2]);
               break;
@@ -148,10 +165,8 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
       CodeExprListConfig((context, expr) {
         Node child;
         final op = expr.op;
-        final name = op.name;
         final e1 = expr.e1;
         final e2 = expr.e2;
-        final e3 = expr.e3;
 
         switch (op) {
           case CodeOps.divOp:
@@ -165,10 +180,8 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
       CodeExprListConfig((context, expr) {
         Node child;
         final op = expr.op;
-        final name = op.name;
         final e1 = expr.e1;
         final e2 = expr.e2;
-        final e3 = expr.e3;
 
         switch (op) {
           case CodeOps.isOp:
@@ -189,10 +202,8 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
       CodeExprListConfig((context, expr) {
         Node child;
         final op = expr.op;
-        final name = op.name;
         final e1 = expr.e1;
         final e2 = expr.e2;
-        final e3 = expr.e3;
 
         switch (op) {
           case CodeOps.asOp:
@@ -222,7 +233,6 @@ class CodeExprListConfig extends CodeConfigNode<CodeExprList> {
       CodeExprListConfig((context, expr) {
         Node child;
         final op = expr.op;
-        final name = op.name;
         final e1 = expr.e1;
         final e2 = expr.e2;
         final e3 = expr.e3;
@@ -291,13 +301,16 @@ class CodeExprList extends CodeConfigProxyNode<CodeExprList> {
 
   CodeExprList._({
     @required this.op,
-    @required this.e1,
+    this.e1,
     this.e2,
     this.e3,
-  })  : assert(op != null, 'op is required'),
-        assert(e1 != null, 'expr1 is required') {
+  }) : assert(op != null, 'op is required') {
     final style = op.style;
-    if (style == CodeOpStyle.opExpr) {
+
+    if (style == CodeOpStyle.op) {
+      assert(e1 == null && e2 == null && e3 == null,
+          '${op.name} must have zero operand.');
+    } else if (style == CodeOpStyle.opExpr) {
       assert(e1 != null && e2 == null && e3 == null,
           '${op.name} must have 1 operands only.');
     } else if (style == CodeOpStyle.opExpr2 ||
@@ -313,7 +326,7 @@ class CodeExprList extends CodeConfigProxyNode<CodeExprList> {
 
   factory CodeExprList.of({
     @required CodeOp op,
-    @required dynamic expr1,
+    dynamic expr1,
     dynamic expr2,
     dynamic expr3,
   }) {
@@ -867,4 +880,72 @@ class CodeListAccessExpr extends SingleChildNode {
             expr2: e2,
           ),
         ));
+}
+
+class CodeYieldExpr extends SingleChildNode {
+  CodeYieldExpr.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.yieldOp,
+            expr1: CodeRef.of(e1),
+          ),
+        ));
+}
+
+class CodeYieldAsyncExpr extends SingleChildNode {
+  CodeYieldAsyncExpr.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.yieldAsyncOp,
+            expr1: CodeRef.of(e1),
+          ),
+        ));
+}
+
+class CodeAwaitExpr extends SingleChildNode {
+  CodeAwaitExpr.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.awaitOp,
+            expr1: CodeRef.of(e1),
+          ),
+        ));
+}
+
+class CodeBreakExpr extends SingleChildNode {
+  CodeBreakExpr()
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.breakOp,
+          ),
+        ));
+}
+
+class CodeContinueExpr extends SingleChildNode {
+  CodeContinueExpr()
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: CodeOps.continueOp,
+          ),
+        ));
+}
+
+class CodeReturnExpr extends SingleChildNode {
+  CodeReturnExpr.of(dynamic e1)
+      : super(CodeExpr.open(
+          CodeExprList.of(
+            op: e1 == null ? CodeOps.returnOp : CodeOps.returnSingleOp,
+            expr1: e1,
+          ),
+        ));
+
+  factory CodeReturnExpr.ofNull() => CodeReturnExpr.of(CodeNullLiteral());
+
+  factory CodeReturnExpr.ofTrue() =>
+      CodeReturnExpr.of(CodeBoolLiteral.of(true));
+
+  factory CodeReturnExpr.ofFalse() =>
+      CodeReturnExpr.of(CodeBoolLiteral.of(false));
+
+  factory CodeReturnExpr() => CodeReturnExpr.of(null);
 }

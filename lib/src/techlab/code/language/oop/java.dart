@@ -153,8 +153,6 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           mapLiteralConfig: null,
           cascadeConfig: null,
           spreadConfig: null,
-          awaitConfig: null,
-          yieldConfig: null,
           refConfig: null,
           varConfig: null,
 
@@ -163,8 +161,6 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
           exprListConfig: null,
           statementListConfig: null,
           statementConfig: null,
-          breakConfig: null,
-          continueConfig: null,
           varNameConfig: null,
           ifConfig: null,
           elseIfConfig: null,

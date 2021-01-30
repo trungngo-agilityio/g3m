@@ -153,8 +153,6 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           mapLiteralConfig: null,
           cascadeConfig: null,
           spreadConfig: null,
-          awaitConfig: null,
-          yieldConfig: null,
           refConfig: null,
           varConfig: (_, child) => CodeVarConfig.forKotlin(child),
 
@@ -163,8 +161,6 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
           exprListConfig: (_, child) => CodeExprListConfig.forKotlinLike(child),
           statementListConfig: null,
           statementConfig: null,
-          breakConfig: null,
-          continueConfig: null,
           varNameConfig: null,
           ifConfig: null,
           elseIfConfig: null,

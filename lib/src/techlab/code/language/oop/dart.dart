@@ -206,8 +206,6 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           mapLiteralConfig: null,
           cascadeConfig: (_, child) => CodeCascadeConfig.forDartLike(child),
           spreadConfig: (_, child) => CodeSpreadConfig.forDartLike(child),
-          awaitConfig: null,
-          yieldConfig: (_, child) => CodeYieldConfig.forDartLike(child),
           refConfig: null,
           varConfig: (_, child) => CodeVarConfig.forDartLike(child),
 
@@ -216,8 +214,6 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
           exprListConfig: (_, child) => CodeExprListConfig.forDartLike(child),
           statementListConfig: null,
           statementConfig: null,
-          breakConfig: null,
-          continueConfig: null,
           varNameConfig: null,
           ifConfig: null,
           elseIfConfig: null,
