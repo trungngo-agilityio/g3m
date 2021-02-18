@@ -14,7 +14,7 @@ class CodeImportTypeConfig extends CodeConfigNode<CodeImportType> {
           Container([
             importKeyword,
             ' ',
-            package.package,
+            package.package ?? package.path,
             '.',
             import.type,
           ]),

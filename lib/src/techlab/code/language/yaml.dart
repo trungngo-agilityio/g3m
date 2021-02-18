@@ -46,7 +46,7 @@ class YmlCode extends ExactlyOneNode<YmlCode> {
   @override
   Node buildOne(BuildContext context, Node child) {
     return IndentConfig.useSpace2(
-      CodeBlockConfig.curlyBracketSameLine(
+      CodeBlockConfig.colonIndent(
         _buildExprConfig(
           child,
         ),
@@ -56,9 +56,9 @@ class YmlCode extends ExactlyOneNode<YmlCode> {
 
   Node _buildExprConfig(Node child) {
     return CodeNullLiteralConfig.forJavaLike(
-      CodeBoolLiteralConfig.forJavaLike(
-        CodeCharLiteralConfig.forJavaLike(
-          CodeStringLiteralConfig.forJavaLike(
+      CodeStringLiteralConfig.forYamlLike(
+        CodeBoolLiteralConfig.forJavaLike(
+          CodeCharLiteralConfig.forJavaLike(
             CodeNumericLiteralConfig.forJavaLike(
               CodeExprConfig.forJavaLike(
                 CodeArrayLiteralConfig.forYmlLike(

@@ -25,9 +25,9 @@ class CodeGenericParamList extends CodeConfigProxyNode<CodeGenericParamList> {
   CodeGenericParamList._(this.params);
 
   static CodeGenericParamList _parse(dynamic value,
-      {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeGenericParamList>(value, (v) {
-      final list = _parseNodeList<CodeGenericParam>(v, CodeGenericParam._parse);
+      {NodeParseErrorFunc error}) {
+    return parseNode<CodeGenericParamList>(value, (v) {
+      final list = parseNodeList<CodeGenericParam>(v, CodeGenericParam._parse);
       if (list != null) return CodeGenericParamList._(list);
       return null;
     }, error: error);

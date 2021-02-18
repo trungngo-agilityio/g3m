@@ -35,7 +35,7 @@ class CodeFieldConfig extends CodeConfigNode<CodeField> {
         internalKeyword: null,
         abstractKeyword: 'abstract ',
         staticKeyword: 'static ',
-        finalKeyword: null,
+        finalKeyword: 'final ',
         nonFinalKeyword: null,
         optionalKeyword: null,
       );
@@ -185,8 +185,8 @@ class CodeField extends CodeConfigProxyNode<CodeField> implements _NamedNode {
   });
 
   /// Try parse a dynamic value to an argument object.
-  static CodeField _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeField>(value, (v) {
+  static CodeField _parse(dynamic value, {NodeParseErrorFunc error}) {
+    return parseNode<CodeField>(value, (v) {
       final list = _toDynamicNodeList(v);
 
       if (list?.isNotEmpty != true || list.length > 3) {

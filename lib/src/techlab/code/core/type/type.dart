@@ -126,8 +126,8 @@ class CodeType extends CodeConfigProxyNode<CodeType> implements _NamedNode {
   CodeType._(
       {this.instance, this.name, this.generic, this.array, this.nullable});
 
-  static CodeType _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeType>(value, (v) {
+  static CodeType _parse(dynamic value, {NodeParseErrorFunc error}) {
+    return parseNode<CodeType>(value, (v) {
       var name = CodeTypeName.of(v);
       if (name != null) {
         return CodeType._(name: name);

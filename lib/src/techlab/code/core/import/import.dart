@@ -123,8 +123,8 @@ class CodeImport extends CodeConfigProxyNode<CodeImport> {
   });
 
   /// Try parse a dynamic value to an argument object.
-  static CodeImport _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeImport>(value, null, error: error);
+  static CodeImport _parse(dynamic value, {NodeParseErrorFunc error}) {
+    return parseNode<CodeImport>(value, null, error: error);
   }
 
   factory CodeImport.of({

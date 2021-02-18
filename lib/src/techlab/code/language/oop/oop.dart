@@ -239,7 +239,7 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
     @required this.extensionListConfig,
     @required this.extensionConfig,
   }) : super(child) {
-    indentConfig = (_, child) => IndentConfig.useSpace2(child);
+    indentConfig ??= (_, child) => IndentConfig.useSpace2(child);
     blockConfig ??= (_, child) => CodeBlockConfig.curlyBracketSameLine(child);
     codeAccessConfig ??= (_, child) => CodeModifierConfig.forJavaLike(child);
 

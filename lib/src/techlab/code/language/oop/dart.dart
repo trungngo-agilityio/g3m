@@ -188,6 +188,9 @@ class DartCodeConfig extends OopCodeConfig<DartCodeConfig> {
             tLong: 'int',
             tFloat: 'double',
             tDouble: 'double',
+            others: {
+              'int': 'int',
+            }
           ),
 
           typeNameConfig: (_, child) => CodeTypeNameConfig.forDartLike(child),

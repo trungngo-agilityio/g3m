@@ -18,6 +18,7 @@ class StimModelFieldScope {
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
     String comment,
+    dynamic init,
     Set<StimModelTag> tags,
   }) {
     return StimModelField()
@@ -26,6 +27,7 @@ class StimModelFieldScope {
       ..rules = rules
       ..filters = filters
       ..comment = comment
+      ..init = init
       ..tags = tags;
   }
 
@@ -35,6 +37,7 @@ class StimModelFieldScope {
     Set<StimModelFieldRule> rules,
     Set<StimModelFilter> filters,
     String comment,
+    dynamic init,
     Set<StimModelTag> tags,
   }) {
     assert(type != null, 'type is required');
@@ -45,6 +48,7 @@ class StimModelFieldScope {
       filters: filters,
       comment: comment,
       tags: tags,
+      init: init,
     );
   }
 
@@ -55,6 +59,7 @@ class StimModelFieldScope {
     Set<StimModelFilter> filters,
     String comment,
     Set<StimModelTag> tags,
+    dynamic init,
   }) {
     return of(
       name: name,
@@ -63,6 +68,7 @@ class StimModelFieldScope {
       filters: filters,
       comment: comment,
       tags: tags,
+      init: init,
     );
   }
 }
@@ -80,6 +86,8 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   Set<StimModelFilter> filters;
 
   String comment;
+
+  dynamic init;
 
   /// Determines if the field is required or not.
   bool get isRequired =>
@@ -258,6 +266,7 @@ class StimModelField extends StimModelSymbol<StimModelField> {
     Set<StimModelFilter> filters,
     Set<StimModelTag> tags,
     String comment,
+    dynamic init,
   }) {
     return StimModelField()
       ..name = StimName.of(name ?? this.name)
@@ -265,6 +274,7 @@ class StimModelField extends StimModelSymbol<StimModelField> {
       ..rules = rules ?? this.rules
       ..filters = filters ?? this.filters
       ..comment = comment ?? this.comment
+      ..init = init
       ..tags = tags ?? this.tags;
   }
 }

@@ -120,4 +120,10 @@ extension G3StringExtension on String {
 
     return this;
   }
+
+  String past() => inflection.past(this);
+
+  String pluralize() => inflection.pluralize(this);
+
+  String singularize() => inflection.singularize(this);
 }

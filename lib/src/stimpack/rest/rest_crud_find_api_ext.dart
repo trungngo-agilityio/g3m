@@ -52,7 +52,7 @@ extension ExtStimRestCrudFindApiScope on StimRestCrudFindApiScope {
       // Ignore certain fields
       if (field.isSystemOnly || field.isTransient) continue;
 
-      if (field == _idField || field.isIndexed) {
+      if (field == _idField || field.isIndexed || field.isUnique) {
         // Just add the id field by default. It is weird if any technology
         // don't auto indexed that field.
         request.add(field);

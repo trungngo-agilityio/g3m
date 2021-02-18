@@ -422,6 +422,10 @@ class StimModel extends StimPack {
     mt.rangeSet = _symbolSetOf(mt.range);
 
     // rule
+    mt.typeRule = _symbolOf('type rule');
+    mt.typeRuleSet = _symbolSetOf(mt.typeRule);
+
+    // rule
     mt.fieldRule = _symbolOf('field rule');
     mt.fieldRuleSet = _symbolSetOf(mt.fieldRule);
 

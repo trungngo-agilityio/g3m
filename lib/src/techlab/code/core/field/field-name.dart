@@ -39,9 +39,9 @@ class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
     @required this.modifier,
   }) : assert(name != null);
 
-  static CodeFieldName _parse(dynamic value, {_NodeParseErrorFunc error}) {
+  static CodeFieldName _parse(dynamic value, {NodeParseErrorFunc error}) {
     // Try to parse the input as the enum name itself.
-    return _parseNode<CodeFieldName>(value, (v) {
+    return parseNode<CodeFieldName>(value, (v) {
       // Try to parse the input as the name expression.
       final name = _parseNameNode(v, error: error);
 

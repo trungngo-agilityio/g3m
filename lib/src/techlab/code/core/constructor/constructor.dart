@@ -66,6 +66,7 @@ class CodeConstructorConfig extends CodeConfigNode<CodeConstructor> {
         final def = Container([
           '\n',
           constructor.comment,
+          constructor.annotations,
           Trim.leftRight(
             Container([
               ...keywords,
@@ -103,6 +104,9 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
   /// The comment level for constructor.
   final CodeComment comment;
 
+  /// The list of annotations
+  final CodeAnnotationList annotations;
+
   /// The constructor argument list.
   final CodeArgList args;
 
@@ -123,6 +127,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
   CodeConstructor._({
     this.name,
     this.comment,
+    this.annotations,
     this.args,
     this.init,
     this.body,
@@ -162,6 +167,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
     dynamic optionalArgs,
     dynamic namedArgs,
     dynamic comment,
+    dynamic annotations,
     dynamic init,
     dynamic body,
   }) {
@@ -182,6 +188,7 @@ class CodeConstructor extends CodeConfigProxyNode<CodeConstructor>
       ),
       init: CodeStatementList.of(init, closed: true),
       comment: CodeComment.of(comment),
+      annotations: CodeAnnotationList.of(annotations),
       body: CodeBlock.of(CodeStatementList.of(body)),
     );
   }

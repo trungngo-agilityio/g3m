@@ -106,9 +106,9 @@ class CodePropertySetter extends CodeConfigProxyNode<CodePropertySetter> {
 
   factory CodePropertySetter._parse(
     dynamic value, {
-    _NodeParseErrorFunc error,
+    NodeParseErrorFunc error,
   }) {
-    return _parseNode<CodePropertySetter>(value, (v) {
+    return parseNode<CodePropertySetter>(value, (v) {
       final statements = CodeStatementList._parse(v);
       return CodePropertySetter._(
         body: CodeBlock.of(statements),

@@ -116,8 +116,8 @@ class CodeComment extends CodeConfigProxyNode<CodeComment> {
 
   CodeComment(this.text);
 
-  static CodeComment _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeComment>(value, (v) {
+  static CodeComment _parse(dynamic value, {NodeParseErrorFunc error}) {
+    return parseNode<CodeComment>(value, (v) {
       if (v is Node) {
         return CodeComment(v);
       } else {

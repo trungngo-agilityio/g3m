@@ -150,9 +150,9 @@ class CodePropertyGetter extends CodeConfigProxyNode<CodePropertyGetter> {
 
   factory CodePropertyGetter._parse(
     dynamic value, {
-    _NodeParseErrorFunc error,
+    NodeParseErrorFunc error,
   }) {
-    return _parseNode<CodePropertyGetter>(value, (v) {
+    return parseNode<CodePropertyGetter>(value, (v) {
       final statements = CodeStatementList._parse(v);
       return CodePropertyGetter._(
         body: CodeBlock.of(statements),

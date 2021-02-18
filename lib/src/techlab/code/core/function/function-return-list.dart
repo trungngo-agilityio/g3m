@@ -24,10 +24,10 @@ class CodeFunctionReturnList
   CodeFunctionReturnList._(this.types);
 
   static CodeFunctionReturnList _parse(dynamic value,
-      {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeFunctionReturnList>(value, (v) {
+      {NodeParseErrorFunc error}) {
+    return parseNode<CodeFunctionReturnList>(value, (v) {
       var list =
-          _parseNodeList<CodeFunctionReturn>(v, CodeFunctionReturn._parse);
+          parseNodeList<CodeFunctionReturn>(v, CodeFunctionReturn._parse);
 
       // Try to parse the type from a type list
       if (list == null) {

@@ -145,8 +145,8 @@ class CodeArg extends CodeConfigProxyNode<CodeArg> implements _NamedNode {
   });
 
   /// Try parse a dynamic value to an argument object.
-  static CodeArg _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeArg>(value, (v) {
+  static CodeArg _parse(dynamic value, {NodeParseErrorFunc error}) {
+    return parseNode<CodeArg>(value, (v) {
       final list = _toDynamicNodeList(v);
 
       if (list?.isNotEmpty != true || list.length > 3) {

@@ -27,6 +27,65 @@ class JavaCodeFile implements Node {
     this.overwriteIfExists,
   });
 
+  factory JavaCodeFile.ofClass(
+    String name,
+    CodeClass clazz, {
+    String extension,
+    CodePackage package,
+    dynamic comment,
+    List<CodeImport> imports,
+    dynamic body,
+  }) {
+    return JavaCodeFile.of(
+      name,
+      extension: extension,
+      comment: CodeComment.of(comment),
+      package: package,
+      imports: imports,
+      classes: [clazz],
+      body: body,
+    );
+  }
+
+  factory JavaCodeFile.ofInterface(
+    String name,
+    CodeInterface interface, {
+    String extension,
+    CodePackage package,
+    dynamic comment,
+    List<CodeImport> imports,
+    dynamic body,
+  }) {
+    return JavaCodeFile.of(
+      name,
+      extension: extension,
+      comment: CodeComment.of(comment),
+      package: package,
+      imports: imports,
+      interfaces: [interface],
+      body: body,
+    );
+  }
+
+  factory JavaCodeFile.ofEnum(
+    String name,
+    CodeEnum e, {
+    String extension,
+    CodePackage package,
+    CodeComment comment,
+    List<CodeImport> imports,
+    dynamic body,
+  }) {
+    return JavaCodeFile.of(
+      name,
+      extension: extension,
+      comment: comment,
+      package: package,
+      imports: imports,
+      enums: [e],
+    );
+  }
+
   factory JavaCodeFile.of(
     String name, {
     String extension,
@@ -37,11 +96,11 @@ class JavaCodeFile implements Node {
     List<CodeFunction> functions,
     List<CodeInterface> interfaces,
     List<CodeClass> classes,
-    Node body,
+    dynamic body,
   }) {
     // Node that java code expect the file name to be class name.
     return JavaCodeFile._(
-      name,
+      name.pascalCase,
       extension: extension ?? defaultExtension,
       source: JavaCode.of(
           package: package,
@@ -90,6 +149,7 @@ class JavaCode extends SingleChildNode {
           CodeImportList.of(imports),
           CodeEnumList.of(enums),
           CodeFunctionList.of(functions),
+          CodeInterfaceList.of(interfaces),
           CodeClassList.of(classes),
         ]),
       ),
@@ -106,7 +166,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
   JavaCodeConfig(Node child)
       : super(
           child,
-          indentConfig: null,
+          indentConfig: (_, child) => IndentConfig.useSpace4(child),
           blockConfig: null,
           codeAccessConfig: null,
 
@@ -124,20 +184,22 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
 
           // Type configs
           // https://www.tutorialspoint.com/java/java_basic_datatypes.htm
-          typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig.of(
-            child,
-            tDynamic: 'object',
-            tVoid: 'void',
-            tBool: 'boolean',
-            tChar: 'char',
-            tString: 'String',
-            tByte: 'byte',
-            tShort: 'short',
-            tInteger: 'int',
-            tLong: 'long',
-            tFloat: 'float',
-            tDouble: 'double',
-          ),
+          typeNameMapperConfig: (_, child) => CodeTypeNameMapperConfig.of(child,
+              tDynamic: 'Object',
+              tVoid: 'void',
+              tBool: 'Boolean',
+              tChar: 'Char',
+              tString: 'String',
+              tByte: 'Byte',
+              tShort: 'Short',
+              tInteger: 'Integer',
+              tLong: 'Long',
+              tFloat: 'Float',
+              tDouble: 'Double',
+              others: {
+                'int': 'Integer',
+              }),
+
           typeNameConfig: null,
           typeConfig: null,
           typeListConfig: null,

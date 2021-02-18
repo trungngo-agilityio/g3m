@@ -36,7 +36,7 @@ class CodePropertyName extends CodeConfigProxyNode<CodePropertyName>
   CodePropertyName._(this.name);
 
   factory CodePropertyName.of(dynamic text) {
-    return _parseNode<CodePropertyName>(text, (v) {
+    return parseNode<CodePropertyName>(text, (v) {
       if (v is CodeField) return CodePropertyName._(v.name.name);
       if (v is CodeFieldName) return CodePropertyName._(v.name);
       return CodePropertyName._(Text(v));

@@ -49,11 +49,13 @@ Map<StimModelPackage, Set<StimModelType>> stimModelTypeScan({
     }
 
     // The type is accepted.
-    var foundTypes = res[package];
-    if (foundTypes == null) {
-      res[package] = {type};
-    } else {
-      foundTypes.add(type);
+    if (!type.isCollection) {
+      var foundTypes = res[package];
+      if (foundTypes == null) {
+        res[package] = {type};
+      } else {
+        foundTypes.add(type);
+      }
     }
 
     // Found more types to process.

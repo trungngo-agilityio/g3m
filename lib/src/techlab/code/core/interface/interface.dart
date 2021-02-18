@@ -41,6 +41,7 @@ class CodeInterfaceConfig extends CodeConfigNode<CodeInterface> {
         return Container([
           '\n',
           interface.comment,
+          interface.annotations,
           Trim.leftRight(
             Container([
               ...modifiers,
@@ -78,6 +79,8 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
   /// Interface-level code comment.
   final CodeComment comment;
 
+  final CodeAnnotationList annotations;
+
   /// The class body.
   final CodeBlock body;
 
@@ -96,6 +99,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
     this.generic,
     this.extend,
     this.comment,
+    this.annotations,
     this.body,
     this.isPrivate,
     this.isProtected,
@@ -107,6 +111,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
   factory CodeInterface.of({
     @required dynamic name,
     dynamic comment,
+    dynamic annotations,
     dynamic generic,
     dynamic extend,
     dynamic fields,
@@ -116,7 +121,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
     bool isPublic,
     bool isAbstract,
     bool isStatic,
-    Node body,
+    dynamic body,
   }) =>
       CodeInterface._(
         name: CodeTypeName.of(
@@ -131,6 +136,7 @@ class CodeInterface extends CodeConfigProxyNode<CodeInterface>
         isStatic: isStatic,
         generic: CodeGenericParamList.of(generic),
         extend: CodeTypeList.of(extend),
+        annotations: CodeAnnotationList.of(annotations),
         body: CodeBlock.of(
           Container([
             CodeStatement.of(Container([
