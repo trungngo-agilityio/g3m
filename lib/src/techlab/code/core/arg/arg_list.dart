@@ -28,8 +28,9 @@ class CodeArgListConfig extends CodeConfigNode<CodeArgList> {
         final required = expr.required;
         final optional = expr.optional;
         final named = expr.named;
-        final count =
-            required?.length ?? 0 + optional?.length ?? 0 + named?.length ?? 0;
+        final count = (required?.length ?? 0) +
+            (optional?.length ?? 0) +
+            (named?.length ?? 0);
 
         final needNewLine = count > 4 ||
             hasAnnotation(required) ||
