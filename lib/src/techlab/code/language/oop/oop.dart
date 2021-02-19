@@ -373,7 +373,6 @@ abstract class OopCodeConfig<T extends ExactlyOneNode<T>>
         (_, child) => CodeConstructorListConfig.forJavaLike(child);
     classConstructorConfig ??=
         (_, child) => CodeConstructorConfig.forJavaLike(child);
-
     // Mixin & Extension configs
     // No support by default
   }

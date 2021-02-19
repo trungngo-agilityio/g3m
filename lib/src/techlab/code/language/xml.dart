@@ -118,37 +118,98 @@ class XmlElement implements Node {
   }
 }
 
-class XmlCode extends ExactlyOneNode<XmlCode> {
-  XmlCode(Node child) : super(child);
+class XmlCode extends SingleChildNode {
+  XmlCode(Node source) : super(XmlCodeConfig(source));
+}
+
+class XmlCodeConfig extends ExactlyOneNode<XmlCodeConfig> {
+  CodeConfigBuildFunc<IndentConfig> indentConfig;
+  CodeConfigBuildFunc<CodeBlockConfig> blockConfig;
+  CodeConfigBuildFunc<CodeCommentConfig> commentConfig;
+  CodeConfigBuildFunc<CodePlaceHolderConfig> placeHolderConfig;
+
+  //
+  CodeConfigBuildFunc<CodeNullLiteralConfig> nullLiteralConfig;
+  CodeConfigBuildFunc<CodeBoolLiteralConfig> boolLiteralConfig;
+  CodeConfigBuildFunc<CodeCharLiteralConfig> charLiteralConfig;
+  CodeConfigBuildFunc<CodeStringLiteralConfig> stringLiteralConfig;
+  CodeConfigBuildFunc<CodeNumericLiteralConfig> numericLiteralConfig;
+  CodeConfigBuildFunc<CodeArrayLiteralConfig> arrayLiteralConfig;
+  CodeConfigBuildFunc<CodeSetLiteralConfig> setLiteralConfig;
+  CodeConfigBuildFunc<CodeMapLiteralConfig> mapLiteralConfig;
+
+  // expressions
+  CodeConfigBuildFunc<CodeExprConfig> exprConfig;
+  CodeConfigBuildFunc<CodeExprListConfig> exprListConfig;
+
+  XmlCodeConfig(
+    Node child, {
+    this.indentConfig,
+    this.blockConfig,
+    this.commentConfig,
+    this.placeHolderConfig,
+    //
+    this.nullLiteralConfig,
+    this.boolLiteralConfig,
+    this.charLiteralConfig,
+    this.stringLiteralConfig,
+    this.numericLiteralConfig,
+    this.arrayLiteralConfig,
+    this.setLiteralConfig,
+    this.mapLiteralConfig,
+    //
+    this.exprConfig,
+    this.exprListConfig,
+  }) : super(child) {
+    indentConfig ??= (_, child) => IndentConfig.useSpace4(child);
+    blockConfig ??= (_, child) => CodeBlockConfig.indent(child);
+    commentConfig ??= (_, child) => CodeCommentConfig.forXml(child);
+    placeHolderConfig ??= (_, child) => CodePlaceHolderConfig.forXml(child);
+    // Expr configs
+    nullLiteralConfig ??= (_, child) => CodeNullLiteralConfig.forXml(child);
+    boolLiteralConfig ??=
+        (_, child) => CodeBoolLiteralConfig.forJavaLike(child);
+    charLiteralConfig ??=
+        (_, child) => CodeCharLiteralConfig.forJavaLike(child);
+    stringLiteralConfig ??=
+        (_, child) => CodeStringLiteralConfig.forYamlLike(child);
+    numericLiteralConfig ??=
+        (_, child) => CodeNumericLiteralConfig.forJavaLike(child);
+    arrayLiteralConfig ??= (_, child) => CodeArrayLiteralConfig.forXml(child);
+    setLiteralConfig ??= (_, child) => CodeSetLiteralConfig.forJavaLike(child);
+    mapLiteralConfig ??= (_, child) => CodeMapLiteralConfig.forXml(child);
+
+    // statements
+    // TODO Fix
+    exprConfig ??= (_, child) => CodeExprConfig.forJavaLike(child);
+    exprListConfig ??= (_, child) => CodeExprListConfig.forJavaLike(child);
+  }
 
   @override
   Node buildOne(BuildContext context, Node child) {
-    return IndentConfig.useSpace2(
-      CodeBlockConfig.colonIndent(
-        _buildExprConfig(
-          child,
-        ),
-      ),
-    );
-  }
+    final configs = <CodeConfigBuildFunc<Node>>[
+      indentConfig,
+      blockConfig,
+      commentConfig,
+      placeHolderConfig,
+      // Expr configs
+      nullLiteralConfig,
+      boolLiteralConfig,
+      charLiteralConfig,
+      stringLiteralConfig,
+      numericLiteralConfig,
+      arrayLiteralConfig,
+      setLiteralConfig,
+      mapLiteralConfig,
+      //
+      exprConfig,
+      exprListConfig,
+    ];
 
-  Node _buildExprConfig(Node child) {
-    return CodeNullLiteralConfig.forXml(
-      CodeStringLiteralConfig.forYamlLike(
-        CodeBoolLiteralConfig.forJavaLike(
-          CodeCharLiteralConfig.forJavaLike(
-            CodeNumericLiteralConfig.forJavaLike(
-              CodeExprConfig.forJavaLike(
-                CodeArrayLiteralConfig.forXml(
-                  CodeMapLiteralConfig.forXml(
-                    child,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+    for (final i in configs.reversed) {
+      if (i != null) child = i(context, child);
+    }
+
+    return child;
   }
 }

@@ -51,6 +51,19 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         otherFunc: StringFuncs.code.commentDoubleSplash,
       );
 
+  factory CodeCommentConfig.forXml(Node child) => CodeCommentConfig.forCode(
+        child,
+        enumFunc: null,
+        classFunc: null,
+        mixinFunc: null,
+        interfaceFunc: null,
+        fieldFunc: null,
+        propertyFunc: null,
+        constructorFunc: null,
+        functionFunc: null,
+        otherFunc: StringFuncs.code.commentXml,
+      );
+
   factory CodeCommentConfig.forCode(
     Node child, {
     @required StringFunc enumFunc,
@@ -69,7 +82,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
             (e) =>
                 e is CodeBlock ||
                 e is CodeEnum ||
-                    e is CodeEnumValue ||
+                e is CodeEnumValue ||
                 e is CodeMixin ||
                 e is CodeClass ||
                 e is CodeInterface ||

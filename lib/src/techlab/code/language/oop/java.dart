@@ -90,7 +90,7 @@ class JavaCodeFile implements Node {
     String name, {
     String extension,
     CodePackage package,
-    CodeComment comment,
+    dynamic comment,
     List<CodeImport> imports,
     List<CodeEnum> enums,
     List<CodeFunction> functions,
@@ -104,7 +104,7 @@ class JavaCodeFile implements Node {
       extension: extension ?? defaultExtension,
       source: JavaCode.of(
           package: package,
-          comment: comment,
+          comment: CodeComment.of(comment),
           imports: imports,
           enums: enums,
           functions: functions,
