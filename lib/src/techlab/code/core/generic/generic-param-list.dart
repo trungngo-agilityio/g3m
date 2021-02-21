@@ -8,8 +8,10 @@ class CodeGenericParamListConfig extends CodeConfigNode<CodeGenericParamList> {
   factory CodeGenericParamListConfig.forJavaLike(Node child) =>
       CodeGenericParamListConfig((context, param) {
         final params = param.params;
-        if (params == null || params.isEmpty) {
+        if (params == null) {
           return null;
+        } else if (params.isEmpty) {
+          return Text('<>');
         }
 
         return Pad.angleBrackets(

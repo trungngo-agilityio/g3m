@@ -23,8 +23,19 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
         return res;
       }, child);
 
-  factory CodeFieldNameConfig.forJavaLike(Node child) =>
-      CodeFieldNameConfig.of(StringFuncs.camel, child);
+  factory CodeFieldNameConfig.forJavaLike(Node child) {
+    return CodeFieldNameConfig((context, name) {
+      var func = StringFuncs.camel;
+      final modifier = name.modifier;
+      if (modifier?.isStatic == true &&
+          modifier?.isFinal == true &&
+          modifier?.isPublic == true) {
+        func = StringFuncs.constant;
+      }
+
+      return TextTransform(name.name, func);
+    }, child);
+  }
 }
 
 class CodeFieldName extends CodeConfigProxyNode<CodeFieldName>
