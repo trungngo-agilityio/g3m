@@ -16,7 +16,6 @@ class CodeGenericParamListConfig extends CodeConfigNode<CodeGenericParamList> {
 
         return Pad.angleBrackets(
           Join.commaSeparated(params),
-          onlyIfMissing: true,
         );
       }, child);
 }
