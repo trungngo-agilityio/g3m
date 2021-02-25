@@ -31,6 +31,7 @@ class CodePropertyNameConfig extends CodeConfigNode<CodePropertyName> {
 
 class CodePropertyName extends CodeConfigProxyNode<CodePropertyName>
     implements _NamedNode {
+  @override
   final Node name;
 
   CodePropertyName._(this.name);
