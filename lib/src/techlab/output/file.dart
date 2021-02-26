@@ -20,6 +20,8 @@ class File implements Node, Renderer, PostRenderer {
   // The internal string buffer that captures all children's output.
   StringBuffer _buf;
 
+  bool _ignored;
+
   /// Create a new file with the specified file [name].
   /// The file path is related to the directory specified by the nearest
   /// [Directory] ancestor.
@@ -46,11 +48,16 @@ class File implements Node, Renderer, PostRenderer {
   @override
   Node build(BuildContext context) {
     context.file = ioPath.join(context.dir, name);
+    _ignored = GlobIgnore.isIgnored(context, context.file);
+    if (_ignored) return null;
+
     return content;
   }
 
   @override
   void render(RenderContext context) {
+    if (_ignored == true) return;
+
     // Redirect all children's output to the new string buffer.
     _buf = StringBuffer();
     context.out = _buf;
@@ -60,6 +67,11 @@ class File implements Node, Renderer, PostRenderer {
   void postRender(RenderContext context) async {
     final path = context.file;
     final relativePath = ioPath.relative(path);
+
+    if (_ignored == true) {
+      printWarn('$relativePath file is ignored from glob settings.');
+      return;
+    }
 
     final file = io.File(path);
     final content = _buf.toString();

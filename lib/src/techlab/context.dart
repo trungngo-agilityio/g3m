@@ -4,6 +4,8 @@ typedef NodeBuildFunc<T extends Node> = Node Function(
     BuildContext context, T node);
 
 abstract class BuildContext {
+  Iterable<T> findAncestorNodesOfExactType<T>();
+
   /// Walks from bottom to top and try to find an ancestor
   /// with the specified type.
   ///

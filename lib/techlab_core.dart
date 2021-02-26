@@ -1,6 +1,7 @@
 library g3.techlab;
 
 import 'dart:io' as io;
+import 'package:glob/glob.dart' as glob;
 
 import 'package:g3m/util.dart';
 import 'package:meta/meta.dart';
@@ -199,6 +200,8 @@ part 'src/techlab/output/console.dart';
 part 'src/techlab/output/directory.dart';
 
 part 'src/techlab/output/dot-keep-file.dart';
+
+part 'src/techlab/output/glob.dart';
 
 part 'src/techlab/output/file.dart';
 

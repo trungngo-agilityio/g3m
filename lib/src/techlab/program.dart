@@ -42,6 +42,13 @@ class _Context implements BuildContext, RenderContext {
   }
 
   @override
+  Iterable<T> findAncestorNodesOfExactType<T>() sync* {
+    for (final i in ancestors) {
+      if (i is T) yield i as T;
+    }
+  }
+
+  @override
   T findAncestorNodeOfExactType<T extends Node>() {
     for (final i in ancestors) {
       if (i is T) return i;
