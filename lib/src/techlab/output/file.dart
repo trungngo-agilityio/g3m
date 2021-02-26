@@ -69,7 +69,7 @@ class File implements Node, Renderer, PostRenderer {
     final relativePath = ioPath.relative(path);
 
     if (_ignored == true) {
-      printWarn('$relativePath file is ignored from glob settings.');
+      printWarn('$relativePath file is ignored');
       return;
     }
 

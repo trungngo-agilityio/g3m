@@ -68,7 +68,7 @@ class Directory implements Node, PostRenderer {
 
     // Redirects the output directory to the new one.
     // All sub sequence file output will be written to here.
-    context.dir = path;
+    context.dir = ioPath.relative(path);
 
     _ignored = GlobIgnore.isIgnored(context, context.dir);
     if (_ignored) return null;
@@ -79,7 +79,7 @@ class Directory implements Node, PostRenderer {
   @override
   void postRender(RenderContext context) async {
     if (_ignored == true) {
-      printWarn('${context.dir} directory is ignored from glob settings.');
+      printWarn('${context.dir} directory is ignored');
       return;
     }
   }
