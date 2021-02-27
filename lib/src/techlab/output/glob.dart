@@ -24,37 +24,42 @@ class GlobIgnore implements GlobIgnoreNode {
   }
 
   factory GlobIgnore.fromText(String content, Node child) {
-    final matchers = <bool Function(String path)>[];
+    // See: https://git-scm.com/docs/gitignore
 
-    if (content != null) {
-      final lines = content.split('\n');
-      for (var line in lines) {
-        line = line.trim();
-        // '#' marks that the line is just a comment.
-        if (line.isNotEmpty && !line.startsWith('#')) {
-          var res = true;
+    return GlobIgnore._([
+      (path) {
+        var matched = false;
 
-          if (line.startsWith('!')) {
-            res = false;
-            line = line.substring(1).trim();
-          }
+        if (content != null) {
+          final lines = content.split('\n');
 
-          final rule = glob.Glob(line);
-          matchers.add((path) {
-            if (rule.matches(path)) {
-              return res;
-            } else {
-              return !res;
+          for (var line in lines) {
+            line = line.trim();
+            // '#' marks that the line is just a comment.
+            if (line.isNotEmpty && !line.startsWith('#')) {
+              var negated = false;
+              if (line.startsWith('!')) {
+                // This is a negate rule.
+                line = line.substring(1).trim();
+                negated = true;
+              }
+
+              final rule = glob.Glob(line);
+              if (rule.matches(path)) {
+                matched = !negated;
+              }
             }
-          });
+          }
         }
+
+        return matched;
       }
-    }
-    return GlobIgnore._(matchers, child);
+    ], child);
   }
 
   GlobIgnore._(this._matchers, this._child);
 
+  @override
   bool matches(String path) {
     if (path == null || _dir == null || _matchers?.isNotEmpty != true) {
       return false;
