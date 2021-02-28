@@ -44,7 +44,7 @@ class CodeCommentConfig extends CodeConfigNode<CodeComment> {
         classFunc: StringFuncs.code.commentJavaDoc,
         mixinFunc: null,
         interfaceFunc: StringFuncs.code.commentJavaDoc,
-        fieldFunc: StringFuncs.code.commentDoubleSplash,
+        fieldFunc: StringFuncs.code.commentJavaDoc,
         propertyFunc: StringFuncs.code.commentJavaDoc,
         constructorFunc: StringFuncs.code.commentJavaDoc,
         functionFunc: StringFuncs.code.commentJavaDoc,

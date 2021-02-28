@@ -27,9 +27,7 @@ class CodeFieldNameConfig extends CodeConfigNode<CodeFieldName> {
     return CodeFieldNameConfig((context, name) {
       var func = StringFuncs.camel;
       final modifier = name.modifier;
-      if (modifier?.isStatic == true &&
-          modifier?.isFinal == true &&
-          modifier?.isPublic == true) {
+      if (modifier?.isStatic == true) {
         func = StringFuncs.constant;
       }
 
