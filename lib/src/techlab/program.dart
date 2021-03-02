@@ -66,7 +66,8 @@ class _Context implements BuildContext, RenderContext {
           if (i != null) {
             final child = i is Node ? i : Text(i);
 
-            final context = _Context.childOf(this, child)..build();
+            final context = _Context.childOf(this, child)
+              ..build();
             _children.add(context);
           }
         }
@@ -76,7 +77,8 @@ class _Context implements BuildContext, RenderContext {
       do {
         final builtNode = node.build(this);
         if (builtNode != null) {
-          final context = _Context.childOf(this, builtNode)..build();
+          final context = _Context.childOf(this, builtNode)
+            ..build();
           _children.add(context);
         }
 
@@ -133,7 +135,7 @@ class _Context implements BuildContext, RenderContext {
 class Program {
   final Node root;
 
-  bool _yesToAll = true;
+  bool _yesToAll;
 
   Program._(this.root);
 

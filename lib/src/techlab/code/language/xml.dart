@@ -26,18 +26,22 @@ class XmlCodeFile implements Node {
     @meta.required String rootName,
     @meta.required dynamic body,
     Map<String, dynamic> attributes,
+    bool overwriteIfExists,
   }) {
     assert(name != null);
     assert(rootName != null);
-    return XmlCodeFile(name,
-        source: Container([
-          '<?xml version="1.0" encoding="UTF-8"?>\n',
-          XmlElement(
-            rootName,
-            attributes: attributes,
-            body: body,
-          ),
-        ]));
+    return XmlCodeFile(
+      name,
+      source: Container([
+        '<?xml version="1.0" encoding="UTF-8"?>\n',
+        XmlElement(
+          rootName,
+          attributes: attributes,
+          body: body,
+        ),
+      ]),
+      overwriteIfExists: overwriteIfExists,
+    );
   }
 
   @override

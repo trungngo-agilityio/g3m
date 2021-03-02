@@ -24,8 +24,13 @@ class YmlCodeFile implements Node {
   factory YmlCodeFile.of(
     String name, {
     Map<String, dynamic> body,
+    bool overwriteIfExists,
   }) {
-    return YmlCodeFile(name, source: CodeMapLiteral.of(body));
+    return YmlCodeFile(
+      name,
+      source: CodeMapLiteral.of(body),
+      overwriteIfExists: overwriteIfExists,
+    );
   }
 
   @override

@@ -32,16 +32,14 @@ abstract class BuildContext {
   void abort();
 }
 
-abstract class RenderContext {
+abstract class RenderContext extends BuildContext {
+  @override
   String get dir;
 
+  @override
   String get file;
 
   StringSink out;
-
-  void abort();
-
-  bool yesToAll;
 }
 
 /// The abstract node type that all nodes in the tree must
