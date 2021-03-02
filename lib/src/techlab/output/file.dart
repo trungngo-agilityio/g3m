@@ -159,6 +159,7 @@ class File implements Node, Renderer, PostRenderer {
     }
   }
 
+  /// TODO: Pretty print
   void _printPatch(diff.Patch patch) {
     String coords1, coords2;
 
@@ -177,20 +178,17 @@ class File implements Node, Renderer, PostRenderer {
       coords2 = '${patch.start2 + 1},${patch.length2}';
     }
 
-    final text = printInfo('@@ -$coords1 +$coords2 @@\n');
-
     for (final aDiff in patch.diffs) {
       final text = aDiff.text;
       switch (aDiff.operation) {
         case diff.DIFF_INSERT:
+          printInfo('@@ -$coords1 +$coords2 @@\n');
           printSuccess('+${text}\n');
           break;
         case diff.DIFF_DELETE:
+          printInfo('@@ -$coords1 +$coords2 @@\n');
           printError('-${text}\n');
           break;
-        // case diff.DIFF_EQUAL:
-        //   text.write(' ');
-        //   break;
       }
     }
   }
