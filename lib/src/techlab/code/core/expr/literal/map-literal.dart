@@ -26,7 +26,7 @@ class CodeMapLiteralConfig extends CodeConfigNode<CodeMapLiteral> {
           literal.values.isNotEmpty
               ? Container([
                   NewLine(),
-                  Indent(Join.of('\n', pairs)),
+                  Indent(Join.newLineSeparated(pairs)),
                   NewLine(),
                 ])
               : null,
