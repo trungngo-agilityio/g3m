@@ -89,7 +89,7 @@ extension ExtCrudCreateOneApiScope on StimRestCrudCreateOneApiScope {
     for (final field in fields) {
       // Ignore certain fields
       if (field.isSystemOnly || field.isTransient) continue;
-      if (!field.isReadOnly) request.add(field);
+      if (!field.isReadOnly && !field.isUpdateOnly) request.add(field);
       if (!field.isWriteOnly) response.add(field);
     }
 

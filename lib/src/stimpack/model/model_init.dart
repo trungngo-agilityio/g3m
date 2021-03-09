@@ -218,6 +218,7 @@ class StimModel extends StimPack {
       ..readOnly = fieldRule.of(name: 'read only')
       ..writeOnly = fieldRule.of(name: 'write only')
       ..createOnly = fieldRule.of(name: 'create only')
+      ..updateOnly = fieldRule.of(name: 'update only')
       ..systemOnly = fieldRule.of(name: 'system only')
       ..autoIncreased = fieldRule.of(name: 'auto increased')
       ..transient = fieldRule.of(name: 'transient');

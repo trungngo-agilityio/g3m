@@ -93,6 +93,7 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   bool get isRequired =>
       rules?.contains(stimpack.model.fieldRule.required) == true;
 
+
   /// Determines if the field is readonly or not.
   bool get isReadOnly =>
       rules?.contains(stimpack.model.fieldRule.readOnly) == true;
@@ -104,6 +105,10 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   /// Determines if the field is modifiable after being created or not.
   bool get isCreateOnly =>
       rules?.contains(stimpack.model.fieldRule.createOnly) == true;
+
+  /// Determines if the field is update only or not.
+  bool get isUpdateOnly =>
+      rules?.contains(stimpack.model.fieldRule.updateOnly) == true;
 
   /// Determines if the field is system only or not.
   bool get isSystemOnly =>
@@ -147,6 +152,9 @@ class StimModelField extends StimModelSymbol<StimModelField> {
 
   /// Marks that this field is not modifiable after being created.
   void createOnly() => rules += stimpack.model.fieldRule.createOnly;
+
+  /// Marks that this field is only available during update.
+  void updateOnly() => rules += stimpack.model.fieldRule.updateOnly;
 
   /// Marks that this field is a system field. It will not be readable
   /// by users or external systems
