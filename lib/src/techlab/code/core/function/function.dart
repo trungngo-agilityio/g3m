@@ -25,7 +25,10 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
       CodeFunctionConfig._internal(child);
 
   factory CodeFunctionConfig.forJavaLike(Node child) =>
-      CodeFunctionConfig._internal(child);
+      CodeFunctionConfig._internal(
+        child,
+        overrideKeyword: '@Override',
+      );
 
   /// [returnsAfter] determines if the return clause should be put
   /// in front or at the end of the function definition.
@@ -34,6 +37,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
     Node child, {
     String throwKeyword = 'throws',
     String voidKeyword = 'void',
+    String overrideKeyword = '@override',
     String functionKeywords = '',
     bool overrideAsAnnotation = true,
     bool throwsAsAnnotation = false,
@@ -80,7 +84,7 @@ class CodeFunctionConfig extends CodeConfigNode<CodeFunction> {
           // In the case of dart language, override is an annotation.
           // For csharp, it is an modifier.
           overrideAsAnnotation == true && func.modifier?.isOverride == true
-              ? '@override\n'
+              ? '${overrideKeyword}\n'
               : null,
           func.modifier,
           if (returnsAfter == false)

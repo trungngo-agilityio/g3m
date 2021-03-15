@@ -198,6 +198,7 @@ class JavaCodeConfig extends OopCodeConfig<JavaCodeConfig> {
               tDouble: 'Double',
               others: {
                 'int': 'Integer',
+                'boolean': 'boolean',
               }),
 
           typeNameConfig: null,
