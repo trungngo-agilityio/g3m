@@ -66,8 +66,7 @@ class _Context implements BuildContext, RenderContext {
           if (i != null) {
             final child = i is Node ? i : Text(i);
 
-            final context = _Context.childOf(this, child)
-              ..build();
+            final context = _Context.childOf(this, child)..build();
             _children.add(context);
           }
         }
@@ -77,8 +76,7 @@ class _Context implements BuildContext, RenderContext {
       do {
         final builtNode = node.build(this);
         if (builtNode != null) {
-          final context = _Context.childOf(this, builtNode)
-            ..build();
+          final context = _Context.childOf(this, builtNode)..build();
           _children.add(context);
         }
 
@@ -130,12 +128,23 @@ class _Context implements BuildContext, RenderContext {
   set yesToAll(bool value) {
     _program._yesToAll = value;
   }
+
+  @override
+  bool get verbose {
+    return _program._verbose;
+  }
+
+  @override
+  set verbose(bool value) {
+    _program._verbose = value;
+  }
 }
 
 class Program {
   final Node root;
 
   bool _yesToAll;
+  bool _verbose = false;
 
   Program._(this.root);
 

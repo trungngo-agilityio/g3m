@@ -92,13 +92,17 @@ class File implements Node, Renderer, PostRenderer {
 
       if (notModified) {
         // The content has not been modified, just skip it.
-        print('$relativePath has not been modified.');
+        if (context.verbose == true) {
+          print('$relativePath has not been modified.');
+        }
         return;
       }
 
       if (overwriteIfExists == false) {
-        printWarn(
-            '$relativePath has been modified, but skipped because of hard settings.');
+        if (context.verbose == true) {
+          printWarn(
+              '$relativePath has been modified, but skipped because of hard settings.');
+        }
         return;
       } else if (overwriteIfExists == true || context.yesToAll == true) {
         printInfo('$relativePath has been overwritten.');

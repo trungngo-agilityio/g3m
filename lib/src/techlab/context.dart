@@ -27,6 +27,8 @@ abstract class BuildContext {
   ///
   String file;
 
+  bool verbose;
+
   bool yesToAll;
 
   void abort();
