@@ -93,7 +93,6 @@ class StimModelField extends StimModelSymbol<StimModelField> {
   bool get isRequired =>
       rules?.contains(stimpack.model.fieldRule.required) == true;
 
-
   /// Determines if the field is readonly or not.
   bool get isReadOnly =>
       rules?.contains(stimpack.model.fieldRule.readOnly) == true;
@@ -231,12 +230,12 @@ class StimModelField extends StimModelSymbol<StimModelField> {
 
     void process(StimModelRange range) {
       processed.add(range);
-      if (range.min != null && (min == null || range.min < min)) {
+      if (range.min != null && (min == null || range.min > min)) {
         // record new min
         min = range.min;
       }
 
-      if (range.max != null && (max == null || range.max > max)) {
+      if (range.max != null && (max == null || range.max < max)) {
         // record new max
         max = range.max;
       }
