@@ -281,7 +281,7 @@ class StimModelField extends StimModelSymbol<StimModelField> {
       ..rules = rules ?? this.rules
       ..filters = filters ?? this.filters
       ..comment = comment ?? this.comment
-      ..init = init
+      ..init = init ?? this.init
       ..tags = tags ?? this.tags;
   }
 }
