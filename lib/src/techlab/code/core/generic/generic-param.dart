@@ -6,7 +6,7 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
 
   factory CodeGenericParamConfig.forJavaLike(Node child) =>
       CodeGenericParamConfig((context, param) {
-        return param.name;
+        return PascalCase(param.name);
       }, child);
 }
 
