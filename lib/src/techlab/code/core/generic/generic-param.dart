@@ -4,6 +4,11 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
   CodeGenericParamConfig(NodeBuildFunc<CodeGenericParam> buildFunc, Node child)
       : super(buildFunc, child);
 
+  factory CodeGenericParamConfig.forTypescript(Node child) =>
+      CodeGenericParamConfig((context, param) {
+        return param.name;
+      }, child);
+
   factory CodeGenericParamConfig.forJavaLike(Node child) =>
       CodeGenericParamConfig((context, param) {
         return PascalCase(param.name);

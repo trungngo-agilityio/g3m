@@ -185,7 +185,7 @@ class TypescriptCodeConfig extends OopCodeConfig<TypescriptCodeConfig> {
           annotationListConfig: null,
 
           // Generic configs
-          genericParamConfig: null,
+          genericParamConfig: (_, child) => CodeGenericParamConfig.forTypescript(child),
           genericParamListConfig: null,
 
           // Field configs
