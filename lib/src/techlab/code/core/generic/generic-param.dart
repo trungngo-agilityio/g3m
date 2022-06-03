@@ -4,9 +4,14 @@ class CodeGenericParamConfig extends CodeConfigNode<CodeGenericParam> {
   CodeGenericParamConfig(NodeBuildFunc<CodeGenericParam> buildFunc, Node child)
       : super(buildFunc, child);
 
-  factory CodeGenericParamConfig.forJavaLike(Node child) =>
+  factory CodeGenericParamConfig.forTypescript(Node child) =>
       CodeGenericParamConfig((context, param) {
         return param.name;
+      }, child);
+
+  factory CodeGenericParamConfig.forJavaLike(Node child) =>
+      CodeGenericParamConfig((context, param) {
+        return PascalCase(param.name);
       }, child);
 }
 
@@ -18,8 +23,8 @@ class CodeGenericParam extends CodeConfigProxyNode<CodeGenericParam>
   CodeGenericParam._({@required this.name})
       : assert(name != null);
 
-  static CodeGenericParam _parse(dynamic value, {_NodeParseErrorFunc error}) {
-    return _parseNode<CodeGenericParam>(value, (v) {
+  static CodeGenericParam _parse(dynamic value, {NodeParseErrorFunc error}) {
+    return parseNode<CodeGenericParam>(value, (v) {
       // Try to parse the value as the expression name.
       final name = CodeType._parse(v, error: error);
       if (name == null) return null;
