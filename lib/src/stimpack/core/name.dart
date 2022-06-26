@@ -42,13 +42,32 @@ abstract class StimNamed {
 ///
 class StimName {
   final String _text;
-
   final _NameOp _op;
   final Object _left;
-
   final Object _right;
+  StimName _root;
 
-  StimName._(this._op, this._left, this._right, this._text);
+  String _s;
+  StimName _upper,
+      _lower,
+      _camel,
+      _pascal,
+      _snake,
+      _dot,
+      _path,
+      _param,
+      _header,
+      _title,
+      _constant,
+      _sentence,
+      _words,
+      _plural,
+      _singular,
+      _past;
+
+  StimName._(this._op, this._left, this._right, this._text, this._root) {
+      _root ??= this;
+  }
 
   factory StimName.of(dynamic value) {
     if (value is StimName) {
@@ -56,13 +75,13 @@ class StimName {
     } else if (value is StimNamed) {
       return StimName.refOf(value);
     } else {
-      return StimName._(null, null, null, _normalized(value));
+      return StimName._(null, null, null, _normalized(value), null);
     }
   }
 
   factory StimName.refOf(StimNamed value) {
     assert(value != null);
-    return StimName._(_NameOp.ref, value, null, null);
+    return StimName._(_NameOp.ref, value, null, null, value.name._root);
   }
 
   StimName operator ^(Object another) {
@@ -70,7 +89,7 @@ class StimName {
   }
 
   StimName reset(Object another) {
-    return StimName._(_NameOp.reset, this, another, null);
+    return StimName._(_NameOp.reset, this, another, null, null);
   }
 
   StimName operator &(Object another) {
@@ -86,7 +105,7 @@ class StimName {
   }
 
   StimName addRight(Object another) {
-    return StimName._(_NameOp.addRight, this, another, null);
+    return StimName._(_NameOp.addRight, this, another, null, null);
   }
 
   StimName operator >>(Object another) {
@@ -94,7 +113,7 @@ class StimName {
   }
 
   StimName addLeft(Object another) {
-    return StimName._(_NameOp.addLeft, this, another, null);
+    return StimName._(_NameOp.addLeft, this, another, null, null);
   }
 
   StimName operator -(Object another) {
@@ -102,79 +121,95 @@ class StimName {
   }
 
   StimName remove(Object another) {
-    return StimName._(_NameOp.remove, this, another, null);
+    return StimName._(_NameOp.remove, this, another, null, null);
   }
 
   StimName removeIfStartsWith(Object another) {
-    return StimName._(_NameOp.removeIfStartsWith, this, another, null);
+    return StimName._(_NameOp.removeIfStartsWith, this, another, null, null);
   }
 
   StimName removeIfEndsWith(Object another) {
-    return StimName._(_NameOp.removeIfEndsWith, this, another, null);
+    return StimName._(_NameOp.removeIfEndsWith, this, another, null, null);
   }
 
   StimName upper() {
-    return StimName._(_NameOp.upper, this, null, null);
+    _root._upper ??= StimName._(_NameOp.upper, _root, null, null, _root);
+    return _root._upper;
   }
 
   StimName lower() {
-    return StimName._(_NameOp.lower, this, null, null);
+    _root._lower ??= StimName._(_NameOp.lower, _root, null, null, _root);
+    return _root._lower;
   }
 
   StimName camel() {
-    return StimName._(_NameOp.camel, this, null, null);
+    _root._camel ??= StimName._(_NameOp.camel, _root, null, null, _root);
+    return _root._camel;
   }
 
   StimName pascal() {
-    return StimName._(_NameOp.pascal, this, null, null);
+    _root._pascal ??= StimName._(_NameOp.pascal, _root, null, null, _root);
+    return _root._pascal;
   }
 
   StimName snake() {
-    return StimName._(_NameOp.snake, this, null, null);
+    _root._snake ??= StimName._(_NameOp.snake, _root, null, null, _root);
+    return _root._snake;
   }
 
   StimName dot() {
-    return StimName._(_NameOp.dot, this, null, null);
+    _root._dot ??= StimName._(_NameOp.dot, _root, null, null, _root);
+    return _root._dot;
   }
 
   StimName path() {
-    return StimName._(_NameOp.path, this, null, null);
+    _root._path ??= StimName._(_NameOp.path, _root, null, null, _root);
+    return _root._path;
   }
 
   StimName param() {
-    return StimName._(_NameOp.param, this, null, null);
+    _root._param ??= StimName._(_NameOp.param, _root, null, null, _root);
+    return _root._param;
   }
 
   StimName header() {
-    return StimName._(_NameOp.header, this, null, null);
+    _root._header ??= StimName._(_NameOp.header, _root, null, null, _root);
+    return _root._header;
   }
 
   StimName title() {
-    return StimName._(_NameOp.title, this, null, null);
+    _root._title ??= StimName._(_NameOp.title, _root, null, null, _root);
+    return _root._title;
   }
 
   StimName constant() {
-    return StimName._(_NameOp.constant, this, null, null);
+    _root._constant ??= StimName._(_NameOp.constant, _root, null, null, _root);
+    return _root._constant;
   }
 
   StimName sentence() {
-    return StimName._(_NameOp.sentence, this, null, null);
+    _root._sentence ??= StimName._(_NameOp.sentence, _root, null, null, _root);
+    return _root._sentence;
   }
 
   StimName words() {
-    return StimName._(_NameOp.words, this, null, null);
+    _root._words ??= StimName._(_NameOp.words, _root, null, null, _root);
+    return _root._words;
   }
 
   StimName plural() {
-    return StimName._(_NameOp.plural, this, null, null);
+    _root._plural ??= StimName._(_NameOp.plural, this, null, null, null);
+    return _root._plural;
   }
 
   StimName singular() {
-    return StimName._(_NameOp.singular, this, null, null);
+    _root._singular ??= StimName._(_NameOp.singular, this, null, null, null);
+    return _root._singular;
   }
 
   StimName past() {
-    return StimName._(_NameOp.past, this, null, null);
+    _root._past ??= StimName._(_NameOp.past, this, null, null, null);
+    return _root._past;
   }
 
   /// Normalizes an input object to a name string that.
@@ -242,8 +277,15 @@ class StimName {
 
   @override
   String toString() {
-    var l = _normalized(_left);
-    var r = _normalized(_right);
+    // Computes and cache the result;
+    _s ??= _toString();
+    return _s;
+  }
+
+  /// The internal to string implementation.
+  String _toString() {
+    final l = _normalized(_left);
+    final r = _normalized(_right);
 
     switch (_op) {
       case _NameOp.add:

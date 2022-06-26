@@ -9,7 +9,7 @@ void main() {
   test('empty', () {
     final name = 'partial_file.txt';
     // delete the temp file first.
-    final file = io.File('/tmp/${name}');
+    final file = io.File('/tmp/$name');
     file.writeAsStringSync('Hello<content>World</content>. This remained!');
 
     var root = Directory.absolute(
