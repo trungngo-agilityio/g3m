@@ -46,6 +46,7 @@ class StimName {
   final Object _left;
   final Object _right;
   StimName _root;
+  ReCase _recase;
 
   String _s;
   StimName _upper,
@@ -318,37 +319,48 @@ class StimName {
         return l.toLowerCase();
 
       case _NameOp.camel:
-        return ReCase.forCode(l).camel;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.camel;
 
       case _NameOp.pascal:
-        return ReCase.forCode(l).pascal;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.pascal;
 
       case _NameOp.snake:
-        return ReCase.forCode(l).snake;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.snake;
 
       case _NameOp.dot:
-        return ReCase.forCode(l).dot;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.dot;
 
       case _NameOp.path:
-        return ReCase.forCode(l).path;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.path;
 
       case _NameOp.param:
-        return ReCase.forCode(l).param;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.param;
 
       case _NameOp.header:
-        return ReCase.forCode(l).header;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.header;
 
       case _NameOp.title:
-        return ReCase.forCode(l).title;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.title;
 
       case _NameOp.constant:
-        return ReCase.forCode(l).constant;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.constant;
 
       case _NameOp.sentence:
-        return ReCase.forCode(l).sentence;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.sentence;
 
       case _NameOp.words:
-        return ReCase.forCode(l).words;
+        _root._recase ??= ReCase.forCode(l);
+        return _root._recase.words;
 
       case _NameOp.plural:
         return StringFuncs.plural(l);
