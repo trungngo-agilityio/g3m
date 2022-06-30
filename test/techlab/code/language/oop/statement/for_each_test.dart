@@ -9,7 +9,7 @@ void main() {
 
     const s2 = 'for (let i: number in entries) {}\n';
 
-    const s3 = 'for (int i: entries) {}\n';
+    const s3 = 'for (Integer i: entries) {}\n';
 
     const s4 = 'for (i in entries) {}\n';
 

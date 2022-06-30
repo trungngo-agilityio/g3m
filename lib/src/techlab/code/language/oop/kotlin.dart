@@ -106,7 +106,7 @@ class KotlinCodeConfig extends OopCodeConfig<KotlinCodeConfig> {
   KotlinCodeConfig(Node child)
       : super(
           child,
-          indentConfig: null,
+          indentConfig: (_, child) => IndentConfig.useSpace4(child),
           blockConfig: null,
           codeAccessConfig: null,
 

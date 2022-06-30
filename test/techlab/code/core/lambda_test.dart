@@ -34,10 +34,10 @@ void main() {
     runAndExpect(
       code,
       '(_, firstName, String lastName, final String text) {\n'
-      '  callALambda((_) {\n'
-      '    return false;\n'
-      '  });\n'
-      '  return true;\n'
+      '    callALambda((_) {\n'
+      '        return false;\n'
+      '    });\n'
+      '    return true;\n'
       '}',
     );
   });

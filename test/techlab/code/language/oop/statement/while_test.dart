@@ -37,6 +37,10 @@ void main() {
         '  print("Hello World!");\n'
         '}\n';
 
+    const s2 = 'while (true) {\n'
+        '    print("Hello World!");\n'
+        '}\n';
+
     oopRunAndExpect(
       CodeWhile.of(
         condition: true,
@@ -49,9 +53,9 @@ void main() {
       // https://www.tutorialspoint.com/typescript/typescript_while_loop.htm
       typescript: s1,
       // https://www.w3schools.com/java/java_while_loop.asp
-      java: s1,
+      java: s2,
       // https://kotlinlang.org/docs/reference/control-flow.html#while-loops
-      kotlin: s1,
+      kotlin: s2,
     );
   });
 }

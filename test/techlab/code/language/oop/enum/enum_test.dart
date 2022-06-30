@@ -73,7 +73,7 @@ void main() {
 
       const s3 = '\n'
           'enum Person {\n'
-          '  FIRST_NAME\n'
+          '    FIRST_NAME\n'
           '}\n';
 
       oopRunAndExpect(
@@ -103,8 +103,8 @@ void main() {
           '}\n';
       const s3 = '\n'
           'enum Person {\n'
-          '  FIRST_NAME,\n'
-          '  LAST_NAME\n'
+          '    FIRST_NAME,\n'
+          '    LAST_NAME\n'
           '}\n';
 
       oopRunAndExpect(
@@ -137,7 +137,7 @@ void main() {
 
       const s3 = '\n'
           'enum Person {\n'
-          '  FIRST_NAME\n'
+          '    FIRST_NAME\n'
           '}\n';
 
       oopRunAndExpect(
@@ -173,12 +173,12 @@ void main() {
 
       const s3 = '\n'
           'private enum _Person {\n'
-          '  FIRST_NAME,\n'
-          '  LAST_NAME = "john doe",\n'
-          '  /**\n'
-          '   * this is a comment\n'
-          '   */\n'
-          '  AGE = 10\n'
+          '    FIRST_NAME,\n'
+          '    LAST_NAME = "john doe",\n'
+          '    /**\n'
+          '     * this is a comment\n'
+          '     */\n'
+          '    AGE = 10\n'
           '}\n';
 
       oopRunAndExpect(

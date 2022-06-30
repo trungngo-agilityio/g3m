@@ -28,7 +28,7 @@ void main() {
     runAndExpect(
       code,
       'if (a >= this && a < this) {\n'
-      '  hello();\n'
+      '    hello();\n'
       '}\n',
     );
   });

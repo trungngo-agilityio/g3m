@@ -24,6 +24,12 @@ void main() {
         '  return false;\n'
         '}';
 
+    const s2 = 'if (true) {\n'
+        '    return true;\n'
+        '} else {\n'
+        '    return false;\n'
+        '}';
+
     oopRunAndExpect(
       CodeIf.of(
         condition: true,
@@ -32,8 +38,8 @@ void main() {
       ),
       dart: s1,
       typescript: s1,
-      java: s1,
-      kotlin: s1,
+      java: s2,
+      kotlin: s2,
     );
   });
 
@@ -47,6 +53,15 @@ void main() {
         '} else {\n'
         '  world();\n'
         '}';
+    const s2 = 'if (true) {\n'
+        '    hello();\n'
+        '} else if (false) {\n'
+        '    return 1;\n'
+        '} else if (false) {\n'
+        '    return 2;\n'
+        '} else {\n'
+        '    world();\n'
+        '}';
 
     oopRunAndExpect(
       CodeIf.of(condition: true, then: [
@@ -59,8 +74,8 @@ void main() {
       ]),
       dart: s1,
       typescript: s1,
-      java: s1,
-      kotlin: s1,
+      java: s2,
+      kotlin: s2,
     );
   });
 }

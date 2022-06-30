@@ -5,9 +5,11 @@ import '../utils.dart';
 
 void main() {
   group('simple', () {
-    const s1 = 'for (Int i = 0; i<10; i++) {}\n';
+    const s1 = 'for (int i = 0; i<10; i++) {}\n';
 
     const s2 = 'for (let i: Int = 0; i<10; i++) {}\n';
+
+    const s3 = 'for (Integer i = 0; i<10; i++) {}\n';
 
     const s4 = 'for (var i: Int = 0; i<10; i++) {}\n';
 
@@ -20,7 +22,7 @@ void main() {
       ),
       dart: s1,
       typescript: s2,
-      java: s1,
+      java: s3,
       kotlin: s4,
     );
   });
